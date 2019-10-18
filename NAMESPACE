@@ -1,0 +1,5 @@
+importFrom("utils", "read.csv", "read.table", "write.csv")
+exportPattern("^[[:alpha:]]+")
+
+## Imports
+import(parallel)

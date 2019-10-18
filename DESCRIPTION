@@ -1,0 +1,15 @@
+Package: lcplants
+Type: Package
+Title: Taxonomic Standardization of Plant Species Names according with the Leipzig Reference List for vascular plant names
+Version: 1.0
+Date: 2019-10-17
+Author: Alessandro Gentile, Marten Winter, Martin Freiberg
+Depends: parallel (>= 3.5.2)
+Maintainer: Alessandro Gentile <alessandro.gentile@idiv.de>
+Description: Automated standardization of taxonomic names and removal of orthographic errors in plant species names using the 'Leipzig Catalogue of Plants' (LCP)
+License: GPL (>= 2)	(https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+LazyLoad: yes
+NeedsCompilation: no
+Packaged: 2019-10-17 16:58:05 UTC
+Repository: iDiv (https://idata.idiv.de/ddm/Data/ShowData/1810)
+Date/Publication: 2019-10-17 16:58:05 UTC
