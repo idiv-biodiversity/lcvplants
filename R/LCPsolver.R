@@ -1,20 +1,22 @@
+## Author: Alessandro Gentile
+## Last Version: 2020/01/20
+
 LCPsolver <-
 function(sp, 
-         genus_search = genus_search, 
-         wd_path = wd_path, 
-         out_path = out_path, 
-         LCPposition_table = LCPposition_table, 
-         LCPspecies_table = LCPspecies_table, 
-         encoding = encoding, 
-         max.distance = max.distance, 
-         family_tab = family_tab, 
-         order_tab = order_tab, 
-         genus_tab = genus_tab, 
-         infraspecies_tab = infraspecies_tab, 
-         status = status, save = save, 
-         visualize = visualize, 
-         version = version, 
-         verbose = verbose) {
+         genus_search, 
+         out_path, 
+         LCPposition_table, 
+         LCPspecies_table, 
+         encoding, 
+         max.distance, 
+         family_tab, 
+         order_tab, 
+         genus_tab, 
+         infraspecies_tab, 
+         status, 
+         save, 
+         visualize, 
+         version) {
 
 # extract genus, species, infrasp, author from the typed name ----------------------------------------------
   Infrasp_cat <- c("subsp.", "var.", "forma", "ssp.", "f.", "subvar.", "subf.")
@@ -67,7 +69,7 @@ function(sp,
     author <- FALSE
     auth_name <- NULL
     full_name <- paste(genus,species, sep = " ")
-    if (verbose == 1) {print('Search based on genus and species names')}
+    message('Search based on genus and epithet name')
   } else if (N_terms > 2 && ((tolower(sp_terms[3]) %in% Infrasp_cat) == FALSE)) { 
     species <- sp_terms[2]
     species <- tolower(species)
@@ -76,7 +78,7 @@ function(sp,
     author <- TRUE
     auth_name <- paste0(sp_terms[3:N_terms], collapse = " ")
     full_name <- paste(genus,species,auth_name, sep = " ")
-    if (verbose == 1) {print('Search based on genus, species and author names')}
+    message('Search based on genus, epithet and author name')
   } else if (N_terms <= 4 && ((tolower(sp_terms[3]) %in% Infrasp_cat) == TRUE)) {
     species <- sp_terms[2]
     species <- tolower(species)
@@ -87,7 +89,7 @@ function(sp,
     author <- FALSE
     auth_name <- NULL
     full_name <- paste(genus,species,infrasp,infrasp_name, sep = " ")
-    if (verbose == 1) {print('Search based on genus, species and infraspecies names ')}
+    message('Search based on genus, epithet and infraspecies name')
   } else if (N_terms > 4 && ((tolower(sp_terms[3]) %in% Infrasp_cat) == TRUE)) {
     species <- sp_terms[2]
     species <- tolower(species)
@@ -98,7 +100,7 @@ function(sp,
     author <- TRUE
     auth_name <- paste0(sp_terms[5:N_terms], collapse = " ")
     full_name <- paste(genus,species,infrasp,infrasp_name,auth_name, sep = " ")
-    if (verbose == 1) {print('Search based on genus, species, infraspecies and author names')}
+    message('Search based on genus, epithet, infraspecies and author name')
   }
   
   Genus_table_tmp <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
@@ -130,7 +132,7 @@ function(sp,
   # option to select all the name belonging to the searched order, family or genus name
   if (N_terms < 2) {
     if (N_terms == 1 && (order_tab == TRUE || family_tab == TRUE || genus_tab == TRUE)) {
-      print('search for the only genus, family or order')
+      message('search for the only genus, family or order name')
       if (genus_tab == TRUE && family_tab == FALSE && order_tab == FALSE) {
         matched_name <- agrep(genus, LCPspecies_table$Input.Taxon, value = TRUE, max.distance = max.distance)
         matched_pos <- agrep(genus, LCPspecies_table$Input.Taxon, value = FALSE, max.distance = max.distance)
@@ -155,7 +157,6 @@ function(sp,
         if (length(matched_genus) > 0) {
           matched_genus <- matched_genus[ddf == min(ddf)]
           matched_pos <- matched_pos[ddf == min(ddf)]
-          #ddf <- abs(nchar(matched_genus) - nchar(genus))
         }
         result_name <- NULL
         result_pos <- NULL
@@ -163,12 +164,11 @@ function(sp,
         for (i in 1:length(matched_pos)) {
           result_name <- rbind(result_name, matched_name[i])
           iter <- matched_pos[i]
-          #result_pos <- rbind(result_pos, matched_pos[matched_pos[i]])
           LCP_genus <- unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))[1]
           LCP_species <- unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))[2]
           if (genus %in% matched_genus) {
             score <- drop(attr(adist(matched_genus[i], genus, counts = TRUE), "counts"))
-            if (length(unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))) < 3) {   # condizione in cui c'e` solo il genere e specie
+            if (length(unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))) < 3) {   # option there is only the genus and epithet name
               LCP_Infrasp <- "species"
               LCP_Infrasp_name <- " "
               LCP_Author_name <- " "
@@ -403,7 +403,6 @@ function(sp,
               }
             }
           } else if (length(matched_pos) > 0 && length(matched_pos2) == 0) {
-            # setup better....
             Genus_table_tmp <- data.frame(Submitted_Name = full_name, 
                                           Order = "", Family = "", 
                                           Genus = unlist(strsplit(matched_name[1], " "))[1], 
@@ -684,8 +683,6 @@ function(sp,
               Matched_table_final <- Infrasp_table_final
 # run the fuzzy match search engine for the author when infrasp is not specified ----------------------------------------------------
             } else if (is.null(Infrasp_table_final$Genus[1]) && author == TRUE) {
-              #matched_name <- agrep(auth_name, Infrasp_table_final$Authors, value = TRUE, max.distance = 0)
-              #matched_pos <- agrep(auth_name, Infrasp_table_final$Authors, value = TRUE, max.distance = 0)
               col5 <- dim(Species_table_final)[2]
               row5 <- dim(Species_table_final)[1]
               for (k in 1:row5) {
@@ -797,12 +794,11 @@ function(sp,
                 }
               }
             } else {Matched_table_final <- Species_table_final}
-# opzione per ricerca solo dell'epiteto (Genere e spacie) e eventualmente solo per lo status 'valid'  ----------------------------------------------------
+# option to search only for the epithet (Genus and epithet) and eventually only for the status 'valid'  ----------------------------------------------------
           } else if (is.null(infrasp) && author == FALSE && infraspecies_tab == FALSE) {
             matched_name <- agrep('species', Species_table_final$Infrasp, value = TRUE, max.distance = 0)
             matched_pos <- agrep('species', Species_table_final$Infrasp, value = FALSE, max.distance = 0)
             matched_name2 <- agrep('valid', Species_table_final$Status, value = TRUE, max.distance = 0)
-            #matched_pos2 <- agrep('valid', Species_table_final$Status, value = FALSE, max.distance = 0)
             if (length(matched_pos) > 0 && status == TRUE && length(matched_name2) > 0) {
               for (j in 1:length(matched_pos)) {
                 Spec_Tab_genus <- (Species_table_final$Genus)[matched_pos[j]]
@@ -868,7 +864,7 @@ function(sp,
                   }
                 }
               }
-            # se vi sono species, di cui nessuna 'valid', ma solo "synonym"
+            # option for the cases where there are species only 'synonym', without any 'valid' status
             } else if (length(matched_pos) > 0 && status == TRUE && length(matched_name2) == 0){
               for (j in 1:length(matched_pos)) {
                 Spec_Tab_genus <- (Species_table_final$Genus)[matched_pos[j]]
@@ -962,14 +958,8 @@ function(sp,
                                                   Substitution = 0)}
         if (visualize == TRUE){
           Matched_table <- Matched_table_final
-          #View(Matched_table)
-          #table_name <- paste("/LCP_",genus,"_",species,"_List.csv",sep = "")
-          #pathstring <- paste(wd_path, out_path, table_name, sep = "")
-          #write.table(Matched_table,pathstring,sep=",",row.names=FALSE)
-          
         }
     } else {Matched_table_final <- Genus_table_final}
   }
-  #print(Species_table_final$Genus)
   return(Matched_table_final)
 }
