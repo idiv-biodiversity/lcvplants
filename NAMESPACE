@@ -1,5 +1,17 @@
-importFrom("utils", "read.csv", "read.table", "write.csv")
-exportPattern("^[[:alpha:]]+")
+## Exports
+export(LCP)
+export(LCPsolver)
+export(read_data)
 
 ## Imports
-import(parallel)
+importFrom(parallel, parLapply)
+importFrom(parallel, detectCores)
+importFrom(parallel, makeCluster)
+importFrom(parallel, stopCluster)
+importFrom(utils, View)
+importFrom(utils, read.csv)
+importFrom(utils, read.table)
+importFrom(utils, write.csv)
+importFrom(utils, adist)
+importFrom(utils, data)
+importFrom(utils, write.table)
