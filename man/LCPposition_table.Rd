@@ -2,27 +2,26 @@
 \alias{LCPposition_table}
 \docType{data}
 \title{
-List of the number positions of the first 3 letters of the species name in the LCPposition_table
+List of the number positions of the first 3 letters of the species name in the LCPspecies_table
 }
-\description{contains 2677 values defining the position on the LCP list for the first 3 characters for the different letters of the alphabet.
+\description{
+The 'LCPposition_table' contains 2.676 records each of them reports the position (in term of number of rows) of the first three letters (triphthong) for the 1.314.778 plant names stored in the variable 'Input.Taxon' (which are listed in alphabetical order) of the table 'LCPspecies_table'. This indexing system allows the speeding up of the search on the largest list 'LCPspecies_table.rda'. When the function 'LCPsolver()' begins the search for a plant name (e.g. "Laserpitium eliasii"), it starts to compare the first three letters of the submitted genus name (e.g. 'Las') with the records in the list of Triphthong on the 'LCPposition_table.rda' table. When it is able to find a match, the LCPsolver() function reads and stores in memory the corresponding value (e.g. 688815) in the 'Position' column. This value will be the starting point from where to start the search on the 'LCPspecies_table' table; and the following position value (e.g. 691389) in the 'Position' column will be used as the end point in the 'LCPspecies_table' table where to stop the search process.
+
 }
 \usage{data("LCPposition_table")}
 \format{
   A data frame with 2676 observations on the following 3 variables.
   \describe{
-    \item{\code{Position}}{a character vector}
-    \item{\code{Triphthong}}{a character vector}
-    \item{\code{Genus}}{a character vector}
+    \item{\code{Position}}{A character vector. It is the position of the first 3 letters of the species name in the LCPspecies_table.}
+    \item{\code{Triphthong}}{A character vector. First 3 letters of the species name in the LCPspecies_table.}
+    \item{\code{Genus}}{A character vector. Corresponding Genus name.}
   }
 }
-\details{
-%%  ~~ If necessary, more details than the __description__ above ~~
-}
-\source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
-}
+
+\source{ https://idata.idiv.de/ddm/Data/ShowData/1806 }
+
 \references{
-%%  ~~ possibly secondary sources and usages ~~
+The Leipzig Catalogue of Plants (LCP) - An improved taxonomic reference list for all known vascular plants
 }
 \examples{
 data(LCPposition_table)

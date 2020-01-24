@@ -1,0 +1,32 @@
+\name{read_data}
+\alias{read_data}
+\title{
+Standardize plant names according to the Leipzig Catalogue of Plants (LCP)
+}
+\description{
+Allow a taxonomic resolution of plant taxa names listed in the "Leipzig Catalogue of Plants" (LCP)
+}
+\usage{
+read_data(pathstring, encoding)
+}
+\arguments{
+  \item{pathstring}{
+A character vector, which allow the user to define the path where the input text file where is saved the input list of taxa is stored.
+}
+  \item{encoding}{
+character vector, "UTF-8" (default). This value will allow the user to set the specific codification of the strings.
+}
+}
+
+\references{
+The Leipzig Catalogue of Plants (LCP) - An improved taxonomic reference list for all known vascular plants
+}
+\author{
+Alessandro Gentile, Marten Winter, Martin Freiberg
+}
+
+\seealso{ https://idata.idiv.de/ddm/Data/ShowData/1806 }
+
+\examples{
+read_data(file.choose(), 'UTF-8')
+}
