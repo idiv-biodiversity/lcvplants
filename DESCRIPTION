@@ -3,12 +3,13 @@ Title: The Leipzig Catalogue of Plants (LCP) - An improved taxonomic reference l
     for all known vascular plants
 Description: An 'R-package' to allow a taxonomic resolution of plant taxa names listed in the "Leipzig Catalogue of Plants" (LCP). The package aims to facilitate finding, retrieving and orthographically resolving plant names through the comparison between plant taxa. The R-package is able to apply a text-based search of plant names on the LCP using a fuzzy match algorithm, which is the core of the searching engine.
 Type: Package
-Version: 1.0
+Version: 1.0.1
 License: MIT + file LICENSE 
 Author: c(
     person("Alessandro", "Gentile", role = c("aut", "cre")),
     person("Martin", "Freiberg", role = "aut"),
     person("Marten", "Winter", role = "aut"),
+    person("Alexander", "Zizka"), role "aut")
   )
 Maintainer: LCP package, Alessandro Gentile <gentile.alessandro@gmail.com>
     LCP list; Martin Freiberg <freiberg@uni-leipzig.de> 

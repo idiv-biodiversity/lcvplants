@@ -1,0 +1,10 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+lcplants.Rproj
+.travis.yml
+_pkgdown.yml
+
+NEWS.md
+.travis.yml
+_pkgdown.yml
+README.yml

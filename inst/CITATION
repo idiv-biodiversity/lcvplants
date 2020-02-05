@@ -1,0 +1,1 @@
+note <- sprintf("R package version %s", meta$Version)
