@@ -1,5 +1,5 @@
 # lcplants v1.1.0
-[![Build Status](https://travis-ci.org/idiv-biodiversity/lcplants.svg?branch=master)]()
+[![Build Status](https://travis-ci.com/idiv-biodiversity/lcplants.svg?branch=master)]()
 [![codecov.io](https://codecov.io/github/idiv-biodiversity/lcplants/graphs/badge.svg?branch=master)](https://codecov.io/github/idiv-biodiversity/lcplants)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
