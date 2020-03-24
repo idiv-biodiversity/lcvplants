@@ -14,5 +14,5 @@ URL: https://github.com/idiv-biodiversity/lcplants
 BugReports: https://github.com/idiv-biodiversity/lcplants/issues
 Repository: iDiv (https://idata.idiv.de/ddm/Data/ShowData/1806)
 Depends: parallel (>= 3.5.2)
-Imports:
 LazyLoad: yes
+RoxygenNote: 7.0.2

@@ -78,7 +78,7 @@ function(splist,
          infraspecies_tab = FALSE, 
          status = TRUE, 
          save = FALSE, 
-         visualize = TRUE, 
+         visualize = FALSE, 
          version = "1.1", 
          max.cores = (detectCores() -1),
          out_path = getwd()) {
@@ -161,8 +161,40 @@ function(splist,
     stopCluster(cl)
   }
   
-  Output_Table_tmp <- data.frame(ID = NULL, Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  Output_Table <- data.frame(ID = NULL, Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
+  Output_Table_tmp <- data.frame(ID = NULL, 
+                                 Submitted_Name = NULL, 
+                                 Order = NULL, 
+                                 Family = NULL, 
+                                 Genus = NULL, 
+                                 Species = NULL, 
+                                 Infrasp = NULL, 
+                                 Infraspecies = NULL, 
+                                 Authors = NULL, 
+                                 Status = NULL, 
+                                 LCP_Accepted_Taxon = NULL, 
+                                 PL_Comparison = NULL,
+                                 PL_Alternative = NULL, 
+                                 Score = NULL, 
+                                 Insertion = NULL,
+                                 Deletion = NULL, 
+                                 Substitution = NULL)
+  Output_Table <- data.frame(ID = NULL, 
+                             Submitted_Name = NULL, 
+                             Order = NULL,
+                             Family = NULL, 
+                             Genus = NULL, 
+                             Species = NULL, 
+                             Infrasp = NULL, 
+                             Infraspecies = NULL, 
+                             Authors = NULL, 
+                             Status = NULL, 
+                             LCP_Accepted_Taxon = NULL, 
+                             PL_Comparison = NULL, 
+                             PL_Alternative = NULL, 
+                             Score = NULL, 
+                             Insertion = NULL, 
+                             Deletion = NULL, 
+                             Substitution = NULL)
   
   iter = 0
   namefirst = " "
@@ -173,7 +205,24 @@ function(splist,
     if(name != namefirst)
       iter = iter +1
     namefirst = name
-    Output_Table_tmp <- data.frame(ID = iter, Submitted_Name = results[i,1], Order = results[i,2], Family = results[i,3], Genus = results[i,4], Species = results[i,5], Infrasp = results[i,6], Infraspecies = results[i,7], Authors = results[i,8], Status = results[i,9], LCP_Accepted_Taxon = results[i,10], PL_Comparison = results[i,11], PL_Alternative = results[i,12], Score = results[i,13], Insertion = results[i,14], Deletion = results[i,15], Substitution = results[i,16], stringsAsFactors = FALSE)
+    Output_Table_tmp <- data.frame(ID = iter, Submitted_Name = results[i,1], 
+                                   Order = results[i,2], 
+                                   Family = results[i,3], 
+                                   Genus = results[i,4],
+                                   Species = results[i,5], 
+                                   Infrasp = results[i,6], 
+                                   Infraspecies = results[i,7],
+                                   Authors = results[i,8],
+                                   Status = results[i,9],
+                                   LCP_Accepted_Taxon = results[i,10], 
+                                   PL_Comparison = results[i,11], 
+                                   PL_Alternative = results[i,12], 
+                                   Score = results[i,13], 
+                                   Insertion = results[i,14], 
+                                   Deletion = results[i,15], 
+                                   Substitution = results[i,16],
+                                   stringsAsFactors = FALSE)
+    
     Output_Table <- rbind(Output_Table, Output_Table_tmp)
   }
   if (!is.null(Output_Table$Species[1])) {
@@ -185,7 +234,7 @@ function(splist,
       pathstring <- paste(out_path, table_name, sep = "")
       write.table(Output_Table,pathstring,sep=",",row.names=FALSE)
     }
-  } else {message(paste("the Leipzig Catalogue of Plants (LCP) was not able to identify any species name, try to type it differently or use the max.distance option"))}
+  } else {message("the Leipzig Catalogue of Plants (LCP) was not able to identify any species name, try to type it differently or use the max.distance option")}
   
   end.time <- Sys.time()
   time.taken <- end.time - start.time
@@ -194,52 +243,8 @@ function(splist,
   message("-    End of Leipzig Catalogue of Plants (LCP) search    -")
   message("---------------------------------------------------------")
   
-  if (visualize == TRUE){
+  if (visualize){
     View(Output_Table)
   }
   return(Output_Table)
 }
-
-
-
-#' Standardize plant names according to the Leipzig Catalogue of Plants (LCP)
-#' 
-#' Allow a taxonomic resolution of plant taxa names listed in the "Leipzig
-#' Catalogue of Plants" (LCP)
-#' 
-#' 
-#' @param pathstring A character vector, which allow the user to define the
-#' path where the input text file where is saved the input list of taxa is
-#' stored.
-#' @param encoding character vector, "UTF-8" (default). This value will allow
-#' the user to set the specific codification of the strings.
-#' @author Alessandro Gentile, Marten Winter, Martin Freiberg
-#' @seealso https://idata.idiv.de/ddm/Data/ShowData/1806
-#' @references The Leipzig Catalogue of Plants (LCP) - An improved taxonomic
-#' reference list for all known vascular plants
-#' @examples
-#' 
-#' read_data(file.choose(), 'UTF-8')
-#' 
-#' @export read_data
-read_data <-
-function(pathstring, encoding) {
-    search_table.sp <- try(read.csv(pathstring,
-                                    header = TRUE,
-                                    sep = "\t",
-                                    fill = TRUE,
-                                    colClasses = "character",
-                                    as.is = TRUE,
-                                    encoding = encoding
-    ), silent = TRUE)
-    
-    N_rows <- dim(search_table.sp)[1]
-    lista <- NULL
-    for (i in 1:N_rows){
-      row <- (search_table.sp[i,1])
-      lista <- c(lista, row)
-    }
-    return(lista)
-  }
-
-#utils::globalVariables(c('LCPposition_table', 'LCPspecies_table'))
