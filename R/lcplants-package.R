@@ -117,10 +117,11 @@ NULL
 #' @name LCPposition_table
 #' @docType data
 #' @format A data frame with 2676 observations on the following 3 variables.
-#' \describe{ \item{list("Position")}{A character vector. It is the position of
+#' \describe{ 
+#'  \item{Position}{A character vector. It is the position of
 #' the first 3 letters of the species name in the LCPspecies_table.}
-#' \item{list("Triphthong")}{A character vector. First 3 letters of the species
-#' name in the LCPspecies_table.} \item{list("Genus")}{A character vector.
+#' \item{Triphthong"}{A character vector. First 3 letters of the species
+#' name in the LCPspecies_table.} \item{Genus}{A character vector.
 #' Corresponding Genus name.} }
 #' @references The Leipzig Catalogue of Plants (LCP) - An improved taxonomic
 #' reference list for all known vascular plants

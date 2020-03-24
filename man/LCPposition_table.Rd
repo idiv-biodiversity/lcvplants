@@ -5,12 +5,15 @@
 \alias{LCPposition_table}
 \title{List of the number positions of the first 3 letters of the species name in
 the LCPspecies_table}
-\format{A data frame with 2676 observations on the following 3 variables.
-\describe{ \item{list("Position")}{A character vector. It is the position of
+\format{
+A data frame with 2676 observations on the following 3 variables.
+\describe{ 
+ \item{Position}{A character vector. It is the position of
 the first 3 letters of the species name in the LCPspecies_table.}
-\item{list("Triphthong")}{A character vector. First 3 letters of the species
-name in the LCPspecies_table.} \item{list("Genus")}{A character vector.
-Corresponding Genus name.} }}
+\item{Triphthong"}{A character vector. First 3 letters of the species
+name in the LCPspecies_table.} \item{Genus}{A character vector.
+Corresponding Genus name.} }
+}
 \source{
 https://idata.idiv.de/ddm/Data/ShowData/1806
 }

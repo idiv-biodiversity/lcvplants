@@ -15,7 +15,7 @@ LCP(
   infraspecies_tab = FALSE,
   status = TRUE,
   save = FALSE,
-  visualize = TRUE,
+  visualize = FALSE,
   version = "1.1",
   max.cores = (detectCores() - 1),
   out_path = getwd()

@@ -64,6 +64,9 @@
 #' #LCP("Hibiscus vitifolius")
 #' #LCP("list")
 #' 
+#' @importFrom utils View adist data write.table
+#' @importFrom parallel detectCores makeCluster parLapply stopCluster
+#' 
 #' @export LCP
 #' 
 

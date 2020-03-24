@@ -5,7 +5,8 @@
 \alias{LCPspecies_table}
 \title{List of Plant Species Name accordingly with the Leipzig Catalogue of Plants
 (LCP)}
-\format{A data frame with 1314778 observations on the following 7 variables.
+\format{
+A data frame with 1314778 observations on the following 7 variables.
 \describe{ \item{list("Input.Taxon")}{A character vector. This variable
 contains the list of all 1.314.778 vascular plant taxa names listed by the
 authors of the Leipzig Catalogue of Plants.} \item{list("Status")}{A
@@ -26,7 +27,8 @@ names (350.766) according to the LCP.} \item{list("Family")}{A character
 vector. It provides the corresponding family name of the 'Input.Taxon',
 staying empty if the Status is unresolved.} \item{list("Order")}{A character
 vector. The Order column provides the corresponding order name of the
-'Input.Taxon', staying empty if the Status is unresolved.} }}
+'Input.Taxon', staying empty if the Status is unresolved.} }
+}
 \source{
 https://idata.idiv.de/ddm/Data/ShowData/1806
 }

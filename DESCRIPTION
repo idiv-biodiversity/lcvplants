@@ -2,17 +2,18 @@ Package: lcplants
 Title: The Leipzig Catalogue of Plants (LCP) - An improved taxonomic reference list 
     for all known vascular plants
 Version: 1.0.1
-Author@R: c(
-    person(given = "Alessandro", family = "Gentile", role = c("aut", "cre"), email = gentile.alessandro@gmail.com),
-    person(given = "Martin", family =  "Freiberg", role = "aut"),
-    person(given = "Marten", family =  "Winter", role = "aut"),
-    person(given = "Alexander", family =  "Zizka", role "aut")
+Authors@R: c(
+    person(given = "Alessandro", family = "Gentile", role = c("aut", "cre"), email = "gentile.alessandro@gmail.com"),
+    person(given = "Martin", family = "Freiberg", role = "aut"),
+    person(given = "Marten", family = "Winter", role = "aut"),
+    person(given = "Alexander", family = "Zizka", role = "ctb")
   )
 Description: An 'R-package' to allow a taxonomic resolution of plant taxa names listed in the "Leipzig Catalogue of Plants" (LCP). The package aims to facilitate finding, retrieving and orthographically resolving plant names through the comparison between plant taxa. The R-package is able to apply a text-based search of plant names on the LCP using a fuzzy match algorithm, which is the core of the searching engine.
 License: MIT + file LICENSE 
 URL: https://github.com/idiv-biodiversity/lcplants
 BugReports: https://github.com/idiv-biodiversity/lcplants/issues
 Repository: iDiv (https://idata.idiv.de/ddm/Data/ShowData/1806)
-Depends: parallel (>= 3.5.2)
+Imports: parallel (>= 3.5.2), utils
 LazyLoad: yes
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
+Encoding: UTF-8

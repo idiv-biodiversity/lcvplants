@@ -17,7 +17,7 @@
 #' @examples
 #' 
 #' read_data(file.choose(), 'UTF-8')
-#' 
+#' @importFrom  utils read.csv
 #' @export read_data
 read_data <-
   function(pathstring, encoding) {
