@@ -186,7 +186,14 @@ function(sp,
                                     PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, 
                                     Insertion = NULL, Deletion = NULL, Substitution = NULL)
   
-  Genus_table_final   <- Species_table_tmp   <- Species_table_final <- Infrasp_table_tmp   <- Infrasp_table_final <- Matched_table_tmp   <- Matched_table_final <- Genus_table_tmp
+  Genus_table_final   <- 
+    Species_table_tmp   <-
+    Species_table_final <- 
+    Infrasp_table_tmp   <- 
+    Infrasp_table_final <-
+    Matched_table_tmp   <- 
+    Matched_table_final <-
+    Genus_table_tmp
   genus_found <- FALSE
   author_found <- FALSE
   
@@ -972,66 +979,79 @@ function(sp,
               }
             } else if (length(matched_pos) > 0 && status == FALSE) {
               for (j in 1:length(matched_pos)) {
-                Spec_Tab_genus <- (Species_table_final$Genus)[matched_pos[j]]
-                Spec_Tab_species <- (Species_table_final$Species)[matched_pos[j]]
-                Spec_Tab_Infrasp <- (Species_table_final$Infrasp)[matched_pos[j]]
-                Spec_Tab_Infrasp_name <- (Species_table_final$Infraspecies)[matched_pos[j]]
-                Spec_Tab_Author_name <- (Species_table_final$Authors)[matched_pos[j]]
-                Spec_Tab_Score = (Species_table_final$Score)[matched_pos[j]]
-                Spec_Tab_Insertion <- (Species_table_final$Insertion)[matched_pos[j]]
-                Spec_Tab_Deletion <- (Species_table_final$Deletion)[matched_pos[j]]
-                Spec_Tab_Substitution <- (Species_table_final$Substitution)[matched_pos[j]]
-                Matched_table_tmp <- data.frame(Submitted_Name = Species_table_final$Submitted_Name[matched_pos[j]], 
-                                                Order = Species_table_final$Order[matched_pos[j]], 
-                                                Family = Species_table_final$Family[matched_pos[j]], 
-                                                Genus = Species_table_final$Genus[matched_pos[j]], 
-                                                Species = Species_table_final$Species[matched_pos[j]], 
-                                                Infrasp = Spec_Tab_Infrasp, 
-                                                Infraspecies = Spec_Tab_Infrasp_name, 
-                                                Authors = Spec_Tab_Author_name, 
-                                                Status = Species_table_final$Status[matched_pos[j]], 
-                                                LCP_Accepted_Taxon = Species_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
-                                                PL_Comparison = Species_table_final$PL_Comparison[matched_pos[j]], 
-                                                PL_Alternative = Species_table_final$PL_Alternative[matched_pos[j]], 
-                                                Score = Spec_Tab_Score, 
-                                                Insertion = Spec_Tab_Insertion, 
-                                                Deletion = Spec_Tab_Deletion, 
-                                                Substitution = Spec_Tab_Substitution)
+                Spec_Tab_genus <- 
+                  (Species_table_final$Genus)[matched_pos[j]]
+                Spec_Tab_species <- 
+                  (Species_table_final$Species)[matched_pos[j]]
+                Spec_Tab_Infrasp <- 
+                  (Species_table_final$Infrasp)[matched_pos[j]]
+                Spec_Tab_Infrasp_name <- 
+                  (Species_table_final$Infraspecies)[matched_pos[j]]
+                Spec_Tab_Author_name <- 
+                  (Species_table_final$Authors)[matched_pos[j]]
+                Spec_Tab_Score <- 
+                  (Species_table_final$Score)[matched_pos[j]]
+                Spec_Tab_Insertion <- 
+                  (Species_table_final$Insertion)[matched_pos[j]]
+                Spec_Tab_Deletion <- 
+                  (Species_table_final$Deletion)[matched_pos[j]]
+                Spec_Tab_Substitution <- 
+                  (Species_table_final$Substitution)[matched_pos[j]]
+                Matched_table_tmp <- 
+                  data.frame(
+                    Submitted_Name = Species_table_final$Submitted_Name[matched_pos[j]], 
+                    Order = Species_table_final$Order[matched_pos[j]], 
+                    Family = Species_table_final$Family[matched_pos[j]], 
+                    Genus = Species_table_final$Genus[matched_pos[j]], 
+                    Species = Species_table_final$Species[matched_pos[j]], 
+                    Infrasp = Spec_Tab_Infrasp, 
+                    Infraspecies = Spec_Tab_Infrasp_name, 
+                    Authors = Spec_Tab_Author_name, 
+                    Status = Species_table_final$Status[matched_pos[j]], 
+                    LCP_Accepted_Taxon = Species_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
+                    PL_Comparison = Species_table_final$PL_Comparison[matched_pos[j]], 
+                    PL_Alternative = Species_table_final$PL_Alternative[matched_pos[j]], 
+                    Score = Spec_Tab_Score, 
+                    Insertion = Spec_Tab_Insertion, 
+                    Deletion = Spec_Tab_Deletion, 
+                    Substitution = Spec_Tab_Substitution)
                 Matched_table_final <- rbind(Matched_table_final, Matched_table_tmp)
               }
-            } else {Matched_table_final <- data.frame(Submitted_Name = full_name, 
-                                                      Order = "", 
-                                                      Family = "", 
-                                                      Genus = "", 
-                                                      Species = "", 
-                                                      Infrasp = "", 
-                                                      Infraspecies = "", 
-                                                      Authors = "", 
-                                                      Status = "", 
-                                                      LCP_Accepted_Taxon = "", 
-                                                      PL_Comparison = "", 
-                                                      PL_Alternative = "", 
-                                                      Score = 'Epithet name not found', 
-                                                      Insertion = 0, 
-                                                      Deletion = 0, 
-                                                      Substitution = 0)}
+            } else {Matched_table_final <- 
+              data.frame(Submitted_Name = full_name, 
+                         Order = "",
+                         Family = "", 
+                         Genus = "", 
+                         Species = "", 
+                         Infrasp = "", 
+                         Infraspecies = "", 
+                         Authors = "", 
+                         Status = "", 
+                         LCP_Accepted_Taxon = "", 
+                         PL_Comparison = "", 
+                         PL_Alternative = "", 
+                         Score = 'Epithet name not found',
+                         Insertion = 0, 
+                         Deletion = 0, 
+                         Substitution = 0)}
           } else {Matched_table_final <- Species_table_final}
-        } else {Matched_table_final <- data.frame(Submitted_Name = full_name, 
-                                                  Order = "", 
-                                                  Family = "", 
-                                                  Genus = "", 
-                                                  Species = "", 
-                                                  Infrasp = "", 
-                                                  Infraspecies = "", 
-                                                  Authors = "", 
-                                                  Status = "", 
-                                                  LCP_Accepted_Taxon = "", 
-                                                  PL_Comparison = "", 
-                                                  PL_Alternative = "", 
-                                                  Score = 'Epithet name not found', 
-                                                  Insertion = 0, 
-                                                  Deletion = 0, 
-                                                  Substitution = 0)}
+        } else {Matched_table_final <- 
+          data.frame(Submitted_Name = full_name,
+                     Order = "", 
+                     Family = "", 
+                     Genus = "",
+                     Species = "", 
+                     Infrasp = "", 
+                     Infraspecies = "", 
+                     Authors = "", 
+                     Status = "", 
+                     LCP_Accepted_Taxon = "", 
+                     PL_Comparison = "", 
+                     PL_Alternative = "", 
+                     Score = 'Epithet name not found', 
+                     Insertion = 0, 
+                     Deletion = 0, 
+                     Substitution = 0)}
         if (visualize == TRUE){
           Matched_table <- Matched_table_final
         }

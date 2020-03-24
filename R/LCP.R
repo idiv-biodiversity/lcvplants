@@ -63,7 +63,8 @@
 #' 
 #' LCP("Hibiscus vitifolius")
 #' LCP("Hibiscus abelmoschus var. betulifolius Mast.")
-#' LCP(c("Hibiscus abelmoschus var. betulifolius Mast.", "Hibiscus abutiloides Willd.", 
+#' LCP(c("Hibiscus abelmoschus var. betulifolius Mast.", 
+#'      "Hibiscus abutiloides Willd.", 
 #'       "Hibiscus aculeatus", "Hibiscus acuminatus"), max.cores = 1)
 #' 
 #' @importFrom utils View adist data write.table
@@ -91,10 +92,10 @@ function(splist,
   start.time <- Sys.time()
   
   if(.Platform$OS.type == "unix"){
-    encoding = "UTF-8"
+    encoding <- "UTF-8"
   }
   if(Sys.getenv("RSTUDIO") != "1"){
-    visualize = FALSE
+    visualize <- FALSE
   }
   
   if(length(splist) == 1 && tolower(splist) == "list"){
@@ -201,15 +202,15 @@ function(splist,
                              Deletion = NULL, 
                              Substitution = NULL)
   
-  iter = 0
-  namefirst = " "
+  iter <- 0
+  namefirst <- " "
   col <- dim(results)[2]
   row <- dim(results)[1]
   for (i in 1:row)  {
     name <- results[i,1]
     if(name != namefirst)
-      iter = iter +1
-    namefirst = name
+      iter <- iter +1
+    namefirst <- name
     Output_Table_tmp <- data.frame(ID = iter, Submitted_Name = results[i,1], 
                                    Order = results[i,2], 
                                    Family = results[i,3], 
@@ -232,14 +233,18 @@ function(splist,
   }
   if (!is.null(Output_Table$Species[1])) {
     if (save == TRUE) {
-      exec_date <- paste(substring(Sys.time(),1,4),substring(Sys.time(),6,7),substring(Sys.time(),9,10),sep="")
-      exec_time <- paste(substring(Sys.time(),12,13),substring(Sys.time(),15,16),substring(Sys.time(),18,19),sep="")
+      exec_date <- paste(substring(Sys.time(),1,4),
+                         substring(Sys.time(),6,7),
+                         substring(Sys.time(),9,10),sep="")
+      exec_time <- paste(substring(Sys.time(),12,13),
+                         substring(Sys.time(),15,16),
+                         substring(Sys.time(),18,19),sep="")
       out_code <- paste(exec_date, "_", exec_time, sep="")
       table_name <- paste("/LCP_results_",out_code,".csv",sep = "")
       pathstring <- paste(out_path, table_name, sep = "")
       write.table(Output_Table,pathstring,sep=",",row.names=FALSE)
     }
-  } else {message("the Leipzig Catalogue of Plants (LCP) was not able to identify any species name, try to type it differently or use the max.distance option")}
+  } else {message("no match found, check typing or change 'max.distance'")}
   
   end.time <- Sys.time()
   time.taken <- end.time - start.time
