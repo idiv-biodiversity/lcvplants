@@ -6,7 +6,7 @@
 A package for large-scale taxonomic harmonization of plant names by fuzzy matching and synonymy resolution against the Leipzig Plant Catalogue as taxonomic backbone. Submission of single names or list of species names is possible (for lists with more than 5000 species computation may take some time). The Leipzig Plant Catalogue is an updated taxonomic backbone based on the plant list comprising more than 1,300,000 names and 350,000 accepted names.
 
 
-See [News](https://github.com/idiv-biodiversity/lcplants/NEWS.md) for update information.
+See `News.md` for update information.
 
 # Installation
 ```r
