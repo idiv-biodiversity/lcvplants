@@ -1,6 +1,72 @@
 ## Author: Alessandro Gentile
 ## Last Version: 2020/01/20
 
+
+
+#' Standardize plant names according to the Leipzig Catalogue of Plants (LCP)
+#' 
+#' Allow a taxonomic resolution of plant taxa names listed in the "Leipzig
+#' Catalogue of Plants" (LCP). Connects to the LCP table and validates the
+#' names of a vector of plant taxa, replacing synonyms by accepted names and
+#' removing orthographical errors in plant names.
+#' 
+#' 
+#' @param splist A character vector specifying the input taxon, each element
+#' including genus and specific epithet and, potentially, infraspecific rank,
+#' infraspecific name and author name
+#' @param genus_search Logical, FALSE (default). If TRUE, the function will
+#' apply the fuzzy match algorithm also for the search of the genus name,
+#' otherwise as default the search is applied only to the epithet, the
+#' infraspecies and the name author.
+#' @param max.distance is an integer value. It represents the maximum distance
+#' (number of characters) allowed for a match when comparing the submitted name
+#' with the closest name matches in the LCP
+#' @param encoding character vector, "UTF-8" (default). This value will allow
+#' the user to set the specific codification of the strings
+#' @param family_tab Logical, FALSE (default). If TRUE, the function will
+#' return the list of plant taxa names belonging to the same family name
+#' submitted by the user
+#' @param order_tab Logical, FALSE (default). If TRUE, the function will return
+#' the list of plant taxa names belonging to the same order name submitted by
+#' the user
+#' @param genus_tab Logical, FALSE (default). If TRUE, the function will return
+#' the list of plant taxa names belonging to the same genus name submitted by
+#' the user
+#' @param infraspecies_tab Logical, FALSE (default). If TRUE, the function will
+#' return also all the infraspecies names found for a submitted plant name
+#' @param status Logical, TRUE (default). If FALSE, the function will return
+#' not only the valid epithet for a species name but also all the possible
+#' synonyms
+#' @param save Logical. FALSE (default). If TRUE, the function will write the
+#' output file as comma-separated format (.csv), saving it into the working
+#' directory or in the directory already set through the 'out_path' option
+#' @param visualize If TRUE the function will visualize the output search on
+#' the 'Source Tab' of RStudio. This option has to be turned off (FALSE) if the
+#' package is execute in a UNIX environment (from the command line) without
+#' having a Graphical User Interface
+#' @param version A character vector indicating the current version of the
+#' package (current version is 1.0). A new version is under development
+#' allowing the package to connect the web API that is under construction
+#' @param max.cores integer value, indicating the number of CPU cores to be
+#' used for the parallelization of the plant name search when a list of plant
+#' taxa names is submitted. As default, the maximum number of CPU cores
+#' available on the working machine menus one is set
+#' @param out_path a character vector, which allow the user to define the path
+#' where the output file has to be saved. The working directory is set as
+#' default
+#' @author Alessandro Gentile, Martin Freiberg, Marten Winter
+#' @seealso https://idata.idiv.de/ddm/Data/ShowData/1806
+#' @references The Leipzig Catalogue of Plants (LCP) - An improved taxonomic
+#' reference list for all known vascular plants
+#' @keywords R-package nomenclature taxonomy vascular plants
+#' @examples
+#' 
+#' #LCP("Hibiscus vitifolius")
+#' #LCP("list")
+#' 
+#' @export LCP
+#' 
+
 LCP <-
 function(splist, 
          genus_search = FALSE,
@@ -134,6 +200,28 @@ function(splist,
   return(Output_Table)
 }
 
+
+
+#' Standardize plant names according to the Leipzig Catalogue of Plants (LCP)
+#' 
+#' Allow a taxonomic resolution of plant taxa names listed in the "Leipzig
+#' Catalogue of Plants" (LCP)
+#' 
+#' 
+#' @param pathstring A character vector, which allow the user to define the
+#' path where the input text file where is saved the input list of taxa is
+#' stored.
+#' @param encoding character vector, "UTF-8" (default). This value will allow
+#' the user to set the specific codification of the strings.
+#' @author Alessandro Gentile, Marten Winter, Martin Freiberg
+#' @seealso https://idata.idiv.de/ddm/Data/ShowData/1806
+#' @references The Leipzig Catalogue of Plants (LCP) - An improved taxonomic
+#' reference list for all known vascular plants
+#' @examples
+#' 
+#' read_data(file.choose(), 'UTF-8')
+#' 
+#' @export read_data
 read_data <-
 function(pathstring, encoding) {
     search_table.sp <- try(read.csv(pathstring,
