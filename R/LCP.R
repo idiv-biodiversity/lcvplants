@@ -61,8 +61,9 @@
 #' @keywords R-package nomenclature taxonomy vascular plants
 #' @examples
 #' 
-#' #LCP("Hibiscus vitifolius")
-#' #LCP("list")
+#' LCP("Hibiscus vitifolius")
+#' LCP("Hibiscus abelmoschus var. betulifolius Mast.")
+#' LCP(c("Hibiscus abelmoschus var. betulifolius Mast.", "Hibiscus abutiloides Willd.", "Hibiscus aculeatus", "Hibiscus acuminatus"))
 #' 
 #' @importFrom utils View adist data write.table
 #' @importFrom parallel detectCores makeCluster parLapply stopCluster
