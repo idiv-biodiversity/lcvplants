@@ -3,6 +3,7 @@
 lcplants.Rproj
 .travis.yml
 _pkgdown.yml
+pre_submission_tests.R
 
 NEWS.md
 .travis.yml

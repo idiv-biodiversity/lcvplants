@@ -87,8 +87,10 @@ removing orthographical errors in plant names.
 }
 \examples{
 
-#LCP("Hibiscus vitifolius")
-#LCP("list")
+LCP("Hibiscus vitifolius")
+LCP("Hibiscus abelmoschus var. betulifolius Mast.")
+LCP(c("Hibiscus abelmoschus var. betulifolius Mast.", "Hibiscus abutiloides Willd.", 
+      "Hibiscus aculeatus", "Hibiscus acuminatus"), max.cores = 1)
 
 }
 \references{

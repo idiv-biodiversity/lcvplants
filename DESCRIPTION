@@ -1,7 +1,7 @@
 Package: lcplants
 Title: The Leipzig Catalogue of Plants (LCP) - An improved taxonomic reference list 
     for all known vascular plants
-Version: 1.0.1
+Version: 1.1.0
 Authors@R: c(
     person(given = "Alessandro", family = "Gentile", role = c("aut", "cre"), email = "gentile.alessandro@gmail.com"),
     person(given = "Martin", family = "Freiberg", role = "aut"),
@@ -13,6 +13,7 @@ License: MIT + file LICENSE
 URL: https://github.com/idiv-biodiversity/lcplants
 BugReports: https://github.com/idiv-biodiversity/lcplants/issues
 Repository: iDiv (https://idata.idiv.de/ddm/Data/ShowData/1806)
+Depends: R (>= 3.5.0)
 Imports: parallel (>= 3.5.2), utils
 LazyLoad: yes
 RoxygenNote: 7.1.0

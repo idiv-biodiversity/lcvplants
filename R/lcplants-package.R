@@ -72,7 +72,6 @@
 #' 
 #' # To submit one single plant taxa name or a list:
 #' LCP("Hibiscus vitifolius")
-#' LCP("list")
 #' # To submit a plant taxa name to solve some possible orthographic errors:
 #' LCP("Hibiscus vitfolius", max.distance = 1)
 #' # To submit a plant taxa name to solve possible orthographic errors also at the genus level:
@@ -83,7 +82,8 @@
 #' LCP("Hibiscus vitifolius", infraspecies_tab = TRUE)
 #' # To submit a plant taxa name looking for all plant taxa names belonging to the same genus rank:
 #' LCP("Hibiscus", genus_tab = TRUE)
-#' # To execute the searching process booking a fixed number of CPU cores available on the working machine:
+#' # To execute the searching process booking a fixed number of
+#' # CPU cores available on the working machine:
 #' LCP("Hibiscus vitifolius", max.cores = 3)
 #' # To save the result to a Comma-Separated Values (.csv) file:
 #' LCP("Hibiscus vitifolius", save = TRUE)
@@ -120,7 +120,7 @@ NULL
 #' \describe{ 
 #'  \item{Position}{A character vector. It is the position of
 #' the first 3 letters of the species name in the LCPspecies_table.}
-#' \item{Triphthong"}{A character vector. First 3 letters of the species
+#' \item{Triphthong}{A character vector. First 3 letters of the species
 #' name in the LCPspecies_table.} \item{Genus}{A character vector.
 #' Corresponding Genus name.} }
 #' @references The Leipzig Catalogue of Plants (LCP) - An improved taxonomic
@@ -149,25 +149,25 @@ NULL
 #' @name LCPspecies_table
 #' @docType data
 #' @format A data frame with 1314778 observations on the following 7 variables.
-#' \describe{ \item{list("Input.Taxon")}{A character vector. This variable
+#' \describe{ \item{Input.Taxon}{A character vector. This variable
 #' contains the list of all 1.314.778 vascular plant taxa names listed by the
-#' authors of the Leipzig Catalogue of Plants.} \item{list("Status")}{A
+#' authors of the Leipzig Catalogue of Plants.} \item{Status}{A
 #' character vector. This variable provides a description if a taxon is
 #' classified as 'valid', 'synonym', 'unresolved' or 'external'. The
 #' 'unresolved' rank means that the status of the plant name could be either
 #' valid or synonym, but the information available does not allow a definitive
 #' decision (see the main text Freiberg et al. for more details).}
-#' \item{list("PL.comparison")}{A character vector. This field provides a
+#' \item{PL.comparison}{A character vector. This field provides a
 #' direct comparison with 'The Plant List' (TPL; The Plant List
 #' http://www.theplantlist.org/ accessed: 1.1. 2013) reporting further
 #' information such as 'identical', 'synonym', 'other synonym', 'different
 #' authors', 'missing', 'misspelling', 'unresolved'.}
-#' \item{list("PL.alternative")}{A character vector. This field provides a
-#' possible alternative name suggested by TPL.} \item{list("Output.Taxon")}{A
+#' \item{PL.alternative}{A character vector. This field provides a
+#' possible alternative name suggested by TPL.} \item{Output.Taxon}{A
 #' character vector. This variable contains the list of the accepted plant taxa
-#' names (350.766) according to the LCP.} \item{list("Family")}{A character
+#' names (350.766) according to the LCP.} \item{Family}{A character
 #' vector. It provides the corresponding family name of the 'Input.Taxon',
-#' staying empty if the Status is unresolved.} \item{list("Order")}{A character
+#' staying empty if the Status is unresolved.} \item{Order}{A character
 #' vector. The Order column provides the corresponding order name of the
 #' 'Input.Taxon', staying empty if the Status is unresolved.} }
 #' @references The Leipzig Catalogue of Plants (LCP) - An improved taxonomic

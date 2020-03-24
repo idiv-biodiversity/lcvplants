@@ -20,7 +20,7 @@ Catalogue of Plants" (LCP)
 }
 \examples{
 
-read_data(file.choose(), 'UTF-8')
+\dontrun{read_data(file.choose(), 'UTF-8')}
 }
 \references{
 The Leipzig Catalogue of Plants (LCP) - An improved taxonomic

@@ -63,7 +63,6 @@ the sentence as the following example: "LCP('Payena lancifolia H.J.Lam',
 
 # To submit one single plant taxa name or a list:
 LCP("Hibiscus vitifolius")
-LCP("list")
 # To submit a plant taxa name to solve some possible orthographic errors:
 LCP("Hibiscus vitfolius", max.distance = 1)
 # To submit a plant taxa name to solve possible orthographic errors also at the genus level:
@@ -74,7 +73,8 @@ LCP("Hibiscus vitifolius", status = FALSE)
 LCP("Hibiscus vitifolius", infraspecies_tab = TRUE)
 # To submit a plant taxa name looking for all plant taxa names belonging to the same genus rank:
 LCP("Hibiscus", genus_tab = TRUE)
-# To execute the searching process booking a fixed number of CPU cores available on the working machine:
+# To execute the searching process booking a fixed number of
+# CPU cores available on the working machine:
 LCP("Hibiscus vitifolius", max.cores = 3)
 # To save the result to a Comma-Separated Values (.csv) file:
 LCP("Hibiscus vitifolius", save = TRUE)

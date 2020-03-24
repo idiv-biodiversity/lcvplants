@@ -10,7 +10,7 @@ A data frame with 2676 observations on the following 3 variables.
 \describe{ 
  \item{Position}{A character vector. It is the position of
 the first 3 letters of the species name in the LCPspecies_table.}
-\item{Triphthong"}{A character vector. First 3 letters of the species
+\item{Triphthong}{A character vector. First 3 letters of the species
 name in the LCPspecies_table.} \item{Genus}{A character vector.
 Corresponding Genus name.} }
 }

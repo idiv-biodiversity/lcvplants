@@ -16,7 +16,7 @@
 #' reference list for all known vascular plants
 #' @examples
 #' 
-#' read_data(file.choose(), 'UTF-8')
+#' \dontrun{read_data(file.choose(), 'UTF-8')}
 #' @importFrom  utils read.csv
 #' @export read_data
 read_data <-
