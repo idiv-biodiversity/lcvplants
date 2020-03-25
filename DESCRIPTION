@@ -15,6 +15,8 @@ BugReports: https://github.com/idiv-biodiversity/lcplants/issues
 Repository: iDiv (https://idata.idiv.de/ddm/Data/ShowData/1806)
 Depends: R (>= 3.5.0)
 Imports: parallel (>= 3.5.2), utils
+Suggests: knitr
 LazyLoad: yes
 RoxygenNote: 7.1.0
 Encoding: UTF-8
+VignetteBuilder: knitr

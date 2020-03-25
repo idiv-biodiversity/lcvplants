@@ -1,29 +1,156 @@
 ---
-title: "Taxonomic resolution using LCP and lcplants"
+title: "Taxonomic name resolution using the Leipzig Plant Catalogue and `lcplants`"
 author: "Alexander Zizka"
 output: html_document
+vignette: >
+  %\VignetteIndexEntry{Taxonomic name resolution using the Leipzig Plant Catalogue and `lcplants`}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+```
+
+
 # Background
+When comparing or merging any list of plant species, for instance for compiling regional species list, merging occurrence lists with trait data or phylogenies the taxonomic names must be matched, to avoid artificial inflation due to synonyms, data loss or erroneous matches due to homonyms. 
 
 # The Leipzig Plant Catalogue
+The Leipzig Plant Catalogue is a novel global taxonomic backbone, updating The Plant List, comprising more than 1,300,000 names and 350,000 accepted names. We described the LCP in detail in the related scientific publication (NOT YET PUBLISHED).
 
-# Using lcplants
+# *lcplants*
+A package for large-scale taxonomic harmonization of plant names by fuzzy matching and synonymy resolution against the Leipzig Plant Catalogue as taxonomic backbone. Submission of single names or list of species names is possible (for lists with more than 5000 species computation may take some time). 
 
-#' # To submit one single plant taxa name or a list:
-#' LCP("Hibiscus vitifolius")
-#' # To submit a plant taxa name to solve some possible orthographic errors:
-#' LCP("Hibiscus vitfolius", max.distance = 1)
-#' # To submit a plant taxa name to solve possible orthographic errors also at the genus level:
-#' LCP("Hibiescus vitifolius", max.distance = 1, genus_search = TRUE)
-#' # To submit a plant taxon looking for all the synonym names:
-#' LCP("Hibiscus vitifolius", status = FALSE)
-#' # To submit a plant taxa name looking for all infraspecies names:
-#' LCP("Hibiscus vitifolius", infraspecies_tab = TRUE)
-#' # To submit a plant taxa name looking for all plant taxa names belonging to the same genus rank:
-#' LCP("Hibiscus", genus_tab = TRUE)
-#' # To execute the searching process booking a fixed number of
-#' # CPU cores available on the working machine:
-#' LCP("Hibiscus vitifolius", max.cores = 3)
-#' # To save the result to a Comma-Separated Values (.csv) file:
-#' LCP("Hibiscus vitifolius", save = TRUE)
+# Running lcplants
+## Installation
+You can install `lcplants` from github using the devtools package (you may need to install devtools first).
+
+```{r, eval = FALSE}
+library(devtools)
+devtools::install_github("idiv-biodiversity/lcplants")
+library(lcplants)
+```
+
+```{r, eval = TRUE, echo = FALSE}
+library(lcplants)
+```
+
+
+## Input
+All you need to run lcplants is a species name or a list of species names for which you need the status or synonymy. The genus name and epitheton should not contain special characters, the name of the authorities might contain special characters.
+
+## Basic Analysis
+The main function of lcplants is `LCP`. The function taxes your names(s) as input argument and will match it against the Leipzig plant Catalogue. LCP uses fuzzy matching, so that it can identify the accepted name of misspelled species as well. The `LCP` function has some options to customize the fuzzy matching and the output, which are described below. You can get help on all arguments using `?LCP`. To run a basic analyses, all you need to do is to call `LCP` on your species name. **By default `LCP` uses direct matches only; see below if you want to use fuzzy matching**.
+
+```{r, message = TRUE}
+LCP("Hibiscus vitifolius")
+```
+
+To assign the results to an object use the following.
+```{r, eval = FALSE}
+resol <- LCP("Hibiscus vitifolius")
+resol
+```
+
+The name may (and ideally should) also include the authorities.
+```{r, eval = FALSE}
+LCP("Hibiscus abelmoschus var. betulifolius Mast.")
+```
+
+`LCP` also works on vectors of names. With more than 5000 names, computation may take some time.
+```{r, eval = FALSE}
+LCP(c("Hibiscus abelmoschus var. betulifolius Mast.", 
+      "Hibiscus abutiloides Willd.", 
+      "Hibiscus aculeatus", 
+      "Hibiscus acuminatus"))
+```
+
+You can also pick a .csv file from your hard disk.
+```{r, eval = FALSE}
+LCP("list")
+```
+
+## Output
+The output value of `LCP` is a `data.frame` with the matching information for your species names. This includes the status of the submitted name ("valid", "synonym", "invalid"), in case of synonyms the matched accepted name in LCP, a comparison to the status of the matched name in The Plant List and information on the fuzzy matching (e.g. in cases your name was misspelled, information by how match so). 
+
+|Output column name| Explanation
+|---|---|
+|ID|A unique identifier of the matched name|
+|Submitted_Name| The submitted name|
+|Order|The matched taxonomic order for the submitted name|
+|Family|The matched taxonomic family|
+|Genus|The matched genus|
+|Species|The matched epitheton|
+|Infrasp|The infra-specific rank, in case the matched name is an infra-specific rank|
+|Infraspecies|The infra-specific name if applicable|
+|Authors|The authorities of the matched name|
+|LCP_Accepted_Taxon|The accepted name of the matched name in LCP|
+|PL_Comparison|The status of a comparison to The Plant List, i.e. is the accepted name the same in TPL?|
+|PL_Alternative|In case the accepted name is different in TPL, the accepted name in TPL|
+|Score|Summary of the fuzzy matching|
+|Insertion|In case the matching was not perfect, the number of inserted characters in the matched name|
+|Deletion|In case the fuzzy match was not perfect, the number of deleted characters|
+|Substitution|In case the fuzzy match was not perfect, the number of substituted characters|
+
+# Further functionalities
+There are several arguments to customize the matching and output of `LCP`. See `?LCP` for a description. 
+
+## Change distance of the fuzzy matching
+In case you expect misspellings in your names list (very likely, at least for longer lists), you might want to use fuzzy matching for the names resolution. If fuzzy matching is activated, `LCP` will also match names that differ in spelling from the submitted name. You can use the `max.distance` argument to define in how many positions the matched names are allowed to differ from the submitted name. This is especially relevant if your names include authorities, since they often differ in spelling (e.g., if spaces are used or not). One or two might be reasonable values here. Increases in `max.distance` will increase the computation time for the name resolution. In any case, it is advisable to check the results of fuzzy matching since there might be accepted names that only differ by few characters.
+
+```{r}
+# no fuzzy matching does not find misspelled names
+fuzz <- LCP("Hibiscus vitifolios")
+fuzz$Score
+
+# fuzzy matching does find it
+fuzz <- LCP("Hibiscus vitifolios", max.distance = 1)
+fuzz$Score
+
+#Also works for larger distances
+fuzz <- LCP("Hibiscus vitifulios", max.distance = 2)
+fuzz$Score
+
+# But results become less reliable with larger distances
+fuzz <- LCP("Hibiscus acetosulla", max.distance = 5)
+fuzz
+```
+
+
+## Run fuzzy matching on the genus
+By default `LCP` will only use fuzzy matching for the species epitheton, infra-specific names and the authorities. If you want to include the genus name, use the `genus_search` argument.
+
+```{r}
+# no fuzzy matching does not find misspelled names
+fuzz <- LCP("Hubiscus vitifolius")
+fuzz$Score
+
+# fuzzy matching does find it
+fuzz <- LCP("Hubiscus vitifolius", max.distance = 1, genus_search = TRUE)
+fuzz$Score
+```
+
+## Parallelize computation
+The name resolution can take a while to compute, especially for long lists and high matching distances (can be up to 30 minutes). TO speed up the process, you can use multiple cores if available using the `max.cores` argument. By default `LCP` will use all available cores but one.
+
+## Get all synonyms for submitted names
+By default, `LCP` only returns accepted names, but you can use the `LCP` function to obtain all synonyms for your names of interest using the `status` argument.
+
+```{r, message = TRUE}
+LCP("Hibiscus vitifolius", status = FALSE)
+```
+
+## Get all names from a genus
+You can also use the `LCP` function to get a list of all species names within a genus in the Leipzig Plant Catalogue.
+
+```{r, eval = FALSE}
+LCP("Hibiscus", genus_tab = TRUE)
+```
+
+## Get all infra-specific names in a species
+Similarly, you can use the `LCP` function to obtain all infra-specific namers of a species
+
+```{r, eval = FALSE}
+LCP("Hibiscus vitifolius", infraspecies_tab = TRUE)
+```
