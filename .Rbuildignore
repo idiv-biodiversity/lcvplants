@@ -4,8 +4,10 @@ lcplants.Rproj
 .travis.yml
 _pkgdown.yml
 pre_submission_tests.R
+_site.yml
 
 NEWS.md
 .travis.yml
 _pkgdown.yml
 README.yml
+^docs$

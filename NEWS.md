@@ -5,6 +5,7 @@ lcplants 1.1.0 (2020-03-25)
   * migrated documentation to Roxygen2
   * added a vignette
   * added webpage
+  * added unit testing
 
 ### MINOR IMPROVEMENTS
   * added CITATION information
