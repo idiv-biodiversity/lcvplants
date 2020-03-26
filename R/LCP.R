@@ -120,7 +120,6 @@ function(splist,
 # query LCP list ----------------------------------------------------
   
   #ASK ALESSANDRO ABOUT THIS SECTION, IF it is necessary
-  # that's fine
   
   #data(LCPposition_table)
   #data(LCPspecies_table)
