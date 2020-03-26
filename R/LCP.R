@@ -123,22 +123,22 @@ function(splist,
   
   #data(LCPposition_table)
   #data(LCPspecies_table)
-  pkgEnv <- new.env(parent=emptyenv())
-  
-  if(!exists("LCPposition_table", pkgEnv)) {
-    data("LCPposition_table", package="lcplants", envir=pkgEnv)
-  }
-  if(!exists("LCPspecies_table", pkgEnv)) {
-    data("LCPspecies_table", package="lcplants", envir=pkgEnv)
-  }
-  
-  get_position <- function() {
-    pkgEnv[["LCPposition_table"]]
-  }
-  get_species <- function() {
-    pkgEnv[["LCPspecies_table"]]
-  }
-  
+  # pkgEnv <- new.env(parent=emptyenv())
+  # 
+  # if(!exists("LCPposition_table", pkgEnv)) {
+  #   data("LCPposition_table", package="lcplants", envir=pkgEnv)
+  # }
+  # if(!exists("LCPspecies_table", pkgEnv)) {
+  #   data("LCPspecies_table", package="lcplants", envir=pkgEnv)
+  # }
+  # 
+  # get_position <- function() {
+  #   pkgEnv[["LCPposition_table"]]
+  # }
+  # get_species <- function() {
+  #   pkgEnv[["LCPspecies_table"]]
+  # }
+  # 
   
   
 # run the function
@@ -147,8 +147,8 @@ function(splist,
     results <- do.call("rbind", lapply(splist, 
                                        genus_search = genus_search, 
                                        out_path = out_path, 
-                                       LCPposition_table = get_position(), 
-                                       LCPspecies_table = get_species(), 
+                                       LCPposition_table = LCPposition_table, 
+                                       LCPspecies_table = LCPspecies_table, 
                                        max.distance = max.distance, 
                                        encoding = encoding, 
                                        status = status, 
@@ -170,8 +170,8 @@ function(splist,
                                           splist, 
                                           genus_search = genus_search, 
                                           out_path = out_path, 
-                                          LCPposition_table = get_position(), 
-                                          LCPspecies_table = get_species(), 
+                                          LCPposition_table = LCPposition_table, 
+                                          LCPspecies_table = LCPspecies_table, 
                                           max.distance = max.distance, 
                                           encoding = encoding, 
                                           status = status, 
