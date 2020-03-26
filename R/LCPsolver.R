@@ -65,8 +65,6 @@
 #' @seealso https://idata.idiv.de/ddm/Data/ShowData/1806
 #' @references The Leipzig Catalogue of Plants (LCP) - An improved taxonomic
 #' reference list for all known vascular plants
-#' @export LCPsolver
-
 
 LCPsolver <-
 function(sp, 
