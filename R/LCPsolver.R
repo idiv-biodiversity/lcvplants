@@ -232,7 +232,8 @@ function(sp,
       if (length(matched_pos) > 0) {
         matched_genus <- NULL
         
-        for (i in 1:length(matched_pos)) {
+        #for (i in 1:length(matched_pos)) {
+        for (i in seq_along(matched_pos)) {
           matched_genus <- rbind(matched_genus, unlist(strsplit(matched_name[i], " "))[1])
         }
         

@@ -18,7 +18,9 @@ LCP(
   visualize = FALSE,
   version = "1.1",
   max.cores = (detectCores() - 1),
-  out_path = getwd()
+  out_path = getwd(),
+  lcp_ref = NULL,
+  pos_ref = NULL
 )
 }
 \arguments{
@@ -82,7 +84,9 @@ where the output file has to be saved.}
 Allow a taxonomic resolution of plant taxa names listed in the "Leipzig
 Catalogue of Plants" (LCP). Connects to the LCP table and validates the
 names of a vector of plant taxa, replacing synonyms by accepted names and
-removing orthographical errors in plant names.
+removing orthographical errors in plant names. 
+The LCP data package must be installed. It is available from 
+https://github.com/idiv-biodiversity/LCP.
 }
 \examples{
 
