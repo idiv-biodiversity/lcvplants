@@ -8,7 +8,9 @@
 #' Allow a taxonomic resolution of plant taxa names listed in the "Leipzig
 #' Catalogue of Plants" (LCP). Connects to the LCP table and validates the
 #' names of a vector of plant taxa, replacing synonyms by accepted names and
-#' removing orthographical errors in plant names.
+#' removing orthographical errors in plant names. 
+#' The LCP data package must be installed. It is available from 
+#' https://github.com/idiv-biodiversity/LCP.
 #' 
 #' 
 #' @param splist A character vector specifying the input taxon, each element
@@ -86,7 +88,9 @@ function(splist,
          visualize = FALSE, 
          version = "1.1", 
          max.cores = (detectCores() -1),
-         out_path = getwd()) {
+         out_path = getwd(),
+         lcp_ref = NULL,
+         pos_ref = NULL) {
 
   start.time <- Sys.time()
   
@@ -100,8 +104,22 @@ function(splist,
   if(length(splist) == 1 && tolower(splist) == "list"){
     pathstring <- file.choose()
     splist <- read_data(pathstring, encoding)
+  }
+  
+# Check for the LCP package and if not installed, asked to install
+    if (!requireNamespace("LCP", quietly = TRUE)) {
+      stop("Install the 'LCP' package or provide a custom reference. See the details section in ?LCP for help.",
+           call. = FALSE
+      )
     }
+    
+    LCPposition_table <- LCP:tab_position
+    LCPspecies_table <- LCP:tab_lcp
+
+
 # query LCP list ----------------------------------------------------
+  
+  #ASK ALESSANDRO ABOUT THIS SECTION, IF it is necessary
   
   #data(LCPposition_table)
   #data(LCPspecies_table)
@@ -120,6 +138,8 @@ function(splist,
   get_species <- function() {
     pkgEnv[["LCPspecies_table"]]
   }
+  
+  
   
 # run the function
   if (length(splist) < 2) {
