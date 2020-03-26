@@ -384,9 +384,10 @@ summary {
 <h1>Running lcplants</h1>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
-<p>You can install <code>lcplants</code> from github using the devtools package (you may need to install devtools first).</p>
+<p>You can install <code>lcplants</code> from github using the devtools package (you may need to install devtools first). To use <code>lcplants</code> you also need the data of the <a href="https://github.com/idiv-biodiversity/LCP"><code>LCP</code> package</a>, which you can install in the same way.</p>
 <pre class="r"><code>library(devtools)
 devtools::install_github(&quot;idiv-biodiversity/lcplants&quot;)
+devtools::install_github(&quot;idiv-biodiversity/LCP&quot;)
 library(lcplants)</code></pre>
 </div>
 <div id="input" class="section level2">
@@ -399,7 +400,7 @@ library(lcplants)</code></pre>
 <pre class="r"><code>LCP(&quot;Hibiscus vitifolius&quot;)</code></pre>
 <pre><code>## serial path, for searching a single taxon</code></pre>
 <pre><code>## Search based on genus and epithet name</code></pre>
-<pre><code>## Time difference of 0.224401 secs</code></pre>
+<pre><code>## Time difference of 3.579843 secs</code></pre>
 <pre><code>## ---------------------------------------------------------</code></pre>
 <pre><code>## -    End of Leipzig Catalogue of Plants (LCP) search    -</code></pre>
 <pre><code>## ---------------------------------------------------------</code></pre>
@@ -513,25 +514,25 @@ resol</code></pre>
 <p>In case you expect misspellings in your names list (very likely, at least for longer lists), you might want to use fuzzy matching for the names resolution. If fuzzy matching is activated, <code>LCP</code> will also match names that differ in spelling from the submitted name. You can use the <code>max.distance</code> argument to define in how many positions the matched names are allowed to differ from the submitted name. This is especially relevant if your names include authorities, since they often differ in spelling (e.g., if spaces are used or not). One or two might be reasonable values here. Increases in <code>max.distance</code> will increase the computation time for the name resolution. In any case, it is advisable to check the results of fuzzy matching since there might be accepted names that only differ by few characters.</p>
 <pre class="r"><code># no fuzzy matching does not find misspelled names
 fuzz &lt;- LCP(&quot;Hibiscus vitifolios&quot;)</code></pre>
-<pre><code>## Time difference of 1.130027 secs</code></pre>
+<pre><code>## Time difference of 9.93633 secs</code></pre>
 <pre class="r"><code>fuzz$Score</code></pre>
 <pre><code>## [1] Epithet name not found
 ## Levels: Epithet name not found</code></pre>
 <pre class="r"><code># fuzzy matching does find it
 fuzz &lt;- LCP(&quot;Hibiscus vitifolios&quot;, max.distance = 1)</code></pre>
-<pre><code>## Time difference of 0.2742589 secs</code></pre>
+<pre><code>## Time difference of 23.26576 secs</code></pre>
 <pre class="r"><code>fuzz$Score</code></pre>
 <pre><code>## [1] misspelling: Epithet
 ## Levels: misspelling: Epithet</code></pre>
 <pre class="r"><code>#Also works for larger distances
 fuzz &lt;- LCP(&quot;Hibiscus vitifulios&quot;, max.distance = 2)</code></pre>
-<pre><code>## Time difference of 0.2603228 secs</code></pre>
+<pre><code>## Time difference of 27.79699 secs</code></pre>
 <pre class="r"><code>fuzz$Score</code></pre>
 <pre><code>## [1] misspelling: Epithet
 ## Levels: misspelling: Epithet</code></pre>
 <pre class="r"><code># But results become less reliable with larger distances
 fuzz &lt;- LCP(&quot;Hibiscus acetosulla&quot;, max.distance = 5)</code></pre>
-<pre><code>## Time difference of 0.655241 secs</code></pre>
+<pre><code>## Time difference of 36.58726 secs</code></pre>
 <pre class="r"><code>fuzz</code></pre>
 <pre><code>##   ID      Submitted_Name    Order    Family    Genus    Species Infrasp
 ## 1  1 Hibiscus acetosulla Malvales Malvaceae Hibiscus acetosella species
@@ -551,13 +552,13 @@ fuzz &lt;- LCP(&quot;Hibiscus acetosulla&quot;, max.distance = 5)</code></pre>
 <p>By default <code>LCP</code> will only use fuzzy matching for the species epitheton, infra-specific names and the authorities. If you want to include the genus name, use the <code>genus_search</code> argument.</p>
 <pre class="r"><code># no fuzzy matching does not find misspelled names
 fuzz &lt;- LCP(&quot;Hubiscus vitifolius&quot;)</code></pre>
-<pre><code>## Time difference of 0.06984401 secs</code></pre>
+<pre><code>## Time difference of 0.148355 secs</code></pre>
 <pre class="r"><code>fuzz$Score</code></pre>
 <pre><code>## [1] Genus name not found
 ## Levels: Genus name not found</code></pre>
 <pre class="r"><code># fuzzy matching does find it
 fuzz &lt;- LCP(&quot;Hubiscus vitifolius&quot;, max.distance = 1, genus_search = TRUE)</code></pre>
-<pre><code>## Time difference of 0.1086771 secs</code></pre>
+<pre><code>## Time difference of 17.38687 secs</code></pre>
 <pre class="r"><code>fuzz$Score</code></pre>
 <pre><code>## [1] misspelling: Genus
 ## Levels: misspelling: Genus</code></pre>
@@ -572,7 +573,7 @@ fuzz &lt;- LCP(&quot;Hubiscus vitifolius&quot;, max.distance = 1, genus_search =
 <pre class="r"><code>LCP(&quot;Hibiscus vitifolius&quot;, status = FALSE)</code></pre>
 <pre><code>## serial path, for searching a single taxon</code></pre>
 <pre><code>## Search based on genus and epithet name</code></pre>
-<pre><code>## Time difference of 0.2254331 secs</code></pre>
+<pre><code>## Time difference of 0.7661662 secs</code></pre>
 <pre><code>## ---------------------------------------------------------</code></pre>
 <pre><code>## -    End of Leipzig Catalogue of Plants (LCP) search    -</code></pre>
 <pre><code>## ---------------------------------------------------------</code></pre>

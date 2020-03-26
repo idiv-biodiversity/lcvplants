@@ -4,6 +4,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE)
 ## ---- eval = FALSE------------------------------------------------------------
 #  library(devtools)
 #  devtools::install_github("idiv-biodiversity/lcplants")
+#  devtools::install_github("idiv-biodiversity/LCP")
 #  library(lcplants)
 
 ## ---- eval = TRUE, echo = FALSE-----------------------------------------------

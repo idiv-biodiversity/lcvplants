@@ -8,16 +8,18 @@ Authors@R: c(
     person(given = "Marten", family = "Winter", role = "aut"),
     person(given = "Alexander", family = "Zizka", role = "ctb")
   )
-Description: An 'R-package' to allow a taxonomic resolution of plant taxa names listed in the "Leipzig Catalogue of Plants" (LCP). The package aims to facilitate finding, retrieving and orthographically resolving plant names through the comparison between plant taxa. The R-package is able to apply a text-based search of plant names on the LCP using a fuzzy match algorithm, which is the core of the searching engine.
+Description: Allows taxonomic resolution of plant taxa names listed in the "Leipzig Catalogue of Plants" (LCP). The package aims to facilitate finding, retrieving and orthographically resolving plant names through the comparison between plant taxa. The R-package is able to apply a text-based search of plant names on the LCP using a fuzzy match algorithm, which is the core of the searching engine.
 License: MIT + file LICENSE 
 URL: https://github.com/idiv-biodiversity/lcplants
 BugReports: https://github.com/idiv-biodiversity/lcplants/issues
 Repository: iDiv (https://idata.idiv.de/ddm/Data/ShowData/1806)
-Depends: R (>= 3.5.0)
+Depends: R (>= 3.5.0), LCP
 Imports: parallel (>= 3.5.2), utils
+Remotes:  idiv-biodiversity/LCP 
 Suggests: 
     knitr,
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    remotes
 LazyLoad: yes
 RoxygenNote: 7.1.0
 Encoding: UTF-8

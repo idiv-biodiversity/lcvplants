@@ -7,6 +7,7 @@ env:
    global:
      - R_BUILD_ARGS="--no-build-vignettes"
      - R_CHECK_ARGS="--no-build-vignettes --as-cran"
+     - CODECOV_TOKEN="06dc0527-43c0-42ec-89ad-c528396c9322"
 
 after_success:
 - Rscript -e 'covr::codecov()'

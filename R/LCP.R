@@ -55,7 +55,7 @@
 #' available on the working machine menus one is set
 #' @param out_path a character vector. Defines the path
 #' where the output file has to be saved.
-#' @author Alessandro Gentile, Martin Freiberg, Marten Winter
+#' @author Alessandro Gentile, Alexander Zizka
 #' @seealso https://idata.idiv.de/ddm/Data/ShowData/1806
 #' @references The Leipzig Catalogue of Plants (LCP) - An improved taxonomic
 #' reference list for all known vascular plants
@@ -88,9 +88,7 @@ function(splist,
          visualize = FALSE, 
          version = "1.1", 
          max.cores = (detectCores() -1),
-         out_path = getwd(),
-         lcp_ref = NULL,
-         pos_ref = NULL) {
+         out_path = getwd()) {
 
   start.time <- Sys.time()
   
@@ -111,10 +109,12 @@ function(splist,
       stop("Install the 'LCP' package or provide a custom reference. See the details section in ?LCP for help.",
            call. = FALSE
       )
+    }else{
+      LCPposition_table <- LCP::tab_position
+      LCPspecies_table <- LCP::tab_lcp
     }
     
-    LCPposition_table <- LCP:tab_position
-    LCPspecies_table <- LCP:tab_lcp
+
 
 
 # query LCP list ----------------------------------------------------

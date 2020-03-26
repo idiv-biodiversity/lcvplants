@@ -24,11 +24,14 @@ A package for large-scale taxonomic harmonization of plant names by fuzzy matchi
 
 # Running lcplants
 ## Installation
-You can install `lcplants` from github using the devtools package (you may need to install devtools first).
+You can install `lcplants` from github using the devtools package (you may need to install devtools first). To use `lcplants` you also need the data of the [`LCP` package](https://github.com/idiv-biodiversity/LCP), which you can install in the same way.
+
+
 
 ```{r, eval = FALSE}
 library(devtools)
 devtools::install_github("idiv-biodiversity/lcplants")
+devtools::install_github("idiv-biodiversity/LCP")
 library(lcplants)
 ```
 

@@ -18,9 +18,7 @@ LCP(
   visualize = FALSE,
   version = "1.1",
   max.cores = (detectCores() - 1),
-  out_path = getwd(),
-  lcp_ref = NULL,
-  pos_ref = NULL
+  out_path = getwd()
 )
 }
 \arguments{
@@ -105,7 +103,7 @@ reference list for all known vascular plants
 https://idata.idiv.de/ddm/Data/ShowData/1806
 }
 \author{
-Alessandro Gentile, Martin Freiberg, Marten Winter
+Alessandro Gentile, Alexander Zizka
 }
 \keyword{R-package}
 \keyword{nomenclature}
