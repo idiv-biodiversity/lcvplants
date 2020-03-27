@@ -15,7 +15,7 @@ BugReports: https://github.com/idiv-biodiversity/lcvplants/issues
 Repository: iDiv (https://idata.idiv.de/ddm/Data/ShowData/1806)
 Depends: R (>= 3.5.0), LCVP
 Imports: parallel (>= 3.5.2), utils
-Remotes: LCVP
+Remotes: idiv-biodiversity/LCVP
 Suggests: 
     knitr,
     testthat (>= 2.1.0),
