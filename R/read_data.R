@@ -38,5 +38,3 @@ read_data <-
     }
     return(lista)
   }
-
-#utils::globalVariables(c('LCPposition_table', 'LCPspecies_table'))
