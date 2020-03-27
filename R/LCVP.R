@@ -107,7 +107,7 @@ function(splist,
       )
     }else{
       LCVPposition_table <- LCVP::tab_position
-      LCVPspecies_table <- LCVP::tab_LCVP
+      LCVPspecies_table <- LCVP::tab_lcvp
     }
     
 
@@ -273,4 +273,3 @@ function(splist,
   }
   return(Output_Table)
 }
->>>>>>> acb485bff9764d41289593051ac31596573e7fcf:R/LCVP.R
