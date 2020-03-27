@@ -1,0 +1,179 @@
+{
+  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@type": "SoftwareSourceCode",
+  "identifier": "lcvplants",
+  "description": "Allows taxonomic resolution of plant taxa names listed in the \"Leipzig Catalogue of Vascular Plants\" (LCVP). The package aims to facilitate finding, retrieving and orthographically resolving plant names through the comparison between plant taxa. The R-package is able to apply a text-based search of plant names on the LCVP using a fuzzy match algorithm, which is the core of the searching engine.",
+  "name": "lcvplants: The Leipzig Catalogue of Vascular Plants (LCVP) - An improved taxonomic reference list \n    for all known vascular plants",
+  "codeRepository": "https://github.com/idiv-biodiversity/lcvplants",
+  "issueTracker": "https://github.com/idiv-biodiversity/lcvplants/issues",
+  "license": "https://spdx.org/licenses/MIT",
+  "version": "1.1.0",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "version": "3.6.3",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 3.6.3 (2020-02-29)",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Alessandro",
+      "familyName": "Gentile",
+      "email": "gentile.alessandro@gmail.com"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Martin",
+      "familyName": "Freiberg"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Marten",
+      "familyName": "Winter"
+    }
+  ],
+  "contributor": [
+    {
+      "@type": "Person",
+      "givenName": "Alexander",
+      "familyName": "Zizka"
+    }
+  ],
+  "copyrightHolder": {},
+  "funder": {},
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Alessandro",
+      "familyName": "Gentile",
+      "email": "gentile.alessandro@gmail.com"
+    }
+  ],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "version": ">= 2.1.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "remotes",
+      "name": "remotes",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=remotes"
+    }
+  ],
+  "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 3.5.0"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "LCVP",
+      "name": "LCVP",
+      "sameAs": "https://github.com/idiv-biodiversity/LCVP"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "parallel",
+      "name": "parallel",
+      "version": ">= 3.5.2"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "utils",
+      "name": "utils"
+    }
+  ],
+  "releaseNotes": "https://github.com/idiv-biodiversity/lcvplants/blob/master/NEWS.md",
+  "readme": "https://github.com/idiv-biodiversity/lcvplants/blob/master/README.md",
+  "fileSize": "4304.691KB",
+  "contIntegration": ["https://travis-ci.com/idiv-biodiversity/lcplants.svg?token=Bbiute2RTxuP5ghkjAxb&branch=master", "https://codecov.io/github/idiv-biodiversity/lcplants"],
+  "developmentStatus": "https://www.repostatus.org/#active",
+  "citation": [
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "submitted",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Martin",
+          "familyName": "Freiberg"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Marten",
+          "familyName": "Winter"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Alessandro",
+          "familyName": "Gentile"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Alexander",
+          "familyName": "Zizka"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Alexandra Nora",
+          "familyName": "Mullner-Riehl"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Alexandra",
+          "familyName": "Weigelt"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Christian",
+          "familyName": "Wirth"
+        }
+      ],
+      "name": "The Leipzig Catalogue of Vascular Plants (LCVP) – An improved taxonomic reference list for all known vascular plants ",
+      "identifier": "XXX",
+      "url": "https://github.com/idiv-biodiversity/lcplants",
+      "description": "note",
+      "paginiation": "0",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "issueNumber": "0",
+        "datePublished": "submitted",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "name": "XXX"
+        }
+      }
+    }
+  ]
+}

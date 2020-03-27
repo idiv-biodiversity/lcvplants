@@ -11,3 +11,4 @@ NEWS.md
 _pkgdown.yml
 README.yml
 ^docs$
+^codemeta\.json$
