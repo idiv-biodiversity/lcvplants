@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Taxonomic name resolution using the Leipzig Plant Catalogue and `lcplants` • lcplants</title>
+<title>Taxonomic name resolution using the Leipzig Catalogue of Vascular Plants and `lcvplants` • lcvplants</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Taxonomic name resolution using the Leipzig Plant Catalogue and `lcplants`">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Taxonomic name resolution using the Leipzig Catalogue of Vascular Plants and `lcvplants`">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -30,7 +30,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">lcplants</a>
+        <a class="navbar-link" href="../index.html">lcvplants</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
@@ -54,7 +54,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/taxonomic_resolution_using_lcplants.html">Taxonomic name resolution using the Leipzig Plant Catalogue and `lcplants`</a>
+      <a href="../articles/taxonomic_resolution_using_lcplants.html">Taxonomic name resolution using the Leipzig Catalogue of Vascular Plants and `lcvplants`</a>
     </li>
   </ul>
 </li>
@@ -64,7 +64,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/idiv-biodiversity/lcplants">
+  <a href="https://github.com/idiv-biodiversity/lcvplants">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -82,12 +82,12 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Taxonomic name resolution using the Leipzig Plant Catalogue and <code>lcplants</code>
+      <h1>Taxonomic name resolution using the Leipzig Catalogue of Vascular Plants and <code>lcvplants</code>
 </h1>
                         <h4 class="author">Alexander Zizka</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/idiv-biodiversity/lcplants/blob/master/vignettes/taxonomic_resolution_using_lcplants.Rmd"><code>vignettes/taxonomic_resolution_using_lcplants.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/idiv-biodiversity/lcvplants/blob/master/vignettes/taxonomic_resolution_using_lcplants.Rmd"><code>vignettes/taxonomic_resolution_using_lcplants.Rmd</code></a></small>
       <div class="hidden name"><code>taxonomic_resolution_using_lcplants.Rmd</code></div>
 
     </div>
@@ -99,67 +99,68 @@
 <a href="#background" class="anchor"></a>Background</h1>
 <p>When comparing or merging any list of plant species, for instance for compiling regional species list, merging occurrence lists with trait data or phylogenies the taxonomic names must be matched, to avoid artificial inflation due to synonyms, data loss or erroneous matches due to homonyms.</p>
 </div>
-<div id="the-leipzig-plant-catalogue" class="section level1">
+<div id="the-leipzig-catalogue-of-vascular-plants" class="section level1">
 <h1 class="hasAnchor">
-<a href="#the-leipzig-plant-catalogue" class="anchor"></a>The Leipzig Plant Catalogue</h1>
-<p>The Leipzig Plant Catalogue is a novel global taxonomic backbone, updating The Plant List, comprising more than 1,300,000 names and 350,000 accepted names. We described the LCP in detail in the related scientific publication (NOT YET PUBLISHED).</p>
+<a href="#the-leipzig-catalogue-of-vascular-plants" class="anchor"></a>The Leipzig Catalogue of Vascular Plants</h1>
+<p>The Leipzig Catalogue of Vascular Plants is a novel global taxonomic backbone, updating The Plant List, comprising more than 1,300,000 names and 350,000 accepted names. We described the LCVP in detail in the related scientific publication (NOT YET PUBLISHED).</p>
 </div>
-<div id="lcplants" class="section level1">
+<div id="lcvplants" class="section level1">
 <h1 class="hasAnchor">
-<a href="#lcplants" class="anchor"></a><em>lcplants</em>
+<a href="#lcvplants" class="anchor"></a><em>lcvplants</em>
 </h1>
-<p>A package for large-scale taxonomic harmonization of plant names by fuzzy matching and synonymy resolution against the Leipzig Plant Catalogue as taxonomic backbone. Submission of single names or list of species names is possible (for lists with more than 5000 species computation may take some time).</p>
+<p>A package for large-scale taxonomic harmonization of plant names by fuzzy matching and synonymy resolution against the Leipzig Catalogue of Vascular Plants as taxonomic backbone. Submission of single names or list of species names is possible (for lists with more than 5000 species computation may take some time).</p>
 </div>
-<div id="running-lcplants" class="section level1">
+<div id="running-lcvplants" class="section level1">
 <h1 class="hasAnchor">
-<a href="#running-lcplants" class="anchor"></a>Running lcplants</h1>
+<a href="#running-lcvplants" class="anchor"></a>Running lcvplants</h1>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install <code>lcplants</code> from github using the devtools package (you may need to install devtools first).</p>
+<p>You can install <code>lcvplants</code> from github using the devtools package (you may need to install devtools first). To use <code>lcvplants</code> you also need the data of the <a href="https://github.com/idiv-biodiversity/LCVP"><code>LCVP</code> package</a>, which you can install in the same way.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(devtools)</a>
-<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"idiv-biodiversity/lcplants"</span>)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lcplants)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"idiv-biodiversity/lcvplants"</span>)</a>
+<a class="sourceLine" id="cb1-3" title="3">devtools<span class="op">::</span><span class="kw"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"idiv-biodiversity/LCVP"</span>)</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lcvplants)</a></code></pre></div>
 </div>
 <div id="input" class="section level2">
 <h2 class="hasAnchor">
 <a href="#input" class="anchor"></a>Input</h2>
-<p>All you need to run lcplants is a species name or a list of species names for which you need the status or synonymy. The genus name and epitheton should not contain special characters, the name of the authorities might contain special characters.</p>
+<p>All you need to run lcvplants is a species name or a list of species names for which you need the status or synonymy. The genus name and epitheton should not contain special characters, the name of the authorities might contain special characters.</p>
 </div>
 <div id="basic-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#basic-analysis" class="anchor"></a>Basic Analysis</h2>
-<p>The main function of lcplants is <code>LCP</code>. The function taxes your names(s) as input argument and will match it against the Leipzig plant Catalogue. LCP uses fuzzy matching, so that it can identify the accepted name of misspelled species as well. The <code>LCP</code> function has some options to customize the fuzzy matching and the output, which are described below. You can get help on all arguments using <code><a href="../reference/LCP.html">?LCP</a></code>. To run a basic analyses, all you need to do is to call <code>LCP</code> on your species name. <strong>By default <code>LCP</code> uses direct matches only; see below if you want to use fuzzy matching</strong>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="st">"Hibiscus vitifolius"</span>)</a></code></pre></div>
+<p>The main function of lcvplants is <code>LCVP</code>. The function taxes your names(s) as input argument and will match it against the Leipzig plant Catalogue. LCVP uses fuzzy matching, so that it can identify the accepted name of misspelled species as well. The <code>LCVP</code> function has some options to customize the fuzzy matching and the output, which are described below. You can get help on all arguments using <code><a href="../reference/LCVP.html">?LCVP</a></code>. To run a basic analyses, all you need to do is to call <code>LCVP</code> on your species name. <strong>By default <code>LCVP</code> uses direct matches only; see below if you want to use fuzzy matching</strong>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifolius"</span>)</a></code></pre></div>
 <pre><code>## serial path, for searching a single taxon</code></pre>
 <pre><code>## Search based on genus and epithet name</code></pre>
-<pre><code>## Time difference of 0.25033 secs</code></pre>
+<pre><code>## Time difference of 4.703576 secs</code></pre>
 <pre><code>## ---------------------------------------------------------</code></pre>
-<pre><code>## -    End of Leipzig Catalogue of Plants (LCP) search    -</code></pre>
+<pre><code>## -    End of Leipzig Catalogue of Plants (LCVP) search    -</code></pre>
 <pre><code>## ---------------------------------------------------------</code></pre>
 <pre><code>##   ID      Submitted_Name    Order    Family    Genus    Species Infrasp
 ## 1  1 Hibiscus vitifolius Malvales Malvaceae Hibiscus vitifolius species
-##   Infraspecies Authors Status     LCP_Accepted_Taxon PL_Comparison
+##   Infraspecies Authors Status    LCVP_Accepted_Taxon PL_Comparison
 ## 1                   L.  valid Hibiscus vitifolius L.     identical
 ##   PL_Alternative   Score Insertion Deletion Substitution
 ## 1                matched         0        0            0</code></pre>
 <p>To assign the results to an object use the following.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">resol &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="st">"Hibiscus vitifolius"</span>)</a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">resol &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifolius"</span>)</a>
 <a class="sourceLine" id="cb10-2" title="2">resol</a></code></pre></div>
 <p>The name may (and ideally should) also include the authorities.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span>)</a></code></pre></div>
-<p><code>LCP</code> also works on vectors of names. With more than 5000 names, computation may take some time.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span>, </a>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span>)</a></code></pre></div>
+<p><code>LCVP</code> also works on vectors of names. With more than 5000 names, computation may take some time.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span>, </a>
 <a class="sourceLine" id="cb12-2" title="2">      <span class="st">"Hibiscus abutiloides Willd."</span>, </a>
 <a class="sourceLine" id="cb12-3" title="3">      <span class="st">"Hibiscus aculeatus"</span>, </a>
 <a class="sourceLine" id="cb12-4" title="4">      <span class="st">"Hibiscus acuminatus"</span>))</a></code></pre></div>
 <p>You can also pick a .csv file from your hard disk.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="st">"list"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"list"</span>)</a></code></pre></div>
 </div>
 <div id="output" class="section level2">
 <h2 class="hasAnchor">
 <a href="#output" class="anchor"></a>Output</h2>
-<p>The output value of <code>LCP</code> is a <code>data.frame</code> with the matching information for your species names. This includes the status of the submitted name (“valid”, “synonym”, “invalid”), in case of synonyms the matched accepted name in LCP, a comparison to the status of the matched name in The Plant List and information on the fuzzy matching (e.g. in cases your name was misspelled, information by how match so).</p>
+<p>The output value of <code>LCVP</code> is a <code>data.frame</code> with the matching information for your species names. This includes the status of the submitted name (“valid”, “synonym”, “invalid”), in case of synonyms the matched accepted name in LCVP, a comparison to the status of the matched name in The Plant List and information on the fuzzy matching (e.g. in cases your name was misspelled, information by how match so).</p>
 <table class="table">
 <colgroup>
 <col width="50%">
@@ -207,8 +208,8 @@
 <td>The authorities of the matched name</td>
 </tr>
 <tr class="even">
-<td>LCP_Accepted_Taxon</td>
-<td>The accepted name of the matched name in LCP</td>
+<td>LCVP_Accepted_Taxon</td>
+<td>The accepted name of the matched name in LCVP</td>
 </tr>
 <tr class="odd">
 <td>PL_Comparison</td>
@@ -241,37 +242,37 @@
 <div id="further-functionalities" class="section level1">
 <h1 class="hasAnchor">
 <a href="#further-functionalities" class="anchor"></a>Further functionalities</h1>
-<p>There are several arguments to customize the matching and output of <code>LCP</code>. See <code><a href="../reference/LCP.html">?LCP</a></code> for a description.</p>
+<p>There are several arguments to customize the matching and output of <code>LCVP</code>. See <code><a href="../reference/LCVP.html">?LCVP</a></code> for a description.</p>
 <div id="change-distance-of-the-fuzzy-matching" class="section level2">
 <h2 class="hasAnchor">
 <a href="#change-distance-of-the-fuzzy-matching" class="anchor"></a>Change distance of the fuzzy matching</h2>
-<p>In case you expect misspellings in your names list (very likely, at least for longer lists), you might want to use fuzzy matching for the names resolution. If fuzzy matching is activated, <code>LCP</code> will also match names that differ in spelling from the submitted name. You can use the <code>max.distance</code> argument to define in how many positions the matched names are allowed to differ from the submitted name. This is especially relevant if your names include authorities, since they often differ in spelling (e.g., if spaces are used or not). One or two might be reasonable values here. Increases in <code>max.distance</code> will increase the computation time for the name resolution. In any case, it is advisable to check the results of fuzzy matching since there might be accepted names that only differ by few characters.</p>
+<p>In case you expect misspellings in your names list (very likely, at least for longer lists), you might want to use fuzzy matching for the names resolution. If fuzzy matching is activated, <code>LCVP</code> will also match names that differ in spelling from the submitted name. You can use the <code>max.distance</code> argument to define in how many positions the matched names are allowed to differ from the submitted name. This is especially relevant if your names include authorities, since they often differ in spelling (e.g., if spaces are used or not). One or two might be reasonable values here. Increases in <code>max.distance</code> will increase the computation time for the name resolution. In any case, it is advisable to check the results of fuzzy matching since there might be accepted names that only differ by few characters.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># no fuzzy matching does not find misspelled names</span></a>
-<a class="sourceLine" id="cb14-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="st">"Hibiscus vitifolios"</span>)</a></code></pre></div>
-<pre><code>## Time difference of 0.1964762 secs</code></pre>
+<a class="sourceLine" id="cb14-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifolios"</span>)</a></code></pre></div>
+<pre><code>## Time difference of 11.65436 secs</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">fuzz<span class="op">$</span>Score</a></code></pre></div>
 <pre><code>## [1] Epithet name not found
 ## Levels: Epithet name not found</code></pre>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># fuzzy matching does find it</span></a>
-<a class="sourceLine" id="cb18-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="st">"Hibiscus vitifolios"</span>, <span class="dt">max.distance =</span> <span class="dv">1</span>)</a></code></pre></div>
-<pre><code>## Time difference of 0.2533312 secs</code></pre>
+<a class="sourceLine" id="cb18-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifolios"</span>, <span class="dt">max.distance =</span> <span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## Time difference of 24.59812 secs</code></pre>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">fuzz<span class="op">$</span>Score</a></code></pre></div>
 <pre><code>## [1] misspelling: Epithet
 ## Levels: misspelling: Epithet</code></pre>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co">#Also works for larger distances</span></a>
-<a class="sourceLine" id="cb22-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="st">"Hibiscus vitifulios"</span>, <span class="dt">max.distance =</span> <span class="dv">2</span>)</a></code></pre></div>
-<pre><code>## Time difference of 0.2324119 secs</code></pre>
+<a class="sourceLine" id="cb22-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifulios"</span>, <span class="dt">max.distance =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## Time difference of 26.36493 secs</code></pre>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">fuzz<span class="op">$</span>Score</a></code></pre></div>
 <pre><code>## [1] misspelling: Epithet
 ## Levels: misspelling: Epithet</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co"># But results become less reliable with larger distances</span></a>
-<a class="sourceLine" id="cb26-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="st">"Hibiscus acetosulla"</span>, <span class="dt">max.distance =</span> <span class="dv">5</span>)</a></code></pre></div>
-<pre><code>## Time difference of 0.5625138 secs</code></pre>
+<a class="sourceLine" id="cb26-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus acetosulla"</span>, <span class="dt">max.distance =</span> <span class="dv">5</span>)</a></code></pre></div>
+<pre><code>## Time difference of 41.3031 secs</code></pre>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">fuzz</a></code></pre></div>
 <pre><code>##   ID      Submitted_Name    Order    Family    Genus    Species Infrasp
 ## 1  1 Hibiscus acetosulla Malvales Malvaceae Hibiscus acetosella species
 ## 2  1 Hibiscus acetosulla Malvales Malvaceae Hibiscus acicularis species
-##   Infraspecies        Authors Status                 LCP_Accepted_Taxon
+##   Infraspecies        Authors Status                LCVP_Accepted_Taxon
 ## 1              Welw. ex Hiern  valid Hibiscus acetosella Welw. ex Hiern
 ## 2                     Standl.  valid        Hibiscus acicularis Standl.
 ##   PL_Comparison PL_Alternative                Score Insertion Deletion
@@ -284,16 +285,16 @@
 <div id="run-fuzzy-matching-on-the-genus" class="section level2">
 <h2 class="hasAnchor">
 <a href="#run-fuzzy-matching-on-the-genus" class="anchor"></a>Run fuzzy matching on the genus</h2>
-<p>By default <code>LCP</code> will only use fuzzy matching for the species epitheton, infra-specific names and the authorities. If you want to include the genus name, use the <code>genus_search</code> argument.</p>
+<p>By default <code>LCVP</code> will only use fuzzy matching for the species epitheton, infra-specific names and the authorities. If you want to include the genus name, use the <code>genus_search</code> argument.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="co"># no fuzzy matching does not find misspelled names</span></a>
-<a class="sourceLine" id="cb30-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="st">"Hubiscus vitifolius"</span>)</a></code></pre></div>
-<pre><code>## Time difference of 0.0149529 secs</code></pre>
+<a class="sourceLine" id="cb30-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hubiscus vitifolius"</span>)</a></code></pre></div>
+<pre><code>## Time difference of 0.1602681 secs</code></pre>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">fuzz<span class="op">$</span>Score</a></code></pre></div>
 <pre><code>## [1] Genus name not found
 ## Levels: Genus name not found</code></pre>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="co"># fuzzy matching does find it</span></a>
-<a class="sourceLine" id="cb34-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="st">"Hubiscus vitifolius"</span>, <span class="dt">max.distance =</span> <span class="dv">1</span>, <span class="dt">genus_search =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<pre><code>## Time difference of 0.09973884 secs</code></pre>
+<a class="sourceLine" id="cb34-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hubiscus vitifolius"</span>, <span class="dt">max.distance =</span> <span class="dv">1</span>, <span class="dt">genus_search =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## Time difference of 18.07757 secs</code></pre>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">fuzz<span class="op">$</span>Score</a></code></pre></div>
 <pre><code>## [1] misspelling: Genus
 ## Levels: misspelling: Genus</code></pre>
@@ -301,23 +302,23 @@
 <div id="parallelize-computation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#parallelize-computation" class="anchor"></a>Parallelize computation</h2>
-<p>The name resolution can take a while to compute, especially for long lists and high matching distances (can be up to 30 minutes). TO speed up the process, you can use multiple cores if available using the <code>max.cores</code> argument. By default <code>LCP</code> will use all available cores but one.</p>
+<p>The name resolution can take a while to compute, especially for long lists and high matching distances (can be up to 30 minutes). TO speed up the process, you can use multiple cores if available using the <code>max.cores</code> argument. By default <code>LCVP</code> will use all available cores but one.</p>
 </div>
 <div id="get-all-synonyms-for-submitted-names" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-all-synonyms-for-submitted-names" class="anchor"></a>Get all synonyms for submitted names</h2>
-<p>By default, <code>LCP</code> only returns accepted names, but you can use the <code>LCP</code> function to obtain all synonyms for your names of interest using the <code>status</code> argument.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="st">"Hibiscus vitifolius"</span>, <span class="dt">status =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p>By default, <code>LCVP</code> only returns accepted names, but you can use the <code>LCVP</code> function to obtain all synonyms for your names of interest using the <code>status</code> argument.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifolius"</span>, <span class="dt">status =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <pre><code>## serial path, for searching a single taxon</code></pre>
 <pre><code>## Search based on genus and epithet name</code></pre>
-<pre><code>## Time difference of 0.217371 secs</code></pre>
+<pre><code>## Time difference of 0.554873 secs</code></pre>
 <pre><code>## ---------------------------------------------------------</code></pre>
-<pre><code>## -    End of Leipzig Catalogue of Plants (LCP) search    -</code></pre>
+<pre><code>## -    End of Leipzig Catalogue of Plants (LCVP) search    -</code></pre>
 <pre><code>## ---------------------------------------------------------</code></pre>
 <pre><code>##   ID      Submitted_Name    Order    Family    Genus    Species Infrasp
 ## 1  1 Hibiscus vitifolius Malvales Malvaceae Hibiscus vitifolius species
 ## 2  1 Hibiscus vitifolius Malvales Malvaceae Hibiscus vitifolius species
-##   Infraspecies Authors  Status     LCP_Accepted_Taxon PL_Comparison
+##   Infraspecies Authors  Status    LCVP_Accepted_Taxon PL_Comparison
 ## 1                   L.   valid Hibiscus vitifolius L.     identical
 ## 2                Mill. synonym Hibiscus cannabinus L.     identical
 ##   PL_Alternative   Score Insertion Deletion Substitution
@@ -327,14 +328,14 @@
 <div id="get-all-names-from-a-genus" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-all-names-from-a-genus" class="anchor"></a>Get all names from a genus</h2>
-<p>You can also use the <code>LCP</code> function to get a list of all species names within a genus in the Leipzig Plant Catalogue.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="st">"Hibiscus"</span>, <span class="dt">genus_tab =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>You can also use the <code>LCVP</code> function to get a list of all species names within a genus in the Leipzig Catalogue of Vascular Plants.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus"</span>, <span class="dt">genus_tab =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
 <div id="get-all-infra-specific-names-in-a-species" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-all-infra-specific-names-in-a-species" class="anchor"></a>Get all infra-specific names in a species</h2>
-<p>Similarly, you can use the <code>LCP</code> function to obtain all infra-specific namers of a species</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw"><a href="../reference/LCP.html">LCP</a></span>(<span class="st">"Hibiscus vitifolius"</span>, <span class="dt">infraspecies_tab =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>Similarly, you can use the <code>LCVP</code> function to obtain all infra-specific namers of a species</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifolius"</span>, <span class="dt">infraspecies_tab =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
 </div>
   </div>
@@ -346,10 +347,10 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#background">Background</a></li>
-      <li><a href="#the-leipzig-plant-catalogue">The Leipzig Plant Catalogue</a></li>
-      <li><a href="#lcplants"><em>lcplants</em></a></li>
+      <li><a href="#the-leipzig-catalogue-of-vascular-plants">The Leipzig Catalogue of Vascular Plants</a></li>
+      <li><a href="#lcvplants"><em>lcvplants</em></a></li>
       <li>
-<a href="#running-lcplants">Running lcplants</a><ul class="nav nav-pills nav-stacked">
+<a href="#running-lcvplants">Running lcvplants</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#installation">Installation</a></li>
       <li><a href="#input">Input</a></li>
       <li><a href="#basic-analysis">Basic Analysis</a></li>

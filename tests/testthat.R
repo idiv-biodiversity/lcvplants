@@ -1,4 +1,4 @@
 library(testthat)
-library(lcplants)
+library(lcvplants)
 
-test_check("lcplants")
+test_check("lcvplants")

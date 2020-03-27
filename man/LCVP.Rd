@@ -80,7 +80,8 @@ where the output file has to be saved.}
 }
 \description{
 Allow a taxonomic resolution of plant taxa names listed in the "Leipzig
-Catalogue of Vascular Plants" (LCVP). Connects to the LCVP table and validates the
+Catalogue of Vascular Plants" (LCVP). 
+Connects to the LCVP table and validates the
 names of a vector of plant taxa, replacing synonyms by accepted names and
 removing orthographical errors in plant names. 
 The LCVP data package must be installed. It is available from 
