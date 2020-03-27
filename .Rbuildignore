@@ -1,6 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-lcplants.Rproj
+lcvplants.Rproj
 .travis.yml
 _pkgdown.yml
 pre_submission_tests.R
