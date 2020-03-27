@@ -1,11 +1,11 @@
-#' Standardize plant names according to the Leipzig Catalogue of Plants (LCP)
+#' Standardize plant names according to the Leipzig Catalogue of Plants (LCVP)
 #' 
 #' Allow a taxonomic resolution of plant taxa names listed in the "Leipzig
-#' Catalogue of Plants" (LCP). Connects to the LCP table and validates the
+#' Catalogue of Vascular Plants" (LCVP). Connects to the LCVP table and validates the
 #' names of a vector of plant taxa, replacing synonyms by accepted names and
 #' removing orthographical errors in plant names. 
-#' The LCP data package must be installed. It is available from 
-#' https://github.com/idiv-biodiversity/LCP.
+#' The LCVP data package must be installed. It is available from 
+#' https://github.com/idiv-biodiversity/LCVP.
 #' 
 #' 
 #' @param splist A character vector specifying the input taxon, each element
@@ -17,7 +17,7 @@
 #' infraspecies and the name author.
 #' @param max.distance is an integer value. It represents the maximum distance
 #' (number of characters) allowed for a match when comparing the submitted name
-#' with the closest name matches in the LCP
+#' with the closest name matches in the LCVP
 #' @param encoding character vector. This value will allow
 #' the user to set the specific codification of the strings
 #' @param family_tab Logical. If TRUE, the function will
@@ -52,24 +52,24 @@
 #' where the output file has to be saved.
 #' @author Alessandro Gentile, Alexander Zizka
 #' @seealso https://idata.idiv.de/ddm/Data/ShowData/1806
-#' @references The Leipzig Catalogue of Plants (LCP) - An improved taxonomic
+#' @references The Leipzig Catalogue of Plants (LCVP) - An improved taxonomic
 #' reference list for all known vascular plants
 #' @keywords R-package nomenclature taxonomy vascular plants
 #' @examples
 #' 
-#' LCP("Hibiscus vitifolius")
-#' LCP("Hibiscus abelmoschus var. betulifolius Mast.")
-#' LCP(c("Hibiscus abelmoschus var. betulifolius Mast.", 
+#' LCVP("Hibiscus vitifolius")
+#' LCVP("Hibiscus abelmoschus var. betulifolius Mast.")
+#' LCVP(c("Hibiscus abelmoschus var. betulifolius Mast.", 
 #'      "Hibiscus abutiloides Willd.", 
 #'       "Hibiscus aculeatus", "Hibiscus acuminatus"), max.cores = 1)
 #' 
 #' @importFrom utils View adist data write.table
 #' @importFrom parallel detectCores makeCluster parLapply stopCluster
 #' 
-#' @export LCP
+#' @export LCVP
 #' 
 
-LCP <-
+LCVP <-
 function(splist, 
          genus_search = FALSE,
          max.distance = 0, 
@@ -99,40 +99,40 @@ function(splist,
     splist <- read_data(pathstring, encoding)
   }
   
-# Check for the LCP package and if not installed, asked to install
-    if (!requireNamespace("LCP", quietly = TRUE)) {
-      stop("Install the 'LCP' package or provide a custom reference. 
-           See the details section in ?LCP for help.",
+# Check for the LCVP package and if not installed, asked to install
+    if (!requireNamespace("LCVP", quietly = TRUE)) {
+      stop("Install the 'LCVP' package or provide a custom reference. 
+           See the details section in ?LCVP for help.",
            call. = FALSE
       )
     }else{
-      LCPposition_table <- LCP::tab_position
-      LCPspecies_table <- LCP::tab_lcp
+      LCVPposition_table <- LCVP::tab_position
+      LCVPspecies_table <- LCVP::tab_LCVP
     }
     
 
 
 
-# query LCP list ----------------------------------------------------
+# query LCVP list ----------------------------------------------------
   
   #ASK ALESSANDRO ABOUT THIS SECTION, IF it is necessary
   
-  #data(LCPposition_table)
-  #data(LCPspecies_table)
+  #data(LCVPposition_table)
+  #data(LCVPspecies_table)
   # pkgEnv <- new.env(parent=emptyenv())
   # 
-  # if(!exists("LCPposition_table", pkgEnv)) {
-  #   data("LCPposition_table", package="lcplants", envir=pkgEnv)
+  # if(!exists("LCVPposition_table", pkgEnv)) {
+  #   data("LCVPposition_table", package="LCVPlants", envir=pkgEnv)
   # }
-  # if(!exists("LCPspecies_table", pkgEnv)) {
-  #   data("LCPspecies_table", package="lcplants", envir=pkgEnv)
+  # if(!exists("LCVPspecies_table", pkgEnv)) {
+  #   data("LCVPspecies_table", package="LCVPlants", envir=pkgEnv)
   # }
   # 
   # get_position <- function() {
-  #   pkgEnv[["LCPposition_table"]]
+  #   pkgEnv[["LCVPposition_table"]]
   # }
   # get_species <- function() {
-  #   pkgEnv[["LCPspecies_table"]]
+  #   pkgEnv[["LCVPspecies_table"]]
   # }
   # 
   
@@ -143,8 +143,8 @@ function(splist,
     results <- do.call("rbind", lapply(splist, 
                                        genus_search = genus_search, 
                                        out_path = out_path, 
-                                       LCPposition_table = LCPposition_table, 
-                                       LCPspecies_table = LCPspecies_table, 
+                                       LCVPposition_table = LCVPposition_table, 
+                                       LCVPspecies_table = LCVPspecies_table, 
                                        max.distance = max.distance, 
                                        encoding = encoding, 
                                        status = status, 
@@ -155,7 +155,7 @@ function(splist,
                                        genus_tab = genus_tab, 
                                        infraspecies_tab = infraspecies_tab, 
                                        version = version, 
-                                       LCPsolver))
+                                       LCVPsolver))
     
   } else {
     message("parallel path, for searching a list of taxa")
@@ -166,8 +166,8 @@ function(splist,
                                           splist, 
                                           genus_search = genus_search, 
                                           out_path = out_path, 
-                                          LCPposition_table = LCPposition_table, 
-                                          LCPspecies_table = LCPspecies_table, 
+                                          LCVPposition_table = LCVPposition_table, 
+                                          LCVPspecies_table = LCVPspecies_table, 
                                           max.distance = max.distance, 
                                           encoding = encoding, 
                                           status = status, 
@@ -178,7 +178,7 @@ function(splist,
                                           genus_tab = genus_tab, 
                                           infraspecies_tab = infraspecies_tab, 
                                           version = version, 
-                                          LCPsolver))
+                                          LCVPsolver))
     stopCluster(cl)
   }
   
@@ -192,7 +192,7 @@ function(splist,
                                  Infraspecies = NULL, 
                                  Authors = NULL, 
                                  Status = NULL, 
-                                 LCP_Accepted_Taxon = NULL, 
+                                 LCVP_Accepted_Taxon = NULL, 
                                  PL_Comparison = NULL,
                                  PL_Alternative = NULL, 
                                  Score = NULL, 
@@ -209,7 +209,7 @@ function(splist,
                              Infraspecies = NULL, 
                              Authors = NULL, 
                              Status = NULL, 
-                             LCP_Accepted_Taxon = NULL, 
+                             LCVP_Accepted_Taxon = NULL, 
                              PL_Comparison = NULL, 
                              PL_Alternative = NULL, 
                              Score = NULL, 
@@ -235,7 +235,7 @@ function(splist,
                                    Infraspecies = results[i,7],
                                    Authors = results[i,8],
                                    Status = results[i,9],
-                                   LCP_Accepted_Taxon = results[i,10], 
+                                   LCVP_Accepted_Taxon = results[i,10], 
                                    PL_Comparison = results[i,11], 
                                    PL_Alternative = results[i,12], 
                                    Score = results[i,13], 
@@ -255,7 +255,7 @@ function(splist,
                          substring(Sys.time(),15,16),
                          substring(Sys.time(),18,19),sep="")
       out_code <- paste(exec_date, "_", exec_time, sep="")
-      table_name <- paste("/LCP_results_",out_code,".csv",sep = "")
+      table_name <- paste("/LCVP_results_",out_code,".csv",sep = "")
       pathstring <- paste(out_path, table_name, sep = "")
       write.table(Output_Table,pathstring,sep=",",row.names=FALSE)
     }
@@ -265,7 +265,7 @@ function(splist,
   time.taken <- end.time - start.time
   print(time.taken)
   message("---------------------------------------------------------")
-  message("-    End of Leipzig Catalogue of Plants (LCP) search    -")
+  message("-    End of Leipzig Catalogue of Plants (LCVP) search    -")
   message("---------------------------------------------------------")
   
   if (visualize){
@@ -273,4 +273,4 @@ function(splist,
   }
   return(Output_Table)
 }
->>>>>>> acb485bff9764d41289593051ac31596573e7fcf:R/LCP.R
+>>>>>>> acb485bff9764d41289593051ac31596573e7fcf:R/LCVP.R
