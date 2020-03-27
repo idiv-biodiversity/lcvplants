@@ -1,5 +1,5 @@
-Package: lcplants
-Title: The Leipzig Catalogue of Plants (LCP) - An improved taxonomic reference list 
+Package: lcvplants
+Title: The Leipzig Catalogue of Vascular Plants (LCVP) - An improved taxonomic reference list 
     for all known vascular plants
 Version: 1.1.0
 Authors@R: c(
@@ -8,14 +8,14 @@ Authors@R: c(
     person(given = "Marten", family = "Winter", role = "aut"),
     person(given = "Alexander", family = "Zizka", role = "ctb")
   )
-Description: Allows taxonomic resolution of plant taxa names listed in the "Leipzig Catalogue of Plants" (LCP). The package aims to facilitate finding, retrieving and orthographically resolving plant names through the comparison between plant taxa. The R-package is able to apply a text-based search of plant names on the LCP using a fuzzy match algorithm, which is the core of the searching engine.
+Description: Allows taxonomic resolution of plant taxa names listed in the "Leipzig Catalogue of Vascular Plants" (LCVP). The package aims to facilitate finding, retrieving and orthographically resolving plant names through the comparison between plant taxa. The R-package is able to apply a text-based search of plant names on the LCVP using a fuzzy match algorithm, which is the core of the searching engine.
 License: MIT + file LICENSE 
-URL: https://github.com/idiv-biodiversity/lcplants
-BugReports: https://github.com/idiv-biodiversity/lcplants/issues
+URL: https://github.com/idiv-biodiversity/lcvplants
+BugReports: https://github.com/idiv-biodiversity/lcvplants/issues
 Repository: iDiv (https://idata.idiv.de/ddm/Data/ShowData/1806)
-Depends: R (>= 3.5.0), LCP
+Depends: R (>= 3.5.0), LCVP
 Imports: parallel (>= 3.5.2), utils
-Remotes:  idiv-biodiversity/LCP 
+Remotes:  idiv-biodiversity/LCVP 
 Suggests: 
     knitr,
     testthat (>= 2.1.0),

@@ -1,6 +1,6 @@
 note <- sprintf("R package version %s", meta$Version)
 bibentry(bibtype = "article",
-         title = "The Leipzig Catalogue of Plants (LCP) – An improved taxonomic reference list for all known vascular plants ",
+         title = "The Leipzig Catalogue of Vascular Plants (LCVP) – An improved taxonomic reference list for all known vascular plants ",
          author = c(person("Martin", "Freiberg"),
 		            person("Marten", "Winter"),
 		            person("Alessandro", "Gentile"),

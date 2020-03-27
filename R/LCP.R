@@ -1,8 +1,3 @@
-## Author: Alessandro Gentile
-## Last Version: 2020/01/20
-
-
-
 #' Standardize plant names according to the Leipzig Catalogue of Plants (LCP)
 #' 
 #' Allow a taxonomic resolution of plant taxa names listed in the "Leipzig

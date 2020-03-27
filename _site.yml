@@ -1,7 +1,7 @@
-name: lcplants
+name: lcvplants
 output_dir: docs
 navbar:
-  title: lcplants
+  title: lcvplants
   type: inverse
   left:
   - text: Home
@@ -9,11 +9,11 @@ navbar:
     href: index.html
   - text: Tutorials
     menu:
-      - text: Taxonomic name resolution using lcplants
+      - text: Taxonomic name resolution using lcvplants
         href: mo_setup.html
   right:
   - text: GitHub
-    href: https://github.com/idiv-biodiversity/lcplants
+    href: https://github.com/idiv-biodiversity/lcvplants
 output:
   html_document:
     lib_dir: site_libs
