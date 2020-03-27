@@ -61,8 +61,8 @@
 #' default
 #' @author Alessandro Gentile, Martin Freiberg, Marten Winter
 #' @seealso https://idata.idiv.de/ddm/Data/ShowData/1806
-#' @references The Leipzig Catalogue of Vascular Plants (LCVP) - An improved taxonomic
-#' reference list for all known vascular plants
+#' @references The Leipzig Catalogue of Vascular Plants (LCVP)
+#' An improved taxonomic reference list for all known vascular plants
 
 LCVPsolver <-
 function(sp, 
@@ -165,7 +165,8 @@ function(sp,
     auth_name <- paste0(sp_terms[3:N_terms], collapse = " ")
     full_name <- paste(genus,species,auth_name, sep = " ")
     message('Search based on genus, epithet and author name')
-  } else if (N_terms <= 4 && ((tolower(sp_terms[3]) %in% Infrasp_cat) == TRUE)) {
+  } else if (N_terms <= 4 && ((tolower(sp_terms[3]) 
+                               %in% Infrasp_cat) == TRUE)) {
     species <- sp_terms[2]
     species <- tolower(species)
     infrasp <- sp_terms[3]
@@ -199,13 +200,17 @@ function(sp,
   # Matched_table_final <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
   
   # SIMPLIFICATION ALEX 
-  Genus_table_tmp     <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, 
-                                    Species = NULL, Infrasp = NULL, Infraspecies = NULL, 
-                                    Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, 
-                                    PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, 
-                                    Insertion = NULL, Deletion = NULL, Substitution = NULL)
+  Genus_table_tmp     <- data.frame(Submitted_Name = NULL, Order = NULL, 
+                                    Family = NULL, Genus = NULL, 
+                                    Species = NULL, Infrasp = NULL, 
+                                    Infraspecies = NULL, Authors = NULL, 
+                                    Status = NULL, LCVP_Accepted_Taxon = NULL, 
+                                    PL_Comparison = NULL, 
+                                    PL_Alternative = NULL, 
+                                    Score = NULL, Insertion = NULL, 
+                                    Deletion = NULL, Substitution = NULL)
   
-  Genus_table_final   <- 
+    Genus_table_final   <- 
     Species_table_tmp   <-
     Species_table_final <- 
     Infrasp_table_tmp   <- 
@@ -216,9 +221,10 @@ function(sp,
   genus_found <- FALSE
   author_found <- FALSE
   
-# run the fuzzy match search engine for the genus ----------------------------------------------------
+# run the fuzzy match search engine for the genus
   
-  genus_ini <- paste(toupper(substring(genus, 1, 1)), tolower(substring(genus, 2, 3)), sep = "")
+  genus_ini <- paste(toupper(substring(genus, 1, 1)), 
+                     tolower(substring(genus, 2, 3)), sep = "")
   col <- dim(LCVPposition_table)[2]
   row <- dim(LCVPposition_table)[1]
   Start_Position <- 1
@@ -231,19 +237,29 @@ function(sp,
       if (is.na(End_Position)){End_Position <- dim(LCVPspecies_table)[1]}
     }
   }
-  # option to select all the name belonging to the searched order, family or genus name
+  # option to select all the name belonging to the searched order, 
+  # family or genus name
   if (N_terms < 2) {
-    if (N_terms == 1 && (order_tab == TRUE || family_tab == TRUE || genus_tab == TRUE)) {
+    if (N_terms == 1 && (order_tab == TRUE || family_tab == TRUE || 
+                         genus_tab == TRUE)) {
       message('search for the only genus, family or order name')
       if (genus_tab == TRUE && family_tab == FALSE && order_tab == FALSE) {
-        matched_name <- agrep(genus, LCVPspecies_table$Input.Taxon, value = TRUE, max.distance = max.distance)
-        matched_pos <- agrep(genus, LCVPspecies_table$Input.Taxon, value = FALSE, max.distance = max.distance)
-      } else if (genus_tab == FALSE && family_tab == TRUE && order_tab == FALSE){
-        matched_name <- agrep(genus, LCVPspecies_table$Family, value = TRUE, max.distance = max.distance)
-        matched_pos <- agrep(genus, LCVPspecies_table$Family, value = FALSE, max.distance = max.distance)
-      } else if (genus_tab == FALSE && family_tab == FALSE && order_tab == TRUE){
-        matched_name <- agrep(genus, LCVPspecies_table$Order, value = TRUE, max.distance = max.distance)
-        matched_pos <- agrep(genus, LCVPspecies_table$Order, value = FALSE, max.distance = max.distance)
+        matched_name <- agrep(genus, LCVPspecies_table$Input.Taxon, 
+                              value = TRUE, max.distance = max.distance)
+        matched_pos <- agrep(genus, LCVPspecies_table$Input.Taxon, 
+                             value = FALSE, max.distance = max.distance)
+      } else if (genus_tab == FALSE && family_tab == TRUE && 
+                 order_tab == FALSE){
+        matched_name <- agrep(genus, LCVPspecies_table$Family, 
+                              value = TRUE, max.distance = max.distance)
+        matched_pos <- agrep(genus, LCVPspecies_table$Family, 
+                             value = FALSE, max.distance = max.distance)
+      } else if (genus_tab == FALSE && family_tab == FALSE && 
+                 order_tab == TRUE){
+        matched_name <- agrep(genus, LCVPspecies_table$Order, 
+                              value = TRUE, max.distance = max.distance)
+        matched_pos <- agrep(genus, LCVPspecies_table$Order, 
+                             value = FALSE, max.distance = max.distance)
       } else {
         matched_name <- NULL
         matched_pos <- NULL
@@ -253,7 +269,8 @@ function(sp,
         
         #for (i in 1:length(matched_pos)) {
         for (i in seq_along(matched_pos)) {
-          matched_genus <- rbind(matched_genus, unlist(strsplit(matched_name[i], " "))[1])
+          matched_genus <- rbind(matched_genus, 
+                                 unlist(strsplit(matched_name[i], " "))[1])
         }
         
         ddf <- abs(nchar(matched_genus) - nchar(genus))
@@ -267,25 +284,35 @@ function(sp,
         for (i in seq_along(matched_pos)) {
           result_name <- rbind(result_name, matched_name[i])
           iter <- matched_pos[i]
-          LCVP_genus <- unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[1]
-          LCVP_species <- unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[2]
+          LCVP_genus <- unlist(strsplit(LCVPspecies_table[matched_pos[i],1],
+                                        " "))[1]
+          LCVP_species <- unlist(strsplit(LCVPspecies_table[matched_pos[i],1], 
+                                          " "))[2]
           if (genus %in% matched_genus) {
-            score <- drop(attr(adist(matched_genus[i], genus, counts = TRUE), "counts"))
-            if (length(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))) < 3) {   # option there is only the genus and epithet name
+            score <- drop(attr(adist(matched_genus[i], genus, counts = TRUE), 
+                               "counts"))
+            # option there is only the genus and epithet name
+            if (length(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], 
+                                       " "))) < 3) {
               LCVP_Infrasp <- "species"
               LCVP_Infrasp_name <- " "
               LCVP_Author_name <- " "
             } else {
               LCVP_Infrasp <- "species"
               LCVP_Infrasp_name <- " "
-              LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[3:length(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " ")))],sep="", collapse = " ")
+              LCVP_Author_name <- 
+                paste(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], 
+                " "))[3:length(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], 
+                " ")))],sep="", collapse = " ")
               for (n in 1:3){
                 for (m in seq_along(Infrasp_cat)){
                   if(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[n] == Infrasp_cat[m]){
                     LCVP_Infrasp <- unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[3]
                     LCVP_Infrasp_name <- unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[4]
-                    LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[5:length(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " ")))],
-                                              sep="", collapse = " ")
+                    LCVP_Author_name <- 
+                      paste(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], 
+                      " "))[5:length(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], 
+                      " ")))], sep="", collapse = " ")
                   }
                 }
               }
@@ -293,8 +320,10 @@ function(sp,
             Genus_table_tmp <- data.frame(Submitted_Name = full_name, 
                                           Order = LCVPspecies_table[matched_pos[i],7], 
                                           Family = LCVPspecies_table[matched_pos[i],6], 
-                                          Genus = unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[1], 
-                                          Species = unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[2], 
+                                          Genus = unlist(strsplit(LCVPspecies_table[matched_pos[i],1], 
+                                                                  " "))[1], 
+                                          Species = unlist(strsplit(LCVPspecies_table[matched_pos[i],1], 
+                                                                    " "))[2], 
                                           Infrasp = LCVP_Infrasp, 
                                           Infraspecies = LCVP_Infrasp_name, 
                                           Authors = LCVP_Author_name, 
@@ -314,14 +343,17 @@ function(sp,
   } else {
     col <- dim(LCVPspecies_table)[2]
     row <- dim(LCVPspecies_table)[1]
-    # loop to select all the name with the same genus name and save this list into Genus_table_final table
+    # loop to select all the name with the same genus name and 
+    # save this list into Genus_table_final table
     for (i in Start_Position:End_Position)  {
           LCVP_genus <- unlist(strsplit(LCVPspecies_table[i,1], " "))[1]
           LCVP_species <- unlist(strsplit(LCVPspecies_table[i,1], " "))[2]
           if (LCVP_genus == genus) {
             genus_found <- TRUE
-            # option when the first letter of the ephitet name is correct or all the letters epithet name are correct but not the first
-            if ((substring(LCVP_species, 1, 1) == substring(species, 1, 1)) || (substring(LCVP_species, 2, 100) == substring(species, 2, 100))) {
+            # option when the first letter of the ephitet name is correct or 
+            # all the letters epithet name are correct but not the first
+            if ((substring(LCVP_species, 1, 1) == substring(species, 1, 1)) 
+                || (substring(LCVP_species, 2, 100) == substring(species, 2, 100))) {
               if (length(unlist(strsplit(LCVPspecies_table[i,1], " "))) < 3) {
                 LCVP_Infrasp <- "species"
                 LCVP_Infrasp_name <- " "
@@ -329,13 +361,18 @@ function(sp,
               } else {
                 LCVP_Infrasp <- "species"
                 LCVP_Infrasp_name <- " "
-                LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[i,1], " "))[3:length(unlist(strsplit(LCVPspecies_table[i,1], " ")))],sep="", collapse = " ")
+                LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[i,1], 
+                                          " "))[3:length(unlist(strsplit(LCVPspecies_table[i,1], " ")))],
+                                          sep="", collapse = " ")
                 for (n in 1:3){
                   for (m in seq_along(Infrasp_cat)){
                     if(unlist(strsplit(LCVPspecies_table[i,1], " "))[n] == Infrasp_cat[m]){
                       LCVP_Infrasp <- unlist(strsplit(LCVPspecies_table[i,1], " "))[3]
                       LCVP_Infrasp_name <- unlist(strsplit(LCVPspecies_table[i,1], " "))[4]
-                      LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[i,1], " "))[5:length(unlist(strsplit(LCVPspecies_table[i,1], " ")))],sep="", collapse = " ")
+                      LCVP_Author_name <- 
+                        paste(unlist(strsplit(LCVPspecies_table[i,1], 
+                        " "))[5:length(unlist(strsplit(LCVPspecies_table[i,1], 
+                        " ")))],sep="", collapse = " ")
                     }
                   }
                 }
@@ -382,27 +419,36 @@ function(sp,
                                           Insertion = NULL, 
                                           Deletion = NULL, 
                                           Substitution = NULL)         
-          matched_name <- agrep(paste(genus,species,sep = " "), LCVPspecies_table$Input.Taxon, value = TRUE, max.distance = max.distance)
-          matched_pos <- agrep(paste(genus,species,sep = " "), LCVPspecies_table$Input.Taxon, value = FALSE, max.distance = max.distance)
+          matched_name <- agrep(paste(genus,species,sep = " "), 
+                                LCVPspecies_table$Input.Taxon, value = TRUE, max.distance = max.distance)
+          matched_pos <- agrep(paste(genus,species,sep = " "), 
+                               LCVPspecies_table$Input.Taxon, value = FALSE, max.distance = max.distance)
           if (length(matched_pos) > 0) {
             for (i in seq_along(matched_pos)) {
               LCVP_genus <- unlist(strsplit(matched_name[i], " "))[1]
               LCVP_species <- unlist(strsplit(matched_name[i], " "))[2]
-              score <- drop(attr(adist(unlist(strsplit(matched_name[i], " "))[2], species, counts = TRUE), "counts"))
-              if (length(unlist(strsplit(matched_name[i], " "))) < 3) {   # condizione in cui c'e` solo il genere e specie
+              score <- drop(attr(adist(unlist(strsplit(matched_name[i], " "))[2], 
+                                       species, counts = TRUE), "counts"))
+              # condizione in cui c'e` solo il genere e specie
+              if (length(unlist(strsplit(matched_name[i], " "))) < 3) {
                 LCVP_Infrasp <- "species"
                 LCVP_Infrasp_name <- " "
                 LCVP_Author_name <- " "
               } else {
                 LCVP_Infrasp <- "species"
                 LCVP_Infrasp_name <- " "
-                LCVP_Author_name <- paste(unlist(strsplit(matched_name[i], " "))[3:length(unlist(strsplit(matched_name[i], " ")))],sep="", collapse = " ")
+                LCVP_Author_name <- paste(unlist(strsplit(matched_name[i], 
+                                                          " "))[3:length(unlist(strsplit(matched_name[i], 
+                                                          " ")))],sep="", collapse = " ")
                 for (n in 1:3){
                   for (m in seq_along(Infrasp_cat)){
                     if(unlist(strsplit(matched_name[i], " "))[n] == Infrasp_cat[m]){
                       LCVP_Infrasp <- unlist(strsplit(matched_name[i], " "))[3]
                       LCVP_Infrasp_name <- unlist(strsplit(matched_name[i], " "))[4]
-                      LCVP_Author_name <- paste(unlist(strsplit(matched_name[i], " "))[5:length(unlist(strsplit(matched_name[i], " ")))],sep="", collapse = " ")
+                      LCVP_Author_name <- 
+                        paste(unlist(strsplit(matched_name[i], 
+                        " "))[5:length(unlist(strsplit(matched_name[i], 
+                        " ")))],sep="", collapse = " ")
                     }
                   }
                 }
@@ -425,7 +471,8 @@ function(sp,
                                             Substitution = 0)
               Genus_table_final <- rbind(Genus_table_final, Genus_table_tmp)
             }
-          } else {Genus_table_final <- data.frame(Submitted_Name = full_name, 
+          } else {Genus_table_final <- data.frame(Submitted_Name = 
+                                                  full_name, 
                                                   Order = "", 
                                                   Family = "", 
                                                   Genus = "", 
@@ -443,14 +490,20 @@ function(sp,
                                                   Substitution = 0)}
         }
       }
-    } else if (is.null(Genus_table_final$Genus[1]) && (genus_found == TRUE || genus_search == TRUE)) {
-          matched_name <- agrep(genus, LCVPspecies_table$Input.Taxon, value = TRUE, max.distance = max.distance)
-          matched_pos <- agrep(genus, LCVPspecies_table$Input.Taxon, value = FALSE, max.distance = max.distance)
-          matched_name2 <- agrep(species, matched_name, value = TRUE, max.distance = max.distance)
-          matched_pos2 <- agrep(species, matched_name, value = FALSE, max.distance = max.distance)
+    } else if (is.null(Genus_table_final$Genus[1]) 
+               && (genus_found == TRUE || genus_search == TRUE)) {
+          matched_name <- agrep(genus, LCVPspecies_table$Input.Taxon, 
+                                value = TRUE, max.distance = max.distance)
+          matched_pos <- agrep(genus, LCVPspecies_table$Input.Taxon, 
+                               value = FALSE, max.distance = max.distance)
+          matched_name2 <- agrep(species, matched_name, value = TRUE, 
+                                 max.distance = max.distance)
+          matched_pos2 <- agrep(species, matched_name, value = FALSE,
+                                max.distance = max.distance)
           matched_genus <- NULL
           for (i in seq_along(matched_pos2)) {
-            matched_genus <- rbind(matched_genus, unlist(strsplit(matched_name2[i], " "))[1])
+            matched_genus <- rbind(matched_genus, 
+                                   unlist(strsplit(matched_name2[i], " "))[1])
           }
           ddf <- abs(nchar(matched_genus) - nchar(genus))
           if (length(matched_genus) > 0) {
@@ -468,21 +521,29 @@ function(sp,
               LCVP_species <- unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[2]
               if (LCVP_genus %in% matched_genus) {
                 score <- drop(attr(adist(LCVP_genus, genus, counts = TRUE), "counts"))
-                if (score[1] == 0 && score[2] == 0 && score[3] == 0){score_name <- 'matched'} else {score_name <- 'misspelling: Genus'}
-                if (length(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))) < 3) {   # condizione in cui c'e` solo il genere e specie
+                if (score[1] == 0 && score[2] == 0 
+                    && score[3] == 0){score_name <- 'matched'} else {score_name <- 'misspelling: Genus'}
+                # condizione in cui c'e` solo il genere e specie
+                if (length(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))) < 3) {
                   LCVP_Infrasp <- "species"
                   LCVP_Infrasp_name <- " "
                   LCVP_Author_name <- " "
                 } else {
                   LCVP_Infrasp <- "species"
                   LCVP_Infrasp_name <- " "
-                  LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[3:length(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " ")))],sep="", collapse = " ")
+                  LCVP_Author_name <- 
+                    paste(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], 
+                    " "))[3:length(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " ")))],
+                    sep="", collapse = " ")
                   for (n in 1:3){
                     for (m in seq_along(Infrasp_cat)){
                       if(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[n] == Infrasp_cat[m]){
                         LCVP_Infrasp <- unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[3]
                         LCVP_Infrasp_name <- unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[4]
-                        LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[5:length(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " ")))],sep="", collapse = " ")
+                        LCVP_Author_name <- 
+                          paste(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], 
+                          " "))[5:length(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " ")))],
+                          sep="", collapse = " ")
                       }
                     }
                   }
@@ -507,7 +568,8 @@ function(sp,
               }
             }
           } else if (length(matched_pos) > 0 && length(matched_pos2) == 0) {
-            Genus_table_tmp <- data.frame(Submitted_Name = full_name, 
+            Genus_table_tmp <- data.frame(Submitted_Name = 
+                                          full_name, 
                                           Order = "", Family = "", 
                                           Genus = unlist(strsplit(matched_name[1], " "))[1], 
                                           Species = "", 
@@ -522,12 +584,14 @@ function(sp,
                                           Insertion = 0, 
                                           Deletion = 0, 
                                           Substitution = 0)
-            Genus_table_final <- rbind(Genus_table_final, Genus_table_tmp)
+            Genus_table_final <- rbind(Genus_table_final, 
+                                       Genus_table_tmp)
           }
     }
   }
   if (is.null(Genus_table_final$Genus[1])){
-    Matched_table_final <- data.frame(Submitted_Name = full_name, 
+    Matched_table_final <- data.frame(Submitted_Name = 
+                                      full_name, 
                                       Order = "", 
                                       Family = "", 
                                       Genus = "", 
@@ -544,10 +608,12 @@ function(sp,
                                       Deletion = 0, 
                                       Substitution = 0)
   } else {
-  # run the fuzzy match search engine for the species ----------------------------------------------------
+  # run the fuzzy match search engine for the species
     if (!is.null(species)) {
-        matched_name <- agrep(species, Genus_table_final$Species, value = TRUE, max.distance = max.distance)
-        matched_pos <- agrep(species, Genus_table_final$Species, value = FALSE, max.distance = max.distance)
+        matched_name <- agrep(species, Genus_table_final$Species, 
+                              value = TRUE, max.distance = max.distance)
+        matched_pos <- agrep(species, Genus_table_final$Species, 
+                             value = FALSE, max.distance = max.distance)
         ddf <- abs(nchar(matched_name) - nchar(species))
         if (length(matched_name) > 0) {
           result <- matched_name[ddf == min(ddf)]
@@ -573,7 +639,8 @@ function(sp,
               } else {
                   NEW_Tab_Score <- 'misspelling: Epithet'
               }
-              Species_table_tmp <- data.frame(Submitted_Name = Genus_table_final$Submitted_Name[matched_pos[j]], 
+              Species_table_tmp <- data.frame(Submitted_Name = 
+                                              Genus_table_final$Submitted_Name[matched_pos[j]], 
                                               Order = Genus_table_final$Order[matched_pos[j]], 
                                               Family = Genus_table_final$Family[matched_pos[j]], 
                                               Genus = Genus_table_final$Genus[matched_pos[j]], 
@@ -589,10 +656,12 @@ function(sp,
                                               Insertion = ins, 
                                               Deletion = del, 
                                               Substitution = sub)
-              Species_table_final <- rbind(Species_table_final, Species_table_tmp)
+              Species_table_final <- rbind(Species_table_final,
+                                           Species_table_tmp)
             }
           }
-        } else if (length(matched_name) > 0 && (species %in% result) == TRUE) {
+        } else if (length(matched_name) > 0 
+                   && (species %in% result) == TRUE) {
           for (j in seq_along(matched_name)) {
             if (matched_name[j] == species || matched_name[j] == paste(species,'_x', sep = "")){
               Gen_Tab_genus <- (Genus_table_final$Genus)[matched_pos[j]]
@@ -606,7 +675,8 @@ function(sp,
               del <- as.numeric((Genus_table_final$Deletion)[matched_pos[j]]) + score[2]
               sub <- as.numeric((Genus_table_final$Substitution)[matched_pos[j]]) + score[3]
               NEW_Tab_Score <- Gen_Tab_Score
-              Species_table_tmp <- data.frame(Submitted_Name = Genus_table_final$Submitted_Name[matched_pos[j]], 
+              Species_table_tmp <- data.frame(Submitted_Name = 
+                                              Genus_table_final$Submitted_Name[matched_pos[j]], 
                                               Order = Genus_table_final$Order[matched_pos[j]], 
                                               Family = Genus_table_final$Family[matched_pos[j]], 
                                               Genus = Genus_table_final$Genus[matched_pos[j]], 
@@ -622,22 +692,26 @@ function(sp,
                                               Insertion = ins, 
                                               Deletion = del, 
                                               Substitution = sub)
-              Species_table_final <- rbind(Species_table_final, Species_table_tmp)
+              Species_table_final <- rbind(Species_table_final, 
+                                           Species_table_tmp)
             }
           }
         }
         
-# run the fuzzy match search engine for the infraspecies ----------------------------------------------------
+        # run the fuzzy match search engine for the infraspecies
         if (!is.null(Species_table_final$Genus[1])) {
           if (!is.null(infrasp)) {
-            matched_name <- agrep(infrasp_name, Species_table_final$Infraspecies, value = TRUE, max.distance = max.distance)
-            matched_pos <- agrep(infrasp_name, Species_table_final$Infraspecies, value = FALSE, max.distance = max.distance)
+            matched_name <- agrep(infrasp_name, Species_table_final$Infraspecies, 
+                                  value = TRUE, max.distance = max.distance)
+            matched_pos <- agrep(infrasp_name, Species_table_final$Infraspecies, 
+                                 value = FALSE, max.distance = max.distance)
             ddf <- abs(nchar(matched_name) - nchar(infrasp_name))
             if (length(matched_name) > 0) {
               result <- matched_name[ddf == min(ddf)]
               ddf <- abs(nchar(result) - nchar(species))
             }
-            if (length(matched_name) > 0 && (infrasp_name %in% result) == FALSE) {
+            if (length(matched_name) > 0 
+                && (infrasp_name %in% result) == FALSE) {
               for (j in seq_along(matched_name)) {
                 if (matched_name[j] %in% result){
                   Spec_Tab_genus <- (Species_table_final$Genus)[matched_pos[j]]
@@ -650,14 +724,18 @@ function(sp,
                   ins <- as.numeric((Species_table_final$Insertion)[matched_pos[j]]) + score[1]
                   del <- as.numeric((Species_table_final$Deletion)[matched_pos[j]]) + score[2]
                   sub <- as.numeric((Species_table_final$Substitution)[matched_pos[j]]) + score[3]
-                  if((score[1] > 0 || score[2] > 0 || score[3] > 0) && Spec_Tab_Score != 'matched'){
-                      NEW_Tab_Score <- paste(Spec_Tab_Score,', Infrasp.', sep="")
-                  } else if ((score[1] > 0 || score[2] > 0 || score[3] > 0) && Spec_Tab_Score == 'matched'){
+                  if((score[1] > 0 || score[2] > 0 || score[3] > 0) 
+                     && Spec_Tab_Score != 'matched'){
+                      NEW_Tab_Score <- paste(Spec_Tab_Score,', 
+                                             Infrasp.', sep="")
+                  } else if ((score[1] > 0 || score[2] > 0 || score[3] > 0) 
+                             && Spec_Tab_Score == 'matched'){
                     NEW_Tab_Score <- 'misspelling: Infrasp.'
                   } else {
                       NEW_Tab_Score <- Spec_Tab_Score
                   }
-                  Infrasp_table_tmp <- data.frame(Submitted_Name = Species_table_final$Submitted_Name[matched_pos[j]], 
+                  Infrasp_table_tmp <- data.frame(Submitted_Name = 
+                                                  Species_table_final$Submitted_Name[matched_pos[j]], 
                                                   Order = Species_table_final$Order[matched_pos[j]], 
                                                   Family = Species_table_final$Family[matched_pos[j]], 
                                                   Genus = Species_table_final$Genus[matched_pos[j]], 
@@ -673,10 +751,12 @@ function(sp,
                                                   Insertion = ins, 
                                                   Deletion = del, 
                                                   Substitution = sub)
-                  Infrasp_table_final <- rbind(Infrasp_table_final, Infrasp_table_tmp)
+                  Infrasp_table_final <- rbind(Infrasp_table_final, 
+                                               Infrasp_table_tmp)
                 }
               }
-            } else if (length(matched_name) > 0 && (infrasp_name %in% result) == TRUE) {
+            } else if (length(matched_name) > 0 
+                       && (infrasp_name %in% result) == TRUE) {
               for (j in seq_along(matched_name)) {
                 if (matched_name[j] == infrasp_name){
                   Spec_Tab_genus <- (Species_table_final$Genus)[matched_pos[j]]
@@ -690,7 +770,8 @@ function(sp,
                   del <- as.numeric((Species_table_final$Deletion)[matched_pos[j]]) + score[2]
                   sub <- as.numeric((Species_table_final$Substitution)[matched_pos[j]]) + score[3]
                   NEW_Tab_Score <- Spec_Tab_Score
-                  Infrasp_table_tmp <- data.frame(Submitted_Name = Species_table_final$Submitted_Name[matched_pos[j]], 
+                  Infrasp_table_tmp <- data.frame(Submitted_Name = 
+                                                  Species_table_final$Submitted_Name[matched_pos[j]], 
                                                   Order = Species_table_final$Order[matched_pos[j]], 
                                                   Family = Species_table_final$Family[matched_pos[j]], 
                                                   Genus = Species_table_final$Genus[matched_pos[j]], 
@@ -706,20 +787,25 @@ function(sp,
                                                   Insertion = ins, 
                                                   Deletion = del, 
                                                   Substitution = sub)
-                  Infrasp_table_final <- rbind(Infrasp_table_final, Infrasp_table_tmp)
+                  Infrasp_table_final <- rbind(Infrasp_table_final, 
+                                               Infrasp_table_tmp)
                 }
               }
             }
-# run the fuzzy match search engine for the author when infrasp is already specified ----------------------------------------------------
+            # run the fuzzy match search engine for the author 
+            # when infrasp is already specified
             if (!is.null(Infrasp_table_final$Genus[1]) && author == TRUE) {
-                matched_name <- agrep(auth_name, Infrasp_table_final$Authors, value = TRUE, max.distance = max.distance)
-                matched_pos <- agrep(auth_name, Infrasp_table_final$Authors, value = FALSE, max.distance = max.distance)
+                matched_name <- agrep(auth_name, Infrasp_table_final$Authors, 
+                                      value = TRUE, max.distance = max.distance)
+                matched_pos <- agrep(auth_name, Infrasp_table_final$Authors, 
+                                     value = FALSE, max.distance = max.distance)
                 ddf <- abs(nchar(matched_name) - nchar(auth_name))
                 if (length(matched_name) > 0) {
                   result <- matched_name[ddf == min(ddf)]
                   ddf <- abs(nchar(result) - nchar(auth_name))
                 }
-                if (length(matched_name) > 0 && (auth_name %in% result) == FALSE) {
+                if (length(matched_name) > 0 
+                    && (auth_name %in% result) == FALSE) {
                   for (j in seq_along(matched_name)) {
                     if (matched_name[j] %in% result){
                       Infrasp_Tab_genus <- (Infrasp_table_final$Genus)[matched_pos[j]]
@@ -731,7 +817,8 @@ function(sp,
                       Infrasp_Tab_Insertion <- (Infrasp_table_final$Insertion)[matched_pos[j]]
                       Infrasp_Tab_Deletion <- (Infrasp_table_final$Deletion)[matched_pos[j]]
                       Infrasp_Tab_Substitution <- (Infrasp_table_final$Substitution)[matched_pos[j]]
-                      Matched_table_tmp <- data.frame(Submitted_Name = Infrasp_table_final$Submitted_Name[matched_pos[j]], 
+                      Matched_table_tmp <- data.frame(Submitted_Name = 
+                                                      Infrasp_table_final$Submitted_Name[matched_pos[j]], 
                                                       Order = Infrasp_table_final$Order[matched_pos[j]], 
                                                       Family = Infrasp_table_final$Family[matched_pos[j]], 
                                                       Genus = Infrasp_table_final$Genus[matched_pos[j]], 
@@ -747,10 +834,12 @@ function(sp,
                                                       Insertion = Infrasp_Tab_Insertion, 
                                                       Deletion = Infrasp_Tab_Deletion, 
                                                       Substitution = Infrasp_Tab_Substitution)
-                      Matched_table_final <- rbind(Matched_table_final, Matched_table_tmp)
+                      Matched_table_final <- rbind(Matched_table_final, 
+                                                   Matched_table_tmp)
                     }
                   }
-                } else if (length(matched_name) > 0 && (auth_name %in% result) == TRUE) {
+                } else if (length(matched_name) > 0 
+                           && (auth_name %in% result) == TRUE) {
                   for (j in seq_along(matched_name)) {
                     if (matched_name[j] == auth_name){
                       Infrasp_Tab_genus <- (Infrasp_table_final$Genus)[matched_pos[j]]
@@ -762,7 +851,8 @@ function(sp,
                       Infrasp_Tab_Insertion <- (Infrasp_table_final$Insertion)[matched_pos[j]]
                       Infrasp_Tab_Deletion <- (Infrasp_table_final$Deletion)[matched_pos[j]]
                       Infrasp_Tab_Substitution <- (Infrasp_table_final$Substitution)[matched_pos[j]]
-                      Matched_table_tmp <- data.frame(Submitted_Name = Infrasp_table_final$Submitted_Name[matched_pos[j]], 
+                      Matched_table_tmp <- data.frame(Submitted_Name = 
+                                                      Infrasp_table_final$Submitted_Name[matched_pos[j]], 
                                                       Order = Infrasp_table_final$Order[matched_pos[j]], 
                                                       Family = Infrasp_table_final$Family[matched_pos[j]], 
                                                       Genus = Infrasp_table_final$Genus[matched_pos[j]], 
@@ -778,15 +868,18 @@ function(sp,
                                                       Insertion = Infrasp_Tab_Insertion, 
                                                       Deletion = Infrasp_Tab_Deletion, 
                                                       Substitution = Infrasp_Tab_Substitution)
-                      Matched_table_final <- rbind(Matched_table_final, Matched_table_tmp)
+                      Matched_table_final <- rbind(Matched_table_final, 
+                                                   Matched_table_tmp)
                     }
                   }
                 }
                 if (is.null(Matched_table_final$Genus[1])) {Matched_table_final <- Infrasp_table_final}
-            } else if (!is.null(Infrasp_table_final$Genus[1]) && author == FALSE){
+            } else if (!is.null(Infrasp_table_final$Genus[1]) 
+                       && author == FALSE){
               Matched_table_final <- Infrasp_table_final
-# run the fuzzy match search engine for the author when infrasp is not specified ----------------------------------------------------
-            } else if (is.null(Infrasp_table_final$Genus[1]) && author == TRUE) {
+            # run the fuzzy match search engine for the author when infrasp is not specified
+            } else if (is.null(Infrasp_table_final$Genus[1]) 
+                       && author == TRUE) {
               col5 <- dim(Species_table_final)[2]
               row5 <- dim(Species_table_final)[1]
               for (k in 1:row5) {
@@ -801,7 +894,8 @@ function(sp,
                 Spec_Tab_Substitution <- (Species_table_final$Substitution)[k]
                 if (Spec_Tab_Author_name == auth_name) {
                   author_found <- TRUE
-                  Matched_table_tmp <- data.frame(Submitted_Name = Species_table_final$Submitted_Name[k], 
+                  Matched_table_tmp <- data.frame(Submitted_Name = 
+                                                  Species_table_final$Submitted_Name[k], 
                                                   Order = Species_table_final$Order[k], 
                                                   Family = Species_table_final$Family[k], 
                                                   Genus = Species_table_final$Genus[k], 
@@ -817,7 +911,8 @@ function(sp,
                                                   Insertion = Spec_Tab_Insertion, 
                                                   Deletion = Spec_Tab_Deletion, 
                                                   Substitution = Spec_Tab_Substitution)
-                  Matched_table_final <- rbind(Matched_table_final, Matched_table_tmp)
+                  Matched_table_final <- rbind(Matched_table_final, 
+                                               Matched_table_tmp)
                 }
               }
               if (is.null(Matched_table_final$Genus[1])) {Matched_table_final <- Species_table_final}
@@ -826,10 +921,13 @@ function(sp,
               Species_table_final$Score[Species_table_final$Score == 'matched'] <- 'Infrasp. name not found'
               Species_table_final$Score<-as.factor(Species_table_final$Score)
               Matched_table_final <- Species_table_final}
-# run the fuzzy match search engine only for the author ----------------------------------------------------
-          } else if (is.null(infrasp) && author == TRUE) {    # research option only for author
-            matched_name <- agrep(auth_name, Species_table_final$Authors, value = TRUE, max.distance = max.distance)
-            matched_pos <- agrep(auth_name, Species_table_final$Authors, value = FALSE, max.distance = max.distance)
+            # run the fuzzy match search engine only for the author
+            # research option only for author
+          } else if (is.null(infrasp) && author == TRUE) {    
+            matched_name <- agrep(auth_name, Species_table_final$Authors, 
+                                  value = TRUE, max.distance = max.distance)
+            matched_pos <- agrep(auth_name, Species_table_final$Authors, 
+                                 value = FALSE, max.distance = max.distance)
             ddf <- abs(nchar(matched_name) - nchar(auth_name))
             if (length(matched_name) > 0) {
               result <- matched_name[ddf == min(ddf)]
@@ -847,7 +945,8 @@ function(sp,
                   Species_Tab_Insertion <- (Species_table_final$Insertion)[matched_pos[j]]
                   Species_Tab_Deletion <- (Species_table_final$Deletion)[matched_pos[j]]
                   Species_Tab_Substitution <- (Species_table_final$Substitution)[matched_pos[j]]
-                  Matched_table_tmp <- data.frame(Submitted_Name = Species_table_final$Submitted_Name[matched_pos[j]], 
+                  Matched_table_tmp <- data.frame(Submitted_Name = 
+                                                  Species_table_final$Submitted_Name[matched_pos[j]], 
                                                   Order = Species_table_final$Order[matched_pos[j]], 
                                                   Family = Species_table_final$Family[matched_pos[j]], 
                                                   Genus = Species_table_final$Genus[matched_pos[j]], 
@@ -863,10 +962,12 @@ function(sp,
                                                   Insertion = Species_Tab_Insertion, 
                                                   Deletion = Species_Tab_Deletion, 
                                                   Substitution = Species_Tab_Substitution)
-                  Matched_table_final <- rbind(Matched_table_final, Matched_table_tmp)
+                  Matched_table_final <- rbind(Matched_table_final, 
+                                               Matched_table_tmp)
                 }
               }
-            } else if (length(matched_name) > 0 && (auth_name %in% result) == TRUE) {
+            } else if (length(matched_name) > 0 
+                       && (auth_name %in% result) == TRUE) {
               for (j in seq_along(matched_name)) {
                 if (matched_name[j] == auth_name){
                   Species_Tab_genus <- (Species_table_final$Genus)[matched_pos[j]]
@@ -878,7 +979,8 @@ function(sp,
                   Species_Tab_Insertion <- (Species_table_final$Insertion)[matched_pos[j]]
                   Species_Tab_Deletion <- (Species_table_final$Deletion)[matched_pos[j]]
                   Species_Tab_Substitution <- (Species_table_final$Substitution)[matched_pos[j]]
-                  Matched_table_tmp <- data.frame(Submitted_Name = Species_table_final$Submitted_Name[matched_pos[j]], 
+                  Matched_table_tmp <- data.frame(Submitted_Name = 
+                                                  Species_table_final$Submitted_Name[matched_pos[j]], 
                                                   Order = Species_table_final$Order[matched_pos[j]], 
                                                   Family = Species_table_final$Family[matched_pos[j]], 
                                                   Genus = Species_table_final$Genus[matched_pos[j]], 
@@ -894,12 +996,15 @@ function(sp,
                                                   Insertion = Species_Tab_Insertion, 
                                                   Deletion = Species_Tab_Deletion, 
                                                   Substitution = Species_Tab_Substitution)
-                  Matched_table_final <- rbind(Matched_table_final, Matched_table_tmp)
+                  Matched_table_final <- rbind(Matched_table_final, 
+                                               Matched_table_tmp)
                 }
               }
             } else {Matched_table_final <- Species_table_final}
-# option to search only for the epithet (Genus and epithet) and eventually only for the status 'valid'  ----------------------------------------------------
-          } else if (is.null(infrasp) && author == FALSE && infraspecies_tab == FALSE) {
+            # option to search only for the epithet (Genus and epithet) 
+            # and eventually only for the status 'valid'
+          } else if (is.null(infrasp) && author == FALSE 
+                     && infraspecies_tab == FALSE) {
             matched_name <- agrep('species', Species_table_final$Infrasp, 
                                   value = TRUE, max.distance = 0)
             matched_pos <- agrep('species', Species_table_final$Infrasp, 
@@ -920,7 +1025,8 @@ function(sp,
                 Spec_Tab_Deletion <- (Species_table_final$Deletion)[matched_pos[j]]
                 Spec_Tab_Substitution <- (Species_table_final$Substitution)[matched_pos[j]]
                 if (Spec_Tab_status == 'valid'){
-                  Matched_table_tmp <- data.frame(Submitted_Name = Species_table_final$Submitted_Name[matched_pos[j]], 
+                  Matched_table_tmp <- data.frame(Submitted_Name = 
+                                                  Species_table_final$Submitted_Name[matched_pos[j]], 
                                                   Order = Species_table_final$Order[matched_pos[j]], 
                                                   Family = Species_table_final$Family[matched_pos[j]], 
                                                   Genus = Species_table_final$Genus[matched_pos[j]], 
