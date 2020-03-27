@@ -284,7 +284,8 @@ function(sp,
                   if(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[n] == Infrasp_cat[m]){
                     LCVP_Infrasp <- unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[3]
                     LCVP_Infrasp_name <- unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[4]
-                    LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[5:length(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " ")))],sep="", collapse = " ")
+                    LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[5:length(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " ")))],
+                                              sep="", collapse = " ")
                   }
                 }
               }
