@@ -101,7 +101,8 @@ function(splist,
   
 # Check for the LCP package and if not installed, asked to install
     if (!requireNamespace("LCP", quietly = TRUE)) {
-      stop("Install the 'LCP' package or provide a custom reference. See the details section in ?LCP for help.",
+      stop("Install the 'LCP' package or provide a custom reference. 
+           See the details section in ?LCP for help.",
            call. = FALSE
       )
     }else{
@@ -272,3 +273,4 @@ function(splist,
   }
   return(Output_Table)
 }
+>>>>>>> acb485bff9764d41289593051ac31596573e7fcf:R/LCP.R

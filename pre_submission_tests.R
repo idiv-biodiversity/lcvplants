@@ -3,7 +3,7 @@ pkgdown::build_site()
 
 source("https://install-github.me/MangoTheCat/goodpractice")
 library(goodpractice)
-gp("C:/Users/az64mycy/Dropbox (iDiv)/research_projects/Z_AG_LPL/lcplants")
+gp("C:/Users/Gentile/Documents/lcplants")
 
 #R CMD check
 devtools::check_built(path = "", 

@@ -1,27 +1,26 @@
 ## Author: Alessandro Gentile
 ## Last Version: 2020/01/20
 
-
 #' Search and solve one single plant name according to the Leipzig Catalogue of
-#' Vascular Plants (LCVP).
+#' Plants (LCP).
 #' 
 #' Allow a taxonomic resolution of plant taxa names listed in the "Leipzig
-#' Catalogue of Vascular Plants" (LCVP).  It applies a string comparison between the
+#' Catalogue of Plants" (LCP).  It applies a string comparison between the
 #' submitted names from the user with the list of taxa listed in the
-#' 'input.taxon' column of the 'LCVPspecies_table.rda' table, applying a fuzzy
+#' 'input.taxon' column of the 'LCPspecies_table.rda' table, applying a fuzzy
 #' match algorithm for possible orthographic errors solving. This function
 #' takes care of one single taxon per time for each execution and it applies
 #' the search for the submitted plant name trying to match the corresponding
-#' taxon in the 'LCVPspecies_table' table.
+#' taxon in the 'LCPspecies_table' table.
 #' 
 #' 
 #' @param sp A character vector specifying the input taxon, each element
 #' including genus and specific epithet and, potentially, infraspecific rank,
 #' infraspecific name and author name
-#' @param LCVPposition_table A character vector specifying the input taxon, each
+#' @param LCPposition_table A character vector specifying the input taxon, each
 #' element including genus and specific epithet and, potentially, infraspecific
 #' rank, infraspecific name and author name
-#' @param LCVPspecies_table A character vector specifying the input taxon, each
+#' @param LCPspecies_table A character vector specifying the input taxon, each
 #' element including genus and specific epithet and, potentially, infraspecific
 #' rank, infraspecific name and author name
 #' @param genus_search Logical, FALSE (default). If TRUE, the function will
@@ -30,7 +29,7 @@
 #' infraspecies and the name author.
 #' @param max.distance is an integer value. It represents the maximum distance
 #' (number of characters) allowed for a match when comparing the submitted name
-#' with the closest name matches in the LCVP
+#' with the closest name matches in the LCP
 #' @param encoding character vector, "UTF-8" (default). This value will allow
 #' the user to set the specific codification of the strings
 #' @param family_tab Logical, FALSE (default). If TRUE, the function will
@@ -62,15 +61,15 @@
 #' default
 #' @author Alessandro Gentile, Martin Freiberg, Marten Winter
 #' @seealso https://idata.idiv.de/ddm/Data/ShowData/1806
-#' @references The Leipzig Catalogue of Plants (LCVP) - An improved taxonomic
+#' @references The Leipzig Catalogue of Plants (LCP) - An improved taxonomic
 #' reference list for all known vascular plants
 
-LCVPsolver <-
+LCPsolver <-
 function(sp, 
          genus_search, 
          out_path, 
-         LCVPposition_table, 
-         LCVPspecies_table, 
+         LCPposition_table, 
+         LCPspecies_table, 
          encoding, 
          max.distance, 
          family_tab, 
@@ -82,38 +81,60 @@ function(sp,
          visualize, 
          version) {
 
-# extract genus, species, infrasp, author from the typed name ----------------------------------------------
+# extract genus, species, infrasp, author from the typed name
   Infrasp_cat <- c("subsp.", "var.", "forma", "ssp.", "f.", "subvar.", "subf.")
   
   
-  # correction of the hybrids for the genus name into the correct form for the LCVP standards
+  # correction of the hybrids for the genus name 
+  # into the correct form for the LCP standards
   sp_terms <- unlist(strsplit(sp, " "))
   N_terms <- length(sp_terms)
   if (toupper(sp_terms[1]) == 'X') {
-    genus <- paste(toupper(substring(sp_terms[2], 1, 1)), tolower(substring(sp_terms[2], 2)), "_x", sep = "", collapse = " ")
-    sp_terms = paste(genus, paste(sp_terms[3:N_terms], sep = "", collapse = " "), sep = " ", collapse = " ")
-    N_terms = N_terms -1
-  } else if(paste(unlist((strsplit(toupper(sp_terms[1]), "")))[1:2], sep = "", collapse = "") == 'X_') {
-    # Translate characters in character vectors, in particular from upper to lower case or vice versa
-    genus <- paste(toupper(substring(sp_terms[1], 3, 3)), tolower(substring(sp_terms[1], 4)), "_x", sep = "", collapse = " ")
-    sp_terms = paste(genus, paste(sp_terms[2:N_terms], sep = "", collapse = " "), sep = " ", collapse = " ")
-  } else {genus <- paste(toupper(substring(sp_terms[1], 1, 1)), tolower(substring(sp_terms[1], 2)), sep = "", collapse = " ")}
+    genus <- paste(toupper(substring(sp_terms[2], 1, 1)), 
+                   tolower(substring(sp_terms[2], 2)), 
+                   "_x", sep = "", collapse = " ")
+    sp_terms <- paste(genus, paste(sp_terms[3:N_terms], 
+                      sep = "", collapse = " "), sep = " ", collapse = " ")
+    N_terms <- N_terms -1
+  } else if(paste(unlist((strsplit(toupper(sp_terms[1]), "")))[1:2], 
+                  sep = "", collapse = "") == 'X_') {
+    # Translate characters in character vectors, 
+    # in particular from upper to lower case or vice versa
+    genus <- paste(toupper(substring(sp_terms[1], 3, 3)), 
+                   tolower(substring(sp_terms[1], 4)), 
+                   "_x", sep = "", collapse = " ")
+    sp_terms <- paste(genus, paste(sp_terms[2:N_terms], 
+                      sep = "", collapse = " "), 
+                      sep = " ", collapse = " ")
+  } else {genus <- paste(toupper(substring(sp_terms[1], 1, 1)), 
+                         tolower(substring(sp_terms[1], 2)), 
+                         sep = "", collapse = " ")}
   
-  # correction of the hybrids for the epithet name into the correct form for the LCVP standards
+  # correction of the hybrids for the epithet name 
+  # into the correct form for the LCP standards
   sp_terms <- unlist(strsplit(sp_terms, " "))
   N_terms <- length(sp_terms)
   if (N_terms > 1){
     if (tolower(sp_terms[2]) == 'x') {
-      epithet <- paste(tolower(sp_terms[3]), "_x", sep = "", collapse = " ")
-      autority <- paste(sp_terms[4:N_terms], sep = " ", collapse = " ")
+      epithet <- paste(tolower(sp_terms[3]), "_x", 
+                       sep = "", collapse = " ")
+      autority <- paste(sp_terms[4:N_terms], 
+                        sep = " ", collapse = " ")
       sp_terms <-  paste(genus, epithet, autority, sep = " ", collapse = " ")
       N_terms <- N_terms -1
-    } else if(paste(unlist((strsplit(tolower(sp_terms[2]), "")))[1:2], sep = "", collapse = "") == 'x_') {
-      # Translate characters in character vectors, in particular from upper to lower case or vice versa
-      epithet <- paste(tolower(substring(sp_terms[2], 3)), "_x", sep = "", collapse = " ")
-      autority <- paste(sp_terms[3:N_terms], sep = " ", collapse = " ")
-      sp_terms =  paste(genus, epithet, autority, sep = " ", collapse = " ")
-    } else {genus <- paste(toupper(substring(sp_terms[1], 1, 1)), tolower(substring(sp_terms[1], 2)), sep = "", collapse = " ")}
+    } else if(paste(unlist((strsplit(tolower(sp_terms[2]), "")))[1:2], 
+                    sep = "", collapse = "") == 'x_') {
+      # Translate characters in character vectors, 
+      # in particular from upper to lower case or vice versa
+      epithet <- paste(tolower(substring(sp_terms[2], 3)), 
+                       "_x", sep = "", collapse = " ")
+      autority <- paste(sp_terms[3:N_terms], 
+                        sep = " ", collapse = " ")
+      sp_terms <-  paste(genus, epithet, autority, 
+                         sep = " ", collapse = " ")
+    } else {genus <- paste(toupper(substring(sp_terms[1], 1, 1)), 
+                           tolower(substring(sp_terms[1], 2)), 
+                           sep = "", collapse = " ")}
   }
   
   sp_terms <- unlist(strsplit(sp_terms, " "))
@@ -134,7 +155,8 @@ function(sp,
     auth_name <- NULL
     full_name <- paste(genus,species, sep = " ")
     message('Search based on genus and epithet name')
-  } else if (N_terms > 2 && ((tolower(sp_terms[3]) %in% Infrasp_cat) == FALSE)) { 
+  } else if (N_terms > 2 && 
+             ((tolower(sp_terms[3]) %in% Infrasp_cat) == FALSE)) { 
     species <- sp_terms[2]
     species <- tolower(species)
     infrasp <- NULL
@@ -167,19 +189,19 @@ function(sp,
     message('Search based on genus, epithet, infraspecies and author name')
   }
   
-  # Genus_table_tmp     <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  # Genus_table_final   <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)         
-  # Species_table_tmp   <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  # Species_table_final <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  # Infrasp_table_tmp   <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  # Infrasp_table_final <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  # Matched_table_tmp   <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  # Matched_table_final <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
+  # Genus_table_tmp     <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
+  # Genus_table_final   <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)         
+  # Species_table_tmp   <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
+  # Species_table_final <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
+  # Infrasp_table_tmp   <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
+  # Infrasp_table_final <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
+  # Matched_table_tmp   <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
+  # Matched_table_final <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
   
   # SIMPLIFICATION ALEX 
   Genus_table_tmp     <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, 
                                     Species = NULL, Infrasp = NULL, Infraspecies = NULL, 
-                                    Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, 
+                                    Authors = NULL, Status = NULL, LCP_Accepted_Taxon = NULL, 
                                     PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, 
                                     Insertion = NULL, Deletion = NULL, Substitution = NULL)
   
@@ -197,16 +219,16 @@ function(sp,
 # run the fuzzy match search engine for the genus ----------------------------------------------------
   
   genus_ini <- paste(toupper(substring(genus, 1, 1)), tolower(substring(genus, 2, 3)), sep = "")
-  col <- dim(LCVPposition_table)[2]
-  row <- dim(LCVPposition_table)[1]
+  col <- dim(LCPposition_table)[2]
+  row <- dim(LCPposition_table)[1]
   Start_Position <- 1
   End_Position <- row
   for (i in 1:row)  {
-    LCVP_genus_ini <- LCVPposition_table[i,2]
-    if (LCVP_genus_ini == genus_ini) {
-      Start_Position <- LCVPposition_table[i,1]
-      End_Position <- LCVPposition_table[i+1,1]
-      if (is.na(End_Position)){End_Position <- dim(LCVPspecies_table)[1]}
+    LCP_genus_ini <- LCPposition_table[i,2]
+    if (LCP_genus_ini == genus_ini) {
+      Start_Position <- LCPposition_table[i,1]
+      End_Position <- LCPposition_table[i+1,1]
+      if (is.na(End_Position)){End_Position <- dim(LCPspecies_table)[1]}
     }
   }
   # option to select all the name belonging to the searched order, family or genus name
@@ -214,14 +236,14 @@ function(sp,
     if (N_terms == 1 && (order_tab == TRUE || family_tab == TRUE || genus_tab == TRUE)) {
       message('search for the only genus, family or order name')
       if (genus_tab == TRUE && family_tab == FALSE && order_tab == FALSE) {
-        matched_name <- agrep(genus, LCVPspecies_table$Input.Taxon, value = TRUE, max.distance = max.distance)
-        matched_pos <- agrep(genus, LCVPspecies_table$Input.Taxon, value = FALSE, max.distance = max.distance)
+        matched_name <- agrep(genus, LCPspecies_table$Input.Taxon, value = TRUE, max.distance = max.distance)
+        matched_pos <- agrep(genus, LCPspecies_table$Input.Taxon, value = FALSE, max.distance = max.distance)
       } else if (genus_tab == FALSE && family_tab == TRUE && order_tab == FALSE){
-        matched_name <- agrep(genus, LCVPspecies_table$Family, value = TRUE, max.distance = max.distance)
-        matched_pos <- agrep(genus, LCVPspecies_table$Family, value = FALSE, max.distance = max.distance)
+        matched_name <- agrep(genus, LCPspecies_table$Family, value = TRUE, max.distance = max.distance)
+        matched_pos <- agrep(genus, LCPspecies_table$Family, value = FALSE, max.distance = max.distance)
       } else if (genus_tab == FALSE && family_tab == FALSE && order_tab == TRUE){
-        matched_name <- agrep(genus, LCVPspecies_table$Order, value = TRUE, max.distance = max.distance)
-        matched_pos <- agrep(genus, LCVPspecies_table$Order, value = FALSE, max.distance = max.distance)
+        matched_name <- agrep(genus, LCPspecies_table$Order, value = TRUE, max.distance = max.distance)
+        matched_pos <- agrep(genus, LCPspecies_table$Order, value = FALSE, max.distance = max.distance)
       } else {
         matched_name <- NULL
         matched_pos <- NULL
@@ -242,43 +264,43 @@ function(sp,
         result_name <- NULL
         result_pos <- NULL
         
-        for (i in 1:length(matched_pos)) {
+        for (i in seq_along(matched_pos)) {
           result_name <- rbind(result_name, matched_name[i])
           iter <- matched_pos[i]
-          LCVP_genus <- unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[1]
-          LCVP_species <- unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[2]
+          LCP_genus <- unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))[1]
+          LCP_species <- unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))[2]
           if (genus %in% matched_genus) {
             score <- drop(attr(adist(matched_genus[i], genus, counts = TRUE), "counts"))
-            if (length(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))) < 3) {   # option there is only the genus and epithet name
-              LCVP_Infrasp <- "species"
-              LCVP_Infrasp_name <- " "
-              LCVP_Author_name <- " "
+            if (length(unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))) < 3) {   # option there is only the genus and epithet name
+              LCP_Infrasp <- "species"
+              LCP_Infrasp_name <- " "
+              LCP_Author_name <- " "
             } else {
-              LCVP_Infrasp <- "species"
-              LCVP_Infrasp_name <- " "
-              LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[3:length(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " ")))],sep="", collapse = " ")
+              LCP_Infrasp <- "species"
+              LCP_Infrasp_name <- " "
+              LCP_Author_name <- paste(unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))[3:length(unlist(strsplit(LCPspecies_table[matched_pos[i],1], " ")))],sep="", collapse = " ")
               for (n in 1:3){
-                for (m in 1:length(Infrasp_cat)){
-                  if(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[n] == Infrasp_cat[m]){
-                    LCVP_Infrasp <- unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[3]
-                    LCVP_Infrasp_name <- unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[4]
-                    LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[5:length(unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " ")))],sep="", collapse = " ")
+                for (m in seq_along(Infrasp_cat)){
+                  if(unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))[n] == Infrasp_cat[m]){
+                    LCP_Infrasp <- unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))[3]
+                    LCP_Infrasp_name <- unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))[4]
+                    LCP_Author_name <- paste(unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))[5:length(unlist(strsplit(LCPspecies_table[matched_pos[i],1], " ")))],sep="", collapse = " ")
                   }
                 }
               }
             }
             Genus_table_tmp <- data.frame(Submitted_Name = full_name, 
-                                          Order = LCVPspecies_table[matched_pos[i],7], 
-                                          Family = LCVPspecies_table[matched_pos[i],6], 
-                                          Genus = unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[1], 
-                                          Species = unlist(strsplit(LCVPspecies_table[matched_pos[i],1], " "))[2], 
-                                          Infrasp = LCVP_Infrasp, 
-                                          Infraspecies = LCVP_Infrasp_name, 
-                                          Authors = LCVP_Author_name, 
-                                          Status = LCVPspecies_table[matched_pos[i],2], 
-                                          LCVP_Accepted_Taxon = LCVPspecies_table[matched_pos[i],5], 
-                                          PL_Comparison = LCVPspecies_table[matched_pos[i],3], 
-                                          PL_Alternative = LCVPspecies_table[matched_pos[i],4], 
+                                          Order = LCPspecies_table[matched_pos[i],7], 
+                                          Family = LCPspecies_table[matched_pos[i],6], 
+                                          Genus = unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))[1], 
+                                          Species = unlist(strsplit(LCPspecies_table[matched_pos[i],1], " "))[2], 
+                                          Infrasp = LCP_Infrasp, 
+                                          Infraspecies = LCP_Infrasp_name, 
+                                          Authors = LCP_Author_name, 
+                                          Status = LCPspecies_table[matched_pos[i],2], 
+                                          LCP_Accepted_Taxon = LCPspecies_table[matched_pos[i],5], 
+                                          PL_Comparison = LCPspecies_table[matched_pos[i],3], 
+                                          PL_Alternative = LCPspecies_table[matched_pos[i],4], 
                                           Score = 'matched', 
                                           Insertion = score[1], 
                                           Deletion = score[2], 
@@ -289,46 +311,46 @@ function(sp,
       }
     }
   } else {
-    col <- dim(LCVPspecies_table)[2]
-    row <- dim(LCVPspecies_table)[1]
+    col <- dim(LCPspecies_table)[2]
+    row <- dim(LCPspecies_table)[1]
     # loop to select all the name with the same genus name and save this list into Genus_table_final table
     for (i in Start_Position:End_Position)  {
-          LCVP_genus <- unlist(strsplit(LCVPspecies_table[i,1], " "))[1]
-          LCVP_species <- unlist(strsplit(LCVPspecies_table[i,1], " "))[2]
-          if (LCVP_genus == genus) {
+          LCP_genus <- unlist(strsplit(LCPspecies_table[i,1], " "))[1]
+          LCP_species <- unlist(strsplit(LCPspecies_table[i,1], " "))[2]
+          if (LCP_genus == genus) {
             genus_found <- TRUE
             # option when the first letter of the ephitet name is correct or all the letters epithet name are correct but not the first
-            if ((substring(LCVP_species, 1, 1) == substring(species, 1, 1)) || (substring(LCVP_species, 2, 100) == substring(species, 2, 100))) {
-              if (length(unlist(strsplit(LCVPspecies_table[i,1], " "))) < 3) {
-                LCVP_Infrasp <- "species"
-                LCVP_Infrasp_name <- " "
-                LCVP_Author_name <- " "
+            if ((substring(LCP_species, 1, 1) == substring(species, 1, 1)) || (substring(LCP_species, 2, 100) == substring(species, 2, 100))) {
+              if (length(unlist(strsplit(LCPspecies_table[i,1], " "))) < 3) {
+                LCP_Infrasp <- "species"
+                LCP_Infrasp_name <- " "
+                LCP_Author_name <- " "
               } else {
-                LCVP_Infrasp <- "species"
-                LCVP_Infrasp_name <- " "
-                LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[i,1], " "))[3:length(unlist(strsplit(LCVPspecies_table[i,1], " ")))],sep="", collapse = " ")
+                LCP_Infrasp <- "species"
+                LCP_Infrasp_name <- " "
+                LCP_Author_name <- paste(unlist(strsplit(LCPspecies_table[i,1], " "))[3:length(unlist(strsplit(LCPspecies_table[i,1], " ")))],sep="", collapse = " ")
                 for (n in 1:3){
-                  for (m in 1:length(Infrasp_cat)){
-                    if(unlist(strsplit(LCVPspecies_table[i,1], " "))[n] == Infrasp_cat[m]){
-                      LCVP_Infrasp <- unlist(strsplit(LCVPspecies_table[i,1], " "))[3]
-                      LCVP_Infrasp_name <- unlist(strsplit(LCVPspecies_table[i,1], " "))[4]
-                      LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[i,1], " "))[5:length(unlist(strsplit(LCVPspecies_table[i,1], " ")))],sep="", collapse = " ")
+                  for (m in seq_along(Infrasp_cat)){
+                    if(unlist(strsplit(LCPspecies_table[i,1], " "))[n] == Infrasp_cat[m]){
+                      LCP_Infrasp <- unlist(strsplit(LCPspecies_table[i,1], " "))[3]
+                      LCP_Infrasp_name <- unlist(strsplit(LCPspecies_table[i,1], " "))[4]
+                      LCP_Author_name <- paste(unlist(strsplit(LCPspecies_table[i,1], " "))[5:length(unlist(strsplit(LCPspecies_table[i,1], " ")))],sep="", collapse = " ")
                     }
                   }
                 }
               }
               Genus_table_tmp <- data.frame(Submitted_Name = full_name, 
-                                            Order = LCVPspecies_table[i,7], 
-                                            Family = LCVPspecies_table[i,6], 
-                                            Genus = unlist(strsplit(LCVPspecies_table[i,1], " "))[1], 
-                                            Species = unlist(strsplit(LCVPspecies_table[i,1], " "))[2], 
-                                            Infrasp = LCVP_Infrasp, 
-                                            Infraspecies = LCVP_Infrasp_name, 
-                                            Authors = LCVP_Author_name, 
-                                            Status = LCVPspecies_table[i,2], 
-                                            LCVP_Accepted_Taxon = LCVPspecies_table[i,5], 
-                                            PL_Comparison = LCVPspecies_table[i,3], 
-                                            PL_Alternative = LCVPspecies_table[i,4], 
+                                            Order = LCPspecies_table[i,7], 
+                                            Family = LCPspecies_table[i,6], 
+                                            Genus = unlist(strsplit(LCPspecies_table[i,1], " "))[1], 
+                                            Species = unlist(strsplit(LCPspecies_table[i,1], " "))[2], 
+                                            Infrasp = LCP_Infrasp, 
+                                            Infraspecies = LCP_Infrasp_name, 
+                                            Authors = LCP_Author_name, 
+                                            Status = LCPspecies_table[i,2], 
+                                            LCP_Accepted_Taxon = LCPspecies_table[i,5], 
+                                            PL_Comparison = LCPspecies_table[i,3], 
+                                            PL_Alternative = LCPspecies_table[i,4], 
                                             Score = 'matched', 
                                             Insertion = 0, 
                                             Deletion = 0, 
@@ -352,50 +374,50 @@ function(sp,
                                           Infraspecies = NULL, 
                                           Authors = NULL, 
                                           Status = NULL, 
-                                          LCVP_Accepted_Taxon = NULL, 
+                                          LCP_Accepted_Taxon = NULL, 
                                           PL_Comparison = NULL, 
                                           PL_Alternative = NULL, 
                                           Score = NULL, 
                                           Insertion = NULL, 
                                           Deletion = NULL, 
                                           Substitution = NULL)         
-          matched_name <- agrep(paste(genus,species,sep = " "), LCVPspecies_table$Input.Taxon, value = TRUE, max.distance = max.distance)
-          matched_pos <- agrep(paste(genus,species,sep = " "), LCVPspecies_table$Input.Taxon, value = FALSE, max.distance = max.distance)
+          matched_name <- agrep(paste(genus,species,sep = " "), LCPspecies_table$Input.Taxon, value = TRUE, max.distance = max.distance)
+          matched_pos <- agrep(paste(genus,species,sep = " "), LCPspecies_table$Input.Taxon, value = FALSE, max.distance = max.distance)
           if (length(matched_pos) > 0) {
-            for (i in 1:length(matched_pos)) {
-              LCVP_genus <- unlist(strsplit(matched_name[i], " "))[1]
-              LCVP_species <- unlist(strsplit(matched_name[i], " "))[2]
+            for (i in seq_along(matched_pos)) {
+              LCP_genus <- unlist(strsplit(matched_name[i], " "))[1]
+              LCP_species <- unlist(strsplit(matched_name[i], " "))[2]
               score <- drop(attr(adist(unlist(strsplit(matched_name[i], " "))[2], species, counts = TRUE), "counts"))
               if (length(unlist(strsplit(matched_name[i], " "))) < 3) {   # condizione in cui c'e` solo il genere e specie
-                LCVP_Infrasp <- "species"
-                LCVP_Infrasp_name <- " "
-                LCVP_Author_name <- " "
+                LCP_Infrasp <- "species"
+                LCP_Infrasp_name <- " "
+                LCP_Author_name <- " "
               } else {
-                LCVP_Infrasp <- "species"
-                LCVP_Infrasp_name <- " "
-                LCVP_Author_name <- paste(unlist(strsplit(matched_name[i], " "))[3:length(unlist(strsplit(matched_name[i], " ")))],sep="", collapse = " ")
+                LCP_Infrasp <- "species"
+                LCP_Infrasp_name <- " "
+                LCP_Author_name <- paste(unlist(strsplit(matched_name[i], " "))[3:length(unlist(strsplit(matched_name[i], " ")))],sep="", collapse = " ")
                 for (n in 1:3){
-                  for (m in 1:length(Infrasp_cat)){
+                  for (m in seq_along(Infrasp_cat)){
                     if(unlist(strsplit(matched_name[i], " "))[n] == Infrasp_cat[m]){
-                      LCVP_Infrasp <- unlist(strsplit(matched_name[i], " "))[3]
-                      LCVP_Infrasp_name <- unlist(strsplit(matched_name[i], " "))[4]
-                      LCVP_Author_name <- paste(unlist(strsplit(matched_name[i], " "))[5:length(unlist(strsplit(matched_name[i], " ")))],sep="", collapse = " ")
+                      LCP_Infrasp <- unlist(strsplit(matched_name[i], " "))[3]
+                      LCP_Infrasp_name <- unlist(strsplit(matched_name[i], " "))[4]
+                      LCP_Author_name <- paste(unlist(strsplit(matched_name[i], " "))[5:length(unlist(strsplit(matched_name[i], " ")))],sep="", collapse = " ")
                     }
                   }
                 }
               }
               Genus_table_tmp <- data.frame(Submitted_Name = full_name, 
-                                            Order = LCVPspecies_table[matched_pos[i],7], 
-                                            Family = LCVPspecies_table[matched_pos[i],6], 
-                                            Genus = LCVP_genus, 
-                                            Species = LCVP_species, 
-                                            Infrasp = LCVP_Infrasp, 
-                                            Infraspecies = LCVP_Infrasp_name, 
-                                            Authors = LCVP_Author_name, 
-                                            Status = LCVPspecies_table[matched_pos[i],2], 
-                                            LCVP_Accepted_Taxon = LCVPspecies_table[matched_pos[i],5], 
-                                            PL_Comparison = LCVPspecies_table[matched_pos[i],3], 
-                                            PL_Alternative = LCVPspecies_table[matched_pos[i],4], 
+                                            Order = LCPspecies_table[matched_pos[i],7], 
+                                            Family = LCPspecies_table[matched_pos[i],6], 
+                                            Genus = LCP_genus, 
+                                            Species = LCP_species, 
+                                            Infrasp = LCP_Infrasp, 
+                                            Infraspecies = LCP_Infrasp_name, 
+                                            Authors = LCP_Author_name, 
+                                            Status = LCPspecies_table[matched_pos[i],2], 
+                                            LCP_Accepted_Taxon = LCPspecies_table[matched_pos[i],5], 
+                                            PL_Comparison = LCPspecies_table[matched_pos[i],3], 
+                                            PL_Alternative = LCPspecies_table[matched_pos[i],4], 
                                             Score = 'matched', 
                                             Insertion = 0, 
                                             Deletion = 0, 
@@ -411,7 +433,7 @@ function(sp,
                                                   Infraspecies = "", 
                                                   Authors = "", 
                                                   Status = "", 
-                                                  LCVP_Accepted_Taxon = "", 
+                                                  LCP_Accepted_Taxon = "", 
                                                   PL_Comparison = "", 
                                                   PL_Alternative = "", 
                                                   Score = 'Epithet name not found', 
@@ -421,12 +443,12 @@ function(sp,
         }
       }
     } else if (is.null(Genus_table_final$Genus[1]) && (genus_found == TRUE || genus_search == TRUE)) {
-          matched_name <- agrep(genus, LCVPspecies_table$Input.Taxon, value = TRUE, max.distance = max.distance)
-          matched_pos <- agrep(genus, LCVPspecies_table$Input.Taxon, value = FALSE, max.distance = max.distance)
+          matched_name <- agrep(genus, LCPspecies_table$Input.Taxon, value = TRUE, max.distance = max.distance)
+          matched_pos <- agrep(genus, LCPspecies_table$Input.Taxon, value = FALSE, max.distance = max.distance)
           matched_name2 <- agrep(species, matched_name, value = TRUE, max.distance = max.distance)
           matched_pos2 <- agrep(species, matched_name, value = FALSE, max.distance = max.distance)
           matched_genus <- NULL
-          for (i in 1:length(matched_pos2)) {
+          for (i in seq_along(matched_pos2)) {
             matched_genus <- rbind(matched_genus, unlist(strsplit(matched_name2[i], " "))[1])
           }
           ddf <- abs(nchar(matched_genus) - nchar(genus))
@@ -437,45 +459,45 @@ function(sp,
           result_name <- NULL
           result_pos <- NULL
           if (length(matched_pos) > 0 && length(matched_pos2) > 0) {
-            for (i in 1:length(matched_pos2)) {
+            for (i in seq_along(matched_pos2)) {
               result_name <- rbind(result_name, matched_name2[i])
               iter <- matched_pos2[i]
               result_pos <- rbind(result_pos, matched_pos[matched_pos2[i]])
-              LCVP_genus <- unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[1]
-              LCVP_species <- unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[2]
-              if (LCVP_genus %in% matched_genus) {
-                score <- drop(attr(adist(LCVP_genus, genus, counts = TRUE), "counts"))
-                if (score[1] == 0 && score[2] == 0 && score[3] == 0){score_name = 'matched'} else {score_name = 'misspelling: Genus'}
-                if (length(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))) < 3) {   # condizione in cui c'e` solo il genere e specie
-                  LCVP_Infrasp <- "species"
-                  LCVP_Infrasp_name <- " "
-                  LCVP_Author_name <- " "
+              LCP_genus <- unlist(strsplit(LCPspecies_table[matched_pos[iter],1], " "))[1]
+              LCP_species <- unlist(strsplit(LCPspecies_table[matched_pos[iter],1], " "))[2]
+              if (LCP_genus %in% matched_genus) {
+                score <- drop(attr(adist(LCP_genus, genus, counts = TRUE), "counts"))
+                if (score[1] == 0 && score[2] == 0 && score[3] == 0){score_name <- 'matched'} else {score_name <- 'misspelling: Genus'}
+                if (length(unlist(strsplit(LCPspecies_table[matched_pos[iter],1], " "))) < 3) {   # condizione in cui c'e` solo il genere e specie
+                  LCP_Infrasp <- "species"
+                  LCP_Infrasp_name <- " "
+                  LCP_Author_name <- " "
                 } else {
-                  LCVP_Infrasp <- "species"
-                  LCVP_Infrasp_name <- " "
-                  LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[3:length(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " ")))],sep="", collapse = " ")
+                  LCP_Infrasp <- "species"
+                  LCP_Infrasp_name <- " "
+                  LCP_Author_name <- paste(unlist(strsplit(LCPspecies_table[matched_pos[iter],1], " "))[3:length(unlist(strsplit(LCPspecies_table[matched_pos[iter],1], " ")))],sep="", collapse = " ")
                   for (n in 1:3){
-                    for (m in 1:length(Infrasp_cat)){
-                      if(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[n] == Infrasp_cat[m]){
-                        LCVP_Infrasp <- unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[3]
-                        LCVP_Infrasp_name <- unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[4]
-                        LCVP_Author_name <- paste(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[5:length(unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " ")))],sep="", collapse = " ")
+                    for (m in seq_along(Infrasp_cat)){
+                      if(unlist(strsplit(LCPspecies_table[matched_pos[iter],1], " "))[n] == Infrasp_cat[m]){
+                        LCP_Infrasp <- unlist(strsplit(LCPspecies_table[matched_pos[iter],1], " "))[3]
+                        LCP_Infrasp_name <- unlist(strsplit(LCPspecies_table[matched_pos[iter],1], " "))[4]
+                        LCP_Author_name <- paste(unlist(strsplit(LCPspecies_table[matched_pos[iter],1], " "))[5:length(unlist(strsplit(LCPspecies_table[matched_pos[iter],1], " ")))],sep="", collapse = " ")
                       }
                     }
                   }
                 }
                 Genus_table_tmp <- data.frame(Submitted_Name = full_name, 
-                                              Order = LCVPspecies_table[matched_pos[iter],7], 
-                                              Family = LCVPspecies_table[matched_pos[iter],6], 
-                                              Genus = unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[1], 
-                                              Species = unlist(strsplit(LCVPspecies_table[matched_pos[iter],1], " "))[2], 
-                                              Infrasp = LCVP_Infrasp, 
-                                              Infraspecies = LCVP_Infrasp_name, 
-                                              Authors = LCVP_Author_name, 
-                                              Status = LCVPspecies_table[matched_pos[iter],2], 
-                                              LCVP_Accepted_Taxon = LCVPspecies_table[matched_pos[iter],5], 
-                                              PL_Comparison = LCVPspecies_table[matched_pos[iter],3], 
-                                              PL_Alternative = LCVPspecies_table[matched_pos[iter],4], 
+                                              Order = LCPspecies_table[matched_pos[iter],7], 
+                                              Family = LCPspecies_table[matched_pos[iter],6], 
+                                              Genus = unlist(strsplit(LCPspecies_table[matched_pos[iter],1], " "))[1], 
+                                              Species = unlist(strsplit(LCPspecies_table[matched_pos[iter],1], " "))[2], 
+                                              Infrasp = LCP_Infrasp, 
+                                              Infraspecies = LCP_Infrasp_name, 
+                                              Authors = LCP_Author_name, 
+                                              Status = LCPspecies_table[matched_pos[iter],2], 
+                                              LCP_Accepted_Taxon = LCPspecies_table[matched_pos[iter],5], 
+                                              PL_Comparison = LCPspecies_table[matched_pos[iter],3], 
+                                              PL_Alternative = LCPspecies_table[matched_pos[iter],4], 
                                               Score = score_name, 
                                               Insertion = score[1], 
                                               Deletion = score[2], 
@@ -492,7 +514,7 @@ function(sp,
                                           Infraspecies = "", 
                                           Authors = "", 
                                           Status = "", 
-                                          LCVP_Accepted_Taxon = "", 
+                                          LCP_Accepted_Taxon = "", 
                                           PL_Comparison = "", 
                                           PL_Alternative = "", 
                                           Score = 'Epithet name not found', 
@@ -513,7 +535,7 @@ function(sp,
                                       Infraspecies = "", 
                                       Authors = "", 
                                       Status = "", 
-                                      LCVP_Accepted_Taxon = "", 
+                                      LCP_Accepted_Taxon = "", 
                                       PL_Comparison = "", 
                                       PL_Alternative = "", 
                                       Score = 'Genus name not found', 
@@ -531,7 +553,7 @@ function(sp,
           ddf <- abs(nchar(result) - nchar(species))
         }
         if (length(matched_name) > 0 && (species %in% result) == FALSE) {
-          for (j in 1:length(matched_name)) {
+          for (j in seq_along(matched_name)) {
             if (matched_name[j] %in% result || matched_name[j] %in% result){
               Gen_Tab_genus <- (Genus_table_final$Genus)[matched_pos[j]]
               Gen_Tab_species <- (Genus_table_final$Species)[matched_pos[j]]
@@ -544,11 +566,11 @@ function(sp,
               del <- as.numeric((Genus_table_final$Deletion)[matched_pos[j]]) + score[2]
               sub <- as.numeric((Genus_table_final$Substitution)[matched_pos[j]]) + score[3]
               if((score[1] > 0 || score[2] > 0 || score[3] > 0) && Gen_Tab_Score != 'matched'){
-                  NEW_Tab_Score = paste(Gen_Tab_Score,', Epithet', sep="")
+                  NEW_Tab_Score <- paste(Gen_Tab_Score,', Epithet', sep="")
               } else if ((score[1] > 0 || score[2] > 0 || score[3] > 0) && Gen_Tab_Score == 'matched'){
-                  NEW_Tab_Score = 'misspelling: Epithet'
+                  NEW_Tab_Score <- 'misspelling: Epithet'
               } else {
-                  NEW_Tab_Score = 'misspelling: Epithet'
+                  NEW_Tab_Score <- 'misspelling: Epithet'
               }
               Species_table_tmp <- data.frame(Submitted_Name = Genus_table_final$Submitted_Name[matched_pos[j]], 
                                               Order = Genus_table_final$Order[matched_pos[j]], 
@@ -559,7 +581,7 @@ function(sp,
                                               Infraspecies = Gen_Tab_Infrasp_name, 
                                               Authors = Gen_Tab_Author_name, 
                                               Status = Genus_table_final$Status[matched_pos[j]], 
-                                              LCVP_Accepted_Taxon = Genus_table_final$LCVP_Accepted_Taxon[matched_pos[j]], 
+                                              LCP_Accepted_Taxon = Genus_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
                                               PL_Comparison = Genus_table_final$PL_Comparison[matched_pos[j]], 
                                               PL_Alternative = Genus_table_final$PL_Alternative[matched_pos[j]], 
                                               Score = NEW_Tab_Score, 
@@ -570,7 +592,7 @@ function(sp,
             }
           }
         } else if (length(matched_name) > 0 && (species %in% result) == TRUE) {
-          for (j in 1:length(matched_name)) {
+          for (j in seq_along(matched_name)) {
             if (matched_name[j] == species || matched_name[j] == paste(species,'_x', sep = "")){
               Gen_Tab_genus <- (Genus_table_final$Genus)[matched_pos[j]]
               Gen_Tab_species <- (Genus_table_final$Species)[matched_pos[j]]
@@ -582,7 +604,7 @@ function(sp,
               ins <- as.numeric((Genus_table_final$Insertion)[matched_pos[j]]) + score[1]
               del <- as.numeric((Genus_table_final$Deletion)[matched_pos[j]]) + score[2]
               sub <- as.numeric((Genus_table_final$Substitution)[matched_pos[j]]) + score[3]
-              NEW_Tab_Score = Gen_Tab_Score
+              NEW_Tab_Score <- Gen_Tab_Score
               Species_table_tmp <- data.frame(Submitted_Name = Genus_table_final$Submitted_Name[matched_pos[j]], 
                                               Order = Genus_table_final$Order[matched_pos[j]], 
                                               Family = Genus_table_final$Family[matched_pos[j]], 
@@ -592,7 +614,7 @@ function(sp,
                                               Infraspecies = Gen_Tab_Infrasp_name, 
                                               Authors = Gen_Tab_Author_name, 
                                               Status = Genus_table_final$Status[matched_pos[j]], 
-                                              LCVP_Accepted_Taxon = Genus_table_final$LCVP_Accepted_Taxon[matched_pos[j]], 
+                                              LCP_Accepted_Taxon = Genus_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
                                               PL_Comparison = Genus_table_final$PL_Comparison[matched_pos[j]], 
                                               PL_Alternative = Genus_table_final$PL_Alternative[matched_pos[j]], 
                                               Score = NEW_Tab_Score, 
@@ -615,7 +637,7 @@ function(sp,
               ddf <- abs(nchar(result) - nchar(species))
             }
             if (length(matched_name) > 0 && (infrasp_name %in% result) == FALSE) {
-              for (j in 1:length(matched_name)) {
+              for (j in seq_along(matched_name)) {
                 if (matched_name[j] %in% result){
                   Spec_Tab_genus <- (Species_table_final$Genus)[matched_pos[j]]
                   Spec_Tab_species <- (Species_table_final$Species)[matched_pos[j]]
@@ -628,11 +650,11 @@ function(sp,
                   del <- as.numeric((Species_table_final$Deletion)[matched_pos[j]]) + score[2]
                   sub <- as.numeric((Species_table_final$Substitution)[matched_pos[j]]) + score[3]
                   if((score[1] > 0 || score[2] > 0 || score[3] > 0) && Spec_Tab_Score != 'matched'){
-                      NEW_Tab_Score = paste(Spec_Tab_Score,', Infrasp.', sep="")
+                      NEW_Tab_Score <- paste(Spec_Tab_Score,', Infrasp.', sep="")
                   } else if ((score[1] > 0 || score[2] > 0 || score[3] > 0) && Spec_Tab_Score == 'matched'){
-                    NEW_Tab_Score = 'misspelling: Infrasp.'
+                    NEW_Tab_Score <- 'misspelling: Infrasp.'
                   } else {
-                      NEW_Tab_Score = Spec_Tab_Score
+                      NEW_Tab_Score <- Spec_Tab_Score
                   }
                   Infrasp_table_tmp <- data.frame(Submitted_Name = Species_table_final$Submitted_Name[matched_pos[j]], 
                                                   Order = Species_table_final$Order[matched_pos[j]], 
@@ -643,7 +665,7 @@ function(sp,
                                                   Infraspecies = Spec_Tab_Infrasp_name, 
                                                   Authors = Spec_Tab_Author_name, 
                                                   Status = Species_table_final$Status[matched_pos[j]], 
-                                                  LCVP_Accepted_Taxon = Species_table_final$LCVP_Accepted_Taxon[matched_pos[j]], 
+                                                  LCP_Accepted_Taxon = Species_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
                                                   PL_Comparison = Species_table_final$PL_Comparison[matched_pos[j]], 
                                                   PL_Alternative = Species_table_final$PL_Alternative[matched_pos[j]], 
                                                   Score = NEW_Tab_Score, 
@@ -654,7 +676,7 @@ function(sp,
                 }
               }
             } else if (length(matched_name) > 0 && (infrasp_name %in% result) == TRUE) {
-              for (j in 1:length(matched_name)) {
+              for (j in seq_along(matched_name)) {
                 if (matched_name[j] == infrasp_name){
                   Spec_Tab_genus <- (Species_table_final$Genus)[matched_pos[j]]
                   Spec_Tab_species <- (Species_table_final$Species)[matched_pos[j]]
@@ -666,7 +688,7 @@ function(sp,
                   ins <- as.numeric((Species_table_final$Insertion)[matched_pos[j]]) + score[1]
                   del <- as.numeric((Species_table_final$Deletion)[matched_pos[j]]) + score[2]
                   sub <- as.numeric((Species_table_final$Substitution)[matched_pos[j]]) + score[3]
-                  NEW_Tab_Score = Spec_Tab_Score
+                  NEW_Tab_Score <- Spec_Tab_Score
                   Infrasp_table_tmp <- data.frame(Submitted_Name = Species_table_final$Submitted_Name[matched_pos[j]], 
                                                   Order = Species_table_final$Order[matched_pos[j]], 
                                                   Family = Species_table_final$Family[matched_pos[j]], 
@@ -676,7 +698,7 @@ function(sp,
                                                   Infraspecies = Spec_Tab_Infrasp_name, 
                                                   Authors = Spec_Tab_Author_name, 
                                                   Status = Species_table_final$Status[matched_pos[j]], 
-                                                  LCVP_Accepted_Taxon = Species_table_final$LCVP_Accepted_Taxon[matched_pos[j]], 
+                                                  LCP_Accepted_Taxon = Species_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
                                                   PL_Comparison = Species_table_final$PL_Comparison[matched_pos[j]], 
                                                   PL_Alternative = Species_table_final$PL_Alternative[matched_pos[j]], 
                                                   Score = NEW_Tab_Score, 
@@ -697,7 +719,7 @@ function(sp,
                   ddf <- abs(nchar(result) - nchar(auth_name))
                 }
                 if (length(matched_name) > 0 && (auth_name %in% result) == FALSE) {
-                  for (j in 1:length(matched_name)) {
+                  for (j in seq_along(matched_name)) {
                     if (matched_name[j] %in% result){
                       Infrasp_Tab_genus <- (Infrasp_table_final$Genus)[matched_pos[j]]
                       Infrasp_Tab_species <- (Infrasp_table_final$Species)[matched_pos[j]]
@@ -717,7 +739,7 @@ function(sp,
                                                       Infraspecies = Infrasp_table_final$Infraspecies[matched_pos[j]], 
                                                       Authors = Infrasp_table_final$Authors[matched_pos[j]], 
                                                       Status = Infrasp_table_final$Status[matched_pos[j]], 
-                                                      LCVP_Accepted_Taxon = Infrasp_table_final$LCVP_Accepted_Taxon[matched_pos[j]], 
+                                                      LCP_Accepted_Taxon = Infrasp_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
                                                       PL_Comparison = Infrasp_table_final$PL_Comparison[matched_pos[j]], 
                                                       PL_Alternative = Infrasp_table_final$PL_Alternative[matched_pos[j]], 
                                                       Score = Infrasp_Tab_Score, 
@@ -728,7 +750,7 @@ function(sp,
                     }
                   }
                 } else if (length(matched_name) > 0 && (auth_name %in% result) == TRUE) {
-                  for (j in 1:length(matched_name)) {
+                  for (j in seq_along(matched_name)) {
                     if (matched_name[j] == auth_name){
                       Infrasp_Tab_genus <- (Infrasp_table_final$Genus)[matched_pos[j]]
                       Infrasp_Tab_species <- (Infrasp_table_final$Species)[matched_pos[j]]
@@ -748,7 +770,7 @@ function(sp,
                                                       Infraspecies = Infrasp_table_final$Infraspecies[matched_pos[j]], 
                                                       Authors = Infrasp_table_final$Authors[matched_pos[j]], 
                                                       Status = Infrasp_table_final$Status[matched_pos[j]], 
-                                                      LCVP_Accepted_Taxon = Infrasp_table_final$LCVP_Accepted_Taxon[matched_pos[j]], 
+                                                      LCP_Accepted_Taxon = Infrasp_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
                                                       PL_Comparison = Infrasp_table_final$PL_Comparison[matched_pos[j]], 
                                                       PL_Alternative = Infrasp_table_final$PL_Alternative[matched_pos[j]], 
                                                       Score = Infrasp_Tab_Score, 
@@ -787,7 +809,7 @@ function(sp,
                                                   Infraspecies = Spec_Tab_Infrasp_name, 
                                                   Authors = Spec_Tab_Author_name, 
                                                   Status = Species_table_final$Status[k], 
-                                                  LCVP_Accepted_Taxon = Species_table_final$LCVP_Accepted_Taxon[k], 
+                                                  LCP_Accepted_Taxon = Species_table_final$LCP_Accepted_Taxon[k], 
                                                   PL_Comparison = Species_table_final$PL_Comparison[k], 
                                                   PL_Alternative = Species_table_final$PL_Alternative[k], 
                                                   Score = Spec_Tab_Score, 
@@ -813,14 +835,14 @@ function(sp,
               ddf <- abs(nchar(result) - nchar(auth_name))
             }
             if (length(matched_name) > 0 && (auth_name %in% result) == FALSE) {
-              for (j in 1:length(matched_name)) {
+              for (j in seq_along(matched_name)) {
                 if (matched_name[j] %in% result){
                   Species_Tab_genus <- (Species_table_final$Genus)[matched_pos[j]]
                   Species_Tab_species <- (Species_table_final$Species)[matched_pos[j]]
                   Species_Tab_Infrasp <- (Species_table_final$Infrasp)[matched_pos[j]]
                   Species_Tab_Infrasp_name <- (Species_table_final$Infraspecies)[matched_pos[j]]
                   Species_Tab_Author_name <- (Species_table_final$Authors)[matched_pos[j]]
-                  Species_Tab_Score = (Species_table_final$Score)[matched_pos[j]]
+                  Species_Tab_Score <- (Species_table_final$Score)[matched_pos[j]]
                   Species_Tab_Insertion <- (Species_table_final$Insertion)[matched_pos[j]]
                   Species_Tab_Deletion <- (Species_table_final$Deletion)[matched_pos[j]]
                   Species_Tab_Substitution <- (Species_table_final$Substitution)[matched_pos[j]]
@@ -833,7 +855,7 @@ function(sp,
                                                   Infraspecies = Species_table_final$Infraspecies[matched_pos[j]], 
                                                   Authors = Species_table_final$Authors[matched_pos[j]], 
                                                   Status = Species_table_final$Status[matched_pos[j]], 
-                                                  LCVP_Accepted_Taxon = Species_table_final$LCVP_Accepted_Taxon[matched_pos[j]], 
+                                                  LCP_Accepted_Taxon = Species_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
                                                   PL_Comparison = Species_table_final$PL_Comparison[matched_pos[j]], 
                                                   PL_Alternative = Species_table_final$PL_Alternative[matched_pos[j]], 
                                                   Score = Species_Tab_Score, 
@@ -844,14 +866,14 @@ function(sp,
                 }
               }
             } else if (length(matched_name) > 0 && (auth_name %in% result) == TRUE) {
-              for (j in 1:length(matched_name)) {
+              for (j in seq_along(matched_name)) {
                 if (matched_name[j] == auth_name){
                   Species_Tab_genus <- (Species_table_final$Genus)[matched_pos[j]]
                   Species_Tab_species <- (Species_table_final$Species)[matched_pos[j]]
                   Species_Tab_Infrasp <- (Species_table_final$Infrasp)[matched_pos[j]]
                   Species_Tab_Infrasp_name <- (Species_table_final$Infraspecies)[matched_pos[j]]
                   Species_Tab_Author_name <- (Species_table_final$Authors)[matched_pos[j]]
-                  Species_Tab_Score = (Species_table_final$Score)[matched_pos[j]]
+                  Species_Tab_Score <- (Species_table_final$Score)[matched_pos[j]]
                   Species_Tab_Insertion <- (Species_table_final$Insertion)[matched_pos[j]]
                   Species_Tab_Deletion <- (Species_table_final$Deletion)[matched_pos[j]]
                   Species_Tab_Substitution <- (Species_table_final$Substitution)[matched_pos[j]]
@@ -864,7 +886,7 @@ function(sp,
                                                   Infraspecies = Species_table_final$Infraspecies[matched_pos[j]], 
                                                   Authors = Species_table_final$Authors[matched_pos[j]], 
                                                   Status = Species_table_final$Status[matched_pos[j]], 
-                                                  LCVP_Accepted_Taxon = Species_table_final$LCVP_Accepted_Taxon[matched_pos[j]], 
+                                                  LCP_Accepted_Taxon = Species_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
                                                   PL_Comparison = Species_table_final$PL_Comparison[matched_pos[j]], 
                                                   PL_Alternative = Species_table_final$PL_Alternative[matched_pos[j]], 
                                                   Score = Species_Tab_Score, 
@@ -877,18 +899,22 @@ function(sp,
             } else {Matched_table_final <- Species_table_final}
 # option to search only for the epithet (Genus and epithet) and eventually only for the status 'valid'  ----------------------------------------------------
           } else if (is.null(infrasp) && author == FALSE && infraspecies_tab == FALSE) {
-            matched_name <- agrep('species', Species_table_final$Infrasp, value = TRUE, max.distance = 0)
-            matched_pos <- agrep('species', Species_table_final$Infrasp, value = FALSE, max.distance = 0)
-            matched_name2 <- agrep('valid', Species_table_final$Status, value = TRUE, max.distance = 0)
-            if (length(matched_pos) > 0 && status == TRUE && length(matched_name2) > 0) {
-              for (j in 1:length(matched_pos)) {
+            matched_name <- agrep('species', Species_table_final$Infrasp, 
+                                  value = TRUE, max.distance = 0)
+            matched_pos <- agrep('species', Species_table_final$Infrasp, 
+                                 value = FALSE, max.distance = 0)
+            matched_name2 <- agrep('valid', Species_table_final$Status, 
+                                   value = TRUE, max.distance = 0)
+            if (length(matched_pos) > 0 && status == TRUE && 
+                length(matched_name2) > 0) {
+              for (j in seq_along(matched_pos)) {
                 Spec_Tab_genus <- (Species_table_final$Genus)[matched_pos[j]]
                 Spec_Tab_species <- (Species_table_final$Species)[matched_pos[j]]
                 Spec_Tab_Infrasp <- (Species_table_final$Infrasp)[matched_pos[j]]
                 Spec_Tab_Infrasp_name <- (Species_table_final$Infraspecies)[matched_pos[j]]
                 Spec_Tab_Author_name <- (Species_table_final$Authors)[matched_pos[j]]
                 Spec_Tab_status <- (Species_table_final$Status)[matched_pos[j]]
-                Spec_Tab_Score = (Species_table_final$Score)[matched_pos[j]]
+                Spec_Tab_Score <- (Species_table_final$Score)[matched_pos[j]]
                 Spec_Tab_Insertion <- (Species_table_final$Insertion)[matched_pos[j]]
                 Spec_Tab_Deletion <- (Species_table_final$Deletion)[matched_pos[j]]
                 Spec_Tab_Substitution <- (Species_table_final$Substitution)[matched_pos[j]]
@@ -902,30 +928,32 @@ function(sp,
                                                   Infraspecies = Spec_Tab_Infrasp_name, 
                                                   Authors = Spec_Tab_Author_name, 
                                                   Status = Species_table_final$Status[matched_pos[j]], 
-                                                  LCVP_Accepted_Taxon = Species_table_final$LCVP_Accepted_Taxon[matched_pos[j]], 
+                                                  LCP_Accepted_Taxon = Species_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
                                                   PL_Comparison = Species_table_final$PL_Comparison[matched_pos[j]], 
                                                   PL_Alternative = Species_table_final$PL_Alternative[matched_pos[j]], 
                                                   Score = Spec_Tab_Score, 
                                                   Insertion = Spec_Tab_Insertion, 
                                                   Deletion = Spec_Tab_Deletion, 
                                                   Substitution = Spec_Tab_Substitution)
-                  Matched_table_final <- rbind(Matched_table_final, Matched_table_tmp)
+                  Matched_table_final <- rbind(Matched_table_final, 
+                                               Matched_table_tmp)
                 }
               }
               if (is.null(Matched_table_final$Genus)) {
-                for (j in 1:length(matched_pos)) {
+                for (j in seq_along(matched_pos)) {
                   Spec_Tab_genus <- (Species_table_final$Genus)[matched_pos[j]]
                   Spec_Tab_species <- (Species_table_final$Species)[matched_pos[j]]
                   Spec_Tab_Infrasp <- (Species_table_final$Infrasp)[matched_pos[j]]
                   Spec_Tab_Infrasp_name <- (Species_table_final$Infraspecies)[matched_pos[j]]
                   Spec_Tab_Author_name <- (Species_table_final$Authors)[matched_pos[j]]
                   Spec_Tab_status <- (Species_table_final$Status)[matched_pos[j]]
-                  Spec_Tab_Score = (Species_table_final$Score)[matched_pos[j]]
+                  Spec_Tab_Score <- (Species_table_final$Score)[matched_pos[j]]
                   Spec_Tab_Insertion <- (Species_table_final$Insertion)[matched_pos[j]]
                   Spec_Tab_Deletion <- (Species_table_final$Deletion)[matched_pos[j]]
                   Spec_Tab_Substitution <- (Species_table_final$Substitution)[matched_pos[j]]
                   if (Spec_Tab_Infrasp == 'species'){
-                    Matched_table_tmp <- data.frame(Submitted_Name = Species_table_final$Submitted_Name[matched_pos[j]], 
+                    Matched_table_tmp <- data.frame(Submitted_Name = 
+                                                    Species_table_final$Submitted_Name[matched_pos[j]], 
                                                     Order = Species_table_final$Order[matched_pos[j]], 
                                                     Family = Species_table_final$Family[matched_pos[j]], 
                                                     Genus = Species_table_final$Genus[matched_pos[j]], 
@@ -934,30 +962,34 @@ function(sp,
                                                     Infraspecies = Spec_Tab_Infrasp_name, 
                                                     Authors = Spec_Tab_Author_name, 
                                                     Status = Species_table_final$Status[matched_pos[j]], 
-                                                    LCVP_Accepted_Taxon = Species_table_final$LCVP_Accepted_Taxon[matched_pos[j]], 
+                                                    LCP_Accepted_Taxon = Species_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
                                                     PL_Comparison = Species_table_final$PL_Comparison[matched_pos[j]], 
                                                     PL_Alternative = Species_table_final$PL_Alternative[matched_pos[j]], 
                                                     Score = Spec_Tab_Score, 
                                                     Insertion = Spec_Tab_Insertion, 
                                                     Deletion = Spec_Tab_Deletion, 
                                                     Substitution = Spec_Tab_Substitution)
-                    Matched_table_final <- rbind(Matched_table_final, Matched_table_tmp)
+                    Matched_table_final <- rbind(Matched_table_final, 
+                                                 Matched_table_tmp)
                   }
                 }
               }
-            # option for the cases where there are species only 'synonym', without any 'valid' status
-            } else if (length(matched_pos) > 0 && status == TRUE && length(matched_name2) == 0){
-              for (j in 1:length(matched_pos)) {
+            # option for the cases where there are species only 'synonym', 
+            # without any 'valid' status
+            } else if (length(matched_pos) > 0 && 
+                       status == TRUE && length(matched_name2) == 0){
+              for (j in seq_along(matched_pos)) {
                 Spec_Tab_genus <- (Species_table_final$Genus)[matched_pos[j]]
                 Spec_Tab_species <- (Species_table_final$Species)[matched_pos[j]]
                 Spec_Tab_Infrasp <- (Species_table_final$Infrasp)[matched_pos[j]]
                 Spec_Tab_Infrasp_name <- (Species_table_final$Infraspecies)[matched_pos[j]]
                 Spec_Tab_Author_name <- (Species_table_final$Authors)[matched_pos[j]]
-                Spec_Tab_Score = (Species_table_final$Score)[matched_pos[j]]
+                Spec_Tab_Score <- (Species_table_final$Score)[matched_pos[j]]
                 Spec_Tab_Insertion <- (Species_table_final$Insertion)[matched_pos[j]]
                 Spec_Tab_Deletion <- (Species_table_final$Deletion)[matched_pos[j]]
                 Spec_Tab_Substitution <- (Species_table_final$Substitution)[matched_pos[j]]
-                Matched_table_tmp <- data.frame(Submitted_Name = Species_table_final$Submitted_Name[matched_pos[j]], 
+                Matched_table_tmp <- data.frame(Submitted_Name = 
+                                                Species_table_final$Submitted_Name[matched_pos[j]], 
                                                 Order = Species_table_final$Order[matched_pos[j]], 
                                                 Family = Species_table_final$Family[matched_pos[j]], 
                                                 Genus = Species_table_final$Genus[matched_pos[j]], 
@@ -966,17 +998,19 @@ function(sp,
                                                 Infraspecies = Spec_Tab_Infrasp_name, 
                                                 Authors = Spec_Tab_Author_name, 
                                                 Status = Species_table_final$Status[matched_pos[j]], 
-                                                LCVP_Accepted_Taxon = Species_table_final$LCVP_Accepted_Taxon[matched_pos[j]], 
+                                                LCP_Accepted_Taxon = Species_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
                                                 PL_Comparison = Species_table_final$PL_Comparison[matched_pos[j]], 
                                                 PL_Alternative = Species_table_final$PL_Alternative[matched_pos[j]], 
                                                 Score = Spec_Tab_Score, 
                                                 Insertion = Spec_Tab_Insertion, 
                                                 Deletion = Spec_Tab_Deletion, 
-                                                Substitution = Spec_Tab_Substitution)
-                Matched_table_final <- rbind(Matched_table_final, Matched_table_tmp)
+                                                Substitution = 
+                                                  Spec_Tab_Substitution)
+                Matched_table_final <- rbind(Matched_table_final, 
+                                             Matched_table_tmp)
               }
             } else if (length(matched_pos) > 0 && status == FALSE) {
-              for (j in 1:length(matched_pos)) {
+              for (j in seq_along(matched_pos)) {
                 Spec_Tab_genus <- 
                   (Species_table_final$Genus)[matched_pos[j]]
                 Spec_Tab_species <- 
@@ -997,7 +1031,8 @@ function(sp,
                   (Species_table_final$Substitution)[matched_pos[j]]
                 Matched_table_tmp <- 
                   data.frame(
-                    Submitted_Name = Species_table_final$Submitted_Name[matched_pos[j]], 
+                    Submitted_Name = 
+                      Species_table_final$Submitted_Name[matched_pos[j]], 
                     Order = Species_table_final$Order[matched_pos[j]], 
                     Family = Species_table_final$Family[matched_pos[j]], 
                     Genus = Species_table_final$Genus[matched_pos[j]], 
@@ -1006,14 +1041,15 @@ function(sp,
                     Infraspecies = Spec_Tab_Infrasp_name, 
                     Authors = Spec_Tab_Author_name, 
                     Status = Species_table_final$Status[matched_pos[j]], 
-                    LCVP_Accepted_Taxon = Species_table_final$LCVP_Accepted_Taxon[matched_pos[j]], 
+                    LCP_Accepted_Taxon = Species_table_final$LCP_Accepted_Taxon[matched_pos[j]], 
                     PL_Comparison = Species_table_final$PL_Comparison[matched_pos[j]], 
                     PL_Alternative = Species_table_final$PL_Alternative[matched_pos[j]], 
                     Score = Spec_Tab_Score, 
                     Insertion = Spec_Tab_Insertion, 
                     Deletion = Spec_Tab_Deletion, 
                     Substitution = Spec_Tab_Substitution)
-                Matched_table_final <- rbind(Matched_table_final, Matched_table_tmp)
+                Matched_table_final <- rbind(Matched_table_final, 
+                                             Matched_table_tmp)
               }
             } else {Matched_table_final <- 
               data.frame(Submitted_Name = full_name, 
@@ -1025,7 +1061,7 @@ function(sp,
                          Infraspecies = "", 
                          Authors = "", 
                          Status = "", 
-                         LCVP_Accepted_Taxon = "", 
+                         LCP_Accepted_Taxon = "", 
                          PL_Comparison = "", 
                          PL_Alternative = "", 
                          Score = 'Epithet name not found',
@@ -1043,7 +1079,7 @@ function(sp,
                      Infraspecies = "", 
                      Authors = "", 
                      Status = "", 
-                     LCVP_Accepted_Taxon = "", 
+                     LCP_Accepted_Taxon = "", 
                      PL_Comparison = "", 
                      PL_Alternative = "", 
                      Score = 'Epithet name not found', 
