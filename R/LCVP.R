@@ -102,10 +102,10 @@ function(splist,
   
 # Check for the LCVP package and if not installed, asked to install
     if (!requireNamespace("LCVP", quietly = TRUE)) {
-      stop("Install the 'LCVP' package or provide a custom reference. 
+      warning("Install the 'LCVP' package or provide a custom reference. 
            See the details section in ?LCVP for help.",
-           call. = FALSE
-      )
+           call. = FALSE)
+      return(NULL)
     }else{
       LCVPposition_table <- LCVP::tab_position
       LCVPspecies_table <- LCVP::tab_lcvp
