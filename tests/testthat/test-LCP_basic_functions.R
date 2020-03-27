@@ -13,7 +13,8 @@ test_that("perfect matching with authorities works", {
   expect_equal(nrow(test), 1)
   expect_equal(as.character(test$Status), "synonym")
   expect_equal(as.character(test$Infraspecies), "betulifolius")
-  expect_equal(as.character(test$LCP_Accepted_Taxon), "Abelmoschus moschatus Medik.")
+  expect_equal(as.character(test$LCP_Accepted_Taxon), 
+               "Abelmoschus moschatus Medik.")
 })
 
 test_that("perfect matching with multiple species works", {
@@ -23,7 +24,8 @@ test_that("perfect matching with multiple species works", {
                 "Hibiscus acuminatus"), max.cores = 1)
   
   expect_equal(nrow(test), 4)
-  expect_equal(as.character(test$Status), c("synonym", "synonym", "valid", "synonym"))
+  expect_equal(as.character(test$Status), 
+               c("synonym", "synonym", "valid", "synonym"))
 })
 
 test_that("fuzzy matching works", {
@@ -42,7 +44,9 @@ test_that("fuzzy matching works", {
   test <- LCP("Hibiscus acetosulla", max.distance = 5)
   
   expect_equal(nrow(test), 2)
-  expect_equal(as.character(test$LCP_Accepted_Taxon), c("Hibiscus acetosella Welw. ex Hiern", "Hibiscus acicularis Standl."))
+  expect_equal(as.character(test$LCP_Accepted_Taxon), 
+               c("Hibiscus acetosella Welw. ex Hiern", 
+                 "Hibiscus acicularis Standl."))
   expect_equal(as.character(test$Score), rep("misspelling: Epithet",2))
   expect_equal(test$Substitution, c(1,2))
 })
