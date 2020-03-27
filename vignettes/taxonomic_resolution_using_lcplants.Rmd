@@ -1,7 +1,7 @@
 ---
 title: "Taxonomic name resolution using the Leipzig Catalogue of Vascular Plants and `lcvplants`"
 author: "Alexander Zizka"
-output: html_document
+output: pdf_document
 vignette: >
   %\VignetteIndexEntry{Taxonomic name resolution using the Leipzig Catalogue of Vascular Plants and `lcvplants`}
   %\VignetteEngine{knitr::rmarkdown}
