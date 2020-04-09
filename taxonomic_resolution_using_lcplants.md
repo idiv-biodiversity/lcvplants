@@ -8,19 +8,17 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE)
-```
+
 
 
 # Background
 When comparing or merging any list of plant species, for instance for compiling regional species lists, merging occurrence lists with trait data or phylogenies the taxonomic names must be matched to avoid artificial inflation due to synonyms, data loss or erroneous matches due to homonyms. 
 
 # The Leipzig Catalogue of Vascular Plants
-The Leipzig Catalogue of Vascular Plants (LCVP) is a novel global taxonomic backbone, updating The Plant List, comprising more than 1,300,000 names and 350,000 accepted taxa names. We described the LCVP in detail in the related scientific publication (NOT YET PUBLISHED).
+The Leipzig Catalogue of Vascular Plants is a novel global taxonomic backbone, updating The Plant List, comprising more than 1,300,000 names and 350,000 accepted names. We described the LCVP in detail in the related scientific publication (NOT YET PUBLISHED).
 
 # *lcvplants*
-A package for large-scale taxonomic harmonization of plant names by fuzzy matching and synonymy resolution against the Leipzig Catalogue of Vascular Plants as taxonomic backbone. Submission of single names or list of species names is possible (for lists with more than 5,000 species computation may take some time). 
+A package for large-scale taxonomic harmonization of plant names by fuzzy matching and synonymy resolution against the Leipzig Catalogue of Vascular Plants as taxonomic backbone. Submission of single names or list of species names is possible (for lists with more than 5000 species computation may take some time). 
 
 # Running lcvplants
 ## Installation
@@ -28,16 +26,15 @@ You can install `lcvplants` from github using the devtools package (you may need
 
 
 
-```{r, eval = FALSE}
+
+```r
 library(devtools)
 devtools::install_github("idiv-biodiversity/lcvplants")
 devtools::install_github("idiv-biodiversity/LCVP")
 library(lcvplants)
 ```
 
-```{r, eval = TRUE, echo = FALSE}
-library(lcvplants)
-```
+
 
 
 ## Input
@@ -46,23 +43,58 @@ All you need to run lcvplants is a species name or a list of species names for w
 ## Basic Analysis
 The main function of lcvplants is `LCVP`. The function taxes your names(s) as input argument and will match it against the Leipzig plant Catalogue. LCVP uses fuzzy matching, so that it can identify the accepted name of misspelled species as well. The `LCVP` function has some options to customize the fuzzy matching and the output, which are described below. You can get help on all arguments using `?LCVP`. To run a basic analyses, all you need to do is to call `LCVP` on your species name. **By default, `LCVP` uses direct matches only; see below if you want to use fuzzy matching**.
 
-```{r, message = TRUE}
+
+```r
 LCVP("Hibiscus vitifolius")
 ```
 
+```
+## serial path, for searching a single taxon
+```
+
+```
+## Search based on genus and epithet name
+```
+
+```
+## Time difference of 4.646147 secs
+```
+
+```
+## ---------------------------------------------------------
+```
+
+```
+## -    End of Leipzig Catalogue of Plants (LCVP) search    -
+```
+
+```
+## ---------------------------------------------------------
+```
+
+```
+##   ID      Submitted_Name    Order    Family    Genus    Species Infrasp Infraspecies Authors Status    LCVP_Accepted_Taxon PL_Comparison PL_Alternative   Score Insertion
+## 1  1 Hibiscus vitifolius Malvales Malvaceae Hibiscus vitifolius species                   L.  valid Hibiscus vitifolius L.     identical                matched         0
+##   Deletion Substitution
+## 1        0            0
+```
+
 To assign the results to an object use the following.
-```{r, eval = FALSE}
+
+```r
 resol <- LCVP("Hibiscus vitifolius")
 resol
 ```
 
 The name may (and ideally should) also include the authorities.
-```{r, eval = FALSE}
+
+```r
 LCVP("Hibiscus abelmoschus var. betulifolius Mast.")
 ```
 
-`LCVP` also works on vectors of names. With more than 5,000 names, computation may take some time.
-```{r, eval = FALSE}
+`LCVP` also works on vectors of names. With more than 5000 names, computation may take some time.
+
+```r
 LCVP(c("Hibiscus abelmoschus var. betulifolius Mast.", 
       "Hibiscus abutiloides Willd.", 
       "Hibiscus aculeatus", 
@@ -70,7 +102,8 @@ LCVP(c("Hibiscus abelmoschus var. betulifolius Mast.",
 ```
 
 You can also pick a .csv file from your hard disk.
-```{r, eval = FALSE}
+
+```r
 LCVP("list")
 ```
 
@@ -102,36 +135,122 @@ There are several arguments to customize the matching and output of `LCVP`. See 
 ## Change distance of the fuzzy matching
 In case you expect misspellings in your names list (very likely, at least for longer lists), you might want to use fuzzy matching for the names resolution. If fuzzy matching is activated, `LCVP` will also match names that differ in spelling from the submitted name. You can use the `max.distance` argument to define in how many positions the matched names are allowed to differ from the submitted name. This is especially relevant if your names include authorities, since they often differ in spelling (e.g., if spaces are used or not). One or two might be reasonable values here. Increases in `max.distance` will increase the computation time for the name resolution. In any case, it is advisable to check the results of fuzzy matching since there might be accepted names that only differ by few characters.
 
-```{r}
+
+```r
 # no fuzzy matching does not find misspelled names
 fuzz <- LCVP("Hibiscus vitifolios")
-fuzz$Score
+```
 
+```
+## Time difference of 13.38639 secs
+```
+
+```r
+fuzz$Score
+```
+
+```
+## [1] Epithet name not found
+## Levels: Epithet name not found
+```
+
+```r
 # fuzzy matching does find it
 fuzz <- LCVP("Hibiscus vitifolios", max.distance = 1)
-fuzz$Score
+```
 
+```
+## Time difference of 28.87506 secs
+```
+
+```r
+fuzz$Score
+```
+
+```
+## [1] misspelling: Epithet
+## Levels: misspelling: Epithet
+```
+
+```r
 #Also works for larger distances
 fuzz <- LCVP("Hibiscus vitifulios", max.distance = 2)
-fuzz$Score
+```
 
+```
+## Time difference of 31.13727 secs
+```
+
+```r
+fuzz$Score
+```
+
+```
+## [1] misspelling: Epithet
+## Levels: misspelling: Epithet
+```
+
+```r
 # But results become less reliable with larger distances
 fuzz <- LCVP("Hibiscus acetosulla", max.distance = 5)
+```
+
+```
+## Time difference of 45.30406 secs
+```
+
+```r
 fuzz
+```
+
+```
+##   ID      Submitted_Name    Order    Family    Genus    Species Infrasp Infraspecies        Authors Status                LCVP_Accepted_Taxon PL_Comparison PL_Alternative
+## 1  1 Hibiscus acetosulla Malvales Malvaceae Hibiscus acetosella species              Welw. ex Hiern  valid Hibiscus acetosella Welw. ex Hiern     identical               
+## 2  1 Hibiscus acetosulla Malvales Malvaceae Hibiscus acicularis species                     Standl.  valid        Hibiscus acicularis Standl.     identical               
+##                  Score Insertion Deletion Substitution
+## 1 misspelling: Epithet         0        0            1
+## 2 misspelling: Epithet         3        3            2
 ```
 
 
 ## Run fuzzy matching on the genus
 By default, `LCVP` will only use fuzzy matching for species epitheta, infra-specific names and the authorities. If you want to include the genus name, use the `genus_search` argument.
 
-```{r}
+
+```r
 # no fuzzy matching does not find misspelled names
 fuzz <- LCVP("Hubiscus vitifolius")
-fuzz$Score
+```
 
+```
+## Time difference of 0.1987529 secs
+```
+
+```r
+fuzz$Score
+```
+
+```
+## [1] Genus name not found
+## Levels: Genus name not found
+```
+
+```r
 # fuzzy matching does find it
 fuzz <- LCVP("Hubiscus vitifolius", max.distance = 1, genus_search = TRUE)
+```
+
+```
+## Time difference of 19.96766 secs
+```
+
+```r
 fuzz$Score
+```
+
+```
+## [1] misspelling: Genus
+## Levels: misspelling: Genus
 ```
 
 ## Parallelize computation
@@ -140,20 +259,56 @@ The name resolution can take a while to compute, especially for long lists and h
 ## Get all synonyms for submitted names
 By default, `LCVP` only returns accepted names, but you can use the `LCVP` function to obtain all synonyms for your names of interest using the `status` argument.
 
-```{r, message = TRUE}
+
+```r
 LCVP("Hibiscus vitifolius", status = FALSE)
+```
+
+```
+## serial path, for searching a single taxon
+```
+
+```
+## Search based on genus and epithet name
+```
+
+```
+## Time difference of 0.7920051 secs
+```
+
+```
+## ---------------------------------------------------------
+```
+
+```
+## -    End of Leipzig Catalogue of Plants (LCVP) search    -
+```
+
+```
+## ---------------------------------------------------------
+```
+
+```
+##   ID      Submitted_Name    Order    Family    Genus    Species Infrasp Infraspecies Authors  Status    LCVP_Accepted_Taxon PL_Comparison PL_Alternative   Score Insertion
+## 1  1 Hibiscus vitifolius Malvales Malvaceae Hibiscus vitifolius species                   L.   valid Hibiscus vitifolius L.     identical                matched         0
+## 2  1 Hibiscus vitifolius Malvales Malvaceae Hibiscus vitifolius species                Mill. synonym Hibiscus cannabinus L.     identical                matched         0
+##   Deletion Substitution
+## 1        0            0
+## 2        0            0
 ```
 
 ## Get all names from a genus
 You can also use the `LCVP` function to get a list of all species names within a genus in the Leipzig Catalogue of Vascular Plants.
 
-```{r, eval = FALSE}
+
+```r
 LCVP("Hibiscus", genus_tab = TRUE)
 ```
 
 ## Get all infra-specific names in a species
 Similarly, you can use the `LCVP` function to obtain all infra-specific namers of a species
 
-```{r, eval = FALSE}
+
+```r
 LCVP("Hibiscus vitifolius", infraspecies_tab = TRUE)
 ```

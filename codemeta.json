@@ -119,7 +119,7 @@
   ],
   "releaseNotes": "https://github.com/idiv-biodiversity/lcvplants/blob/master/NEWS.md",
   "readme": "https://github.com/idiv-biodiversity/lcvplants/blob/master/README.md",
-  "fileSize": "4311.457KB",
+  "fileSize": "272.973KB",
   "contIntegration": [
     "https://travis-ci.com/idiv-biodiversity/lcplants.svg?token=Bbiute2RTxuP5ghkjAxb&branch=master",
     "https://codecov.io/github/idiv-biodiversity/lcplants"
