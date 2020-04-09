@@ -95,8 +95,8 @@ the search for the submitted plant name trying to match the corresponding
 taxon in the 'LCVPspecies_table' table.
 }
 \references{
-The Leipzig Catalogue of Vascular Plants (LCVP) - An improved taxonomic
-reference list for all known vascular plants
+The Leipzig Catalogue of Vascular Plants (LCVP)
+An improved taxonomic reference list for all known vascular plants
 }
 \seealso{
 https://idata.idiv.de/ddm/Data/ShowData/1806

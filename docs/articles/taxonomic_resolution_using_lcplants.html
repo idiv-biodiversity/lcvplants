@@ -97,7 +97,7 @@
 <div id="background" class="section level1">
 <h1 class="hasAnchor">
 <a href="#background" class="anchor"></a>Background</h1>
-<p>When comparing or merging any list of plant species, for instance for compiling regional species list, merging occurrence lists with trait data or phylogenies the taxonomic names must be matched, to avoid artificial inflation due to synonyms, data loss or erroneous matches due to homonyms.</p>
+<p>When comparing or merging any list of plant species, for instance for compiling regional species lists, merging occurrence lists with trait data or phylogenies the taxonomic names must be matched to avoid artificial inflation due to synonyms, data loss or erroneous matches due to homonyms.</p>
 </div>
 <div id="the-leipzig-catalogue-of-vascular-plants" class="section level1">
 <h1 class="hasAnchor">
@@ -130,11 +130,11 @@
 <div id="basic-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#basic-analysis" class="anchor"></a>Basic Analysis</h2>
-<p>The main function of lcvplants is <code>LCVP</code>. The function taxes your names(s) as input argument and will match it against the Leipzig plant Catalogue. LCVP uses fuzzy matching, so that it can identify the accepted name of misspelled species as well. The <code>LCVP</code> function has some options to customize the fuzzy matching and the output, which are described below. You can get help on all arguments using <code><a href="../reference/LCVP.html">?LCVP</a></code>. To run a basic analyses, all you need to do is to call <code>LCVP</code> on your species name. <strong>By default <code>LCVP</code> uses direct matches only; see below if you want to use fuzzy matching</strong>.</p>
+<p>The main function of lcvplants is <code>LCVP</code>. The function taxes your names(s) as input argument and will match it against the Leipzig plant Catalogue. LCVP uses fuzzy matching, so that it can identify the accepted name of misspelled species as well. The <code>LCVP</code> function has some options to customize the fuzzy matching and the output, which are described below. You can get help on all arguments using <code><a href="../reference/LCVP.html">?LCVP</a></code>. To run a basic analyses, all you need to do is to call <code>LCVP</code> on your species name. <strong>By default, <code>LCVP</code> uses direct matches only; see below if you want to use fuzzy matching</strong>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifolius"</span>)</a></code></pre></div>
 <pre><code>## serial path, for searching a single taxon</code></pre>
 <pre><code>## Search based on genus and epithet name</code></pre>
-<pre><code>## Time difference of 4.703576 secs</code></pre>
+<pre><code>## Time difference of 9.623202 secs</code></pre>
 <pre><code>## ---------------------------------------------------------</code></pre>
 <pre><code>## -    End of Leipzig Catalogue of Plants (LCVP) search    -</code></pre>
 <pre><code>## ---------------------------------------------------------</code></pre>
@@ -197,7 +197,7 @@
 </tr>
 <tr class="odd">
 <td>Infrasp</td>
-<td>The infra-specific rank, in case the matched name is an infra-specific rank</td>
+<td>The infra-specific rank, in case the matched name contains a variety or subspecies name</td>
 </tr>
 <tr class="even">
 <td>Infraspecies</td>
@@ -249,25 +249,25 @@
 <p>In case you expect misspellings in your names list (very likely, at least for longer lists), you might want to use fuzzy matching for the names resolution. If fuzzy matching is activated, <code>LCVP</code> will also match names that differ in spelling from the submitted name. You can use the <code>max.distance</code> argument to define in how many positions the matched names are allowed to differ from the submitted name. This is especially relevant if your names include authorities, since they often differ in spelling (e.g., if spaces are used or not). One or two might be reasonable values here. Increases in <code>max.distance</code> will increase the computation time for the name resolution. In any case, it is advisable to check the results of fuzzy matching since there might be accepted names that only differ by few characters.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># no fuzzy matching does not find misspelled names</span></a>
 <a class="sourceLine" id="cb14-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifolios"</span>)</a></code></pre></div>
-<pre><code>## Time difference of 11.65436 secs</code></pre>
+<pre><code>## Time difference of 33.70832 secs</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">fuzz<span class="op">$</span>Score</a></code></pre></div>
 <pre><code>## [1] Epithet name not found
 ## Levels: Epithet name not found</code></pre>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># fuzzy matching does find it</span></a>
 <a class="sourceLine" id="cb18-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifolios"</span>, <span class="dt">max.distance =</span> <span class="dv">1</span>)</a></code></pre></div>
-<pre><code>## Time difference of 24.59812 secs</code></pre>
+<pre><code>## Time difference of 54.69226 secs</code></pre>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">fuzz<span class="op">$</span>Score</a></code></pre></div>
 <pre><code>## [1] misspelling: Epithet
 ## Levels: misspelling: Epithet</code></pre>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co">#Also works for larger distances</span></a>
 <a class="sourceLine" id="cb22-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifulios"</span>, <span class="dt">max.distance =</span> <span class="dv">2</span>)</a></code></pre></div>
-<pre><code>## Time difference of 26.36493 secs</code></pre>
+<pre><code>## Time difference of 46.98707 secs</code></pre>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">fuzz<span class="op">$</span>Score</a></code></pre></div>
 <pre><code>## [1] misspelling: Epithet
 ## Levels: misspelling: Epithet</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co"># But results become less reliable with larger distances</span></a>
 <a class="sourceLine" id="cb26-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus acetosulla"</span>, <span class="dt">max.distance =</span> <span class="dv">5</span>)</a></code></pre></div>
-<pre><code>## Time difference of 41.3031 secs</code></pre>
+<pre><code>## Time difference of 59.2915 secs</code></pre>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">fuzz</a></code></pre></div>
 <pre><code>##   ID      Submitted_Name    Order    Family    Genus    Species Infrasp
 ## 1  1 Hibiscus acetosulla Malvales Malvaceae Hibiscus acetosella species
@@ -285,16 +285,16 @@
 <div id="run-fuzzy-matching-on-the-genus" class="section level2">
 <h2 class="hasAnchor">
 <a href="#run-fuzzy-matching-on-the-genus" class="anchor"></a>Run fuzzy matching on the genus</h2>
-<p>By default <code>LCVP</code> will only use fuzzy matching for the species epitheton, infra-specific names and the authorities. If you want to include the genus name, use the <code>genus_search</code> argument.</p>
+<p>By default, <code>LCVP</code> will only use fuzzy matching for species epitheta, infra-specific names and the authorities. If you want to include the genus name, use the <code>genus_search</code> argument.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="co"># no fuzzy matching does not find misspelled names</span></a>
 <a class="sourceLine" id="cb30-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hubiscus vitifolius"</span>)</a></code></pre></div>
-<pre><code>## Time difference of 0.1602681 secs</code></pre>
+<pre><code>## Time difference of 0.2480421 secs</code></pre>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">fuzz<span class="op">$</span>Score</a></code></pre></div>
 <pre><code>## [1] Genus name not found
 ## Levels: Genus name not found</code></pre>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="co"># fuzzy matching does find it</span></a>
 <a class="sourceLine" id="cb34-2" title="2">fuzz &lt;-<span class="st"> </span><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hubiscus vitifolius"</span>, <span class="dt">max.distance =</span> <span class="dv">1</span>, <span class="dt">genus_search =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<pre><code>## Time difference of 18.07757 secs</code></pre>
+<pre><code>## Time difference of 27.32786 secs</code></pre>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">fuzz<span class="op">$</span>Score</a></code></pre></div>
 <pre><code>## [1] misspelling: Genus
 ## Levels: misspelling: Genus</code></pre>
@@ -302,7 +302,7 @@
 <div id="parallelize-computation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#parallelize-computation" class="anchor"></a>Parallelize computation</h2>
-<p>The name resolution can take a while to compute, especially for long lists and high matching distances (can be up to 30 minutes). TO speed up the process, you can use multiple cores if available using the <code>max.cores</code> argument. By default <code>LCVP</code> will use all available cores but one.</p>
+<p>The name resolution can take a while to compute, especially for long lists and high matching distances (can be up to 30 minutes). To speed up the process, you can use multiple cores if available using the <code>max.cores</code> argument. By default, <code>LCVP</code> will use all available cores but one.</p>
 </div>
 <div id="get-all-synonyms-for-submitted-names" class="section level2">
 <h2 class="hasAnchor">
@@ -311,7 +311,7 @@
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifolius"</span>, <span class="dt">status =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <pre><code>## serial path, for searching a single taxon</code></pre>
 <pre><code>## Search based on genus and epithet name</code></pre>
-<pre><code>## Time difference of 0.554873 secs</code></pre>
+<pre><code>## Time difference of 0.7222929 secs</code></pre>
 <pre><code>## ---------------------------------------------------------</code></pre>
 <pre><code>## -    End of Leipzig Catalogue of Plants (LCVP) search    -</code></pre>
 <pre><code>## ---------------------------------------------------------</code></pre>

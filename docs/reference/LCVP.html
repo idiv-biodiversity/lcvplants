@@ -37,7 +37,8 @@
 
 <meta property="og:title" content="Standardize plant names according to the Leipzig Catalogue of Plants (LCVP) — LCVP" />
 <meta property="og:description" content="Allow a taxonomic resolution of plant taxa names listed in the &quot;Leipzig
-Catalogue of Vascular Plants&quot; (LCVP). Connects to the LCVP table and validates the
+Catalogue of Vascular Plants&quot; (LCVP). 
+Connects to the LCVP table and validates the
 names of a vector of plant taxa, replacing synonyms by accepted names and
 removing orthographical errors in plant names. 
 The LCVP data package must be installed. It is available from 
@@ -132,7 +133,8 @@ https://github.com/idiv-biodiversity/LCVP." />
 
     <div class="ref-description">
     <p>Allow a taxonomic resolution of plant taxa names listed in the "Leipzig
-Catalogue of Vascular Plants" (LCVP). Connects to the LCVP table and validates the
+Catalogue of Vascular Plants" (LCVP). 
+Connects to the LCVP table and validates the
 names of a vector of plant taxa, replacing synonyms by accepted names and
 removing orthographical errors in plant names. 
 The LCVP data package must be installed. It is available from 
@@ -255,19 +257,19 @@ reference list for all known vascular plants</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>LCVP</span>(<span class='st'>"Hibiscus vitifolius"</span>)</div><div class='output co'>#&gt; <span class='message'>serial path, for searching a single taxon</span></div><div class='output co'>#&gt; <span class='message'>Search based on genus and epithet name</span></div><div class='output co'>#&gt; Time difference of 5.032986 secs</div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt; <span class='message'>-    End of Leipzig Catalogue of Plants (LCVP) search    -</span></div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt;   ID      Submitted_Name    Order    Family    Genus    Species Infrasp
+<span class='fu'>LCVP</span>(<span class='st'>"Hibiscus vitifolius"</span>)</div><div class='output co'>#&gt; <span class='message'>serial path, for searching a single taxon</span></div><div class='output co'>#&gt; <span class='message'>Search based on genus and epithet name</span></div><div class='output co'>#&gt; Time difference of 9.278636 secs</div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt; <span class='message'>-    End of Leipzig Catalogue of Plants (LCVP) search    -</span></div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt;   ID      Submitted_Name    Order    Family    Genus    Species Infrasp
 #&gt; 1  1 Hibiscus vitifolius Malvales Malvaceae Hibiscus vitifolius species
 #&gt;   Infraspecies Authors Status    LCVP_Accepted_Taxon PL_Comparison
 #&gt; 1                   L.  valid Hibiscus vitifolius L.     identical
 #&gt;   PL_Alternative   Score Insertion Deletion Substitution
-#&gt; 1                matched         0        0            0</div><div class='input'><span class='fu'>LCVP</span>(<span class='st'>"Hibiscus abelmoschus var. betulifolius Mast."</span>)</div><div class='output co'>#&gt; <span class='message'>serial path, for searching a single taxon</span></div><div class='output co'>#&gt; <span class='message'>Search based on genus, epithet, infraspecies and author name</span></div><div class='output co'>#&gt; Time difference of 1.470345 secs</div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt; <span class='message'>-    End of Leipzig Catalogue of Plants (LCVP) search    -</span></div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt;   ID                               Submitted_Name    Order    Family    Genus
+#&gt; 1                matched         0        0            0</div><div class='input'><span class='fu'>LCVP</span>(<span class='st'>"Hibiscus abelmoschus var. betulifolius Mast."</span>)</div><div class='output co'>#&gt; <span class='message'>serial path, for searching a single taxon</span></div><div class='output co'>#&gt; <span class='message'>Search based on genus, epithet, infraspecies and author name</span></div><div class='output co'>#&gt; Time difference of 3.040194 secs</div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt; <span class='message'>-    End of Leipzig Catalogue of Plants (LCVP) search    -</span></div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt;   ID                               Submitted_Name    Order    Family    Genus
 #&gt; 1  1 Hibiscus abelmoschus var. betulifolius Mast. Malvales Malvaceae Hibiscus
 #&gt;       Species Infrasp Infraspecies Authors  Status          LCVP_Accepted_Taxon
 #&gt; 1 abelmoschus    var. betulifolius   Mast. synonym Abelmoschus moschatus Medik.
 #&gt;   PL_Comparison PL_Alternative   Score Insertion Deletion Substitution
 #&gt; 1     identical                matched         0        0            0</div><div class='input'><span class='fu'>LCVP</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Hibiscus abelmoschus var. betulifolius Mast."</span>,
      <span class='st'>"Hibiscus abutiloides Willd."</span>,
-      <span class='st'>"Hibiscus aculeatus"</span>, <span class='st'>"Hibiscus acuminatus"</span>), <span class='kw'>max.cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>parallel path, for searching a list of taxa</span></div><div class='output co'>#&gt; Time difference of 11.3149 secs</div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt; <span class='message'>-    End of Leipzig Catalogue of Plants (LCVP) search    -</span></div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt;   ID                               Submitted_Name    Order    Family    Genus
+      <span class='st'>"Hibiscus aculeatus"</span>, <span class='st'>"Hibiscus acuminatus"</span>), <span class='kw'>max.cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>parallel path, for searching a list of taxa</span></div><div class='output co'>#&gt; Time difference of 23.58359 secs</div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt; <span class='message'>-    End of Leipzig Catalogue of Plants (LCVP) search    -</span></div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt;   ID                               Submitted_Name    Order    Family    Genus
 #&gt; 1  1 Hibiscus abelmoschus var. betulifolius Mast. Malvales Malvaceae Hibiscus
 #&gt; 2  2                  Hibiscus abutiloides Willd. Malvales Malvaceae Hibiscus
 #&gt; 3  3                           Hibiscus aculeatus Malvales Malvaceae Hibiscus

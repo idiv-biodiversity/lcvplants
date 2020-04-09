@@ -1,5 +1,8 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "lcvplants",
   "description": "Allows taxonomic resolution of plant taxa names listed in the \"Leipzig Catalogue of Vascular Plants\" (LCVP). The package aims to facilitate finding, retrieving and orthographically resolving plant names through the comparison between plant taxa. The R-package is able to apply a text-based search of plant names on the LCVP using a fuzzy match algorithm, which is the core of the searching engine.",
@@ -116,8 +119,11 @@
   ],
   "releaseNotes": "https://github.com/idiv-biodiversity/lcvplants/blob/master/NEWS.md",
   "readme": "https://github.com/idiv-biodiversity/lcvplants/blob/master/README.md",
-  "fileSize": "4304.691KB",
-  "contIntegration": ["https://travis-ci.com/idiv-biodiversity/lcplants.svg?token=Bbiute2RTxuP5ghkjAxb&branch=master", "https://codecov.io/github/idiv-biodiversity/lcplants"],
+  "fileSize": "4311.457KB",
+  "contIntegration": [
+    "https://travis-ci.com/idiv-biodiversity/lcplants.svg?token=Bbiute2RTxuP5ghkjAxb&branch=master",
+    "https://codecov.io/github/idiv-biodiversity/lcplants"
+  ],
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
     {
