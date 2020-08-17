@@ -200,15 +200,23 @@ function(sp,
   # Matched_table_final <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
   
   # SIMPLIFICATION ALEX 
-  Genus_table_tmp     <- data.frame(Submitted_Name = NULL, Order = NULL, 
-                                    Family = NULL, Genus = NULL, 
-                                    Species = NULL, Infrasp = NULL, 
-                                    Infraspecies = NULL, Authors = NULL, 
-                                    Status = NULL, LCVP_Accepted_Taxon = NULL, 
+  Genus_table_tmp     <- data.frame(Submitted_Name = NULL, 
+                                    Order = NULL, 
+                                    Family = NULL, 
+                                    Genus = NULL, 
+                                    Species = NULL, 
+                                    Infrasp = NULL, 
+                                    Infraspecies = NULL,
+                                    Authors = NULL, 
+                                    Status = NULL, 
+                                    LCVP_Accepted_Taxon = NULL, 
                                     PL_Comparison = NULL, 
                                     PL_Alternative = NULL, 
-                                    Score = NULL, Insertion = NULL, 
-                                    Deletion = NULL, Substitution = NULL)
+                                    Score = NULL, 
+                                    Insertion = NULL, 
+                                    Deletion = NULL, 
+                                    Substitution = NULL, 
+                                    stringsAsFactors = FALSE)
   
     Genus_table_final   <- 
     Species_table_tmp   <-
@@ -334,7 +342,8 @@ function(sp,
                                           Score = 'matched', 
                                           Insertion = score[1], 
                                           Deletion = score[2], 
-                                          Substitution = score[3])
+                                          Substitution = score[3], 
+                                          stringsAsFactors = FALSE)
             Genus_table_final <- rbind(Genus_table_final, Genus_table_tmp)
           }
         }
@@ -392,7 +401,8 @@ function(sp,
                                             Score = 'matched', 
                                             Insertion = 0, 
                                             Deletion = 0, 
-                                            Substitution = 0)
+                                            Substitution = 0, 
+                                            stringsAsFactors = FALSE)
               Genus_table_final <- rbind(Genus_table_final, Genus_table_tmp)
             }
           }
@@ -418,7 +428,8 @@ function(sp,
                                           Score = NULL, 
                                           Insertion = NULL, 
                                           Deletion = NULL, 
-                                          Substitution = NULL)         
+                                          Substitution = NULL, 
+                                          stringsAsFactors = FALSE)         
           matched_name <- agrep(paste(genus,species,sep = " "), 
                                 LCVPspecies_table$Input.Taxon, value = TRUE, max.distance = max.distance)
           matched_pos <- agrep(paste(genus,species,sep = " "), 
@@ -468,7 +479,8 @@ function(sp,
                                             Score = 'matched', 
                                             Insertion = 0, 
                                             Deletion = 0, 
-                                            Substitution = 0)
+                                            Substitution = 0, 
+                                            stringsAsFactors = FALSE)
               Genus_table_final <- rbind(Genus_table_final, Genus_table_tmp)
             }
           } else {Genus_table_final <- data.frame(Submitted_Name = 
@@ -487,7 +499,8 @@ function(sp,
                                                   Score = 'Epithet name not found', 
                                                   Insertion = 0, 
                                                   Deletion = 0, 
-                                                  Substitution = 0)}
+                                                  Substitution = 0, 
+                                                  stringsAsFactors = FALSE)}
         }
       }
     } else if (is.null(Genus_table_final$Genus[1]) 
@@ -563,7 +576,8 @@ function(sp,
                                               Score = score_name, 
                                               Insertion = score[1], 
                                               Deletion = score[2], 
-                                              Substitution = score[3])
+                                              Substitution = score[3], 
+                                              stringsAsFactors = FALSE)
                 Genus_table_final <- rbind(Genus_table_final, Genus_table_tmp)
               }
             }
@@ -583,7 +597,8 @@ function(sp,
                                           Score = 'Epithet name not found', 
                                           Insertion = 0, 
                                           Deletion = 0, 
-                                          Substitution = 0)
+                                          Substitution = 0, 
+                                          stringsAsFactors = FALSE)
             Genus_table_final <- rbind(Genus_table_final, 
                                        Genus_table_tmp)
           }
@@ -606,7 +621,8 @@ function(sp,
                                       Score = 'Genus name not found', 
                                       Insertion = 0, 
                                       Deletion = 0, 
-                                      Substitution = 0)
+                                      Substitution = 0, 
+                                      stringsAsFactors = FALSE)
   } else {
   # run the fuzzy match search engine for the species
     if (!is.null(species)) {
@@ -655,7 +671,8 @@ function(sp,
                                               Score = NEW_Tab_Score, 
                                               Insertion = ins, 
                                               Deletion = del, 
-                                              Substitution = sub)
+                                              Substitution = sub, 
+                                              stringsAsFactors = FALSE)
               Species_table_final <- rbind(Species_table_final,
                                            Species_table_tmp)
             }
@@ -691,7 +708,8 @@ function(sp,
                                               Score = NEW_Tab_Score, 
                                               Insertion = ins, 
                                               Deletion = del, 
-                                              Substitution = sub)
+                                              Substitution = sub, 
+                                              stringsAsFactors = FALSE)
               Species_table_final <- rbind(Species_table_final, 
                                            Species_table_tmp)
             }
@@ -750,7 +768,8 @@ function(sp,
                                                   Score = NEW_Tab_Score, 
                                                   Insertion = ins, 
                                                   Deletion = del, 
-                                                  Substitution = sub)
+                                                  Substitution = sub, 
+                                                  stringsAsFactors = FALSE)
                   Infrasp_table_final <- rbind(Infrasp_table_final, 
                                                Infrasp_table_tmp)
                 }
@@ -786,7 +805,8 @@ function(sp,
                                                   Score = NEW_Tab_Score, 
                                                   Insertion = ins, 
                                                   Deletion = del, 
-                                                  Substitution = sub)
+                                                  Substitution = sub, 
+                                                  stringsAsFactors = FALSE)
                   Infrasp_table_final <- rbind(Infrasp_table_final, 
                                                Infrasp_table_tmp)
                 }
@@ -833,7 +853,8 @@ function(sp,
                                                       Score = Infrasp_Tab_Score, 
                                                       Insertion = Infrasp_Tab_Insertion, 
                                                       Deletion = Infrasp_Tab_Deletion, 
-                                                      Substitution = Infrasp_Tab_Substitution)
+                                                      Substitution = Infrasp_Tab_Substitution, 
+                                                      stringsAsFactors = FALSE)
                       Matched_table_final <- rbind(Matched_table_final, 
                                                    Matched_table_tmp)
                     }
@@ -867,7 +888,8 @@ function(sp,
                                                       Score = Infrasp_Tab_Score, 
                                                       Insertion = Infrasp_Tab_Insertion, 
                                                       Deletion = Infrasp_Tab_Deletion, 
-                                                      Substitution = Infrasp_Tab_Substitution)
+                                                      Substitution = Infrasp_Tab_Substitution, 
+                                                      stringsAsFactors = FALSE)
                       Matched_table_final <- rbind(Matched_table_final, 
                                                    Matched_table_tmp)
                     }
@@ -910,7 +932,8 @@ function(sp,
                                                   Score = Spec_Tab_Score, 
                                                   Insertion = Spec_Tab_Insertion, 
                                                   Deletion = Spec_Tab_Deletion, 
-                                                  Substitution = Spec_Tab_Substitution)
+                                                  Substitution = Spec_Tab_Substitution, 
+                                                  stringsAsFactors = FALSE)
                   Matched_table_final <- rbind(Matched_table_final, 
                                                Matched_table_tmp)
                 }
@@ -961,7 +984,8 @@ function(sp,
                                                   Score = Species_Tab_Score, 
                                                   Insertion = Species_Tab_Insertion, 
                                                   Deletion = Species_Tab_Deletion, 
-                                                  Substitution = Species_Tab_Substitution)
+                                                  Substitution = Species_Tab_Substitution, 
+                                                  stringsAsFactors = FALSE)
                   Matched_table_final <- rbind(Matched_table_final, 
                                                Matched_table_tmp)
                 }
@@ -995,7 +1019,8 @@ function(sp,
                                                   Score = Species_Tab_Score, 
                                                   Insertion = Species_Tab_Insertion, 
                                                   Deletion = Species_Tab_Deletion, 
-                                                  Substitution = Species_Tab_Substitution)
+                                                  Substitution = Species_Tab_Substitution, 
+                                                  stringsAsFactors = FALSE)
                   Matched_table_final <- rbind(Matched_table_final, 
                                                Matched_table_tmp)
                 }
@@ -1041,7 +1066,8 @@ function(sp,
                                                   Score = Spec_Tab_Score, 
                                                   Insertion = Spec_Tab_Insertion, 
                                                   Deletion = Spec_Tab_Deletion, 
-                                                  Substitution = Spec_Tab_Substitution)
+                                                  Substitution = Spec_Tab_Substitution, 
+                                                  stringsAsFactors = FALSE)
                   Matched_table_final <- rbind(Matched_table_final, 
                                                Matched_table_tmp)
                 }
@@ -1075,7 +1101,8 @@ function(sp,
                                                     Score = Spec_Tab_Score, 
                                                     Insertion = Spec_Tab_Insertion, 
                                                     Deletion = Spec_Tab_Deletion, 
-                                                    Substitution = Spec_Tab_Substitution)
+                                                    Substitution = Spec_Tab_Substitution, 
+                                                    stringsAsFactors = FALSE)
                     Matched_table_final <- rbind(Matched_table_final, 
                                                  Matched_table_tmp)
                   }
@@ -1111,8 +1138,8 @@ function(sp,
                                                 Score = Spec_Tab_Score, 
                                                 Insertion = Spec_Tab_Insertion, 
                                                 Deletion = Spec_Tab_Deletion, 
-                                                Substitution = 
-                                                  Spec_Tab_Substitution)
+                                                Substitution = Spec_Tab_Substitution, 
+                                                stringsAsFactors = FALSE)
                 Matched_table_final <- rbind(Matched_table_final, 
                                              Matched_table_tmp)
               }
@@ -1154,7 +1181,8 @@ function(sp,
                     Score = Spec_Tab_Score, 
                     Insertion = Spec_Tab_Insertion, 
                     Deletion = Spec_Tab_Deletion, 
-                    Substitution = Spec_Tab_Substitution)
+                    Substitution = Spec_Tab_Substitution, 
+                    stringsAsFactors = FALSE)
                 Matched_table_final <- rbind(Matched_table_final, 
                                              Matched_table_tmp)
               }
@@ -1174,7 +1202,8 @@ function(sp,
                          Score = 'Epithet name not found',
                          Insertion = 0, 
                          Deletion = 0, 
-                         Substitution = 0)}
+                         Substitution = 0, 
+                         stringsAsFactors = FALSE)}
           } else {Matched_table_final <- Species_table_final}
         } else {Matched_table_final <- 
           data.frame(Submitted_Name = full_name,
@@ -1192,7 +1221,8 @@ function(sp,
                      Score = 'Epithet name not found', 
                      Insertion = 0, 
                      Deletion = 0, 
-                     Substitution = 0)}
+                     Substitution = 0, 
+                     stringsAsFactors = FALSE)}
         if (visualize == TRUE){
           Matched_table <- Matched_table_final
         }

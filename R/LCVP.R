@@ -199,7 +199,8 @@ function(splist,
                                  Score = NULL, 
                                  Insertion = NULL,
                                  Deletion = NULL, 
-                                 Substitution = NULL)
+                                 Substitution = NULL, 
+                                 stringsAsFactors = FALSE)
   Output_Table <- data.frame(ID = NULL, 
                              Submitted_Name = NULL, 
                              Order = NULL,
@@ -216,7 +217,8 @@ function(splist,
                              Score = NULL, 
                              Insertion = NULL, 
                              Deletion = NULL, 
-                             Substitution = NULL)
+                             Substitution = NULL, 
+                             stringsAsFactors = FALSE)
   
   iter <- 0
   namefirst <- " "

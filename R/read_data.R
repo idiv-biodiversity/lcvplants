@@ -27,7 +27,7 @@ read_data <-
                                     fill = TRUE,
                                     colClasses = "character",
                                     as.is = TRUE,
-                                    encoding = encoding
+                                    stringsAsFactors = FALSE
     ), silent = TRUE)
     
     N_rows <- dim(search_table.sp)[1]
