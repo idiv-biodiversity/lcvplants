@@ -38,5 +38,5 @@ LCVP("list")
 You can find more information on how to use lcvplants in the [vignette](https://idiv-biodiversity.github.io/lcvplants/articles/taxonomic_resolution_using_lcplants.html)
 
 # Citation
-Freiberg M, Winter M, Gentile A, Zizka A, Muellner-Riehl AN, Weigelt A & Wirth C. The Leipzig Catalogue of Vascular Plants (LCVP) –- An improved taxonomic reference list for all known vascular plants. R package, available at https://github.com/idiv-biodiversity/lcvplants.
+Freiberg M, Winter M, Gentile A, Zizka A, Muellner-Riehl AN, Weigelt A & Wirth C. LCVP, The Leipzig catalogue of vascular plants, a new taxonomic reference list for all known vascular plants. R package, available at https://github.com/idiv-biodiversity/lcvplants.
 
