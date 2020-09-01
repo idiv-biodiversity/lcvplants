@@ -14,10 +14,9 @@
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.3",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.3 (2020-02-29)",
+  "runtimePlatform": "R Under development (unstable) (2020-08-30 r79091)",
   "author": [
     {
       "@type": "Person",
@@ -119,11 +118,8 @@
   ],
   "releaseNotes": "https://github.com/idiv-biodiversity/lcvplants/blob/master/NEWS.md",
   "readme": "https://github.com/idiv-biodiversity/lcvplants/blob/master/README.md",
-  "fileSize": "272.973KB",
-  "contIntegration": [
-    "https://travis-ci.com/idiv-biodiversity/lcplants.svg?token=Bbiute2RTxuP5ghkjAxb&branch=master",
-    "https://codecov.io/github/idiv-biodiversity/lcplants"
-  ],
+  "fileSize": "0KB",
+  "contIntegration": ["https://travis-ci.com/idiv-biodiversity/lcplants.svg?token=Bbiute2RTxuP5ghkjAxb&branch=master", "https://codecov.io/github/idiv-biodiversity/lcplants"],
   "developmentStatus": "https://www.repostatus.org/#active",
   "citation": [
     {
@@ -170,7 +166,7 @@
       "identifier": "XXX",
       "url": "https://github.com/idiv-biodiversity/lcplants",
       "description": "note",
-      "paginiation": "0",
+      "pagination": "0",
       "isPartOf": {
         "@type": "PublicationIssue",
         "issueNumber": "0",
