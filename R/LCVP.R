@@ -139,7 +139,7 @@ function(splist,
   
   
 # run the function
-  if (length(splist) < 2) {
+  if (length(splist) < 2 | max.cores < 2) {
     message("serial path, for searching a single taxon")
     results <- do.call("rbind", lapply(splist, 
                                        genus_search = genus_search, 
