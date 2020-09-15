@@ -1,7 +1,7 @@
 Package: lcvplants
 Title: The Leipzig Catalogue of Vascular Plants (LCVP) - An improved taxonomic reference list 
     for all known vascular plants
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(
     person(given = "Alessandro", family = "Gentile", role = c("aut", "cre"), email = "gentile.alessandro@gmail.com"),
     person(given = "Martin", family = "Freiberg", role = "aut"),

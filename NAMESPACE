@@ -2,6 +2,7 @@
 
 export(LCVP)
 export(read_data)
+importFrom(LCVP,update_LCVP_data)
 importFrom(parallel,detectCores)
 importFrom(parallel,makeCluster)
 importFrom(parallel,parLapply)

@@ -66,7 +66,7 @@
 #' 
 #' @importFrom utils View adist data write.table
 #' @importFrom parallel detectCores makeCluster parLapply stopCluster
-#' 
+#' @importFrom LCVP update_LCVP_data
 #' @export LCVP
 #' 
 
@@ -114,30 +114,6 @@ function(splist,
 
 
 
-# query LCVP list ----------------------------------------------------
-  
-  #ASK ALESSANDRO ABOUT THIS SECTION, IF it is necessary
-  
-  #data(LCVPposition_table)
-  #data(LCVPspecies_table)
-  # pkgEnv <- new.env(parent=emptyenv())
-  # 
-  # if(!exists("LCVPposition_table", pkgEnv)) {
-  #   data("LCVPposition_table", package="LCVPlants", envir=pkgEnv)
-  # }
-  # if(!exists("LCVPspecies_table", pkgEnv)) {
-  #   data("LCVPspecies_table", package="LCVPlants", envir=pkgEnv)
-  # }
-  # 
-  # get_position <- function() {
-  #   pkgEnv[["LCVPposition_table"]]
-  # }
-  # get_species <- function() {
-  #   pkgEnv[["LCVPspecies_table"]]
-  # }
-  # 
-  
-  
 # run the function
   if (length(splist) < 2) {
     message("serial path, for searching a single taxon")

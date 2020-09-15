@@ -1,7 +1,5 @@
 ---
-title: "Taxonomic name resolution using the Leipzig Catalogue of Vascular Plants and `lcvplants`"
-author: "Alexander Zizka"
-output: pdf_document
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Taxonomic name resolution using the Leipzig Catalogue of Vascular Plants and `lcvplants`}
   %\VignetteEngine{knitr::rmarkdown}
@@ -50,12 +48,6 @@ The main function of lcvplants is `LCVP`. The function taxes your names(s) as in
 LCVP("Hibiscus vitifolius")
 ```
 
-To assign the results to an object use the following.
-```{r, eval = FALSE}
-resol <- LCVP("Hibiscus vitifolius")
-resol
-```
-
 The name may (and ideally should) also include the authorities.
 ```{r, eval = FALSE}
 LCVP("Hibiscus abelmoschus var. betulifolius Mast.")
@@ -67,6 +59,19 @@ LCVP(c("Hibiscus abelmoschus var. betulifolius Mast.",
       "Hibiscus abutiloides Willd.", 
       "Hibiscus aculeatus", 
       "Hibiscus acuminatus"))
+```
+
+In case you have a `data.frame`, for instance including a cloumn with the species names ("species"), you can use `LCVP` as follows:
+
+```{r, eval = FALSE}
+dat <- data.frame(species = c("Hibiscus abelmoschus var. betulifolius Mast.",
+                              "Hibiscus abutiloides Willd.", 
+                              "Hibiscus aculeatus", 
+                              "Hibiscus acuminatus"),
+                  additional.colum1 = runif(4, min = -180, max = 180),
+                  additional.colum2 = runif(4, min = -90, max = 90))
+
+LCVP(dat$species)
 ```
 
 You can also pick a .csv file from your hard disk.

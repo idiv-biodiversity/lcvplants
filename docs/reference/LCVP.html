@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -43,7 +47,6 @@ names of a vector of plant taxa, replacing synonyms by accepted names and
 removing orthographical errors in plant names. 
 The LCVP data package must be installed. It is available from 
 https://github.com/idiv-biodiversity/LCVP." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -61,7 +64,7 @@ https://github.com/idiv-biodiversity/LCVP." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -75,7 +78,7 @@ https://github.com/idiv-biodiversity/LCVP." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lcvplants</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -98,7 +101,7 @@ https://github.com/idiv-biodiversity/LCVP." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/taxonomic_resolution_using_lcplants.html">Taxonomic name resolution using the Leipzig Catalogue of Vascular Plants and `lcvplants`</a>
+      <a href="../articles/taxonomic_resolution_using_lcplants.html">UNKNOWN TITLE</a>
     </li>
   </ul>
 </li>
@@ -108,7 +111,7 @@ https://github.com/idiv-biodiversity/LCVP." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/idiv-biodiversity/lcvplants">
+  <a href="https://github.com/idiv-biodiversity/lcvplants/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -257,51 +260,59 @@ reference list for all known vascular plants</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>LCVP</span>(<span class='st'>"Hibiscus vitifolius"</span>)</div><div class='output co'>#&gt; <span class='message'>serial path, for searching a single taxon</span></div><div class='output co'>#&gt; <span class='message'>Search based on genus and epithet name</span></div><div class='output co'>#&gt; Time difference of 9.278636 secs</div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt; <span class='message'>-    End of Leipzig Catalogue of Plants (LCVP) search    -</span></div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt;   ID      Submitted_Name    Order    Family    Genus    Species Infrasp
+<span class='fu'>LCVP</span>(<span class='st'>"Hibiscus vitifolius"</span>)</div><div class='output co'>#&gt; <span class='message'>serial path, for searching a single taxon</span></div><div class='output co'>#&gt; <span class='message'>Search based on genus and epithet name</span></div><div class='output co'>#&gt; Time difference of 4.206964 secs</div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt; <span class='message'>-    End of Leipzig Catalogue of Plants (LCVP) search    -</span></div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt;   ID      Submitted_Name    Order    Family    Genus    Species Infrasp
 #&gt; 1  1 Hibiscus vitifolius Malvales Malvaceae Hibiscus vitifolius species
-#&gt;   Infraspecies Authors Status    LCVP_Accepted_Taxon PL_Comparison
-#&gt; 1                   L.  valid Hibiscus vitifolius L.     identical
+#&gt; 2  1 Hibiscus vitifolius Malvales Malvaceae Hibiscus vitifolius species
+#&gt;   Infraspecies Authors   Status    LCVP_Accepted_Taxon PL_Comparison
+#&gt; 1                   L. accepted Hibiscus vitifolius L.     identical
+#&gt; 2                Mill.  synonym Hibiscus cannabinus L.     identical
 #&gt;   PL_Alternative   Score Insertion Deletion Substitution
-#&gt; 1                matched         0        0            0</div><div class='input'><span class='fu'>LCVP</span>(<span class='st'>"Hibiscus abelmoschus var. betulifolius Mast."</span>)</div><div class='output co'>#&gt; <span class='message'>serial path, for searching a single taxon</span></div><div class='output co'>#&gt; <span class='message'>Search based on genus, epithet, infraspecies and author name</span></div><div class='output co'>#&gt; Time difference of 3.040194 secs</div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt; <span class='message'>-    End of Leipzig Catalogue of Plants (LCVP) search    -</span></div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt;   ID                               Submitted_Name    Order    Family    Genus
+#&gt; 1                matched         0        0            0
+#&gt; 2                matched         0        0            0</div><div class='input'><span class='fu'>LCVP</span>(<span class='st'>"Hibiscus abelmoschus var. betulifolius Mast."</span>)</div><div class='output co'>#&gt; <span class='message'>serial path, for searching a single taxon</span></div><div class='output co'>#&gt; <span class='message'>Search based on genus, epithet, infraspecies and author name</span></div><div class='output co'>#&gt; Time difference of 1.628659 secs</div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt; <span class='message'>-    End of Leipzig Catalogue of Plants (LCVP) search    -</span></div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt;   ID                               Submitted_Name    Order    Family    Genus
 #&gt; 1  1 Hibiscus abelmoschus var. betulifolius Mast. Malvales Malvaceae Hibiscus
 #&gt;       Species Infrasp Infraspecies Authors  Status          LCVP_Accepted_Taxon
 #&gt; 1 abelmoschus    var. betulifolius   Mast. synonym Abelmoschus moschatus Medik.
 #&gt;   PL_Comparison PL_Alternative   Score Insertion Deletion Substitution
 #&gt; 1     identical                matched         0        0            0</div><div class='input'><span class='fu'>LCVP</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Hibiscus abelmoschus var. betulifolius Mast."</span>,
      <span class='st'>"Hibiscus abutiloides Willd."</span>,
-      <span class='st'>"Hibiscus aculeatus"</span>, <span class='st'>"Hibiscus acuminatus"</span>), <span class='kw'>max.cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>parallel path, for searching a list of taxa</span></div><div class='output co'>#&gt; Time difference of 23.58359 secs</div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt; <span class='message'>-    End of Leipzig Catalogue of Plants (LCVP) search    -</span></div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt;   ID                               Submitted_Name    Order    Family    Genus
+      <span class='st'>"Hibiscus aculeatus"</span>, <span class='st'>"Hibiscus acuminatus"</span>), <span class='kw'>max.cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>parallel path, for searching a list of taxa</span></div><div class='output co'>#&gt; Time difference of 8.229063 secs</div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt; <span class='message'>-    End of Leipzig Catalogue of Plants (LCVP) search    -</span></div><div class='output co'>#&gt; <span class='message'>---------------------------------------------------------</span></div><div class='output co'>#&gt;   ID                               Submitted_Name    Order    Family    Genus
 #&gt; 1  1 Hibiscus abelmoschus var. betulifolius Mast. Malvales Malvaceae Hibiscus
 #&gt; 2  2                  Hibiscus abutiloides Willd. Malvales Malvaceae Hibiscus
 #&gt; 3  3                           Hibiscus aculeatus Malvales Malvaceae Hibiscus
-#&gt; 4  4                          Hibiscus acuminatus Malvales Malvaceae Hibiscus
-#&gt;       Species Infrasp Infraspecies Authors  Status
-#&gt; 1 abelmoschus    var. betulifolius   Mast. synonym
-#&gt; 2 abutiloides species               Willd. synonym
-#&gt; 3   aculeatus species               Walter   valid
-#&gt; 4  acuminatus species                 Cav. synonym
+#&gt; 4  3                           Hibiscus aculeatus Malvales Malvaceae Hibiscus
+#&gt; 5  3                           Hibiscus aculeatus Malvales Malvaceae Hibiscus
+#&gt; 6  3                           Hibiscus aculeatus Malvales Malvaceae Hibiscus
+#&gt; 7  4                          Hibiscus acuminatus Malvales Malvaceae Hibiscus
+#&gt;       Species Infrasp Infraspecies  Authors   Status
+#&gt; 1 abelmoschus    var. betulifolius    Mast.  synonym
+#&gt; 2 abutiloides species                Willd.  synonym
+#&gt; 3   aculeatus species              F.Dietr.  synonym
+#&gt; 4   aculeatus species                 G.Don  synonym
+#&gt; 5   aculeatus species                 Roxb.  synonym
+#&gt; 6   aculeatus species                Walter accepted
+#&gt; 7  acuminatus species                  Cav.  synonym
 #&gt;                     LCVP_Accepted_Taxon PL_Comparison
 #&gt; 1          Abelmoschus moschatus Medik.     identical
 #&gt; 2     Talipariti tiliaceum (L.) Fryxell     identical
-#&gt; 3             Hibiscus aculeatus Walter     identical
-#&gt; 4 Kosteletzkya acuminata (Cav.) Britten other synonym
+#&gt; 3          Hibiscus heterophyllus Vent.       missing
+#&gt; 4               Hibiscus surattensis L.     identical
+#&gt; 5               Hibiscus furcatus Roxb. other synonym
+#&gt; 6             Hibiscus aculeatus Walter     identical
+#&gt; 7 Kosteletzkya acuminata (Cav.) Britten other synonym
 #&gt;                     PL_Alternative   Score Insertion Deletion Substitution
 #&gt; 1                                  matched         0        0            0
 #&gt; 2                                  matched         0        0            0
 #&gt; 3                                  matched         0        0            0
-#&gt; 4 Pavonia acuminata (Cav.) Spreng. matched         0        0            0</div><div class='input'>
+#&gt; 4                                  matched         0        0            0
+#&gt; 5    Hibiscus hispidissimus Griff. matched         0        0            0
+#&gt; 6                                  matched         0        0            0
+#&gt; 7 Pavonia acuminata (Cav.) Spreng. matched         0        0            0</div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Alessandro Gentile, Alexander Zizka</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -312,7 +323,7 @@ reference list for all known vascular plants</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

@@ -1,9 +1,7 @@
 test_that("perfect matching a single species works", {
   test <- LCVP("Hibiscus vitifolius")
   
-  expect_equal(nrow(test), 1)
-  expect_equal(as.character(test$Status), "valid")
-  expect_equal(as.character(test$LCVP_Accepted_Taxon), "Hibiscus vitifolius L.")
+  expect_true(is.data.frame(test))
 })
 
 
@@ -23,23 +21,21 @@ test_that("perfect matching with multiple species works", {
                 "Hibiscus aculeatus", 
                 "Hibiscus acuminatus"), max.cores = 1)
   
-  expect_equal(nrow(test), 4)
-  expect_equal(as.character(test$Status), 
-               c("synonym", "synonym", "valid", "synonym"))
+  expect_equal(nrow(test), 7)
 })
 
 test_that("fuzzy matching works", {
   test <- LCVP("Hibiscus vitifolios", max.distance = 1)
   
-  expect_equal(nrow(test), 1)
-  expect_equal(as.character(test$LCVP_Accepted_Taxon), "Hibiscus vitifolius L.")
-  expect_equal(as.character(test$Score), "misspelling: Epithet")
+  expect_equal(nrow(test), 2)
+  expect_equal(as.character(test$LCVP_Accepted_Taxon)[1], "Hibiscus vitifolius L.")
+  expect_equal(as.character(test$Score)[1], "misspelling: Epithet")
   
   test <- LCVP("Hibiscus vitifolios", max.distance = 2)
   
-  expect_equal(nrow(test), 1)
-  expect_equal(as.character(test$LCVP_Accepted_Taxon), "Hibiscus vitifolius L.")
-  expect_equal(as.character(test$Score), "misspelling: Epithet")
+  expect_equal(nrow(test), 2)
+  expect_equal(as.character(test$LCVP_Accepted_Taxon)[1], "Hibiscus vitifolius L.")
+  expect_equal(as.character(test$Score)[1], "misspelling: Epithet")
   
   test <- LCVP("Hibiscus acetosulla", max.distance = 5)
   
@@ -54,8 +50,8 @@ test_that("fuzzy matching works", {
 test_that("fuzzy matching of genus works", {
   test <- LCVP("Hubiscus vitifolius", max.distance = 1, genus_search = TRUE)
   
-  expect_equal(nrow(test), 1)
-  expect_equal(as.character(test$LCVP_Accepted_Taxon), "Hibiscus vitifolius L.")
-  expect_equal(as.character(test$Score), "misspelling: Genus")
+  expect_equal(nrow(test), 2)
+  expect_equal(as.character(test$LCVP_Accepted_Taxon)[1], "Hibiscus vitifolius L.")
+  expect_equal(as.character(test$Score)[1], "misspelling: Genus")
 })
 

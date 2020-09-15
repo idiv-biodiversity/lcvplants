@@ -10,7 +10,7 @@
   "codeRepository": "https://github.com/idiv-biodiversity/lcvplants",
   "issueTracker": "https://github.com/idiv-biodiversity/lcvplants/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -124,7 +124,7 @@
   "citation": [
     {
       "@type": "ScholarlyArticle",
-      "datePublished": "submitted",
+      "datePublished": "2020",
       "author": [
         {
           "@type": "Person",
@@ -149,7 +149,7 @@
         {
           "@type": "Person",
           "givenName": "Alexandra Nora",
-          "familyName": "Mullner-Riehl"
+          "familyName": "Muellner-Riehl"
         },
         {
           "@type": "Person",
@@ -162,18 +162,18 @@
           "familyName": "Wirth"
         }
       ],
-      "name": "The Leipzig Catalogue of Vascular Plants (LCVP) – An improved taxonomic reference list for all known vascular plants ",
-      "identifier": "XXX",
-      "url": "https://github.com/idiv-biodiversity/lcplants",
-      "description": "note",
+      "name": "LCVP, The Leipzig catalogue of vascular plants, a new taxonomic reference list for all known vascular plants",
+      "identifier": "10.1101/2020.05.08.077149",
       "pagination": "0",
+      "@id": "https://doi.org/10.1101/2020.05.08.077149",
+      "sameAs": "https://doi.org/10.1101/2020.05.08.077149",
       "isPartOf": {
         "@type": "PublicationIssue",
         "issueNumber": "0",
-        "datePublished": "submitted",
+        "datePublished": "2020",
         "isPartOf": {
           "@type": ["PublicationVolume", "Periodical"],
-          "name": "XXX"
+          "name": "bioRxiv"
         }
       }
     }
