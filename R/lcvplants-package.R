@@ -1,10 +1,8 @@
 
 
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_title(\"#1\")}",
-#' "lcvplants")\Sexpr{tools:::Rd_package_title("lcvplants")}
+#' \Sexpr{tools:::Rd_package_title("lcvplants")}
 #' 
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_description(\"#1\")}",
-#' "lcvplants")\Sexpr{tools:::Rd_package_description("lcvplants")}
+#' \Sexpr{tools:::Rd_package_description("lcvplants")}
 #' 
 #' The R-package is able to apply a text-based search of plant names on the LCVP
 #' using a fuzzy match algorithm, which is the core of the searching engine.
@@ -58,12 +56,10 @@
 #' @aliases lcvplants-package lcvplants
 #' @docType package
 #' @author
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_author(\"#1\")}",
-#' "lcvplants")\Sexpr{tools:::Rd_package_author("lcvplants")}
+#' \Sexpr{tools:::Rd_package_author("lcvplants")}
 #' 
 #' Maintainer:
-#' c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_maintainer(\"#1\")}",
-#' "lcvplants")\Sexpr{tools:::Rd_package_maintainer("lcvplants")}
+#' \Sexpr{tools:::Rd_package_maintainer("lcvplants")}
 #' @seealso https://idata.idiv.de/ddm/Data/ShowData/1806
 #' @references The Leipzig Catalogue of Vascular Plants (LCVP) - An improved taxonomic
 #' reference list for all known vascular plants.
@@ -77,9 +73,9 @@
 #' # To submit a plant taxa name to solve possible orthographic errors also at the genus level:
 #' LCVP("Hibiescus vitifolius", max.distance = 1, genus_search = TRUE)
 #' # To submit a plant taxon looking for all the synonym names:
-#' LCVP("Hibiscus vitifolius", status = FALSE)
+#' LCVP("Hibiscus vitifolius", synonyms = TRUE)
 #' # To submit a plant taxa name looking for all infraspecies names:
-#' LCVP("Hibiscus vitifolius", infraspecies_tab = TRUE)
+#' LCVP("Hibiscus vitifolius", infra_specific = TRUE)
 #' # To submit a plant taxa name looking for all plant taxa names belonging to the same genus rank:
 #' LCVP("Hibiscus", genus_tab = TRUE)
 #' # To execute the searching process booking a fixed number of

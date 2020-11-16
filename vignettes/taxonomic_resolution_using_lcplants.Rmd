@@ -146,7 +146,7 @@ The name resolution can take a while to compute, especially for long lists and h
 By default, `LCVP` only returns accepted names, but you can use the `LCVP` function to obtain all synonyms for your names of interest using the `status` argument.
 
 ```{r, message = TRUE}
-LCVP("Hibiscus vitifolius", status = FALSE)
+LCVP("Hibiscus vitifolius", synonyms = FALSE)
 ```
 
 ## Get all names from a genus
@@ -160,5 +160,5 @@ LCVP("Hibiscus", genus_tab = TRUE)
 Similarly, you can use the `LCVP` function to obtain all infra-specific namers of a species
 
 ```{r, eval = FALSE}
-LCVP("Hibiscus vitifolius", infraspecies_tab = TRUE)
+LCVP("Hibiscus vitifolius", infra_specific = TRUE)
 ```
