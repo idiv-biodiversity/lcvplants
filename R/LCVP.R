@@ -71,7 +71,7 @@
 
 LCVP <-
 function(splist, 
-         synonyms = TRUE, 
+         synonyms = FALSE, 
          infra_specific = FALSE, 
          genus_search = FALSE,
          max.distance = 0, 
