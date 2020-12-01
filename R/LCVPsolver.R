@@ -960,7 +960,7 @@ function(sp,
                                   value = TRUE, max.distance = 0)
             matched_pos <- agrep('species', Species_table_final$Infrasp, 
                                  value = FALSE, max.distance = 0)
-            matched_name2 <- agrep('valid', Species_table_final$Status, 
+            matched_name2 <- agrep('accepted', Species_table_final$Status, 
                                    value = TRUE, max.distance = 0)
             if (length(matched_pos) > 0 && status == TRUE && 
                 length(matched_name2) > 0) {
@@ -975,7 +975,7 @@ function(sp,
                 Spec_Tab_Insertion <- (Species_table_final$Insertion)[matched_pos[j]]
                 Spec_Tab_Deletion <- (Species_table_final$Deletion)[matched_pos[j]]
                 Spec_Tab_Substitution <- (Species_table_final$Substitution)[matched_pos[j]]
-                if (Spec_Tab_status == 'valid'){
+                if (Spec_Tab_status == 'accepted'){
                   Matched_table_tmp <- data.frame(Submitted_Name = 
                                                   Species_table_final$Submitted_Name[matched_pos[j]], 
                                                   Order = Species_table_final$Order[matched_pos[j]], 
@@ -1035,7 +1035,7 @@ function(sp,
                 }
               }
             # option for the cases where there are species only 'synonym', 
-            # without any 'valid' status
+            # without any 'accepted' status
             } else if (length(matched_pos) > 0 && 
                        status == TRUE && length(matched_name2) == 0){
               for (j in seq_along(matched_pos)) {
