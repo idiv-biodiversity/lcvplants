@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_data.R
 \name{read_data}
 \alias{read_data}
-\title{Standardize plant names according to the Leipzig Catalogue of Plants (LCP)}
+\title{Standardize plant names according to the Leipzig Catalogue of Vascular Plants (LCVP)}
 \usage{
 read_data(pathstring, encoding)
 }
@@ -16,14 +16,14 @@ the user to set the specific codification of the strings.}
 }
 \description{
 Allow a taxonomic resolution of plant taxa names listed in the "Leipzig
-Catalogue of Plants" (LCP)
+Catalogue of Vascular Plants" (LCVP)
 }
 \examples{
 
 \dontrun{read_data(file.choose(), 'UTF-8')}
 }
 \references{
-The Leipzig Catalogue of Plants (LCP) - An improved taxonomic
+The Leipzig Catalogue of Vascular Plants (LCVP) - An improved taxonomic
 reference list for all known vascular plants
 }
 \seealso{
