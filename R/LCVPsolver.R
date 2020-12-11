@@ -17,7 +17,7 @@ function(sp,
 
 # extract genus, species, infrasp, author from the typed name
   Infrasp_cat <- c("subsp.", "var.", "forma", "ssp.", "f.", "subvar.", "subf.")
-  
+ # new comment 
   
   # correction of the hybrids for the genus name 
   # into the correct form for the LCVP standards
