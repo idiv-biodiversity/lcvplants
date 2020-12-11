@@ -52,9 +52,12 @@ function(sp,
     if (tolower(sp_terms[2]) == 'x') {
       epithet <- paste(tolower(sp_terms[3]), "_x", 
                        sep = "", collapse = " ")
-      autority <- paste(sp_terms[4:N_terms], 
-                        sep = " ", collapse = " ")
-      sp_terms <-  paste(genus, epithet, autority, sep = " ", collapse = " ")
+      if(N_terms > 3){
+        autority <- paste(sp_terms[4:N_terms],
+                          sep = " ", collapse = " ")
+        sp_terms <-  paste(genus, epithet, autority, sep = " ", collapse = " ")}
+      } else {sp_terms <-  paste(genus, epithet, autority, 
+                                 sep = " ", collapse = " ")
       N_terms <- N_terms -1
     } else if(paste(unlist((strsplit(tolower(sp_terms[2]), "")))[1:2], 
                     sep = "", collapse = "") == 'x_') {
@@ -62,10 +65,12 @@ function(sp,
       # in particular from upper to lower case or vice versa
       epithet <- paste(tolower(substring(sp_terms[2], 3)), 
                        "_x", sep = "", collapse = " ")
-      autority <- paste(sp_terms[3:N_terms], 
-                        sep = " ", collapse = " ")
-      sp_terms <-  paste(genus, epithet, autority, 
-                         sep = " ", collapse = " ")
+      if(N_terms > 2){
+        autority <- paste(sp_terms[3:N_terms],
+                          sep = " ", collapse = " ")
+        sp_terms <-  paste(genus, epithet, autority, sep = " ", collapse = " ")
+      } else {sp_terms <-  paste(genus, epithet, autority, 
+                         sep = " ", collapse = " ")}
     } else {genus <- paste(toupper(substring(sp_terms[1], 1, 1)), 
                            tolower(substring(sp_terms[1], 2)), 
                            sep = "", collapse = " ")}
