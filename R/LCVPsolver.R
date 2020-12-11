@@ -57,7 +57,7 @@ function(sp,
                           sep = " ", collapse = " ")
         sp_terms <-  paste(genus, epithet, autority, sep = " ", collapse = " ")}
       } else {sp_terms <-  paste(genus, epithet, autority, 
-                                 sep = " ", collapse = " ")
+                                 sep = " ", collapse = " ")}
       N_terms <- N_terms -1
     } else if(paste(unlist((strsplit(tolower(sp_terms[2]), "")))[1:2], 
                     sep = "", collapse = "") == 'x_') {
