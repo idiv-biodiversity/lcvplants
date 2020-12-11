@@ -55,7 +55,7 @@ function(sp,
       if(N_terms > 3){
         autority <- paste(sp_terms[4:N_terms],
                           sep = " ", collapse = " ")
-        sp_terms <-  paste(genus, epithet, autority, sep = " ", collapse = " ")}
+        sp_terms <-  paste(genus, epithet, autority, sep = " ", collapse = " ")
       } else {sp_terms <-  paste(genus, epithet, autority, 
                                  sep = " ", collapse = " ")}
       N_terms <- N_terms -1
