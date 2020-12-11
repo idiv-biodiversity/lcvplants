@@ -12,3 +12,4 @@ _pkgdown.yml
 README.yml
 ^docs$
 ^codemeta\.json$
+^manual_tests$

@@ -1,3 +1,12 @@
+lcvplants 1.1.1 (2020-11-16)
+=========================
+### MINOR IMPROVEMENTS
+  * simplified documentation
+  * added information to vignette
+  * adapted tests to new version of LCVP
+  * updated webpage
+  * fixed some minor display bugs in the documentation
+  
 lcvplants 1.1.0 (2020-03-25)
 =========================
 ### MAJOR IMPROVEMENTS

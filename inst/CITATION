@@ -1,17 +1,14 @@
-note <- sprintf("R package version %s", meta$Version)
 bibentry(bibtype = "article",
-         title = "The Leipzig Catalogue of Vascular Plants (LCVP) – An improved taxonomic reference list for all known vascular plants ",
+         title = "LCVP, The Leipzig catalogue of vascular plants, a new taxonomic reference list for all known vascular plants",
          author = c(person("Martin", "Freiberg"),
 		            person("Marten", "Winter"),
 		            person("Alessandro", "Gentile"),
 		            person("Alexander", "Zizka"),
-		            person("Alexandra Nora", "Mullner-Riehl"),
+		            person("Alexandra Nora", "Muellner-Riehl"),
 		            person("Alexandra", "Weigelt"),
 		            person("Christian", "Wirth")),
-         journal = "XXX",
+         journal = "bioRxiv",
          number = 0,
          pages = 00-00,
-         year = "submitted",
-         note = "note",
-         doi = "XXX",
-         url = "https://github.com/idiv-biodiversity/lcplants")
+         year = 2020,
+         doi = "10.1101/2020.05.08.077149")

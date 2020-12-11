@@ -1,4 +1,4 @@
-# lcvplants v1.1.0
+# lcvplants v1.1.1
 [![Build Status](https://travis-ci.com/idiv-biodiversity/lcplants.svg?token=Bbiute2RTxuP5ghkjAxb&branch=master)](https://travis-ci.com/idiv-biodiversity/lcplants.svg?token=Bbiute2RTxuP5ghkjAxb&branch=master)
 [![codecov.io](https://codecov.io/github/idiv-biodiversity/lcplants/graphs/badge.svg?branch=master)](https://codecov.io/github/idiv-biodiversity/lcplants)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -35,8 +35,11 @@ LCVP("list")
 ```
 
 # Documentation
-You can find more information on how to use lcvplants in the [vignette]()
+You can find more information on how to use lcvplants in the [vignette](https://idiv-biodiversity.github.io/lcvplants/articles/taxonomic_resolution_using_lcplants.html)
 
 # Citation
-Freiberg M, Winter M, Gentile A, Zizka A, Muellner-Riehl AN, Weigelt A & Wirth C. The Leipzig Catalogue of Vascular Plants (LCVP) –- An improved taxonomic reference list for all known vascular plants. R package, available at https://github.com/idiv-biodiversity/lcvplants.
 
+```{r}
+library(lcvplants)
+citation("lcvplants")
+```

@@ -6,14 +6,14 @@
 \usage{
 LCVP(
   splist,
+  synonyms = FALSE,
+  infra_specific = FALSE,
   genus_search = FALSE,
   max.distance = 0,
   encoding = "UTF-8",
   family_tab = FALSE,
   order_tab = FALSE,
   genus_tab = FALSE,
-  infraspecies_tab = FALSE,
-  status = TRUE,
   save = FALSE,
   visualize = FALSE,
   version = "1.1",
@@ -25,6 +25,12 @@ LCVP(
 \item{splist}{A character vector specifying the input taxon, each element
 including genus and specific epithet and, potentially, infraspecific rank,
 infraspecific name and author name}
+
+\item{synonyms}{Logical. If TRUE, the full list of names, including synonyms 
+will be returned for each name, if FALSE, only the accepted name will be returned.}
+
+\item{infra_specific}{Logical. If TRUE, infra-specific names (e.g. subspecies) will be returned
+for each submitted name.}
 
 \item{genus_search}{Logical. If TRUE, the function will
 apply the fuzzy match algorithm also for the search of the genus name,
@@ -49,13 +55,6 @@ the user}
 \item{genus_tab}{Logical. If TRUE, the function will return
 the list of plant taxa names belonging to the same genus name submitted by
 the user}
-
-\item{infraspecies_tab}{Logical. If TRUE, the function will
-return also all the infraspecies names found for a submitted plant name}
-
-\item{status}{Logical. If FALSE, the function will return
-not only the valid epithet for a species name but also all the possible
-synonyms}
 
 \item{save}{Logical. If TRUE, the function will write the
 output file as comma-separated format (.csv), saving it into the working

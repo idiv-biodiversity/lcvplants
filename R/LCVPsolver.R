@@ -1,69 +1,3 @@
-## Author: Alessandro Gentile
-## Last Version: 2020/01/20
-
-#' Search and solve one single plant name according to the Leipzig Catalogue of
-#' Plants (LCVP).
-#' 
-#' Allow a taxonomic resolution of plant taxa names listed in the "Leipzig
-#' Catalogue of Plants" (LCVP).  It applies a string comparison between the
-#' submitted names from the user with the list of taxa listed in the
-#' 'input.taxon' column of the 'LCVPspecies_table.rda' table, applying a fuzzy
-#' match algorithm for possible orthographic errors solving. This function
-#' takes care of one single taxon per time for each execution and it applies
-#' the search for the submitted plant name trying to match the corresponding
-#' taxon in the 'LCVPspecies_table' table.
-#' 
-#' 
-#' @param sp A character vector specifying the input taxon, each element
-#' including genus and specific epithet and, potentially, infraspecific rank,
-#' infraspecific name and author name
-#' @param LCVPposition_table A character vector specifying the input taxon, each
-#' element including genus and specific epithet and, potentially, infraspecific
-#' rank, infraspecific name and author name
-#' @param LCVPspecies_table A character vector specifying the input taxon, each
-#' element including genus and specific epithet and, potentially, infraspecific
-#' rank, infraspecific name and author name
-#' @param genus_search Logical, FALSE (default). If TRUE, the function will
-#' apply the fuzzy match algorithm also for the search of the genus name,
-#' otherwise as default the search is applied only to the epithet, the
-#' infraspecies and the name author.
-#' @param max.distance is an integer value. It represents the maximum distance
-#' (number of characters) allowed for a match when comparing the submitted name
-#' with the closest name matches in the LCVP
-#' @param encoding character vector, "UTF-8" (default). This value will allow
-#' the user to set the specific codification of the strings
-#' @param family_tab Logical, FALSE (default). If TRUE, the function will
-#' return the list of plant taxa names belonging to the same family name
-#' submitted by the user
-#' @param order_tab Logical, FALSE (default). If TRUE, the function will return
-#' the list of plant taxa names belonging to the same order name submitted by
-#' the user
-#' @param genus_tab Logical, FALSE (default). If TRUE, the function will return
-#' the list of plant taxa names belonging to the same genus name submitted by
-#' the user
-#' @param infraspecies_tab Logical, FALSE (default). If TRUE, the function will
-#' return also all the infraspecies names found for a submitted plant name
-#' @param status Logical, TRUE (default). If FALSE, the function will return
-#' not only the valid epithet for a species name but also all the possible
-#' synonyms
-#' @param save Logical. FALSE (default). If TRUE, the function will write the
-#' output file as comma-separated format (.csv), saving it into the working
-#' directory or in the directory already set through the 'out_path' option
-#' @param visualize If TRUE the function will visualize the output search on
-#' the 'Source Tab' of RStudio. This option has to be turned off (FALSE) if the
-#' package is execute in a UNIX environment (from the command line) without
-#' having a Graphical User Interface
-#' @param version A character vector indicating the current version of the
-#' package (current version is 1.0). A new version is under development
-#' allowing the package to connect the web API that is under construction
-#' @param out_path A character vector, which allow the user to define the path
-#' where the output file has to be saved. The working directory is set as
-#' default
-#' @author Alessandro Gentile, Martin Freiberg, Marten Winter
-#' @seealso https://idata.idiv.de/ddm/Data/ShowData/1806
-#' @references The Leipzig Catalogue of Vascular Plants (LCVP)
-#' An improved taxonomic reference list for all known vascular plants
-
 LCVPsolver <-
 function(sp, 
          genus_search, 
@@ -190,25 +124,25 @@ function(sp,
     message('Search based on genus, epithet, infraspecies and author name')
   }
   
-  # Genus_table_tmp     <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  # Genus_table_final   <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)         
-  # Species_table_tmp   <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  # Species_table_final <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  # Infrasp_table_tmp   <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  # Infrasp_table_final <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  # Matched_table_tmp   <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  # Matched_table_final <- data.frame(Submitted_Name = NULL, Order = NULL, Family = NULL, Genus = NULL, Species = NULL, Infrasp = NULL, Infraspecies = NULL, Authors = NULL, Status = NULL, LCVP_Accepted_Taxon = NULL, PL_Comparison = NULL, PL_Alternative = NULL, Score = NULL, Insertion = NULL, Deletion = NULL, Substitution = NULL)
-  
+
   # SIMPLIFICATION ALEX 
-  Genus_table_tmp     <- data.frame(Submitted_Name = NULL, Order = NULL, 
-                                    Family = NULL, Genus = NULL, 
-                                    Species = NULL, Infrasp = NULL, 
-                                    Infraspecies = NULL, Authors = NULL, 
-                                    Status = NULL, LCVP_Accepted_Taxon = NULL, 
+  Genus_table_tmp     <- data.frame(Submitted_Name = NULL, 
+                                    Order = NULL, 
+                                    Family = NULL, 
+                                    Genus = NULL, 
+                                    Species = NULL, 
+                                    Infrasp = NULL, 
+                                    Infraspecies = NULL,
+                                    Authors = NULL, 
+                                    Status = NULL, 
+                                    LCVP_Accepted_Taxon = NULL, 
                                     PL_Comparison = NULL, 
                                     PL_Alternative = NULL, 
-                                    Score = NULL, Insertion = NULL, 
-                                    Deletion = NULL, Substitution = NULL)
+                                    Score = NULL, 
+                                    Insertion = NULL, 
+                                    Deletion = NULL, 
+                                    Substitution = NULL, 
+                                    stringsAsFactors = FALSE)
   
     Genus_table_final   <- 
     Species_table_tmp   <-
@@ -334,7 +268,8 @@ function(sp,
                                           Score = 'matched', 
                                           Insertion = score[1], 
                                           Deletion = score[2], 
-                                          Substitution = score[3])
+                                          Substitution = score[3], 
+                                          stringsAsFactors = FALSE)
             Genus_table_final <- rbind(Genus_table_final, Genus_table_tmp)
           }
         }
@@ -392,7 +327,8 @@ function(sp,
                                             Score = 'matched', 
                                             Insertion = 0, 
                                             Deletion = 0, 
-                                            Substitution = 0)
+                                            Substitution = 0, 
+                                            stringsAsFactors = FALSE)
               Genus_table_final <- rbind(Genus_table_final, Genus_table_tmp)
             }
           }
@@ -418,7 +354,8 @@ function(sp,
                                           Score = NULL, 
                                           Insertion = NULL, 
                                           Deletion = NULL, 
-                                          Substitution = NULL)         
+                                          Substitution = NULL, 
+                                          stringsAsFactors = FALSE)         
           matched_name <- agrep(paste(genus,species,sep = " "), 
                                 LCVPspecies_table$Input.Taxon, value = TRUE, max.distance = max.distance)
           matched_pos <- agrep(paste(genus,species,sep = " "), 
@@ -468,7 +405,8 @@ function(sp,
                                             Score = 'matched', 
                                             Insertion = 0, 
                                             Deletion = 0, 
-                                            Substitution = 0)
+                                            Substitution = 0, 
+                                            stringsAsFactors = FALSE)
               Genus_table_final <- rbind(Genus_table_final, Genus_table_tmp)
             }
           } else {Genus_table_final <- data.frame(Submitted_Name = 
@@ -487,7 +425,8 @@ function(sp,
                                                   Score = 'Epithet name not found', 
                                                   Insertion = 0, 
                                                   Deletion = 0, 
-                                                  Substitution = 0)}
+                                                  Substitution = 0, 
+                                                  stringsAsFactors = FALSE)}
         }
       }
     } else if (is.null(Genus_table_final$Genus[1]) 
@@ -563,7 +502,8 @@ function(sp,
                                               Score = score_name, 
                                               Insertion = score[1], 
                                               Deletion = score[2], 
-                                              Substitution = score[3])
+                                              Substitution = score[3], 
+                                              stringsAsFactors = FALSE)
                 Genus_table_final <- rbind(Genus_table_final, Genus_table_tmp)
               }
             }
@@ -583,7 +523,8 @@ function(sp,
                                           Score = 'Epithet name not found', 
                                           Insertion = 0, 
                                           Deletion = 0, 
-                                          Substitution = 0)
+                                          Substitution = 0, 
+                                          stringsAsFactors = FALSE)
             Genus_table_final <- rbind(Genus_table_final, 
                                        Genus_table_tmp)
           }
@@ -606,7 +547,8 @@ function(sp,
                                       Score = 'Genus name not found', 
                                       Insertion = 0, 
                                       Deletion = 0, 
-                                      Substitution = 0)
+                                      Substitution = 0, 
+                                      stringsAsFactors = FALSE)
   } else {
   # run the fuzzy match search engine for the species
     if (!is.null(species)) {
@@ -655,7 +597,8 @@ function(sp,
                                               Score = NEW_Tab_Score, 
                                               Insertion = ins, 
                                               Deletion = del, 
-                                              Substitution = sub)
+                                              Substitution = sub, 
+                                              stringsAsFactors = FALSE)
               Species_table_final <- rbind(Species_table_final,
                                            Species_table_tmp)
             }
@@ -691,7 +634,8 @@ function(sp,
                                               Score = NEW_Tab_Score, 
                                               Insertion = ins, 
                                               Deletion = del, 
-                                              Substitution = sub)
+                                              Substitution = sub, 
+                                              stringsAsFactors = FALSE)
               Species_table_final <- rbind(Species_table_final, 
                                            Species_table_tmp)
             }
@@ -750,7 +694,8 @@ function(sp,
                                                   Score = NEW_Tab_Score, 
                                                   Insertion = ins, 
                                                   Deletion = del, 
-                                                  Substitution = sub)
+                                                  Substitution = sub, 
+                                                  stringsAsFactors = FALSE)
                   Infrasp_table_final <- rbind(Infrasp_table_final, 
                                                Infrasp_table_tmp)
                 }
@@ -786,7 +731,8 @@ function(sp,
                                                   Score = NEW_Tab_Score, 
                                                   Insertion = ins, 
                                                   Deletion = del, 
-                                                  Substitution = sub)
+                                                  Substitution = sub, 
+                                                  stringsAsFactors = FALSE)
                   Infrasp_table_final <- rbind(Infrasp_table_final, 
                                                Infrasp_table_tmp)
                 }
@@ -833,7 +779,8 @@ function(sp,
                                                       Score = Infrasp_Tab_Score, 
                                                       Insertion = Infrasp_Tab_Insertion, 
                                                       Deletion = Infrasp_Tab_Deletion, 
-                                                      Substitution = Infrasp_Tab_Substitution)
+                                                      Substitution = Infrasp_Tab_Substitution, 
+                                                      stringsAsFactors = FALSE)
                       Matched_table_final <- rbind(Matched_table_final, 
                                                    Matched_table_tmp)
                     }
@@ -867,7 +814,8 @@ function(sp,
                                                       Score = Infrasp_Tab_Score, 
                                                       Insertion = Infrasp_Tab_Insertion, 
                                                       Deletion = Infrasp_Tab_Deletion, 
-                                                      Substitution = Infrasp_Tab_Substitution)
+                                                      Substitution = Infrasp_Tab_Substitution, 
+                                                      stringsAsFactors = FALSE)
                       Matched_table_final <- rbind(Matched_table_final, 
                                                    Matched_table_tmp)
                     }
@@ -910,7 +858,8 @@ function(sp,
                                                   Score = Spec_Tab_Score, 
                                                   Insertion = Spec_Tab_Insertion, 
                                                   Deletion = Spec_Tab_Deletion, 
-                                                  Substitution = Spec_Tab_Substitution)
+                                                  Substitution = Spec_Tab_Substitution, 
+                                                  stringsAsFactors = FALSE)
                   Matched_table_final <- rbind(Matched_table_final, 
                                                Matched_table_tmp)
                 }
@@ -961,7 +910,8 @@ function(sp,
                                                   Score = Species_Tab_Score, 
                                                   Insertion = Species_Tab_Insertion, 
                                                   Deletion = Species_Tab_Deletion, 
-                                                  Substitution = Species_Tab_Substitution)
+                                                  Substitution = Species_Tab_Substitution, 
+                                                  stringsAsFactors = FALSE)
                   Matched_table_final <- rbind(Matched_table_final, 
                                                Matched_table_tmp)
                 }
@@ -995,7 +945,8 @@ function(sp,
                                                   Score = Species_Tab_Score, 
                                                   Insertion = Species_Tab_Insertion, 
                                                   Deletion = Species_Tab_Deletion, 
-                                                  Substitution = Species_Tab_Substitution)
+                                                  Substitution = Species_Tab_Substitution, 
+                                                  stringsAsFactors = FALSE)
                   Matched_table_final <- rbind(Matched_table_final, 
                                                Matched_table_tmp)
                 }
@@ -1009,7 +960,7 @@ function(sp,
                                   value = TRUE, max.distance = 0)
             matched_pos <- agrep('species', Species_table_final$Infrasp, 
                                  value = FALSE, max.distance = 0)
-            matched_name2 <- agrep('valid', Species_table_final$Status, 
+            matched_name2 <- agrep('accepted', Species_table_final$Status, 
                                    value = TRUE, max.distance = 0)
             if (length(matched_pos) > 0 && status == TRUE && 
                 length(matched_name2) > 0) {
@@ -1024,7 +975,7 @@ function(sp,
                 Spec_Tab_Insertion <- (Species_table_final$Insertion)[matched_pos[j]]
                 Spec_Tab_Deletion <- (Species_table_final$Deletion)[matched_pos[j]]
                 Spec_Tab_Substitution <- (Species_table_final$Substitution)[matched_pos[j]]
-                if (Spec_Tab_status == 'valid'){
+                if (Spec_Tab_status == 'accepted'){
                   Matched_table_tmp <- data.frame(Submitted_Name = 
                                                   Species_table_final$Submitted_Name[matched_pos[j]], 
                                                   Order = Species_table_final$Order[matched_pos[j]], 
@@ -1041,7 +992,8 @@ function(sp,
                                                   Score = Spec_Tab_Score, 
                                                   Insertion = Spec_Tab_Insertion, 
                                                   Deletion = Spec_Tab_Deletion, 
-                                                  Substitution = Spec_Tab_Substitution)
+                                                  Substitution = Spec_Tab_Substitution, 
+                                                  stringsAsFactors = FALSE)
                   Matched_table_final <- rbind(Matched_table_final, 
                                                Matched_table_tmp)
                 }
@@ -1075,14 +1027,15 @@ function(sp,
                                                     Score = Spec_Tab_Score, 
                                                     Insertion = Spec_Tab_Insertion, 
                                                     Deletion = Spec_Tab_Deletion, 
-                                                    Substitution = Spec_Tab_Substitution)
+                                                    Substitution = Spec_Tab_Substitution, 
+                                                    stringsAsFactors = FALSE)
                     Matched_table_final <- rbind(Matched_table_final, 
                                                  Matched_table_tmp)
                   }
                 }
               }
             # option for the cases where there are species only 'synonym', 
-            # without any 'valid' status
+            # without any 'accepted' status
             } else if (length(matched_pos) > 0 && 
                        status == TRUE && length(matched_name2) == 0){
               for (j in seq_along(matched_pos)) {
@@ -1111,8 +1064,8 @@ function(sp,
                                                 Score = Spec_Tab_Score, 
                                                 Insertion = Spec_Tab_Insertion, 
                                                 Deletion = Spec_Tab_Deletion, 
-                                                Substitution = 
-                                                  Spec_Tab_Substitution)
+                                                Substitution = Spec_Tab_Substitution, 
+                                                stringsAsFactors = FALSE)
                 Matched_table_final <- rbind(Matched_table_final, 
                                              Matched_table_tmp)
               }
@@ -1154,7 +1107,8 @@ function(sp,
                     Score = Spec_Tab_Score, 
                     Insertion = Spec_Tab_Insertion, 
                     Deletion = Spec_Tab_Deletion, 
-                    Substitution = Spec_Tab_Substitution)
+                    Substitution = Spec_Tab_Substitution, 
+                    stringsAsFactors = FALSE)
                 Matched_table_final <- rbind(Matched_table_final, 
                                              Matched_table_tmp)
               }
@@ -1174,7 +1128,8 @@ function(sp,
                          Score = 'Epithet name not found',
                          Insertion = 0, 
                          Deletion = 0, 
-                         Substitution = 0)}
+                         Substitution = 0, 
+                         stringsAsFactors = FALSE)}
           } else {Matched_table_final <- Species_table_final}
         } else {Matched_table_final <- 
           data.frame(Submitted_Name = full_name,
@@ -1192,7 +1147,8 @@ function(sp,
                      Score = 'Epithet name not found', 
                      Insertion = 0, 
                      Deletion = 0, 
-                     Substitution = 0)}
+                     Substitution = 0, 
+                     stringsAsFactors = FALSE)}
         if (visualize == TRUE){
           Matched_table <- Matched_table_final
         }
