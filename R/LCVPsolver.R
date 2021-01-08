@@ -873,13 +873,13 @@ function(sp,
               Species_table_final$Score[Species_table_final$Score == 'matched'] <- 'Infrasp. name not found'
               Species_table_final$Score<-as.factor(Species_table_final$Score)
               Matched_table_final <- Species_table_final}
-            # run the fuzzy match search engine only for the author
-            # research option only for author
+            # run the fuzzy match search engine only for the authority
+            # search option only for author
           } else if (is.null(infrasp) && author == TRUE) {    
             matched_name <- agrep(auth_name, Species_table_final$Authors, 
-                                  value = TRUE, max.distance = max.distance)
+                                  value = TRUE, max.distance = 3)
             matched_pos <- agrep(auth_name, Species_table_final$Authors, 
-                                 value = FALSE, max.distance = max.distance)
+                                 value = FALSE, max.distance = 3)
             ddf <- abs(nchar(matched_name) - nchar(auth_name))
             if (length(matched_name) > 0) {
               result <- matched_name[ddf == min(ddf)]
