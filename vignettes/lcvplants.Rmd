@@ -1,4 +1,5 @@
 ---
+title: "Taxonomic name resolution with LCVP and lcvplants"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Taxonomic name resolution using the Leipzig Catalogue of Vascular Plants and `lcvplants`}
