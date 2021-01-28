@@ -39,7 +39,13 @@ You can find more information on how to use lcvplants in the [vignette](https://
 
 # Citation
 
+If you use `lcvplants` please cite the package using:
+
 ```{r}
-library(lcvplants)
 citation("lcvplants")
 ```
+
+which links to the following reference:
+Freiberg, M., Winter, M., Gentile, A., Zizka, A., Muellner-Riehl, A.N., Weigelt, A., Wirth, C., 2020. LCVP, The Leipzig catalogue of vascular plants, a new taxonomic reference list for all known vascular plants. Scientific Data 7, 416. https://doi.org/10.1038/s41597-020-00702-z
+
+
