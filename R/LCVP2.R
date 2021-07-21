@@ -6,11 +6,13 @@
 #' including genus and specific epithet and, potentially, infraspecific rank,
 #' infraspecific name and author name
 #' 
+#' @examples 
+#' LCVP2("Acanathopali tetresparmie", .4)
+#' 
 #'@export
 
-
-
-LCVP2 <- function(splist) {
+LCVP2 <- function(splist, 
+                  max.distance = 0.1) {
   
   # Defensive function here, check for user input errors
   .checksplist(splist)
@@ -22,21 +24,26 @@ LCVP2 <- function(splist) {
   # (this helps with future changes in column position)
   species_position <- 1
   
-  #------- This should go to LCVP package
-  # ATENTION QUICK FIX OF THE NAMES
-  remove_for_now <- c(258521, 669979, 1133520) 
-  
-  # All upper case to avoid problems
-  lcvp_sps <- .standardize(LCVP::tab_lcvp[-remove_for_now,
-                                          species_position]) # ATENTION QUICK FIX OF THE NAMES
-  
-  lcvp_sps_class <- .splist_classify(lcvp_sps)
-  #--------------------------------------------
-  
   # Classify splist
   splist_class <- .splist_classify(splist_std)
   
   # Now match
-  # Match function here
+  matching <- .match_algorithm(splist_class,
+                               max.distance)
+  
+  # Elaborate the return object
+  if (all(is.na(matching))) {
+    result_final <- NULL
+  } else {
+  comb_match <- matching[, -(1:2), drop = FALSE]
+  names_col <- colnames(LCVP::lcvp_sps_class)[-c(1, ncol(LCVP::lcvp_sps_class))]
+  colnames(comb_match) <- paste(names_col, "match", sep = "_")
+  result_final <- data.frame("Search" = splist,
+    LCVP::tab_lcvp[matching[, 1], , drop = FALSE],
+                             comb_match)
+  
+                             
+  }
+  return(result_final)
 } 
 
