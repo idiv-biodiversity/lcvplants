@@ -13,3 +13,4 @@ README.yml
 ^docs$
 ^codemeta\.json$
 ^manual_tests$
+^LICENSE\.md$

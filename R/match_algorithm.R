@@ -146,7 +146,8 @@
     return(rep(NA, n_class))
   } else {
     # Keep the closest
-    fuzzy_match <- fuzzy_match[which.min(adist(name1, name2[fuzzy_match]))]
+    which_closest <- which.min(utils::adist(name1, name2[fuzzy_match]))
+    fuzzy_match <- fuzzy_match[which_closest]
     
     # Reuse the exact_match function, but look only for fuzzy matches
     pos_genus <-

@@ -1,5 +1,5 @@
 # lcvplants v1.1.1
-[![Build Status](https://travis-ci.com/idiv-biodiversity/lcplants.svg?token=Bbiute2RTxuP5ghkjAxb&branch=master)](https://travis-ci.com/idiv-biodiversity/lcplants.svg?token=Bbiute2RTxuP5ghkjAxb&branch=master)
+[![Build Status](https://api.travis-ci.com/idiv-biodiversity/lcplants.svg?token=Bbiute2RTxuP5ghkjAxb&branch=master)
 [![codecov.io](https://codecov.io/github/idiv-biodiversity/lcplants/graphs/badge.svg?branch=master)](https://codecov.io/github/idiv-biodiversity/lcplants)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
@@ -21,17 +21,15 @@ devtools::install_github("idiv-biodiversity/lcvplants")
 library(lcvplants)
 
 # single names
-LCVP("Hibiscus vitifolius")
+lcvp_search("Hibiscus vitifolius")
 
 # Can also include infra specific names and authorities
-LCVP("Hibiscus abelmoschus var. betulifolius Mast.")
+lcvp_search("Hibiscus abelmoschus var. betulifolius Mast.")
 
 # Also works on vectors of names
-LCVP(c("Hibiscus abelmoschus var. betulifolius Mast.", "Hibiscus abutiloides Willd.", 
+lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.", "Hibiscus abutiloides Willd.", 
        "Hibiscus aculeatus", "Hibiscus acuminatus"), max.cores = 1))
 
-# Pick a file from the hard drive
-LCVP("list")
 ```
 
 # Documentation
