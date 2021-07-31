@@ -1,5 +1,5 @@
+#-------------------------------------------------------#
 # The matching algorithm
-
 .match_algorithm  <- function(splist_class, max.distance) {
   # N species
   n_sps <- nrow(splist_class)
@@ -14,8 +14,15 @@
   # Loop across species
   for (i in 1:n_sps) {
     splist_class_i <- splist_class[i, ]
+    
     # Search genus position
-    pos_genus <- .genus_matching(splist_class_i)
+    #pos_genus <- .genus_matching(splist_class_i)
+    
+    pos_genus_pre <- .lcvp_group_ind(splist_class_i[2],
+                                LCVP::tab_position$Genus,
+                                max.distance)
+    pos_genus <- .genus_search(pos_genus_pre)
+    
     if (!any(is.na(pos_genus))) {
       # Try exact match first
       exact[i, ] <- .exact_match(splist_class_i,
@@ -41,35 +48,10 @@
 }
 
 
-# Genus match first
-
-.genus_matching <- function(splist_class_i) {
-  # Genus
-  genus <- splist_class_i[2]
-  # Get genus positions in the reference tab
-  match_genus <- which(LCVP::tab_position[, 3] == genus)
-  # If it did not get anything, try the first 3 letters
-  if (length(match_genus) == 0) {
-    match_genus <-
-      which(LCVP::tab_position[, 2] == substr(genus, 1, 3))
-  }
-  if (length(match_genus) == 0) {
-    return(NA)
-  } else {
-    # Identify their actual positions
-    gen_pos <- NULL
-    for (k in 1:length(match_genus)) {
-    tab_gen_pos <-
-      LCVP::tab_position[c(match_genus[k], match_genus[k] + 1), 1]
-    gen_pos <- c(gen_pos, tab_gen_pos[1]:(tab_gen_pos[2] - 1))
-    }
-    # Generate a vector to use for searching
-    return(gen_pos)
-  }
-}
 
 
-# Exact match
+#-------------------------------------------------------#
+# Exact match function
 .exact_match <- function(splist_class_i,
                          pos_genus,
                          n_class,
@@ -82,7 +64,7 @@
                     x == splist_class_i
                   })
   
-  # Identify if it matched anything and who did it
+  # Identify the actual number positions
   choosen <- which(sp_pos[3, ])
   
   # Work for the when fuzzy
@@ -114,9 +96,8 @@
   }
 }
 
-
-
-# Fuzzy matching
+#-------------------------------------------------------#
+# Fuzzy matching function
 .fuzzy_match <- function(splist_class_i,
                          pos_genus = NULL,
                          max.distance,
@@ -159,6 +140,3 @@
     return(res_fuzzy)
   }
 }
-
-
-

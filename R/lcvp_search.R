@@ -14,7 +14,7 @@
 #' 
 #' res_ex <- lcvp_search("Hibiscus vitifolius")
 #' res_ex <- lcvp_search("Hibiscus vitifoliuse")
-#' res_ex <- lcvp_search("Hibiscusa vitifolius")
+#' res_ex <- lcvp_search("Tibiscus vitifolius")
 #' 
 #' res_ex <- lcvp_search("Hibiscus abelmoschus var. betulifolius Mast.")
 #' 
@@ -32,14 +32,14 @@
 lcvp_search <- function(splist,
                   max.distance = 0.1) {
   # Defensive function here, check for user input errors
-  .checksplist(splist)
+  .names_check(splist, "splist")
   
   # Fix species name
-  splist_std <- .standardize(splist)
+  splist_std <- .names_standardize(splist)
   
   # Columns position
   # (this helps with future changes in column position)
-  species_position <- 1
+  # species_position <- 1
   
   # Classify splist
   splist_class <- .splist_classify(splist_std)
