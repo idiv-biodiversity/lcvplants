@@ -13,7 +13,7 @@ You can install lcvplants directly from R using the `install_github` function of
 
 ```r
 devtools::install_github("idiv-biodiversity/LCVP@LCVP2")
-devtools::install_github("idiv-biodiversity/lcvplants")
+devtools::install_github("idiv-biodiversity/lcvplants@Lcvp_2")
 ```
 
 # Usage
