@@ -6,9 +6,11 @@
 #' including genus and specific epithet and, potentially, infraspecific rank,
 #' infraspecific name and author name
 #' 
-#' @param max.distance is an integer value. It represents the maximum distance
-#' (number of characters) allowed for a match when comparing the submitted name
-#' with the closest name matches in the LCVP
+#' @param max.distance It represents the maximum distance allowed for a match 
+#' when comparing the submitted name with the closest name matches in the LCVP. 
+#' Expressed either as integer, or as a fraction of the pattern length times the maximal 
+#' transformation cost (will be replaced by the smallest integer not less than 
+#' the corresponding fraction). See \code{\link[utils]{agrep}} for more details.
 #'
 #' @examples \dontrun{
 #' 

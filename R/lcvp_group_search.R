@@ -5,11 +5,16 @@
 #' 
 #' @param group_names A character vector specifying the group names. 
 #' This includes names of order, family, genus or author.
+#' 
 #' @param search_by A character indicating whether to search by order ("Order"), 
 #' family ("Family"), genus ("Genus") or authors ("Author").
-#' @param max.distance is an integer value. It represents the maximum distance
-#' (number of characters) allowed for a match when comparing the submitted name
-#' with the closest name matches in the LCVP
+#' 
+#' @param max.distance It represents the maximum distance allowed for a match 
+#' when comparing the submitted name with the closest name matches in the LCVP. 
+#' Expressed either as integer, or as a fraction of the pattern length times the maximal 
+#' transformation cost (will be replaced by the smallest integer not less than 
+#' the corresponding fraction). See \code{\link[utils]{agrep}} for more details.
+#' 
 #' @param bind_result If TRUE the function will return one data.frame. 
 #' If False, the function will return a list of separate data.frames for 
 #' each input group.
