@@ -2,4 +2,5 @@
 
 export(lcvp_group_search)
 export(lcvp_search)
+export(lcvp_summary)
 import(LCVP)

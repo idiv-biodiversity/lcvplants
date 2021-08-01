@@ -10,18 +10,13 @@
 #' @param max.distance is an integer value. It represents the maximum distance
 #' (number of characters) allowed for a match when comparing the submitted name
 #' with the closest name matches in the LCVP
-#' @param bind_result If TRUE results will be binded into one data.frame. 
+#' @param bind_result If TRUE the function will return one data.frame. 
 #' If False, the function will return a list of separate data.frames for 
 #' each input group.
 #'
 #' @examples \dontrun{
 #' 
-#' group_names = "AA"
-#' search_by = "Genus"
-#' max.distance = 0
-
-#' res <- lcvp_group_search(group_names, search_by, 
-#' max.distance, TRUE)
+#' res <- lcvp_group_search("AA", search_by = "Genus")
 #' }
 #'@export
 
@@ -29,8 +24,8 @@
 
 lcvp_group_search <- function(group_names, 
                               search_by,
-                              max.distance,
-                              bind_result = FALSE) {
+                              max.distance = 0.1,
+                              bind_result = TRUE) {
   
   # Check names
   .names_check(group_names, "group_names")

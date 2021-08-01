@@ -4,7 +4,12 @@
 \alias{lcvp_group_search}
 \title{Search plants by group in the Leipzig Catalogue of Plants (LCVP)}
 \usage{
-lcvp_group_search(group_names, search_by, max.distance, bind_result = FALSE)
+lcvp_group_search(
+  group_names,
+  search_by,
+  max.distance = 0.1,
+  bind_result = TRUE
+)
 }
 \arguments{
 \item{group_names}{A character vector specifying the group names. 
@@ -17,7 +22,7 @@ family ("Family"), genus ("Genus") or authors ("Authors").}
 (number of characters) allowed for a match when comparing the submitted name
 with the closest name matches in the LCVP}
 
-\item{bind_result}{If TRUE results will be binded into one data.frame. 
+\item{bind_result}{If TRUE the function will return one data.frame. 
 If False, the function will return a list of separate data.frames for 
 each input group.}
 }
@@ -28,10 +33,6 @@ Leipzig Catalogue of Plants (LCVP)
 \examples{
 \dontrun{
 
-group_names = "AA"
-search_by = "Genus"
-max.distance = 0
-res <- lcvp_group_search(group_names, search_by, 
-max.distance, TRUE)
+res <- lcvp_group_search("AA", search_by = "Genus")
 }
 }

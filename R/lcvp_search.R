@@ -14,14 +14,15 @@
 #' 
 #' res_ex <- lcvp_search("Hibiscus vitifolius")
 #' res_ex <- lcvp_search("Hibiscus vitifoliuse")
-#' res_ex <- lcvp_search("Tibiscus vitifolius")
+#' res_ex <- lcvp_search("Tibiscus vitifolius", max.distance = 2)
 #' 
 #' res_ex <- lcvp_search("Hibiscus abelmoschus var. betulifolius Mast.")
 #' 
 #' res_ex <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.",
 #' "Hibiscus abutiloides Willd.",
 #'  "Hibiscus aculeatus",
-#'  "Hibiscus acuminatus"))
+#'  "Hibiscus acuminatus",
+#'  "Hibiscus furcatuis"), max.distance = 2)
 #' 
 #' system.time(
 #' res_ex <- lcvp_search(rep("Hibiscusa vitifolius", 10))
@@ -37,10 +38,6 @@ lcvp_search <- function(splist,
   # Fix species name
   splist_std <- .names_standardize(splist)
   
-  # Columns position
-  # (this helps with future changes in column position)
-  # species_position <- 1
-  
   # Classify splist
   splist_class <- .splist_classify(splist_std)
   
@@ -55,7 +52,11 @@ lcvp_search <- function(splist,
   ## Return The matrix with matched species and whether it matched each class
   } else {
     comb_match <- matching[,-(1:2), drop = FALSE]
-    
+    comb_match <- as.matrix(apply(comb_match, 2, as.logical))
+    if (ncol(comb_match) == 1) {
+      comb_match <- t(comb_match)
+    }
+    comb_match <- as.data.frame(comb_match)
     names_col <-
       colnames(LCVP::lcvp_sps_class)[-c(1, ncol(LCVP::lcvp_sps_class))]
     

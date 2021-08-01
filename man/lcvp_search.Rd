@@ -23,14 +23,15 @@ This is the new version of the LCVP function
 
 res_ex <- lcvp_search("Hibiscus vitifolius")
 res_ex <- lcvp_search("Hibiscus vitifoliuse")
-res_ex <- lcvp_search("Tibiscus vitifolius")
+res_ex <- lcvp_search("Tibiscus vitifolius", max.distance = 2)
 
 res_ex <- lcvp_search("Hibiscus abelmoschus var. betulifolius Mast.")
 
 res_ex <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.",
 "Hibiscus abutiloides Willd.",
  "Hibiscus aculeatus",
- "Hibiscus acuminatus"))
+ "Hibiscus acuminatus",
+ "Hibiscus furcatuis"), max.distance = 2)
 
 system.time(
 res_ex <- lcvp_search(rep("Hibiscusa vitifolius", 10))

@@ -17,6 +17,8 @@ devtools::install_github("idiv-biodiversity/lcvplants")
 ```
 
 # Usage
+
+Simple working examples:
 ```r
 library(lcvplants)
 
@@ -27,10 +29,34 @@ lcvp_search("Hibiscus vitifolius")
 lcvp_search("Hibiscus abelmoschus var. betulifolius Mast.")
 
 # Also works on vectors of names
-lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.", "Hibiscus abutiloides Willd.", 
-       "Hibiscus aculeatus", "Hibiscus acuminatus"), max.cores = 1))
+match_result <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.", "Hibiscus abutiloides Willd.", 
+       "Hibiscus aculeatus", "Hibiscus acuminatus"))
 
+# You can see the summary results
+lcvp_summary(match_result)
 ```
+
+The algorithm can also consider misspellings and look for the most similar match given a max.distance argument set by the user:
+
+```r
+# Misspeled name
+lcvp_search("Hibiscus vitifolia", max.distance = 2)
+
+# Misspelings in a vector of names
+res_ex <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.", "Hibiscus abutiloides Willd.", "Hibiscus aculeatus", "Hibiscus acuminatus", "Hibiscus furcatuis", "Hibiscus error"), max.distance = 1)
+lcvp_summary(res_ex)
+```
+
+You can also search for species using the Order, Family, Genus or Author name:
+```r
+# Search for the genus AA
+lcvp_group_search("AA", search_by = "Genus")
+
+# It also accepts a vector of names
+lcvp_group_search(c("Orchidaceae", "Poaceae", "Phyllanthaceae"), search_by = "Family")
+```
+
+
 
 # Documentation
 You can find more information on how to use lcvplants in the [vignette](https://idiv-biodiversity.github.io/lcvplants/articles/taxonomic_resolution_using_lcplants.html)
