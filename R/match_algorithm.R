@@ -16,8 +16,6 @@
     splist_class_i <- splist_class[i, ]
     
     # Search genus position
-    #pos_genus <- .genus_matching(splist_class_i)
-    
     pos_genus_pre <- .lcvp_group_ind(splist_class_i[2],
                                 LCVP::tab_position$Genus,
                                 max.distance)

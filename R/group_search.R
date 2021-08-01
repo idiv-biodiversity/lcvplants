@@ -27,7 +27,8 @@
 # based on group (genus, family, order) 
 .lcvp_group_ind <- function(group_name,
                             group_ref,
-                            max.distance) {
+                            max.distance,
+                            only_one = TRUE) {
   
   # Get the position 
   group_pos <- which(group_ref == group_name)
@@ -37,7 +38,7 @@
                        group_ref,
                        max.distance = max.distance)
     n_temp <- length(group_pos)
-    if (n_temp > 1) {
+    if (n_temp > 1 & only_one) {
       # If more than one, get the closest
       which_closest <- which.min(utils::adist(group_name,
                                               group_ref[group_pos]))

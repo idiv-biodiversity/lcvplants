@@ -4,9 +4,9 @@
 #' Leipzig Catalogue of Plants (LCVP) 
 #' 
 #' @param group_names A character vector specifying the group names. 
-#' This includes names of order, family, genus or authors.
+#' This includes names of order, family, genus or author.
 #' @param search_by A character indicating whether to search by order ("Order"), 
-#' family ("Family"), genus ("Genus") or authors ("Authors").
+#' family ("Family"), genus ("Genus") or authors ("Author").
 #' @param max.distance is an integer value. It represents the maximum distance
 #' (number of characters) allowed for a match when comparing the submitted name
 #' with the closest name matches in the LCVP
@@ -15,8 +15,11 @@
 #' each input group.
 #'
 #' @examples \dontrun{
-#' 
+#' # By Genus 
 #' res <- lcvp_group_search("AA", search_by = "Genus")
+#' # By Author
+#' res <- lcvp_group_search("Schltr.", search_by = "Author")
+#' 
 #' }
 #'@export
 
@@ -48,8 +51,8 @@ lcvp_group_search <- function(group_names,
     ref_names <- names(LCVP::lcvp_order)
   }
   
-  if (search_by == "Authors") { # not ready yet
-    ref_names <- NA
+  if (search_by == "Author") { # not ready yet
+    ref_names <- names(LCVP::lcvp_authors)
   }
   # Get the position list
   pos_group <- .lcvp_group(group_names,
@@ -68,8 +71,8 @@ lcvp_group_search <- function(group_names,
     pos_list <- LCVP::lcvp_order[pos_group]
   }
   
-  if (search_by == "Authors") { # not ready yet
-    pos_list <- NA
+  if (search_by == "Author") { # not ready yet
+    pos_list <- LCVP::lcvp_authors[pos_group]
   }
   
   # Return the actual data.frames

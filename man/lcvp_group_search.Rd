@@ -13,10 +13,10 @@ lcvp_group_search(
 }
 \arguments{
 \item{group_names}{A character vector specifying the group names. 
-This includes names of order, family, genus or authors.}
+This includes names of order, family, genus or author.}
 
 \item{search_by}{A character indicating whether to search by order ("Order"), 
-family ("Family"), genus ("Genus") or authors ("Authors").}
+family ("Family"), genus ("Genus") or authors ("Author").}
 
 \item{max.distance}{is an integer value. It represents the maximum distance
 (number of characters) allowed for a match when comparing the submitted name
@@ -32,7 +32,10 @@ Leipzig Catalogue of Plants (LCVP)
 }
 \examples{
 \dontrun{
-
+# By Genus 
 res <- lcvp_group_search("AA", search_by = "Genus")
+# By Author
+res <- lcvp_group_search("Schltr.", search_by = "Author")
+
 }
 }

@@ -12,7 +12,7 @@ See `News.md` for update information.
 You can install lcvplants directly from R using the `install_github` function of devtools (you may need to install that one first). To use `lcvplants` you also need the data of the [`LCVP` package](https://github.com/idiv-biodiversity/LCVP), which you can install in the same way.
 
 ```r
-devtools::install_github("idiv-biodiversity/LCVP")
+devtools::install_github("idiv-biodiversity/LCVP@LCVP2")
 devtools::install_github("idiv-biodiversity/lcvplants")
 ```
 
@@ -45,6 +45,10 @@ lcvp_search("Hibiscus vitifolia", max.distance = 2)
 # Misspelings in a vector of names
 res_ex <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.", "Hibiscus abutiloides Willd.", "Hibiscus aculeatus", "Hibiscus acuminatus", "Hibiscus furcatuis", "Hibiscus error"), max.distance = 1)
 lcvp_summary(res_ex)
+
+
+# You may also want to check all the possible matches 
+lcvp_fuzzy_search("Hibiscus vitifolia", max.distance = 2)
 ```
 
 You can also search for species using the Order, Family, Genus or Author name:
@@ -67,3 +71,4 @@ You can find more information on how to use lcvplants in the [vignette](https://
 library(lcvplants)
 citation("lcvplants")
 ```
+
