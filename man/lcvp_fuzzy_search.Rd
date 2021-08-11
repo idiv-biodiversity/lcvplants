@@ -15,7 +15,7 @@ infraspecific name and author name.}
 when comparing the submitted name with the closest name matches in the LCVP. 
 Expressed either as integer, or as a fraction of the pattern length times the maximal 
 transformation cost (will be replaced by the smallest integer not less than 
-the corresponding fraction). See \code{\link[utils]{agrep}} for more details.}
+the corresponding fraction). See \code{\link[base]{agrep}} for more details.}
 }
 \description{
 This function return all names matched in the Leipzig Catalogue of Plants 

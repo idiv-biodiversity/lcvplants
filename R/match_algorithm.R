@@ -125,16 +125,40 @@
     return(rep(NA, n_class))
   } else {
     # Keep the closest
-    which_closest <- which.min(utils::adist(name1, name2[fuzzy_match]))
+    dist_names <- utils::adist(name1, name2[fuzzy_match])
+    which_closest <- which(dist_names == min(dist_names))
     fuzzy_match <- fuzzy_match[which_closest]
     
     # Reuse the exact_match function, but look only for fuzzy matches
     pos_genus <-
       as.numeric(LCVP::lcvp_sps_class[pos_genus, "ID"][fuzzy_match])
-    res_fuzzy <- .exact_match(splist_class_i,
-                              pos_genus,
-                              n_class,
-                              fuzzy = TRUE)
-    return(res_fuzzy)
+    n_pos_genus <- length(pos_genus)
+    
+    res_fuzzy <- matrix(nrow = n_pos_genus, ncol = n_class)
+    
+    for (i in 1:n_pos_genus) {
+      res_fuzzy[i, ] <- .exact_match(splist_class_i,
+                                pos_genus[i],
+                                n_class,
+                                fuzzy = TRUE)
+    }
+    # keep only the ones with highest number of classes matches
+    rights <- apply(res_fuzzy[, -1, drop = FALSE],
+                    1, 
+                    function(x){sum(x == "TRUE")})
+    pos_genus2 <- which(rights == max(rights))
+    
+    # If more than one 
+    if (length(pos_genus2) > 1) {
+      sub_tab <- LCVP::tab_lcvp[res_fuzzy[pos_genus2, 1], ]
+      pos_genus2 <- which(sub_tab$Status == "accepted")
+      warning(paste0("More than one name was fuzzy matched for species ", 
+                     name1, 
+                     ". Only the accepted name was returned.",
+                     " Consider using the function lcp_fuzzy_search ",
+                     "to check the details."),
+              call. = FALSE)
+    }
+    return(res_fuzzy[pos_genus2, ])
   }
 }

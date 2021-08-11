@@ -19,20 +19,28 @@
 
 lcvp_summary <- function(lcvp_match) {
   
+  lcvp_match <- attributes(lcvp_match)$match.names
   # Total number of searches
   n_searches <- nrow(lcvp_match)
-  
+
   # Total matches
-  n_matches <- sum(!is.na(lcvp_match$Input.Taxon))
+  n_matches <- sum(!is.na(lcvp_match$Genus_match))
   p_matches <- round((n_matches / n_searches) * 100, 2)
+  
   # Correct species names
   n_sp_corre <- sum(lcvp_match$Epithet_match & lcvp_match$Genus_match, 
                     na.rm = TRUE)
   p_sp <- round((n_sp_corre / n_searches) * 100, 2)
+  
+  # Fuzzy matches 
+  n_fuzzy <- n_matches - n_sp_corre
+  p_fu <- round((n_fuzzy / n_searches) * 100, 2)
+  
   # Authors correct
   n_authors <- sum(lcvp_match$Author_match, 
                    na.rm = TRUE)
   p_authors <- round((n_authors / n_searches) * 100, 2)
+  
   # Infracategories correct
   n_infra <- sum(lcvp_match$Subspecies_match &
                      lcvp_match$Variety_match &
@@ -48,6 +56,8 @@ lcvp_summary <- function(lcvp_match) {
             paste0(n_matches, " (", p_matches, "%)")))
   cat(paste("\nSpecies exactly matched:", 
             paste0(n_sp_corre, " (", p_sp, "%)")))
+  cat(paste("\nSpecies fuzzy matched:", 
+            paste0(n_fuzzy, " (", p_fu, "%)")))
   cat(paste("\nAuthors exactly matched:", 
             paste0(n_authors, " (", p_authors, "%)")))
   cat(paste("\nInfracategories exactly matched:", 

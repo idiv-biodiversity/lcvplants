@@ -7,7 +7,8 @@
   if (!is.character(splist) | !is.vector(splist)) {
     stop(paste0("argument '", argument_name, 
                 "' should be character vector, not '", 
-                paste(class(splist), collapse = " "), "'"))
+                paste(class(splist), collapse = " "), "'"),
+         call. = FALSE)
   }
   enc_valid <- !validEnc(splist)
   
@@ -16,7 +17,8 @@
     stop(paste(argument_name, 
                "should include only valid characters,",
                "please check the name(s) at position(s):",
-               paste(which(enc_valid), collapse = ", ")))
+               paste(which(enc_valid), collapse = ", ")),
+         call. = FALSE)
   }
 }
 
@@ -27,8 +29,9 @@
   cats <- c("Genus", "Family", "Order", "Author")
   check <- search_by %in% cats
   if (!check) {
-    stop(paste0("search_by argument should be one of the following:",
-                paste(cats, collapse = ", ")), "; not '", search_by, "'")
+    stop(paste0("search_by argument should be one of the following: ",
+                paste0("'", cats, "'", collapse = ", "), ". Not '", search_by, "'"),
+         call. = FALSE)
   }
 }
 

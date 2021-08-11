@@ -10,7 +10,7 @@
 #' when comparing the submitted name with the closest name matches in the LCVP. 
 #' Expressed either as integer, or as a fraction of the pattern length times the maximal 
 #' transformation cost (will be replaced by the smallest integer not less than 
-#' the corresponding fraction). See \code{\link[utils]{agrep}} for more details.
+#' the corresponding fraction). See \code{\link[base]{agrep}} for more details.
 #'
 #' @examples \dontrun{
 #' 
@@ -24,7 +24,7 @@
 #' "Hibiscus abutiloides Willd.",
 #'  "Hibiscus aculeatus",
 #'  "Hibiscus acuminatus",
-#'  "Hibiscus furcatuis"), max.distance = 2)
+#'  "Hibiscus furcatuis"), max.distance = 0)
 #' 
 #' system.time(
 #' res_ex <- lcvp_search(rep("Hibiscusa vitifolius", 10))
@@ -65,9 +65,10 @@ lcvp_search <- function(splist,
     colnames(comb_match) <- paste(names_col, "match", sep = "_")
     
     result_final <- data.frame("Search" = splist,
-                               LCVP::tab_lcvp[matching[, 1], , drop = FALSE],
-                               comb_match)
-    
+                               LCVP::tab_lcvp[matching[, 1], , drop = FALSE])
+    attributes(result_final)$match.names <- comb_match  
+    rownames(result_final) <- NULL
   }
+  
   return(result_final)
 }

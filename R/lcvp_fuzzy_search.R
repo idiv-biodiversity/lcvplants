@@ -11,13 +11,16 @@
 #' when comparing the submitted name with the closest name matches in the LCVP. 
 #' Expressed either as integer, or as a fraction of the pattern length times the maximal 
 #' transformation cost (will be replaced by the smallest integer not less than 
-#' the corresponding fraction). See \code{\link[utils]{agrep}} for more details.
+#' the corresponding fraction). See \code{\link[base]{agrep}} for more details.
 #'
 #' @examples \dontrun{
 #' 
 #' res_ex <- lcvp_fuzzy_search("Hibiscus vitifolia")
 #' }
 #'@export
+
+
+
 lcvp_fuzzy_search <- function(splist,
                               max.distance = 0.1) {
   # Defensive function here, check for user input errors

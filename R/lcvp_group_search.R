@@ -13,7 +13,7 @@
 #' when comparing the submitted name with the closest name matches in the LCVP. 
 #' Expressed either as integer, or as a fraction of the pattern length times the maximal 
 #' transformation cost (will be replaced by the smallest integer not less than 
-#' the corresponding fraction). See \code{\link[utils]{agrep}} for more details.
+#' the corresponding fraction). See \code{\link[base]{agrep}} for more details.
 #' 
 #' @param bind_result If TRUE the function will return one data.frame. 
 #' If False, the function will return a list of separate data.frames for 
@@ -21,7 +21,7 @@
 #'
 #' @examples \dontrun{
 #' # By Genus 
-#' res <- lcvp_group_search("AA", search_by = "Genus")
+#' res <- lcvp_group_search(c("AA", "Adansonia"), search_by = "Genus")
 #' # By Author
 #' res <- lcvp_group_search("Schltr.", search_by = "Author")
 #' 
