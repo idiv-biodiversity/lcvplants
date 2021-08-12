@@ -58,6 +58,19 @@ lcvp_group_search("AA", search_by = "Genus")
 lcvp_group_search(c("Orchidaceae", "Poaceae", "Phyllanthaceae"), search_by = "Family")
 ```
 
+The package also facilitates the comparison between two lists of species vascular plant names:
+```r
+# Species list 1
+splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[1:10])
+
+# Species list 2
+splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[1:10])
+
+# Compare the two lists
+lcvp_match(splist1, splist2)
+```
+
+
 # Function summary
 
 | Name | Description |
@@ -66,6 +79,7 @@ lcvp_group_search(c("Orchidaceae", "Poaceae", "Phyllanthaceae"), search_by = "Fa
 |`lcvp_summary`| Summarize results of `lcvp_search` query | 
 |`lcvp_fuzzy_match`| Same as `lcvp_seach` but returns all matches|
 |`lcvp_group_search`| Return all names listed in LCVP for a genus, family, order, or authority|
+|`lcvp_match`| Compare and match two lists of species vascular plant names|
 
 # Documentation
 You can find more information on how to use lcvplants in the [vignette](https://idiv-biodiversity.github.io/lcvplants/articles/taxonomic_resolution_using_lcplants.html)
