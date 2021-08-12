@@ -7,8 +7,8 @@ bibentry(bibtype = "article",
 		            person("Alexandra Nora", "Muellner-Riehl"),
 		            person("Alexandra", "Weigelt"),
 		            person("Christian", "Wirth")),
-         journal = "bioRxiv",
-         number = 0,
-         pages = 00-00,
+         journal = "Scientific data",
+         number = 7,
+         pages = 416,
          year = 2020,
-         doi = "10.1101/2020.05.08.077149")
+         doi = "10.1038/s41597-020-00702-z")
