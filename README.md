@@ -1,4 +1,4 @@
-# lcvplants v1.1.1
+# lcvplants v2.0.999
 [![Build Status](https://api.travis-ci.com/idiv-biodiversity/lcplants.svg?token=Bbiute2RTxuP5ghkjAxb&branch=Lcvp_2)
 [![codecov.io](https://codecov.io/github/idiv-biodiversity/lcplants/graphs/badge.svg?branch=Lcvp_2)](https://codecov.io/github/idiv-biodiversity/lcplants)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -37,7 +37,6 @@ lcvp_summary(match_result)
 ```
 
 The algorithm can also consider misspellings and look for the most similar match given a max.distance argument set by the user:
-
 ```r
 # Misspeled name
 lcvp_search("Hibiscus vitifolia", max.distance = 2)
@@ -60,7 +59,14 @@ lcvp_group_search("AA", search_by = "Genus")
 lcvp_group_search(c("Orchidaceae", "Poaceae", "Phyllanthaceae"), search_by = "Family")
 ```
 
+# Function summary
 
+| Name | Description |
+|---|---|
+|`lcvp_search`|Resolve one or multiple vascular plant names. Return only best matches.|
+|`lcvp_summary`| Summarize results of `lcvp_search` query | 
+|`lcvp_fuzzy_match`| Same as `lcvp_seach` but returns all matches|
+|`lcvp_group_search`| Return all names listed in LCVP for a genus, family, order, or authority|
 
 # Documentation
 You can find more information on how to use lcvplants in the [vignette](https://idiv-biodiversity.github.io/lcvplants/articles/taxonomic_resolution_using_lcplants.html)
