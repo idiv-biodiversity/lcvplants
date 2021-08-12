@@ -43,6 +43,9 @@ lcvp_search <- function(splist,
   # Classify splist
   splist_class <- .splist_classify(splist_std)
   
+  # Check binomial
+  .check_binomial(splist_class, splist)
+  
   # Now match
   matching <- .match_algorithm(splist_class,
                                max.distance)

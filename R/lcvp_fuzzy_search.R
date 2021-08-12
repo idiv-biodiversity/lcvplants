@@ -45,6 +45,10 @@ lcvp_fuzzy_search <- function(splist,
   # Classify species
   species_class <- .splist_classify(species_std)
   
+  # Check binomial
+  .check_binomial(species_class, splist)
+  
+  # Run individual algorithm to multiple species
   n_sps <- length(splist)
   result <- list()
   for (i in 1:n_sps) {
@@ -53,6 +57,7 @@ lcvp_fuzzy_search <- function(splist,
                             max.distance,
                             status)
   }
+  # If need to bind the results
   if (bind_result) {
     result <- do.call(rbind, result)
     result <- result[!is.na(result[, 1]), , drop = FALSE]

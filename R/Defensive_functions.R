@@ -35,3 +35,18 @@
   }
 }
 
+#-------------------------------------------------------#
+# Check if names are binomial
+.check_binomial <- function(splist_class, splist) {
+  
+  missing_bino <- which(apply(splist_class[, 2:3, drop = FALSE], 
+                              1,
+                              function(x) {any(is.na(x))}))
+  if (length(missing_bino) > 0) {
+    stop(paste0("splist should include only binomial names,",
+                " please check the following names: ",
+                paste(paste0("'", splist[missing_bino], "'"), collapse = ", ")),
+         call. = FALSE)
+    
+  }
+}
