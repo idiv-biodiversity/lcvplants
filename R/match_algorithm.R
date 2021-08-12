@@ -155,8 +155,8 @@
       warning(paste0("More than one name was fuzzy matched for species ", 
                      name1, 
                      ". Only the accepted name was returned.",
-                     " Consider using the function lcp_fuzzy_search ",
-                     "to check the details."),
+                     " Use lcvp_fuzzy_search ",
+                     "to return all names."),
               call. = FALSE)
     }
     return(res_fuzzy[pos_genus2, ])
