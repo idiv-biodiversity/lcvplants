@@ -1,7 +1,7 @@
 #' Standardize plant names according to the Leipzig Catalogue of Plants (LCVP)
 #'
 #' This is the new version of the LCVP function
-
+#' 
 #' @param splist A character vector specifying the input taxon, each element
 #' including genus and specific epithet and, potentially, infraspecific rank,
 #' infraspecific name and author name
@@ -32,8 +32,8 @@
 #' }
 #'@export
 
-lcvp_search <- function(splist,
-                  max.distance = 0.1) {
+lcvp_search <- function(splist, 
+                        max.distance = 0.1) {
   # Defensive function here, check for user input errors
   .names_check(splist, "splist")
   

@@ -8,25 +8,29 @@ lcvp_group_search(
   group_names,
   search_by,
   max.distance = 0.1,
-  bind_result = TRUE
+  bind_result = TRUE,
+  status = c("accepted", "synonym", "unresolved", "external")
 )
 }
 \arguments{
-\item{group_names}{A character vector specifying the group names. 
+\item{group_names}{A character vector specifying the group names.
 This includes names of order, family, genus or author.}
 
-\item{search_by}{A character indicating whether to search by order ("Order"), 
+\item{search_by}{A character indicating whether to search by order ("Order"),
 family ("Family"), genus ("Genus") or authors ("Author").}
 
-\item{max.distance}{It represents the maximum distance allowed for a match 
-when comparing the submitted name with the closest name matches in the LCVP. 
-Expressed either as integer, or as a fraction of the pattern length times the maximal 
-transformation cost (will be replaced by the smallest integer not less than 
+\item{max.distance}{It represents the maximum distance allowed for a match
+when comparing the submitted name with the closest name matches in the LCVP.
+Expressed either as integer, or as a fraction of the pattern length times the maximal
+transformation cost (will be replaced by the smallest integer not less than
 the corresponding fraction). See \code{\link[base]{agrep}} for more details.}
 
-\item{bind_result}{If TRUE the function will return one data.frame. 
-If False, the function will return a list of separate data.frames for 
+\item{bind_result}{If TRUE the function will return one data.frame.
+If False, the function will return a list of separate data.frames for
 each input group.}
+
+\item{status}{A character vector indicating what status should be included
+in the results: "accepted", "synonym", "unresolved", "external".}
 }
 \description{
 Search plants by order, family, genus or author in the
@@ -34,10 +38,10 @@ Leipzig Catalogue of Plants (LCVP)
 }
 \examples{
 \dontrun{
-# By Genus 
+# By Genus
 res <- lcvp_group_search(c("AA", "Adansonia"), search_by = "Genus")
 # By Author
-res <- lcvp_group_search("Schltr.", search_by = "Author")
+res <- lcvp_group_search("Schltr.", search_by = "Author", status = "accepted")
 
 }
 }

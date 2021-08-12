@@ -2,6 +2,7 @@
 
 export(lcvp_fuzzy_search)
 export(lcvp_group_search)
+export(lcvp_match)
 export(lcvp_search)
 export(lcvp_summary)
 import(LCVP)

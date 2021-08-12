@@ -4,21 +4,28 @@
 \alias{lcvp_fuzzy_search}
 \title{Fuzzy match plant names according to the Leipzig Catalogue of Plants (LCVP)}
 \usage{
-lcvp_fuzzy_search(splist, max.distance = 0.1)
+lcvp_fuzzy_search(
+  species,
+  max.distance = 0.1,
+  status = c("accepted", "synonym", "unresolved", "external")
+)
 }
 \arguments{
-\item{splist}{A character specifying one input taxon, each element
+\item{species}{A character specifying one input taxon, each element
 including genus and specific epithet and, potentially, infraspecific rank,
 infraspecific name and author name.}
 
-\item{max.distance}{It represents the maximum distance allowed for a match 
-when comparing the submitted name with the closest name matches in the LCVP. 
-Expressed either as integer, or as a fraction of the pattern length times the maximal 
-transformation cost (will be replaced by the smallest integer not less than 
+\item{max.distance}{It represents the maximum distance allowed for a match
+when comparing the submitted name with the closest name matches in the LCVP.
+Expressed either as integer, or as a fraction of the pattern length times the maximal
+transformation cost (will be replaced by the smallest integer not less than
 the corresponding fraction). See \code{\link[base]{agrep}} for more details.}
+
+\item{status}{A character vector indicating what status should be included
+in the results: "accepted", "synonym", "unresolved", "external".}
 }
 \description{
-This function return all names matched in the Leipzig Catalogue of Plants 
+This function return all names matched in the Leipzig Catalogue of Plants
 (LCVP) based on a user defined word distance.
 }
 \examples{
