@@ -24,7 +24,7 @@
 #'
 #' @examples \dontrun{
 #' # By Genus
-#' res <- lcvp_group_search(c("AA", "Adansonia"), search_by = "Genus")
+#' res <- lcvp_group_search(c("AA", "Adansonia"), search_by = "Genus", bind_result = T)
 #' # By Author
 #' res <- lcvp_group_search("Schltr.", search_by = "Author", status = "accepted")
 #'
@@ -96,6 +96,7 @@ lcvp_group_search <- function(group_names,
     
     for (i in 1:length(pos_list)) {
       result[[i]] <- LCVP::tab_lcvp[pos_list[[i]],]
+      rownames(result[[i]]) <- NULL
       if (!all(c("accepted", "synonym", "unresolved", "external") %in% status)) {
         result[[i]] <-
           result[[i]][result[[i]]$Status %in% status, , drop = FALSE]
@@ -105,13 +106,13 @@ lcvp_group_search <- function(group_names,
     # Bind the results or not
     if (bind_result) {
       result <- do.call(rbind, result)
+      if (nrow(result) == 0) {
+        return(NULL)
+      }
     } else {
       names(result) <- ref_names[pos_group]
     }
-    if (nrow(result) == 0) {
-      return(NULL)
-    } else {
-      return(result) 
-    }
+    return(result)
   }
 }
+

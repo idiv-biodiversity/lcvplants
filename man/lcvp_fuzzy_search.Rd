@@ -5,13 +5,14 @@
 \title{Fuzzy match plant names according to the Leipzig Catalogue of Plants (LCVP)}
 \usage{
 lcvp_fuzzy_search(
-  species,
+  splist,
   max.distance = 0.1,
-  status = c("accepted", "synonym", "unresolved", "external")
+  status = c("accepted", "synonym", "unresolved", "external"),
+  bind_result = TRUE
 )
 }
 \arguments{
-\item{species}{A character specifying one input taxon, each element
+\item{splist}{A character specifying the input taxon, each element
 including genus and specific epithet and, potentially, infraspecific rank,
 infraspecific name and author name.}
 
@@ -23,6 +24,10 @@ the corresponding fraction). See \code{\link[base]{agrep}} for more details.}
 
 \item{status}{A character vector indicating what status should be included
 in the results: "accepted", "synonym", "unresolved", "external".}
+
+\item{bind_result}{If TRUE the function will return one data.frame.
+If False, the function will return a list of separate data.frames for
+each input group.}
 }
 \description{
 This function return all names matched in the Leipzig Catalogue of Plants
@@ -31,6 +36,7 @@ This function return all names matched in the Leipzig Catalogue of Plants
 \examples{
 \dontrun{
 
-res_ex <- lcvp_fuzzy_search("Hibiscus vitifolia")
+res_ex <- lcvp_fuzzy_search(c("Hibiscus vitifolia", "Adansonia digitata"),
+bind_result = FALSE)
 }
 }

@@ -3,7 +3,7 @@
 #' This function return all names matched in the Leipzig Catalogue of Plants
 #' (LCVP) based on a user defined word distance.
 #'
-#' @param species A character specifying one input taxon, each element
+#' @param splist A character specifying the input taxon, each element
 #' including genus and specific epithet and, potentially, infraspecific rank,
 #' infraspecific name and author name.
 #'
@@ -16,32 +16,69 @@
 #' @param status A character vector indicating what status should be included
 #' in the results: "accepted", "synonym", "unresolved", "external".
 #'
+#' @param bind_result If TRUE the function will return one data.frame.
+#' If False, the function will return a list of separate data.frames for
+#' each input group.
+#' 
 #' @examples \dontrun{
 #'
-#' res_ex <- lcvp_fuzzy_search("Hibiscus vitifolia")
+#' res_ex <- lcvp_fuzzy_search(c("Hibiscus vitifolia", "Adansonia digitata"),
+#' bind_result = FALSE)
 #' }
 #'@export
 
 
 
-lcvp_fuzzy_search <- function(species,
+lcvp_fuzzy_search <- function(splist,
                               max.distance = 0.1,
                               status = c("accepted",
                                          "synonym",
                                          "unresolved",
-                                         "external")) {
+                                         "external"),
+                              bind_result = TRUE) {
   # Defensive function here, check for user input errors
-  .names_check(species, "species")
+  .names_check(splist, "splist")
   
   # Fix species name
-  species_std <- .names_standardize(species)
+  species_std <- .names_standardize(splist)
   
   # Classify species
   species_class <- .splist_classify(species_std)
   
+  n_sps <- length(splist)
+  result <- list()
+  for (i in 1:n_sps) {
+    result [[i]] <-
+      .lcvp_fuzzy_search_ind(species_class[i, , drop = FALSE],
+                            max.distance,
+                            status)
+  }
+  if (bind_result) {
+    result <- do.call(rbind, result)
+    result <- result[!is.na(result[, 1]), , drop = FALSE]
+    if (nrow(result) == 0) {
+      return(NULL)
+    } 
+  } else {
+    names(result) <- splist
+  }
+  return(result) 
+}
+
+
+
+
+#----------------------------------------------------
+
+.lcvp_fuzzy_search_ind <- function(species_class,
+                              max.distance,
+                              status) {
+  
+  
   if (is.na(species_class[, 3])) {
-    warning("species argument does not include an epithet", call. = FALSE)
-    return(NULL)
+    warning(paste0("'", species_class[, 1], "' does not include an epithet."),
+            call. = FALSE)
+    return(NA)
   } else {
     # Now match
     ## Get the genus  first
@@ -70,9 +107,12 @@ lcvp_fuzzy_search <- function(species,
       if (!all(c("accepted", "synonym", "unresolved", "external") %in% status)) {
         result <- result[result$Status %in% status, , drop = FALSE]
       }
+      rownames(result) <- NULL
       return(result)
     } else {
-      return(NULL)
+      warning(paste0("No match found for ", "'", species_class[, 1], "'."),
+              call. = FALSE)
+      return(NA)
     }
   }
 }

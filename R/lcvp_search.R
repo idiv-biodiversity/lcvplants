@@ -69,6 +69,9 @@ lcvp_search <- function(splist,
     attributes(result_final)$match.names <- comb_match  
     rownames(result_final) <- NULL
   }
-  
+  if (is.null(result_final)) {
+    warning(paste0("No match found for the species list provided.",
+                   " Try increasing the 'max.distance' argument."))
+  }
   return(result_final)
 }
