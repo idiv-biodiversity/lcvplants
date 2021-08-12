@@ -158,6 +158,7 @@
     if (length(pos_genus2) > 1) {
       sub_tab <- LCVP::tab_lcvp[res_fuzzy[pos_genus2, 1],]
       pos_genus2 <- which(sub_tab$Status == "accepted")
+
       if (length(pos_genus2) == 0) {
         pos_genus2 <- 1
         warning(
@@ -166,7 +167,7 @@
             name1,
             ". Only the first name was returned.",
             " Consider using the function lcp_fuzzy_search ",
-            "to check the details."
+            "to return all names."
           ),
           call. = FALSE
         )
@@ -177,7 +178,7 @@
             name1,
             ". Only the first accepted name was returned.",
             " Consider using the function lcp_fuzzy_search ",
-            "to check the details."
+            "to return all names."
           ),
           call. = FALSE
         )
