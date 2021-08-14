@@ -37,7 +37,9 @@ lcvp_match <- function(splist1,
   search2 <- lcvp_search(splist2, max.distance)
   
   # match
-  match_pos <- match(search1$Input.Taxon, search2$Input.Taxon)
+  match_pos <- match(search1$Input.Taxon, 
+                     search2$Input.Taxon,
+                     incomparables = NA)
   
   
   # Adjust output
