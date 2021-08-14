@@ -75,7 +75,7 @@ lcvp_match <- function(splist1,
                          sp2_miss[i],
                          search2$Input.Taxon[pos_no_match[i]],
                          search2$Output.Taxon[pos_no_match[i]],
-                         NA)
+                         pos_no_match[i])
         result <- rbind(result, extra_lines)
       }
     }

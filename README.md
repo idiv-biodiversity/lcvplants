@@ -70,6 +70,19 @@ splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[1:10])
 lcvp_match(splist1, splist2)
 ```
 
+Lastly, you can use lcvplants two join two tables based on vascular plant names:
+```r
+# data.frame1 
+splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[2:10])
+x <- data.frame("Species" = splist1, "Trait1" = runif(length(splist1)))
+ 
+# data.frame2
+splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[1:8])
+y <- data.frame("Species" = splist2,  "Trait2" = runif(length(splist2)), "Trait3" = runif(length(splist2)))
+ 
+# Full join the two tables
+lcvp_join(x, y, c("Species", "Species"), type = "full")
+```
 
 # Function summary
 
@@ -80,6 +93,8 @@ lcvp_match(splist1, splist2)
 |`lcvp_fuzzy_match`| Same as `lcvp_seach` but returns all matches|
 |`lcvp_group_search`| Return all names listed in LCVP for a genus, family, order, or authority|
 |`lcvp_match`| Compare and match two lists of species vascular plant names|
+|`lcvp_join`| Join two tables based on vascular plant names|
+
 
 # Documentation
 You can find more information on how to use lcvplants in the [vignette](https://idiv-biodiversity.github.io/lcvplants/articles/taxonomic_resolution_using_lcplants.html)
