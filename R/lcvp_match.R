@@ -16,31 +16,44 @@
 #' Expressed either as integer, or as a fraction of the pattern length times the maximal
 #' transformation cost (will be replaced by the smallest integer not less than
 #' the corresponding fraction). See \code{\link[base]{agrep}} for more details.
+#' 
+#' @param include_all If TRUE (default), it will include all species in both
+#'  splist1 and splist2. If FALSE, it will exclude species only found in splist2.
+#'
 #'
 #'@examples \dontrun{
-#' splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[1:10])
-#' splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[1:10])
-#' lcvp_match(splist1, splist2)
+#' splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[2:10])
+#' splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[1:8])
+#' lcvp_match(splist1, splist2, include_all = FALSE)
 #' }
 #'@export
 
 
 lcvp_match <- function(splist1,
                        splist2,
-                       max.distance = 0.1) {
+                       max.distance = 0.1,
+                       include_all = TRUE) {
   # Defensive
   .names_check(splist1, "splist1")
   .names_check(splist2, "splist2")
   
   # Run the search
   search1 <- lcvp_search(splist1, max.distance)
+  if (is.null(search1)) {
+    stop(paste("No match found for splist1.",
+               "Try increasing the 'max.distance' argument."),
+         call. = FALSE)
+  }
   search2 <- lcvp_search(splist2, max.distance)
-  
+  if (is.null(search2)) {
+    stop(paste("No match found for splist2.",
+         "Try increasing the 'max.distance' argument."),
+         call. = FALSE)
+  }
   # match
-  match_pos <- match(search1$Input.Taxon, 
+  match_pos <- match(search1$Input.Taxon,
                      search2$Input.Taxon,
                      incomparables = NA)
-  
   
   # Adjust output
   sp2 <- splist2[match_pos]
@@ -52,19 +65,20 @@ lcvp_match <- function(splist1,
     "Match.Position.2to1" = match_pos
   )
   
-  ## Include species missing in second dataset
-  pos_no_match <- which(!(splist2 %in% sp2))
-  if (length(pos_no_match) > 0) {
-    sp2_miss <- splist2[pos_no_match]
-    for (i in 1:length(sp2_miss)) {
-      extra_lines <- c(NA,
-                       sp2_miss[i],
-                       search2$Input.Taxon[pos_no_match[i]],
-                       search2$Output.Taxon[pos_no_match[i]],
-                       NA)
-      result <- rbind(result, extra_lines)
+  ## Include species only in second dataset
+  if (include_all) {
+    pos_no_match <- which(!(splist2 %in% sp2))
+    if (length(pos_no_match) > 0) {
+      sp2_miss <- splist2[pos_no_match]
+      for (i in 1:length(sp2_miss)) {
+        extra_lines <- c(NA,
+                         sp2_miss[i],
+                         search2$Input.Taxon[pos_no_match[i]],
+                         search2$Output.Taxon[pos_no_match[i]],
+                         NA)
+        result <- rbind(result, extra_lines)
+      }
     }
   }
-  
   return(result)
 }
