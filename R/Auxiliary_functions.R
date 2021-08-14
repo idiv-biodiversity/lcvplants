@@ -6,8 +6,9 @@
   fixed4 <- trimws(fixed3) # remove trailing and leading space
   fixed5 <- gsub("_", " ", fixed4) # change names separated by _ to space
   # Merge multiple spaces
-  fixed6 <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", fixed5, perl=TRUE) 
-  return(fixed6)
+  fixed6 <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", fixed5, perl=TRUE)
+  fixed7 <- gsub("(^X )|( X$)|( X )", "", fixed6)
+  return(fixed7)
 }
 
 
