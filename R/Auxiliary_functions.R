@@ -1,11 +1,13 @@
 # Make names standard
 .names_standardize <- function(splist) {
-  fixed <- toupper(splist) # all up
-  fixed2 <- trimws(fixed) # remove trailing and leading space
-  fixed3 <- gsub("_", " ", fixed2) # change names separated by _ to space
+  fixed1 <- toupper(splist) # all up
+  fixed2 <- gsub("CF\\.", "", fixed1)
+  fixed3 <- gsub("AFF\\.", "", fixed2)
+  fixed4 <- trimws(fixed3) # remove trailing and leading space
+  fixed5 <- gsub("_", " ", fixed4) # change names separated by _ to space
   # Merge multiple spaces
-  fixed4 <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", fixed3, perl=TRUE) 
-  return(fixed4)
+  fixed6 <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", fixed5, perl=TRUE) 
+  return(fixed6)
 }
 
 
