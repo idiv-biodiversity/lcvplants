@@ -5,10 +5,12 @@ on:
     branches:
       - main
       - master
+      - Lcvp_2
   pull_request:
     branches:
       - main
       - master
+      - Lcvp_2
 
 name: R-CMD-check
 
