@@ -28,11 +28,11 @@ lcvp_search("Hibiscus vitifolius")
 lcvp_search("Hibiscus abelmoschus var. betulifolius Mast.")
 
 # Also works on vectors of names
-match_result <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.", "Hibiscus abutiloides Willd.", 
+search_result <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.", "Hibiscus abutiloides Willd.", 
        "Hibiscus aculeatus", "Hibiscus acuminatus"))
 
 # You can see the summary results
-lcvp_summary(match_result)
+lcvp_summary(search_result)
 ```
 
 The algorithm can also consider misspellings and look for the most similar match given a max.distance argument set by the user:
