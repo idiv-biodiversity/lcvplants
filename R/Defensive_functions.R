@@ -57,12 +57,12 @@
 .check_join <- function(x, y, sp_columns) {
   # Check classes
   class_x <- class(x)
-  if ("data.frame" %in% class_x) {
+  if (!"data.frame" %in% class_x) {
     stop(paste0("x should be a data.frame, not '", class_x, "'."),
          call. = FALSE)
   }
   class_y <- class(y)
-  if ("data.frame" %in% class_y) {
+  if (!"data.frame" %in% class_y) {
     stop(paste0("y should be a data.frame, not '", class_x, "'."),
          call. = FALSE)
   }

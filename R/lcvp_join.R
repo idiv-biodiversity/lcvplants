@@ -53,8 +53,8 @@ lcvp_join <- function(x, y, sp_columns, max.distance = 0.1,
   .check_join(x, y, sp_columns)
   
   # Get names
-  splist1 <- x[, sp_columns[1]]
-  splist2 <- y[, sp_columns[2]]
+  splist1 <- x[, sp_columns[1], drop = TRUE]
+  splist2 <- y[, sp_columns[2], drop = TRUE]
   
   # lcvp_match
   match_result <- lcvp_match(splist1, splist2, include_all = TRUE)
