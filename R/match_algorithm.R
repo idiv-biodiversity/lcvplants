@@ -166,7 +166,7 @@
             "More than one name was fuzzy matched for species ",
             name1,
             ". Only the first name was returned.",
-            " Consider using the function lcp_fuzzy_search ",
+            " Consider using the function lcvp_fuzzy_search ",
             "to return all names."
           ),
           call. = FALSE
@@ -177,7 +177,7 @@
             "More than one name was fuzzy matched for species ",
             name1,
             ". Only the first accepted name was returned.",
-            " Consider using the function lcp_fuzzy_search ",
+            " Consider using the function lcvp_fuzzy_search ",
             "to return all names."
           ),
           call. = FALSE
