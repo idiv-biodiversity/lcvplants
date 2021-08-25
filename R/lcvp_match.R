@@ -19,12 +19,15 @@
 #' 
 #' @param include_all If TRUE (default), it will include all species in both
 #'  splist1 and splist2. If FALSE, it will exclude species only found in splist2.
+#'  
+#' @param identify_dups If TRUE (default), a column indicating the position 
+#'  of duplicated LCVP output names in the resulting data.frame.
 #'
 #'
 #'@examples \dontrun{
-#' splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[2:10])
-#' splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[1:8])
-#' lcvp_match(splist1, splist2, include_all = FALSE)
+#' splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[5:100])
+#' splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[100:2])
+#' res <- lcvp_match(splist1, splist2, include_all = TRUE)
 #' }
 #'@export
 
@@ -32,7 +35,8 @@
 lcvp_match <- function(splist1,
                        splist2,
                        max.distance = 0.1,
-                       include_all = TRUE) {
+                       include_all = TRUE, 
+                       identify_dups = TRUE) {
   # Defensive
   .names_check(splist1, "splist1")
   .names_check(splist2, "splist2")
@@ -80,5 +84,32 @@ lcvp_match <- function(splist1,
       }
     }
   }
+  if (identify_dups) {
+  result$Duplicated.Output.Position <- .find_dups(result)
+  }
   return(result)
 }
+
+
+#-------------------------------------------------------#
+# Find duplicates and identify their position
+.find_dups <- function(x, output_pos = 4) {
+  # Identify dups
+  dups <- duplicated(x[, output_pos]) |
+    duplicated(x[, output_pos], fromLast = TRUE)
+  # Loop to find which duplicates which
+  n <- length(dups)
+  dups_which <- numeric(n)
+  for (i in 1:n) {
+    if (dups[i]) {
+      # Give the position of the dups
+      dups_which[i] <-
+        paste(which(x[, output_pos] == x[i, output_pos]), collapse = ", ")
+    } else {
+      # If not dup, NA
+      dups_which[i] <- NA
+    }
+  }
+  return(dups_which)
+}
+

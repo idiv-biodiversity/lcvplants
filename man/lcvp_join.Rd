@@ -4,7 +4,17 @@
 \alias{lcvp_join}
 \title{Join two data.frames using the Leipzig Catalogue of Plants (LCVP)}
 \usage{
-lcvp_join(x, y, sp_columns, max.distance = 0.1, type = "full")
+lcvp_join(
+  x,
+  y,
+  sp_columns,
+  max.distance = 0.1,
+  type = "full",
+  solve_duplicated = FALSE,
+  func_numeric = mean,
+  func_character = .keep_all,
+  func_logical = any
+)
 }
 \arguments{
 \item{x, y}{data.frames to join.}
@@ -25,6 +35,18 @@ or "inner".
 *"left" return all rows from x.
 *"right" return all rows from y.
 *"inner" return all rows from x where there are matching species in y.}
+
+\item{solve_duplicated}{if TRUE, it will summarize duplicated output names 
+given a function for each column class.}
+
+\item{func_numeric}{A function to summarize numeric columns 
+if solve_duplicated = TRUE.}
+
+\item{func_character}{A function to summarize character columns 
+if solve_duplicated = TRUE.}
+
+\item{func_logical}{A function to summarize logical columns 
+if solve_duplicated = TRUE.}
 }
 \description{
 Join two data.frames using the Leipzig Catalogue of Plants (LCVP)
@@ -32,14 +54,16 @@ Join two data.frames using the Leipzig Catalogue of Plants (LCVP)
 \examples{
 \dontrun{
 # data.frame1 
-splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[2:10])
+splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[2:100])
 x <- data.frame("Species" = splist1, "Trait1" = runif(length(splist1)))
 
 # data.frame2
-splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[1:8])
+splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[98:8])
 y <- data.frame("Species" = splist2, 
 "Trait2" = runif(length(splist2)),
-"Trait3" = runif(length(splist2)))
+"Trait3" = runif(length(splist2)),
+"Trait4" = sample(c("a", "b"), length(splist2), replace = TRUE),
+"Trait5" = sample(c(TRUE, FALSE), length(splist2), replace = TRUE))
 
 
 lcvp_join(x, y, c("Species", "Species"), type = "full")

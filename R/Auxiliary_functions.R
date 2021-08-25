@@ -11,4 +11,7 @@
   return(fixed7)
 }
 
-
+# Function default lcvp_join argument func_character
+.keep_all <- function (x) {
+  return(paste(unique(x), collapse = ", "))
+}

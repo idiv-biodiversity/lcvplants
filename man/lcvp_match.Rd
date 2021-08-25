@@ -4,7 +4,13 @@
 \alias{lcvp_match}
 \title{Match two name list using the Leipzig Catalogue of Plants (LCVP)}
 \usage{
-lcvp_match(splist1, splist2, max.distance = 0.1, include_all = TRUE)
+lcvp_match(
+  splist1,
+  splist2,
+  max.distance = 0.1,
+  include_all = TRUE,
+  identify_dups = TRUE
+)
 }
 \arguments{
 \item{splist1}{A character vector specifying the reference input taxon to be matched.
@@ -23,14 +29,17 @@ the corresponding fraction). See \code{\link[base]{agrep}} for more details.}
 
 \item{include_all}{If TRUE (default), it will include all species in both
 splist1 and splist2. If FALSE, it will exclude species only found in splist2.}
+
+\item{identify_dups}{If TRUE (default), a column indicating the position 
+of duplicated LCVP output names in the resulting data.frame.}
 }
 \description{
 Match two name list using the Leipzig Catalogue of Plants (LCVP)
 }
 \examples{
 \dontrun{
-splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[2:10])
-splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[1:8])
-lcvp_match(splist1, splist2, include_all = FALSE)
+splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[5:100])
+splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[100:2])
+res <- lcvp_match(splist1, splist2, include_all = TRUE)
 }
 }
