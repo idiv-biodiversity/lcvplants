@@ -91,25 +91,4 @@ lcvp_match <- function(splist1,
 }
 
 
-#-------------------------------------------------------#
-# Find duplicates and identify their position
-.find_dups <- function(x, output_pos = 4) {
-  # Identify dups
-  dups <- duplicated(x[, output_pos]) |
-    duplicated(x[, output_pos], fromLast = TRUE)
-  # Loop to find which duplicates which
-  n <- length(dups)
-  dups_which <- numeric(n)
-  for (i in 1:n) {
-    if (dups[i]) {
-      # Give the position of the dups
-      dups_which[i] <-
-        paste(which(x[, output_pos] == x[i, output_pos]), collapse = ", ")
-    } else {
-      # If not dup, NA
-      dups_which[i] <- NA
-    }
-  }
-  return(dups_which)
-}
 

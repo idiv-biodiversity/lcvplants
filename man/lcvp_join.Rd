@@ -19,47 +19,48 @@ lcvp_join(
 \arguments{
 \item{x, y}{data.frames to join.}
 
-\item{sp_columns}{A character vector indicating the column names in x and in y 
-with respective species names to join by. 
+\item{sp_columns}{A character vector indicating the column names in x and in y
+with respective species names to join by.
 For example, c("species", "Species_name").}
 
-\item{max.distance}{It represents the maximum distance allowed for a match 
-when comparing the submitted name with the closest name matches in the LCVP. 
-Expressed either as integer, or as a fraction of the pattern length times the maximal 
-transformation cost (will be replaced by the smallest integer not less than 
+\item{max.distance}{It represents the maximum distance allowed for a match
+when comparing the submitted name with the closest name matches in the LCVP.
+Expressed either as integer, or as a fraction of the pattern length times the maximal
+transformation cost (will be replaced by the smallest integer not less than
 the corresponding fraction). See \code{\link[base]{agrep}} for more details.}
 
-\item{type}{What type of join should be done: "full" (default), "left", "right" 
-or "inner". 
+\item{type}{What type of join should be done: "full" (default), "left", "right"
+or "inner".
 *"full" return all rows and all columns from both x and y.
 *"left" return all rows from x.
 *"right" return all rows from y.
 *"inner" return all rows from x where there are matching species in y.}
 
-\item{solve_duplicated}{if TRUE, it will summarize duplicated output names 
+\item{solve_duplicated}{if TRUE, it will summarize duplicated output names
 given a function for each column class.}
 
 \item{func_numeric}{A function to summarize numeric columns 
-if solve_duplicated = TRUE.}
+if solve_duplicated = TRUE. Default will return the mean.}
 
 \item{func_character}{A function to summarize character columns 
-if solve_duplicated = TRUE.}
+if solve_duplicated = TRUE. Default will keep all unique strings separated 
+by comma.}
 
 \item{func_logical}{A function to summarize logical columns 
-if solve_duplicated = TRUE.}
+if solve_duplicated = TRUE.Default will return TRUE if any is TRUE.}
 }
 \description{
 Join two data.frames using the Leipzig Catalogue of Plants (LCVP)
 }
 \examples{
 \dontrun{
-# data.frame1 
+# data.frame1
 splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[2:100])
 x <- data.frame("Species" = splist1, "Trait1" = runif(length(splist1)))
 
 # data.frame2
 splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[98:8])
-y <- data.frame("Species" = splist2, 
+y <- data.frame("Species" = splist2,
 "Trait2" = runif(length(splist2)),
 "Trait3" = runif(length(splist2)),
 "Trait4" = sample(c("a", "b"), length(splist2), replace = TRUE),
@@ -72,6 +73,8 @@ lcvp_join(x, y, c("Species", "Species"), type = "left")
 
 lcvp_join(x, y, c("Species", "Species"), type = "right")
 
-lcvp_join(x, y, c("Species", "Species"), type = "inner")
+lcvp_join(x, y, c("Species", "Species"), 
+type = "inner", solve_duplicated = TRUE)
+
 }
 }
