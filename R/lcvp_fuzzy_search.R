@@ -41,6 +41,7 @@ lcvp_fuzzy_search <- function(splist,
     splist <- as.character(splist)
   }
   .names_check(splist, "splist")
+  .check_status(status)
   
   # Fix species name
   species_std <- .names_standardize(splist)

@@ -7,7 +7,7 @@
 #' 
 #' @param duplicated_col The column position with duplicated names to be solved.
 #' 
-#' @param remove_cols The columns positions that should be left out of the 
+#' @param fixed_cols The columns positions that should be left out of the 
 #' summarizing processes.
 #' 
 #' @param func_numeric A function to summarize numeric columns 
@@ -46,7 +46,7 @@
 
 lcvp_solve_dups <- function(x, 
                             duplicated_col,
-                            remove_cols = NULL,
+                            fixed_cols = NULL,
                             func_numeric = mean, 
                             func_character = .keep_all,
                             func_logical = any) {
@@ -73,24 +73,14 @@ lcvp_solve_dups <- function(x,
       pos <- as.numeric(unlist(strsplit(dups[i], ",")))
       
       # Select traits
-      if (is.null(remove_cols)) { # If nothing to remove
-        traits <- x[pos, , drop = FALSE]
-        
-        # Summarize them 
-        x[i,] <- .trait_summary(traits,
-                                func_numeric,
-                                func_character,
-                                func_logical)
-        
-      } else { # if some columns should be removed 
-      traits <- x[pos, -(remove_cols), drop = FALSE]
+      fixed_cols <- c(duplicated_col, fixed_cols)
+      traits <- x[pos, -(fixed_cols), drop = FALSE]
       
       # Summarize them 
-      x[i, -(remove_cols)] <- .trait_summary(traits, 
+      x[i, -(fixed_cols)] <- .trait_summary(traits, 
                                      func_numeric, 
                                      func_character,
                                      func_logical)
-      }
     }
   }
   # Remove dups

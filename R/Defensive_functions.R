@@ -54,7 +54,7 @@
 #-------------------------------------------------------#
 # Check inputs for lcvp_join
 
-.check_join <- function(x, y, sp_columns) {
+.check_join <- function(x, y, sp_columns, type) {
   # Check classes
   class_x <- class(x)
   if (!"data.frame" %in% class_x) {
@@ -92,6 +92,15 @@
                 " not found in y columns names."), 
          call. = FALSE)
   }
+  
+  type_valid <- c("full", "left", "right", "inner")
+  check <- all(type %in% type_valid)
+  if (!check) {
+    stop(paste0("type argument should be one of the following: ",
+                paste0("'", type_valid, "'", collapse = ", "), ". Not ",
+                paste0("'", type, "'", collapse = ", ")),
+         call. = FALSE)
+  }
     
 }
 
@@ -119,6 +128,21 @@
   class_x <- class(x)
   if (!"data.frame" %in% class_x) {
     stop(paste0("x should be a data.frame, not '", class_x, "'."),
+         call. = FALSE)
+  }
+}
+
+#-------------------------------------------------------#
+# Check status input
+
+.check_status <- function(status) {
+  
+  status_valid <- c("accepted", "synonym", "unresolved", "external")
+  check <- all(status %in% status_valid)
+  if (!check) {
+    stop(paste0("status argument should be one of the following: ",
+                paste0("'", status_valid, "'", collapse = ", "), ". Not ",
+                paste0("'", status, "'", collapse = ", ")),
          call. = FALSE)
   }
 }

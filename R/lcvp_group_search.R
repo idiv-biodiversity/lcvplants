@@ -24,9 +24,11 @@
 #'
 #' @examples \dontrun{
 #' # By Genus
-#' res <- lcvp_group_search(c("AA", "Adansonia"), search_by = "Genus", bind_result = T)
+#' res <- lcvp_group_search(c("AA", "Adansonia"), 
+#' search_by = "Genus", bind_result = TRUE)
 #' # By Author
-#' res <- lcvp_group_search("Schltr.", search_by = "Author", status = "accepted")
+#' res <- lcvp_group_search("Schltr.", search_by = "Author", 
+#' status = "accepted")
 #'
 #' }
 #'@export
@@ -49,6 +51,7 @@ lcvp_group_search <- function(group_names,
   
   .search_by_check(search_by)
   
+  .check_status(status)
   # Fix entry names
   group_names <- .names_standardize(group_names)
   

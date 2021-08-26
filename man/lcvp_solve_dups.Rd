@@ -7,7 +7,7 @@
 lcvp_solve_dups(
   x,
   duplicated_col,
-  remove_cols = NULL,
+  fixed_cols = NULL,
   func_numeric = mean,
   func_character = .keep_all,
   func_logical = any
@@ -18,7 +18,7 @@ lcvp_solve_dups(
 
 \item{duplicated_col}{The column position with duplicated names to be solved.}
 
-\item{remove_cols}{The columns positions that should be left out of the 
+\item{fixed_cols}{The columns positions that should be left out of the 
 summarizing processes.}
 
 \item{func_numeric}{A function to summarize numeric columns 

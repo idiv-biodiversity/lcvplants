@@ -74,7 +74,7 @@ lcvp_join <- function(x,
                       func_character = .keep_all,
                       func_logical = any) {
   # Defensive here
-  .check_join(x, y, sp_columns)
+  .check_join(x, y, sp_columns, type)
   .check_funcs(func_numeric,
                func_character,
                func_logical)
@@ -126,7 +126,7 @@ lcvp_join <- function(x,
   if (solve_duplicated) {
     result <- lcvp_solve_dups(result,
                               duplicated_col = 4,
-                              remove_cols = 1:4,
+                              fixed_cols = 1:3,
                               func_numeric = func_numeric,
                               func_character = func_character,
                               func_logical = func_logical)

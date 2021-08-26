@@ -18,8 +18,9 @@ Depends: R (>= 3.5.0), LCVP
 Imports: utils
 Suggests: 
     knitr,
-    testthat (>= 2.1.0),
+    testthat (>= 3.0.0),
     remotes
 LazyLoad: yes
 RoxygenNote: 7.1.1
 Encoding: UTF-8
+Config/testthat/edition: 3

@@ -39,9 +39,11 @@ Leipzig Catalogue of Plants (LCVP)
 \examples{
 \dontrun{
 # By Genus
-res <- lcvp_group_search(c("AA", "Adansonia"), search_by = "Genus", bind_result = T)
+res <- lcvp_group_search(c("AA", "Adansonia"), 
+search_by = "Genus", bind_result = TRUE)
 # By Author
-res <- lcvp_group_search("Schltr.", search_by = "Author", status = "accepted")
+res <- lcvp_group_search("Schltr.", search_by = "Author", 
+status = "accepted")
 
 }
 }
