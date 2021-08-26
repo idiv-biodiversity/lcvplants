@@ -38,6 +38,13 @@ lcvp_match <- function(splist1,
                        include_all = TRUE, 
                        identify_dups = TRUE) {
   # Defensive
+  if (is.factor(splist1)) {
+    splist1 <- as.character(splist1)
+  }
+  if (is.factor(splist2)) {
+    splist2 <- as.character(splist2)
+  }
+  
   .names_check(splist1, "splist1")
   .names_check(splist2, "splist2")
   

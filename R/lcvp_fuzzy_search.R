@@ -37,6 +37,9 @@ lcvp_fuzzy_search <- function(splist,
                                          "external"),
                               bind_result = TRUE) {
   # Defensive function here, check for user input errors
+  if (is.factor(splist)) {
+    splist <- as.character(splist)
+  }
   .names_check(splist, "splist")
   
   # Fix species name

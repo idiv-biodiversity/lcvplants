@@ -75,6 +75,9 @@ lcvp_join <- function(x,
                       func_logical = any) {
   # Defensive here
   .check_join(x, y, sp_columns)
+  .check_funcs(func_numeric,
+               func_character,
+               func_logical)
   
   # Transform factors in characters
   i <- sapply(x, is.factor)

@@ -52,7 +52,7 @@
 }
 
 #-------------------------------------------------------#
-# Check inputs for hoin
+# Check inputs for lcvp_join
 
 .check_join <- function(x, y, sp_columns) {
   # Check classes
@@ -95,3 +95,30 @@
     
 }
 
+#-------------------------------------------------------#
+# Check function inputs for lcvp_solve_dups
+.check_funcs <- function(func_numeric, 
+                         func_character,
+                         func_logical) {
+  
+  if (!is.function(func_numeric)) {
+    stop("func_numeric should be a function.")
+  }
+  if (!is.function(func_character)) {
+    stop("func_character should be a function.")
+  }
+  if (!is.function(func_logical)) {
+    stop("func_logical should be a function.")
+  }
+}
+
+#-------------------------------------------------------#
+# Check x input for lcvp_solve_dups
+.check_x <- function(x) {
+  # Check classes
+  class_x <- class(x)
+  if (!"data.frame" %in% class_x) {
+    stop(paste0("x should be a data.frame, not '", class_x, "'."),
+         call. = FALSE)
+  }
+}

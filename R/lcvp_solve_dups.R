@@ -50,6 +50,12 @@ lcvp_solve_dups <- function(x,
                             func_numeric = mean, 
                             func_character = .keep_all,
                             func_logical = any) {
+  # Defensive
+  .check_funcs(func_numeric,
+               func_character,
+               func_logical)
+  .check_x(x)
+  
   # Which dups
   dups <- .find_dups(x, output_pos = duplicated_col)
   

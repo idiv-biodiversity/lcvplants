@@ -42,6 +42,9 @@ lcvp_group_search <- function(group_names,
                                          "unresolved",
                                          "external")) {
   # Check names
+  if (is.factor(group_names)) {
+    group_names <- as.character(group_names)
+  }
   .names_check(group_names, "group_names")
   
   .search_by_check(search_by)

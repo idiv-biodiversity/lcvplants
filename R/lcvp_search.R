@@ -35,6 +35,9 @@
 lcvp_search <- function(splist, 
                         max.distance = 0.1) {
   # Defensive function here, check for user input errors
+  if (is.factor(splist)) {
+    splist <- as.character(splist)
+  }
   .names_check(splist, "splist")
   
   # Fix species name
