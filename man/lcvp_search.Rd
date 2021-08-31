@@ -9,7 +9,8 @@ lcvp_search(splist, max.distance = 0.1)
 \arguments{
 \item{splist}{A character vector specifying the input taxon, each element
 including genus and specific epithet and, potentially, infraspecific rank,
-infraspecific name and author name.}
+infraspecific name and author name. Only valid characters are allowed 
+(see \code{\link[base:validEnc]{base:validEnc()}}).}
 
 \item{max.distance}{It represents the maximum distance allowed for a match 
 when comparing the submitted name with the closest name matches in the LCVP. 
@@ -58,17 +59,16 @@ in `splist`. If no match is found, it will try to find the
 closest name given the maximum distance defined in `max.distance`. If more than
 one name is fuzzy matched, only the accepted or the first will be returned. 
 The function  
-\code{\link[lcvplants::lcvp_fuzzy_search]{lcvp_fuzzy_search}}
+\code{\link[lcvplants:lcvp_fuzzy_search]{lcvp_fuzzy_search}}
 can be used to return all results of the fuzzy match algorithm.
 
-The \code{\link[lcvplants::lcvp_summary]{lcvp_summary}} function can be 
+The \code{\link[lcvplants:lcvp_summary]{lcvp_summary}} function can be 
 used to summarize the results from a multiple species search, indicating the 
 number of species matched, and how many of them were exactly or fuzzy matched. 
 
-Note that only binomial names without special characters are allowed in this
- function. Search based on  genus, family, order or author names should use 
- the function 
-\code{\link[lcvplants::lcvp_group_search]{lcvp_group_search}}.
+Note that only binomial names with valid characters are allowed in this 
+function. Search based on  genus, family, order or author names should use 
+the function \code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}}.
 }
 \examples{
 
@@ -101,9 +101,9 @@ vascular plants. Sci Data 7, 416 (2020).
 https://doi.org/10.1038/s41597-020-00702-z
 }
 \seealso{
-\code{\link[lcvplants::lcvp_summary]{lcvp_summary}}, 
-\code{\link[lcvplants::lcvp_group_search]{lcvp_group_search}},  
-\code{\link[lcvplants::lcvp_fuzzy_search]{lcvp_fuzzy_search}}.
+\code{\link[lcvplants:lcvp_summary]{lcvp_summary}}, 
+\code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}},  
+\code{\link[lcvplants:lcvp_fuzzy_search]{lcvp_fuzzy_search}}.
 }
 \author{
 Bruno Vilela & Alexander Ziska

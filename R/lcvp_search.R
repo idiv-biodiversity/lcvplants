@@ -10,7 +10,8 @@
 #' 
 #' @param splist A character vector specifying the input taxon, each element
 #' including genus and specific epithet and, potentially, infraspecific rank,
-#' infraspecific name and author name.
+#' infraspecific name and author name. Only valid characters are allowed 
+#' (see \code{\link[base:validEnc]{base:validEnc()}}).
 #' 
 #' @param max.distance It represents the maximum distance allowed for a match 
 #' when comparing the submitted name with the closest name matches in the LCVP. 
@@ -26,17 +27,16 @@
 #' closest name given the maximum distance defined in `max.distance`. If more than
 #' one name is fuzzy matched, only the accepted or the first will be returned. 
 #' The function  
-#' \code{\link[lcvplants::lcvp_fuzzy_search]{lcvp_fuzzy_search}}
+#' \code{\link[lcvplants:lcvp_fuzzy_search]{lcvp_fuzzy_search}}
 #' can be used to return all results of the fuzzy match algorithm.
 #' 
-#' The \code{\link[lcvplants::lcvp_summary]{lcvp_summary}} function can be 
+#' The \code{\link[lcvplants:lcvp_summary]{lcvp_summary}} function can be 
 #' used to summarize the results from a multiple species search, indicating the 
 #' number of species matched, and how many of them were exactly or fuzzy matched. 
 #' 
-#' Note that only binomial names without special characters are allowed in this
-#'  function. Search based on  genus, family, order or author names should use 
-#'  the function 
-#' \code{\link[lcvplants::lcvp_group_search]{lcvp_group_search}}.
+#' Note that only binomial names with valid characters are allowed in this 
+#' function. Search based on  genus, family, order or author names should use 
+#' the function \code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}}.
 #' 
 #' 
 #' @return 
@@ -68,9 +68,9 @@
 #' Bruno Vilela & Alexander Ziska
 #' 
 #' @seealso 
-#' \code{\link[lcvplants::lcvp_summary]{lcvp_summary}}, 
-#' \code{\link[lcvplants::lcvp_group_search]{lcvp_group_search}},  
-#' \code{\link[lcvplants::lcvp_fuzzy_search]{lcvp_fuzzy_search}}.
+#' \code{\link[lcvplants:lcvp_summary]{lcvp_summary}}, 
+#' \code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}},  
+#' \code{\link[lcvplants:lcvp_fuzzy_search]{lcvp_fuzzy_search}}.
 #' 
 #' @references 
 #' Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig 
