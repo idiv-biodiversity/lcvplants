@@ -13,7 +13,7 @@
 #' when comparing the submitted name with the closest name matches in the LCVP.
 #' Expressed either as integer, or as a fraction of the pattern length times the maximal
 #' transformation cost (will be replaced by the smallest integer not less than
-#' the corresponding fraction). See \code{\link[base]{agrep}} for more details.
+#' the corresponding fraction). See \code{\link[base:agrep]{base:agrep()}} for more details.
 #'
 #' @param type What type of join should be done: "full" (default), "left", "right"
 #' or "inner".

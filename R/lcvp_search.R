@@ -1,35 +1,108 @@
 #' Standardize plant names according to the Leipzig Catalogue of Plants (LCVP)
 #'
-#' This is the new version of the LCVP function
+#' Allow taxonomic resolution of plant taxa names listed in the "Leipzig
+#' Catalogue of Vascular Plants" (LCVP). 
+#' Connects to the LCVP table and validates the
+#' names of a vector of plant taxa, replacing synonyms by accepted names and
+#' removing orthographic errors in plant names. 
+#' The LCVP data package must be installed. It is available from 
+#' https://github.com/idiv-biodiversity/LCVP.
 #' 
 #' @param splist A character vector specifying the input taxon, each element
 #' including genus and specific epithet and, potentially, infraspecific rank,
-#' infraspecific name and author name
+#' infraspecific name and author name.
 #' 
 #' @param max.distance It represents the maximum distance allowed for a match 
 #' when comparing the submitted name with the closest name matches in the LCVP. 
-#' Expressed either as integer, or as a fraction of the pattern length times the maximal 
-#' transformation cost (will be replaced by the smallest integer not less than 
-#' the corresponding fraction). See \code{\link[base]{agrep}} for more details.
+#' Expressed either as integer, or as a fraction of the pattern length times the 
+#' maximal transformation cost (will be replaced by the smallest integer not 
+#' less than the corresponding fraction). 
+#' See \code{\link[base:agrep]{base:agrep()}} for more details.
 #'
-#' @examples \dontrun{
+#' @details 
 #' 
-#' res_ex <- lcvp_search("Hibiscus vitifolius")
-#' res_ex <- lcvp_search("Hibiscus vitifoliuse")
-#' res_ex <- lcvp_search("Tibiscus vitifolius", max.distance = 2)
+#' The algorithm will first try to exactly match the binomial names provided 
+#' in `splist`. If no match is found, it will try to find the 
+#' closest name given the maximum distance defined in `max.distance`. If more than
+#' one name is fuzzy matched, only the accepted or the first will be returned. 
+#' The function  
+#' \code{\link[lcvplants::lcvp_fuzzy_search]{lcvp_fuzzy_search}}
+#' can be used to return all results of the fuzzy match algorithm.
 #' 
-#' res_ex <- lcvp_search("Hibiscus abelmoschus var. betulifolius Mast.")
+#' The \code{\link[lcvplants::lcvp_summary]{lcvp_summary}} function can be 
+#' used to summarize the results from a multiple species search, indicating the 
+#' number of species matched, and how many of them were exactly or fuzzy matched. 
 #' 
-#' res_ex <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.",
+#' Note that only binomial names without special characters are allowed in this
+#'  function. Search based on  genus, family, order or author names should use 
+#'  the function 
+#' \code{\link[lcvplants::lcvp_group_search]{lcvp_group_search}}.
+#' 
+#' 
+#' @return 
+#' A data.frame with the following columns:
+#' \itemize{
+#' \item{\emph{Search}}{: Taxa name list provided by the user.}
+#' \item{\emph{Input.Taxon}}{: Matched taxa names listed in the LCVP data.}  
+#' \item{\emph{Status}}{: Nomenclature status: 'accepted', 'synonym', 
+#' 'unresolved' or 'external'.}
+#' \item{\emph{PL.comparisson}}{: This field provides a direct comparison with
+#' ‘The Plant List’: ‘identical', 'synonym', 'other synonym', 
+#' 'different authors', 'missing', 'misspelling' or 'unresolved'.}  
+#' \item{\emph{PL.alternative}}{: This field provides a possible alternative 
+#' name from ‘The Plant List’.}
+#' \item{\emph{Output.Taxon}}{: The list of the accepted plant taxa names 
+#' according to the LCVP.}  
+#' \item{\emph{Family}}{: The corresponding family name of the Input.Taxon, 
+#' staying empty if the Status is unresolved.}  
+#' \item{\emph{Order}}{: The corresponding order name of the Input.Taxon,
+#'  staying empty if the Status is unresolved.}
+#' }
+#' See \code{\link[LCVP:tab_lcvp]{LCVP:tab_lcvp}} for more details.
+#' 
+#' If no match is found for one species it will return NA for the columns in 
+#' the LCVP table. But, if no match is found for all species the function will 
+#' return NULL and a warning message.
+#' 
+#' @author 
+#' Bruno Vilela & Alexander Ziska
+#' 
+#' @seealso 
+#' \code{\link[lcvplants::lcvp_summary]{lcvp_summary}}, 
+#' \code{\link[lcvplants::lcvp_group_search]{lcvp_group_search}},  
+#' \code{\link[lcvplants::lcvp_fuzzy_search]{lcvp_fuzzy_search}}.
+#' 
+#' @references 
+#' Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig 
+#' catalogue of vascular plants, a new taxonomic reference list for all known 
+#' vascular plants. Sci Data 7, 416 (2020). 
+#' https://doi.org/10.1038/s41597-020-00702-z 
+#' 
+#' @keywords R-package nomenclature taxonomy vascular plants
+#' 
+#' @examples
+#' 
+#' # Search one species
+#' lcvp_search("Hibiscus vitifolius")
+#' 
+#' # Search one species with misspelled name
+#' lcvp_search("Hibiscus vitifoliuse")
+#' lcvp_search("Tibiscus vitifolius", max.distance = 2)
+#' 
+#' # Search for a variety
+#' lcvp_search("Hibiscus abelmoschus var. betulifolius Mast.")
+#' 
+#' # Search for multiple species
+#' mult <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.",
 #' "Hibiscus abutiloides Willd.",
 #'  "Hibiscus aculeatus",
 #'  "Hibiscus acuminatus",
-#'  "Hibiscus furcatuis"), max.distance = 0)
+#'  "Hibiscus furcatuis"), # This is a wrong name
+#'   max.distance = 0)
+#'  
+#'  ## Results for multiple species search can be summarized using lcvp_summary
+#'  lcvp_summary(mult)
 #' 
-#' system.time(
-#' res_ex <- lcvp_search(rep("Hibiscusa vitifolius", 10))
-#' )
-#' }
 #'@export
 
 lcvp_search <- function(splist, 
@@ -57,14 +130,15 @@ lcvp_search <- function(splist,
   ## Return Null if it did not find anything
   if (all(is.na(matching))) {
     result_final <- NULL
-  ## Return The matrix with matched species and whether it matched each class
+  ## Return the matrix with matched species 
   } else {
     comb_match <- matching[,-(1:2), drop = FALSE]
     comb_match <- as.matrix(apply(comb_match, 2, as.logical))
-    if (ncol(comb_match) == 1) {
+    if (ncol(comb_match) == 1) { # If only one column, need to be transposed
       comb_match <- t(comb_match)
     }
-    comb_match <- as.data.frame(comb_match)
+    # Transform in data.frame
+    comb_match <- as.data.frame(comb_match) 
     names_col <-
       colnames(LCVP::lcvp_sps_class)[-c(1, ncol(LCVP::lcvp_sps_class))]
     
@@ -72,9 +146,14 @@ lcvp_search <- function(splist,
     
     result_final <- data.frame("Search" = splist,
                                LCVP::tab_lcvp[matching[, 1], , drop = FALSE])
+    
+    # Add whether the searched name matched each class, 
+    # will be used in the summary function
     attributes(result_final)$match.names <- comb_match  
+    # Remove row names
     rownames(result_final) <- NULL
   }
+  # If no match, give a warning
   if (is.null(result_final)) {
     warning(paste0("No match found for the species list provided.",
                    " Try increasing the 'max.distance' argument."))
