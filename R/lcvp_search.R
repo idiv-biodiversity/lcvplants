@@ -18,7 +18,7 @@
 #' Expressed either as integer, or as a fraction of the pattern length times the 
 #' maximal transformation cost (will be replaced by the smallest integer not 
 #' less than the corresponding fraction). 
-#' See \code{\link[base:agrep]{base:agrep()}} for more details.
+#' See \code{\link[base:agrep]{agrep}} for more details.
 #'
 #' @details 
 #' 

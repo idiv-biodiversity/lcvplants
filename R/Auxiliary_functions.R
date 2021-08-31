@@ -12,6 +12,7 @@
 }
 
 # Function default lcvp_join argument func_character
+# It returns all names separated by comma. 
 .keep_all <- function (x) {
   return(paste(unique(x), collapse = ", "))
 }
