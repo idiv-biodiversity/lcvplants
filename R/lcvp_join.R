@@ -140,7 +140,7 @@ lcvp_join <- function(x,
   match_result <- lcvp_match(splist1,
                              splist2,
                              include_all = TRUE,
-                             identify_dups = FALSE)
+                             identify_dups = FALSE)[, -4] #remove status
   
   # Adjust tables to join
   y2 <- y[match_result$Match.Position.2to1, , drop = FALSE]
