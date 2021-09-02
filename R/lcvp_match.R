@@ -104,8 +104,8 @@ lcvp_match <- function(splist1,
     splist2 <- as.character(splist2)
   }
   
-  .names_check(splist1, "splist1")
-  .names_check(splist2, "splist2")
+  .names_check(splist1, "The first list of species name")
+  .names_check(splist2, "The second list of species name")
   
   # Run the search
   search1 <- lcvp_search(splist1, max.distance)

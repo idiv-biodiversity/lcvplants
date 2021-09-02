@@ -4,7 +4,7 @@ splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[100:2])
 test_that("lcvp_match works, include_all = TRUE", {
   res_ex <- lcvp_match(splist1, splist2, include_all = TRUE)
   expect_equal(class(res_ex), "data.frame")
-  expect_equal(ncol(res_ex), 6)
+  expect_equal(ncol(res_ex), 7)
   expect_equal(nrow(res_ex), 99)
 })
 

@@ -9,8 +9,8 @@
   
   # Check if it is a character
   if (!is.character(splist) | !is.vector(splist)) {
-    stop(paste0("argument '", argument_name, 
-                "' should be character vector, not '", 
+    stop(paste0(argument_name, 
+                " should be a character vector, not '", 
                 paste(class(splist), collapse = " "), "'"),
          call. = FALSE)
   }

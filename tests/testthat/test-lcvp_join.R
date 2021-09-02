@@ -58,3 +58,4 @@ test_that("lcvp_join output errors for wrong inputs", {
   expect_error(lcvp_join(x, y, sp_columns = c("Species", "Species"), 
                          type = "Hey"))
 })
+

@@ -32,7 +32,6 @@ test_that("lcvp_group_search works for one author, only accepted", {
   expect_equal(class(res_ex), "data.frame")
   expect_equal(ncol(res_ex), 7)
   expect_equal(nrow(res_ex), 5330)
-  expect_equal(nrow(res_ex), 5330, )
 })
 
 test_that("lcvp_group_search works for one family, only unresolved", {
