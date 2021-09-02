@@ -7,7 +7,7 @@
 #'
 #' @param x,y data.frames to join.
 #'
-#' @param sp_columns A character vector indicating the column names in x and in y
+#' @param sp_columns A character vector indicating the column names in x and y
 #' with respective species names to join by.
 #' 
 #' For example, c("species", "Species_name").

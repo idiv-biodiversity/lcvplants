@@ -1,14 +1,14 @@
-#' Search plants by group in the Leipzig Catalogue of Plants (LCVP)
+#' Search plants by taxa or author names in the Leipzig Catalogue of Plants (LCVP)
 #'
 #' Search all plant taxa names listed in the "Leipzig
 #' Catalogue of Vascular Plants" (LCVP) by order, family, 
 #' genus or author. 
 #'
 #' @param group_names A character vector specifying the taxa or author names.
-#' This includes names of order, family, genus or authors. Only valid characters are allowed 
-#' (see \code{\link[base:validEnc]{validEnc}}).
+#' This includes names of orders, families, genus or authors. Only valid 
+#' characters are allowed (see \code{\link[base:validEnc]{validEnc}}).
 #'
-#' @param search_by A character indicating whether to search by: "Order",
+#' @param search_by A character indicating whether to search by "Order",
 #' "Family", "Genus" or "Author".
 #'
 #' @param max.distance It represents the maximum distance allowed for a match 
@@ -27,17 +27,17 @@
 #' 
 #' The "unresolved" rank means that the status of the plant name could be 
 #' either valid or synonym, but the information available does not allow 
-#' a definitive decision. "external" is an extra rank which lists names 
+#' a definitive decision. "external" is an extra rank that lists names 
 #' outside the scope of this publication but useful to keep on this 
 #' updated list.
 #'
 #' @details 
 #' 
 #' The algorithm will look for all the plant taxa names listed in the "Leipzig
-#' Catalogue of Vascular Plants" (LCVP) based on a user specified list of order, 
-#' family, genus or author names. If no match is found, it will try to find the 
-#' closest name given the maximum distance defined in `max.distance`. If more than
-#' one name is fuzzy matched, only the first will be returned.
+#' Catalogue of Vascular Plants" (LCVP) based on a user-specified list of 
+#' orders,  families, genus, or authors names. If no match is found, it will try 
+#' to find the closest name given the maximum distance defined in `max.distance`. 
+#' If more than one name is fuzzy matched, only the first will be returned.
 #' 
 #' @return 
 #' A data.frame or a list of data.frames (if \code{bind_result = FALSE}) 

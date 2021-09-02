@@ -28,7 +28,7 @@ included in the results: "accepted", "synonym", "unresolved", "external".
 
 The "unresolved" rank means that the status of the plant name could be
 either valid or synonym, but the information available does not allow
-a definitive decision. "external" is an extra rank which lists names
+a definitive decision. "external" is an extra rank that lists names
 outside the scope of this publication but useful to keep on this
 updated list.}
 

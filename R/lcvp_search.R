@@ -11,7 +11,7 @@
 #' @param splist A character vector specifying the input taxon, each element
 #' including genus and specific epithet and, potentially, infraspecific rank,
 #' infraspecific name and author name. Only valid characters are allowed 
-#' (see \code{\link[base:validEnc]{base:validEnc()}}).
+#' (see \code{\link[base:validEnc]{base:validEnc}}).
 #' 
 #' @param max.distance It represents the maximum distance allowed for a match 
 #' when comparing the submitted name with the closest name matches in the LCVP. 

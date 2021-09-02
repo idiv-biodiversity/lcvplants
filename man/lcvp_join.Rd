@@ -19,7 +19,7 @@ lcvp_join(
 \arguments{
 \item{x, y}{data.frames to join.}
 
-\item{sp_columns}{A character vector indicating the column names in x and in y
+\item{sp_columns}{A character vector indicating the column names in x and y
 with respective species names to join by.
 
 For example, c("species", "Species_name").}

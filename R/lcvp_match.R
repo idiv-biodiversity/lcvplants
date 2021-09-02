@@ -7,12 +7,12 @@
 #' @param splist1 A character vector specifying the reference input taxon to be matched.
 #' Each element including genus and specific epithet and, potentially,
 #' infraspecific rank, infraspecific name, and author name. Only valid characters are allowed 
-#' (see \code{\link[base:validEnc]{base:validEnc()}}).
+#' (see \code{\link[base:validEnc]{base:validEnc}}).
 #'
 #' @param splist2 A character vector specifying the input taxon to match splist1.
 #' Each element including genus and specific epithet and, potentially, infraspecific rank,
 #' infraspecific name, and author name. Only valid characters are allowed 
-#' (see \code{\link[base:validEnc]{base:validEnc()}}).
+#' (see \code{\link[base:validEnc]{base:validEnc}}).
 #'
 #' @param max.distance It represents the maximum distance allowed for a match 
 #' when comparing the submitted name with the closest name matches in the LCVP. 
@@ -45,8 +45,8 @@
 #' \item{\emph{Match.Position.2to1}}{: positions of the names in splist1 in
 #'  splist2. Can be used to reorder splist2 to match splist1.
 #'  }
-#' \item{\emph{Duplicated.Output.Position}}{: If identify_dups = TRUE, it will 
-#' indicate the position of duplicated names in LCVP.Output.Taxon column. 
+#' \item{\emph{Duplicated.Output.Position}}{: If \code{identify_dups = TRUE}, it 
+#' indicates the position of duplicated names in LCVP.Output.Taxon column. 
 #' This may occur if two inputs are now synonyms. It will output NA if there is 
 #' no duplicated for the species name.
 #' }
@@ -54,9 +54,10 @@
 #' }
 #' See \code{\link[LCVP:tab_lcvp]{LCVP:tab_lcvp}} for more details.
 #' 
-#' If include_all = TRUE, all species will be included. Ordered based on the 
-#' splist1, and followed by non matched names in splist2. If include_all = FALSE,
-#' non matched names in splist2 are not included.
+#' If \code{include_all = TRUE}, all species will be included. Ordered based on the 
+#' \code{splist1}, and followed by non-matched names in \code{splist2}. 
+#' If \code{include_all = FALSE}, non-matched names in \code{splist2} are not 
+#' included.
 #' 
 #' @author 
 #' Bruno Vilela & Alexander Ziska

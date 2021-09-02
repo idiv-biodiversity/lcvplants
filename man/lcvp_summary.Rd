@@ -29,7 +29,7 @@ Summarizes the matching results from
 \code{lcvp_summary} gives a report on the searching results using the
 \code{\link[lcvplants:lcvp_search]{lcvp_search}} function. Indicating the
 number of species searched, how many were matched. Among the matched names,
-it indicate how many were exactly or fuzzy matched. Then it checks how many
+it indicates how many were exactly or fuzzy matched. Then it checks how many
 author and infracategory names were exactly matched. Note that if authors or
 infracategory is not provided, it will be considered a no match.
 }
