@@ -14,7 +14,7 @@ lcvp_fuzzy_search(
 \arguments{
 \item{splist}{A character vector specifying the input taxon, each element
 including genus and specific epithet and, potentially, infraspecific rank,
-infraspecific name and author name. Only valid characters are allowed 
+infraspecific name and author name. Only valid characters are allowed
 (see \code{\link[base:validEnc]{validEnc}}).}
 
 \item{max.distance}{It represents the maximum distance allowed for a match
@@ -23,13 +23,13 @@ Expressed either as integer, or as a fraction of the pattern length times the ma
 transformation cost (will be replaced by the smallest integer not less than
 the corresponding fraction). See \code{\link[base]{agrep}} for more details.}
 
-\item{status}{A character vector indicating what taxa status should be 
+\item{status}{A character vector indicating what taxa status should be
 included in the results: "accepted", "synonym", "unresolved", "external".
 
-The "unresolved" rank means that the status of the plant name could be 
-either valid or synonym, but the information available does not allow 
-a definitive decision. "external" is an extra rank which lists names 
-outside the scope of this publication but useful to keep on this 
+The "unresolved" rank means that the status of the plant name could be
+either valid or synonym, but the information available does not allow
+a definitive decision. "external" is an extra rank which lists names
+outside the scope of this publication but useful to keep on this
 updated list.}
 
 \item{bind_result}{If TRUE the function will return one data.frame (default).
@@ -37,33 +37,33 @@ If False, the function will return a list of separate data.frames for
 each input group.}
 }
 \value{
-A data.frame or a list of data.frames (if \code{bind_result = FALSE}) 
+A data.frame or a list of data.frames (if \code{bind_result = FALSE})
 with the following columns:
 
 \itemize{
 \item{\emph{Search}}{: Taxa name list provided by the user.}
-\item{\emph{Input.Taxon}}{: Matched taxa names listed in the LCVP data.}  
-\item{\emph{Status}}{: Nomenclature status: 'accepted', 'synonym', 
+\item{\emph{Input.Taxon}}{: Matched taxa names listed in the LCVP data.}
+\item{\emph{Status}}{: Nomenclature status: 'accepted', 'synonym',
 'unresolved' or 'external'.}
 \item{\emph{PL.comparisson}}{: This field provides a direct comparison with
-‘The Plant List’: ‘identical', 'synonym', 'other synonym', 
-'different authors', 'missing', 'misspelling' or 'unresolved'.}  
-\item{\emph{PL.alternative}}{: This field provides a possible alternative 
+‘The Plant List’: ‘identical', 'synonym', 'other synonym',
+'different authors', 'missing', 'misspelling' or 'unresolved'.}
+\item{\emph{PL.alternative}}{: This field provides a possible alternative
 name from ‘The Plant List’.}
-\item{\emph{Output.Taxon}}{: The list of the accepted plant taxa names 
-according to the LCVP.}  
-\item{\emph{Family}}{: The corresponding family name of the Input.Taxon, 
-staying empty if the Status is unresolved.}  
+\item{\emph{Output.Taxon}}{: The list of the accepted plant taxa names
+according to the LCVP.}
+\item{\emph{Family}}{: The corresponding family name of the Input.Taxon,
+staying empty if the Status is unresolved.}
 \item{\emph{Order}}{: The corresponding order name of the Input.Taxon,
- staying empty if the Status is unresolved.}
-\item{\emph{Name.Distance}}{The approximate string distance between the Search 
+staying empty if the Status is unresolved.}
+\item{\emph{Name.Distance}}{The approximate string distance between the Search
 and matched Input.Taxon names. See \code{\link[utils:adist]{utils:adist}}
 for more details.}
 }
 See \code{\link[LCVP:tab_lcvp]{LCVP:tab_lcvp}} for more details.
 
-If no match is found for one species it will return NA for the columns in 
-the LCVP table. But, if no match is found for all species the function will 
+If no match is found for one species it will return NA for the columns in
+the LCVP table. But, if no match is found for all species the function will
 return NULL and a warning message.
 }
 \description{
@@ -72,11 +72,11 @@ all matches from a fuzzy search of plant taxa names listed in the "Leipzig
 Catalogue of Vascular Plants" (LCVP).
 }
 \details{
-The algorithm will look for all the names within the given maximum distance 
-defined in `max.distance`.
+The algorithm will look for all the names within the given maximum distance
+defined in \code{max.distance}.
 
 Note that only binomial names with valid characters are allowed in this
-function. Search based on  genus, family, order or author names should use 
+function. Search based on  genus, family, order or author names should use
 the function  \code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}}.
 }
 \examples{
@@ -93,13 +93,13 @@ lcvp_fuzzy_search("Hibiscus vitifolia", status = "accepted")
 
 }
 \references{
-Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig 
-catalogue of vascular plants, a new taxonomic reference list for all known 
-vascular plants. Sci Data 7, 416 (2020). 
+Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig
+catalogue of vascular plants, a new taxonomic reference list for all known
+vascular plants. Sci Data 7, 416 (2020).
 https://doi.org/10.1038/s41597-020-00702-z
 }
 \seealso{
-\code{\link[lcvplants:lcvp_search]{lcvp_summary}}, 
+\code{\link[lcvplants:lcvp_search]{lcvp_summary}},
 \code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}}.
 }
 \author{

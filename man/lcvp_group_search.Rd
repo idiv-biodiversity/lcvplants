@@ -14,67 +14,67 @@ lcvp_group_search(
 }
 \arguments{
 \item{group_names}{A character vector specifying the taxa or author names.
-This includes names of order, family, genus or authors. Only valid characters are allowed 
+This includes names of order, family, genus or authors. Only valid characters are allowed
 (see \code{\link[base:validEnc]{validEnc}}).}
 
 \item{search_by}{A character indicating whether to search by: "Order",
 "Family", "Genus" or "Author".}
 
-\item{max.distance}{It represents the maximum distance allowed for a match 
-when comparing the submitted name with the closest name matches in the LCVP. 
-Expressed either as integer, or as a fraction of the pattern length times the 
-maximal transformation cost (will be replaced by the smallest integer not 
-less than the corresponding fraction). 
+\item{max.distance}{It represents the maximum distance allowed for a match
+when comparing the submitted name with the closest name matches in the LCVP.
+Expressed either as integer, or as a fraction of the pattern length times the
+maximal transformation cost (will be replaced by the smallest integer not
+less than the corresponding fraction).
 See \code{\link[base:agrep]{agrep}} for more details.}
 
 \item{bind_result}{If TRUE the function will return one data.frame (default).
 If False, the function will return a list of separate data.frames for
 each input group.}
 
-\item{status}{A character vector indicating what taxa status should be 
+\item{status}{A character vector indicating what taxa status should be
 included in the results: "accepted", "synonym", "unresolved", "external".
 
-The "unresolved" rank means that the status of the plant name could be 
-either valid or synonym, but the information available does not allow 
-a definitive decision. "external" is an extra rank which lists names 
-outside the scope of this publication but useful to keep on this 
+The "unresolved" rank means that the status of the plant name could be
+either valid or synonym, but the information available does not allow
+a definitive decision. "external" is an extra rank which lists names
+outside the scope of this publication but useful to keep on this
 updated list.}
 }
 \value{
-A data.frame or a list of data.frames (if \code{bind_result = FALSE}) 
+A data.frame or a list of data.frames (if \code{bind_result = FALSE})
 with the following columns for all species of the matched groups:
 
 \itemize{
-\item{\emph{Input.Taxon}}{: Matched taxa names listed in the LCVP data.}  
-\item{\emph{Status}}{: Nomenclature status: 'accepted', 'synonym', 
+\item{\emph{Input.Taxon}}{: Matched taxa names listed in the LCVP data.}
+\item{\emph{Status}}{: Nomenclature status: 'accepted', 'synonym',
 'unresolved' or 'external'.}
 \item{\emph{PL.comparisson}}{: This field provides a direct comparison with
-‘The Plant List’: ‘identical', 'synonym', 'other synonym', 
-'different authors', 'missing', 'misspelling' or 'unresolved'.}  
-\item{\emph{PL.alternative}}{: This field provides a possible alternative 
+‘The Plant List’: ‘identical', 'synonym', 'other synonym',
+'different authors', 'missing', 'misspelling' or 'unresolved'.}
+\item{\emph{PL.alternative}}{: This field provides a possible alternative
 name from ‘The Plant List’.}
-\item{\emph{Output.Taxon}}{: The list of the accepted plant taxa names 
-according to the LCVP.}  
-\item{\emph{Family}}{: The corresponding family name of the Input.Taxon, 
-staying empty if the Status is unresolved.}  
+\item{\emph{Output.Taxon}}{: The list of the accepted plant taxa names
+according to the LCVP.}
+\item{\emph{Family}}{: The corresponding family name of the Input.Taxon,
+staying empty if the Status is unresolved.}
 \item{\emph{Order}}{: The corresponding order name of the Input.Taxon,
- staying empty if the Status is unresolved.}
+staying empty if the Status is unresolved.}
 }
 See \code{\link[LCVP:tab_lcvp]{LCVP:tab_lcvp}} for more details.
 
-If no match is found for all searched names the function will 
+If no match is found for all searched names the function will
 return NULL and a warning message.
 }
 \description{
 Search all plant taxa names listed in the "Leipzig
-Catalogue of Vascular Plants" (LCVP) by order, family, 
+Catalogue of Vascular Plants" (LCVP) by order, family,
 genus or author.
 }
 \details{
 The algorithm will look for all the plant taxa names listed in the "Leipzig
-Catalogue of Vascular Plants" (LCVP) based on a user specified list of order, 
-family, genus or author names. If no match is found, it will try to find the 
-closest name given the maximum distance defined in `max.distance`. If more than
+Catalogue of Vascular Plants" (LCVP) based on a user specified list of order,
+family, genus or author names. If no match is found, it will try to find the
+closest name given the maximum distance defined in \code{max.distance}. If more than
 one name is fuzzy matched, only the first will be returned.
 }
 \examples{
@@ -87,13 +87,13 @@ lcvp_group_search("Schltr.", search_by = "Author", status = "accepted")
 
 }
 \references{
-Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig 
-catalogue of vascular plants, a new taxonomic reference list for all known 
-vascular plants. Sci Data 7, 416 (2020). 
+Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig
+catalogue of vascular plants, a new taxonomic reference list for all known
+vascular plants. Sci Data 7, 416 (2020).
 https://doi.org/10.1038/s41597-020-00702-z
 }
 \seealso{
-\code{\link[lcvplants:lcvp_group_search]{lcvp_search}},   
+\code{\link[lcvplants:lcvp_group_search]{lcvp_search}},
 \code{\link[lcvplants:lcvp_fuzzy_search]{lcvp_fuzzy_search}}.
 }
 \author{

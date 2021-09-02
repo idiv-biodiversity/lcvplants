@@ -1,3 +1,7 @@
+# Small functions to support main functions
+# Author: Bruno Vilela
+
+#-------------------------------------------------------#
 # Make names standard
 .names_standardize <- function(splist) {
   fixed1 <- toupper(splist) # all up
@@ -11,6 +15,7 @@
   return(fixed7)
 }
 
+#-------------------------------------------------------#
 # Function default lcvp_join argument func_character
 # It returns all names separated by comma. 
 .keep_all <- function (x) {

@@ -18,17 +18,17 @@ lcvp_solve_dups(
 
 \item{duplicated_col}{The column position with duplicated names to be solved.}
 
-\item{fixed_cols}{The columns positions that should be left out of the 
+\item{fixed_cols}{The columns positions that should be left out of the
 summarizing processes.}
 
-\item{func_numeric}{A function to summarize numeric columns 
+\item{func_numeric}{A function to summarize numeric columns
 if solve_duplicated = TRUE. Default will return the mean.}
 
-\item{func_character}{A function to summarize character or factor columns 
-if solve_duplicated = TRUE. Default will keep all unique strings separated 
+\item{func_character}{A function to summarize character or factor columns
+if solve_duplicated = TRUE. Default will keep all unique strings separated
 by comma.}
 
-\item{func_logical}{A function to summarize logical columns 
+\item{func_logical}{A function to summarize logical columns
 if solve_duplicated = TRUE.Default will return TRUE if any is TRUE.}
 }
 \description{

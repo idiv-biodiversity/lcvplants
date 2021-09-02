@@ -1,5 +1,8 @@
-# This code has two functions
+# This code has two functions to classify species names according to 
+# Genus, epithet, authors and infracategories
+# Author: Bruno Vilela
 
+#------------------------------------------------
 # Function wrap of .classify_algo for multiple species
 .splist_classify <- function(x) {
   # Infrataxa identifiers

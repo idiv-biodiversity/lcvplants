@@ -1,3 +1,6 @@
+# Code for the algorithms to exactly and fuzzy match names
+# Author: Bruno Vilela
+
 #-------------------------------------------------------#
 # The matching algorithm
 .match_algorithm  <- function(splist_class, max.distance) {

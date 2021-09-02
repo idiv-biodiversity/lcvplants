@@ -1,3 +1,6 @@
+# Algorithm to look for the exact or fuzzy genus names
+# Author: Bruno Vilela
+
 #-------------------------------------------------------#
 # Function to wrap .genus_search for multiple genus names
 .genus_search_multiple <- function(gen_pos) {

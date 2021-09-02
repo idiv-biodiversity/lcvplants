@@ -9,65 +9,65 @@ lcvp_search(splist, max.distance = 0.1)
 \arguments{
 \item{splist}{A character vector specifying the input taxon, each element
 including genus and specific epithet and, potentially, infraspecific rank,
-infraspecific name and author name. Only valid characters are allowed 
+infraspecific name and author name. Only valid characters are allowed
 (see \code{\link[base:validEnc]{base:validEnc()}}).}
 
-\item{max.distance}{It represents the maximum distance allowed for a match 
-when comparing the submitted name with the closest name matches in the LCVP. 
-Expressed either as integer, or as a fraction of the pattern length times the 
-maximal transformation cost (will be replaced by the smallest integer not 
-less than the corresponding fraction). 
+\item{max.distance}{It represents the maximum distance allowed for a match
+when comparing the submitted name with the closest name matches in the LCVP.
+Expressed either as integer, or as a fraction of the pattern length times the
+maximal transformation cost (will be replaced by the smallest integer not
+less than the corresponding fraction).
 See \code{\link[base:agrep]{agrep}} for more details.}
 }
 \value{
 A data.frame with the following columns:
 \itemize{
 \item{\emph{Search}}{: Taxa name list provided by the user.}
-\item{\emph{Input.Taxon}}{: Matched taxa names listed in the LCVP data.}  
-\item{\emph{Status}}{: Nomenclature status: 'accepted', 'synonym', 
+\item{\emph{Input.Taxon}}{: Matched taxa names listed in the LCVP data.}
+\item{\emph{Status}}{: Nomenclature status: 'accepted', 'synonym',
 'unresolved' or 'external'.}
 \item{\emph{PL.comparisson}}{: This field provides a direct comparison with
-‘The Plant List’: ‘identical', 'synonym', 'other synonym', 
-'different authors', 'missing', 'misspelling' or 'unresolved'.}  
-\item{\emph{PL.alternative}}{: This field provides a possible alternative 
+‘The Plant List’: ‘identical', 'synonym', 'other synonym',
+'different authors', 'missing', 'misspelling' or 'unresolved'.}
+\item{\emph{PL.alternative}}{: This field provides a possible alternative
 name from ‘The Plant List’.}
-\item{\emph{Output.Taxon}}{: The list of the accepted plant taxa names 
-according to the LCVP.}  
-\item{\emph{Family}}{: The corresponding family name of the Input.Taxon, 
-staying empty if the Status is unresolved.}  
+\item{\emph{Output.Taxon}}{: The list of the accepted plant taxa names
+according to the LCVP.}
+\item{\emph{Family}}{: The corresponding family name of the Input.Taxon,
+staying empty if the Status is unresolved.}
 \item{\emph{Order}}{: The corresponding order name of the Input.Taxon,
- staying empty if the Status is unresolved.}
+staying empty if the Status is unresolved.}
 }
 See \code{\link[LCVP:tab_lcvp]{LCVP:tab_lcvp}} for more details.
 
-If no match is found for one species it will return NA for the columns in 
-the LCVP table. But, if no match is found for all species the function will 
+If no match is found for one species it will return NA for the columns in
+the LCVP table. But, if no match is found for all species the function will
 return NULL and a warning message.
 }
 \description{
 Allow taxonomic resolution of plant taxa names listed in the "Leipzig
-Catalogue of Vascular Plants" (LCVP). 
+Catalogue of Vascular Plants" (LCVP).
 Connects to the LCVP table and validates the
 names of a vector of plant taxa, replacing synonyms by accepted names and
-removing orthographic errors in plant names. 
-The LCVP data package must be installed. It is available from 
+removing orthographic errors in plant names.
+The LCVP data package must be installed. It is available from
 https://github.com/idiv-biodiversity/LCVP.
 }
 \details{
-The algorithm will first try to exactly match the binomial names provided 
-in `splist`. If no match is found, it will try to find the 
-closest name given the maximum distance defined in `max.distance`. If more than
-one name is fuzzy matched, only the accepted or the first will be returned. 
-The function  
+The algorithm will first try to exactly match the binomial names provided
+in \code{splist}. If no match is found, it will try to find the
+closest name given the maximum distance defined in \code{max.distance}. If more than
+one name is fuzzy matched, only the accepted or the first will be returned.
+The function
 \code{\link[lcvplants:lcvp_fuzzy_search]{lcvp_fuzzy_search}}
 can be used to return all results of the fuzzy match algorithm.
 
-The \code{\link[lcvplants:lcvp_summary]{lcvp_summary}} function can be 
-used to summarize the results from a multiple species search, indicating the 
-number of species matched, and how many of them were exactly or fuzzy matched. 
+The \code{\link[lcvplants:lcvp_summary]{lcvp_summary}} function can be
+used to summarize the results from a multiple species search, indicating the
+number of species matched, and how many of them were exactly or fuzzy matched.
 
-Note that only binomial names with valid characters are allowed in this 
-function. Search based on  genus, family, order or author names should use 
+Note that only binomial names with valid characters are allowed in this
+function. Search based on  genus, family, order or author names should use
 the function \code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}}.
 }
 \examples{
@@ -95,14 +95,14 @@ mult <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.",
 
 }
 \references{
-Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig 
-catalogue of vascular plants, a new taxonomic reference list for all known 
-vascular plants. Sci Data 7, 416 (2020). 
+Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig
+catalogue of vascular plants, a new taxonomic reference list for all known
+vascular plants. Sci Data 7, 416 (2020).
 https://doi.org/10.1038/s41597-020-00702-z
 }
 \seealso{
-\code{\link[lcvplants:lcvp_summary]{lcvp_summary}}, 
-\code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}},  
+\code{\link[lcvplants:lcvp_summary]{lcvp_summary}},
+\code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}},
 \code{\link[lcvplants:lcvp_fuzzy_search]{lcvp_fuzzy_search}}.
 }
 \author{

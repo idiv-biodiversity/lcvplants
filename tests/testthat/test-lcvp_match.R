@@ -11,7 +11,7 @@ test_that("lcvp_match works, include_all = TRUE", {
 test_that("lcvp_match works, include_all = FALSE", {
   res_ex <- lcvp_match(splist1, splist2, include_all = FALSE)
   expect_equal(class(res_ex), "data.frame")
-  expect_equal(ncol(res_ex), 6)
+  expect_equal(ncol(res_ex), 7)
   expect_equal(nrow(res_ex), 96)
 })
 
@@ -20,7 +20,7 @@ test_that("lcvp_match works, include_all = TRUE & identify_dups = FALSE", {
                        include_all = TRUE,
                        identify_dups = FALSE)
   expect_equal(class(res_ex), "data.frame")
-  expect_equal(ncol(res_ex), 5)
+  expect_equal(ncol(res_ex), 6)
   expect_equal(nrow(res_ex), 99)
 })
 
@@ -29,7 +29,7 @@ test_that("lcvp_match works, include_all = FALSE & max.distance = 0", {
                        include_all = FALSE,
                        max.distance = 0)
   expect_equal(class(res_ex), "data.frame")
-  expect_equal(ncol(res_ex), 6)
+  expect_equal(ncol(res_ex), 7)
   expect_equal(nrow(res_ex), 96)
 })
 

@@ -2,25 +2,65 @@
 % Please edit documentation in R/lcvp_summary.R
 \name{lcvp_summary}
 \alias{lcvp_summary}
-\title{Summary results for lcvp_search}
+\title{Summarize the results from lcvp_search}
 \usage{
 lcvp_summary(lcvp_match)
 }
 \arguments{
-\item{lcvp_match}{The output data.frame from lcvp_search.}
+\item{lcvp_match}{The output data.frame from
+\code{\link[lcvplants:lcvp_search]{lcvp_search}}.}
+}
+\value{
+It returns:
+\itemize{
+\item The number of species searched;
+\item The number and percentage of species names found in the LCVP data;
+\item The number and percentage of species names exactly matched;
+\item The number and percentage of species names fuzzy matched;
+\item The number and percentage of author names exactly matched;
+\item The number and percentage of infracategories exactly matched.
+}
 }
 \description{
-The functions summarizes the matching results from lcvp_search
+Summarizes the matching results from
+\code{\link[lcvplants:lcvp_search]{lcvp_search}}.
+}
+\details{
+\code{lcvp_summary} gives a report on the searching results using the
+\code{\link[lcvplants:lcvp_search]{lcvp_search}} function. Indicating the
+number of species searched, how many were matched. Among the matched names,
+it indicate how many were exactly or fuzzy matched. Then it checks how many
+author and infracategory names were exactly matched. Note that if authors or
+infracategory is not provided, it will be considered a no match.
 }
 \examples{
-\dontrun{
-res_ex <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.",
+
+# Perform the search
+x <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.",
 "Hibiscus abutiloides Willd.",
 "Hibiscus aculeatus",
-"Hibiscus acuminatus",
-"Hibiscus furcatuis",
+"Hibiscus acuminatis",
 "Hibiscus error"), 
 max.distance = 1)
-lcvp_summary(res_ex)
+
+# Summarize the results
+lcvp_summary(x)
+
 }
+\references{
+Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig
+catalogue of vascular plants, a new taxonomic reference list for all known
+vascular plants. Sci Data 7, 416 (2020).
+https://doi.org/10.1038/s41597-020-00702-z
 }
+\seealso{
+\code{\link[lcvplants:lcvp_search]{lcvp_summary}}
+}
+\author{
+Bruno Vilela & Alexander Ziska
+}
+\keyword{R-package}
+\keyword{nomenclature}
+\keyword{plants}
+\keyword{taxonomy}
+\keyword{vascular}

@@ -1,3 +1,7 @@
+# Small functions to evaluate user input for the main functions and
+# return meaningful errors
+# Author: Bruno Vilela
+
 #-------------------------------------------------------#
 # Function to check list of names input
 .names_check <- function(splist, 
