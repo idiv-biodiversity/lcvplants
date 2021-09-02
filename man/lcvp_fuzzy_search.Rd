@@ -99,7 +99,7 @@ vascular plants. Sci Data 7, 416 (2020).
 https://doi.org/10.1038/s41597-020-00702-z
 }
 \seealso{
-\code{\link[lcvplants:lcvp_search]{lcvp_summary}},
+\code{\link[lcvplants:lcvp_search]{lcvp_search}},
 \code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}}.
 }
 \author{

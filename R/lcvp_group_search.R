@@ -68,7 +68,7 @@
 #' Bruno Vilela & Alexander Ziska
 #' 
 #' @seealso 
-#' \code{\link[lcvplants:lcvp_group_search]{lcvp_search}},   
+#' \code{\link[lcvplants:lcvp_search]{lcvp_search}},   
 #' \code{\link[lcvplants:lcvp_fuzzy_search]{lcvp_fuzzy_search}}.
 #' 
 #' @references 
