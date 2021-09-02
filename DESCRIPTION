@@ -19,7 +19,8 @@ Remotes: idiv-biodiversity/LCVP
 Suggests: 
     knitr,
     testthat (>= 2.1.0),
-    remotes
+    remotes,
+    rmarkdown
 LazyLoad: yes
 RoxygenNote: 7.1.1
 Encoding: UTF-8
