@@ -19,9 +19,11 @@ Imports: utils
 Suggests: 
     knitr,
     testthat (>= 3.0.0),
-    remotes
+    remotes,
+    rmarkdown
 LazyLoad: yes
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Config/testthat/edition: 3
+VignetteBuilder: knitr

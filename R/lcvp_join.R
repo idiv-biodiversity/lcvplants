@@ -50,7 +50,7 @@
 #' standardized names of both tables are then matched using the algorithm in 
 #' \code{\link[lcvplants:lcvp_match]{lcvp_match}}. The type "full" join will 
 #' keep all species and add NAs to missing values. No NA is added in "inner", 
-#' "left" and "rigth" options.
+#' "left" and "right" options.
 #' 
 #' Duplicated taxonomic resolution may occur if two inputs are now synonyms.
 #' If \code{solve_duplicated} is \code{TRUE} the 

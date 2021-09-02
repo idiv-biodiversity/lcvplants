@@ -1,0 +1,233 @@
+---
+title: "Taxonomic resolution using lcvplants"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Taxonomic resolution using lcvplants}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE
+)
+```
+
+# Background
+When comparing or merging any list of plant species, for instance for compiling regional species lists, merging occurrence lists with trait data or phylogenies, the taxonomic names must be matched to avoid artificial inflation due to synonyms, data loss or erroneous matches due to homonyms. The `lcvplants` package facilitates this process by automatizing large-scale taxonomic harmonization of plant names by fuzzy matching and synonymy resolution against the Leipzig Catalogue of Vascular Plants as taxonomic backbone. 
+
+The Leipzig Catalogue of Vascular Plants (LCVP) is a novel global taxonomic backbone, updating The Plant List, comprising more than 1,300,000 names and 350,000 accepted taxa names. We described the LCVP in detail in the related scientific publication (Freiberg et al, 2020).
+
+# Running lcvplants
+
+## Installation
+You can install `lcvplants` from github using the devtools package (you may need to install devtools first). To use `lcvplants` you also need the data of the [`LCVP` package](https://github.com/idiv-biodiversity/LCVP), which you can install in the same way.
+
+
+```{r installation, eval = FALSE}
+library(devtools)
+devtools::install_github("idiv-biodiversity/lcvplants")
+devtools::install_github("idiv-biodiversity/LCVP")
+```
+
+```{r package load}
+library(lcvplants)
+```
+
+## Taxonomic resolution 
+
+The basic function in `lcvplants` is `lcvp_search`. It allows users to input a list of species name that will be matched to the names in the LCVP
+data. It returns a data.frame indicating the full name matched — including the authority name and removing possible orthographic errors —, the taxonomic status, the accepted name, family and order.
+
+```{r Search one species, eval = FALSE}
+lcvp_search("Hibiscus vitifolius")
+```
+
+```{r, echo = FALSE}
+knitr::kable(lcvp_search("Hibiscus vitifolius"))
+```
+
+
+The `lcvp_search` algorithm will first try to exactly match the binomial names provided by the user. If no match is found, it will try to find the closest name given the maximal transformation cost defined in the argument `max.distance` (see ?base::agrep for more details).
+```{r Search one species with misspelled name, eval = FALSE}
+lcvp_search("Hibiscus vitifoliuse", max.distance = 0.1)
+```
+
+```{r, echo = FALSE, warning = FALSE}
+knitr::kable(lcvp_search("Hibiscus vitifoliuse", max.distance = 0.1))
+```
+
+
+If more than one name is fuzzy matched (more than one closest match found), only the accepted or the first name will be returned. The function `lcvp_fuzzy_search` can be used to return all results of the fuzzy match algorithm within the `max.distance` defined.
+```{r fuzzy match, eval = FALSE}
+lcvp_fuzzy_search("Hibiscus vitifoliuse", max.distance = 0.1)
+```
+
+```{r, echo = FALSE, warning = FALSE}
+knitr::kable(lcvp_fuzzy_search("Hibiscus vitifoliuse", max.distance = 0.1))
+```
+
+
+Both `lcvp_search` and `lcvp_fuzzy_search` allows multiple species search. 
+```{r multiple species search}
+splist <- c(
+  "Hibiscus abelmoschus var. betulifolius Mast.",
+  "Hibiscus abutiloides Willd.",
+  "Hibiscus aculeatus",
+  "Hibiscus acuminatus",
+  "Hibiscus furcatuis" # This is a wrong name
+)
+x <- lcvp_search(splist, max.distance = 0)
+```
+
+```{r show multiple, eval = FALSE}
+x
+```
+
+```{r, echo = FALSE}
+knitr::kable(x)
+```
+
+
+The function `lcvp_summary` gives a report on the searching results using the `lcvp_search` function. Indicating the number of species searched, how many were matched. Among the matched names, it indicates how many were exactly or fuzzy matched. Then it checks how many author and infracategory names were exactly matched. Note that if authors or infracategory is not provided, it will be considered a no match.
+
+```{r}
+lcvp_summary(x)
+```
+
+## Search all vascular plant names of a Genus, Family, Order or Author 
+
+Users can search all plant taxa names listed in the "Leipzig Catalogue of Vascular Plants" (LCVP) by order, family, genus or author, using the `lcvp_group_search` function.
+
+```{r} 
+# Search by Genus
+x <- lcvp_group_search(c("AA", "Adansonia"), search_by = "Genus")
+```
+```{r, eval = FALSE}
+head(x)
+```
+```{r, echo = FALSE}
+knitr::kable(head(x))
+```
+
+Users can choose to keep only certain taxonomic stauts, this includes "accepted", "synonym", "unresolved", and "external".
+
+```{r}
+# Search by Author and keep only accepted names
+x <- lcvp_group_search("Schltr.", search_by = "Author", status = "accepted")
+```
+```{r, eval = FALSE}
+head(x)
+```
+
+
+```{r, echo = FALSE}
+knitr::kable(head(x))
+```
+
+
+## Matching and joining two lists of vascular plant names
+### Match
+In many situations, researchers want to compare and match two lists of species name coming from different sources (e.g. phylogenies, spatial data, trait data, regional lists). The function `lcvp_match` can be used for that. It matches and compares two name lists based on the taxonomic resolution of plant taxa names listed in the LCVP.
+
+```{r}
+# Generate two lists of species name
+splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[5:100])
+splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[100:2])
+```
+
+Ordered is based on the splist1, and followed by non-matched names in splist2.
+```{r}
+# Match both lists
+x <- lcvp_match(splist1, splist2)
+```
+```{r, eval = FALSE}
+head(x)
+```
+```{r, echo = FALSE}
+knitr::kable(head(x))
+```
+
+If `include_all = FALSE`, non-matched names in splist2 are not included. And users can use the column `Match.Position.2to1` to reorder splist2 to match splist1.
+```{r}
+# Match both lists
+matchLists <- lcvp_match(splist1, splist2, include_all = FALSE)
+splist2_reordered <- splist2[matchLists$Match.Position.2to1]
+```
+
+### Join
+The `lcvp_join` function provides a quicker way to join two tables based on the taxonomic resolution of plant taxa names listed in the LCVP. It is inspired by the `dplyr::join` function. 
+The function add the columns from a first table to a second table based on the list of species name in both tables. It first standardizes the species names in both tables based on the "Leipzig Catalogue of Vascular Plants" (LCVP) using the algorithm in `lcvp_search`. These standardized names of both tables are then matched using the algorithm in `lcvp_match`. The argument `type` indicates the kind of join to be done. The option "full" join will keep all species, "left" return all rows from the first table and drops the non-matches from the second, "right" do the same for the second table, and "inner" keep only matched species.
+
+```{r}
+# Create data.frame1
+splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[2:100])
+tbl1 <-
+  data.frame("Species" = splist1, "Trait1" = runif(length(splist1)))
+
+# Create data.frame2
+splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[98:8])
+tbl2 <- data.frame(
+  "Species" = splist2,
+  "Trait2" = runif(length(splist2)),
+  "Trait3" = runif(length(splist2)),
+  "Trait4" = sample(c("a", "b"), length(splist2), replace = TRUE),
+  "Trait5" = sample(c(TRUE, FALSE), length(splist2), replace = TRUE)
+)
+```
+
+```{r}
+# Full join the two tables
+x <- lcvp_join(tbl1, tbl2, c("Species", "Species"), type = "full")
+```
+```{r, eval = FALSE}
+head(x)
+```
+```{r, echo = FALSE}
+knitr::kable(head(x))
+```
+
+Because some names may turn out to be synonyms based on the LCVP taxonomic resolution, users may opt to solve duplicated species names by summarizing traits given provided functions for common classes of variables (numeric, character, and logical). This can be done by turning the option `solve_duplicated = TRUE`, and the algorithm will combine duplicated output names (`Output.Taxon` column) based on users-defined functions to summarize the information.
+```{r}
+x <- lcvp_join(tbl1, tbl2, c("Species", "Species"), type = "full",
+               solve_duplicated = TRUE)
+```
+```{r, eval = FALSE}
+head(x)
+```
+```{r, echo = FALSE}
+knitr::kable(head(x))
+```
+
+Because some users may want to solve duplicated names outside the `lcvp_join` function, the algorithm is available as an individual function names `lcvp_solve_dups`. 
+```{r}
+# Create a data.frame with duplicated names and different traits
+splist <- sample(LCVP::tab_lcvp$Input.Taxon[1:100])
+search <- lcvp_search(splist)
+
+tbl <- data.frame("Species" = search$Output.Taxon,
+"Trait1" = runif(length(splist)),
+"Trait2" = sample(c("a", "b"), length(splist), replace = TRUE),
+"Trait3" = sample(c(TRUE, FALSE), length(splist), replace = TRUE))
+```
+
+```{r}
+# Solve with default parameters
+x <- lcvp_solve_dups(tbl, 1)
+```
+```{r, eval = FALSE}
+head(x)
+```
+```{r, echo = FALSE}
+knitr::kable(head(x))
+```
+
+
+# References
+
+Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig catalogue of vascular plants, a new taxonomic reference list for all known vascular plants. Sci Data 7, 416 (2020). https://doi.org/10.1038/s41597-020-00702-z
+

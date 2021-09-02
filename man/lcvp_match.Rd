@@ -68,7 +68,7 @@ If \code{include_all = FALSE}, non-matched names in \code{splist2} are not
 included.
 }
 \description{
-Match and compares two name lists using based on the taxonomic resolution of
+Matches and compares two name lists based on the taxonomic resolution of
 plant taxa names listed in the "Leipzig Catalogue of Vascular Plants" (LCVP).
 }
 \examples{

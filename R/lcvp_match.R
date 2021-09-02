@@ -1,7 +1,7 @@
 #' Match two name lists using the Leipzig Catalogue of Plants (LCVP)
 #'
 #'
-#' Match and compares two name lists using based on the taxonomic resolution of 
+#' Matches and compares two name lists based on the taxonomic resolution of 
 #' plant taxa names listed in the "Leipzig Catalogue of Vascular Plants" (LCVP).
 #'
 #' @param splist1 A character vector specifying the reference input taxon to be matched.
