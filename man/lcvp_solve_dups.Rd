@@ -49,6 +49,10 @@ The function will combine lines in \code{x} with duplicated names found in
 corresponding class. Factors are transformed into characters.
 }
 \examples{
+# Ensure that LCVP package is available before running the example.
+# If it is not, see the `lcvplants` package vignette for details
+# on installing the required data package.
+if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 
 # Create a data.frame with duplicated names and different traits
 splist <- sample(LCVP::tab_lcvp$Input.Taxon[1:100])
@@ -68,7 +72,7 @@ lcvp_solve_dups(x, 1, func_numeric = median)
 # Get one of characters at random
 lcvp_solve_dups(x, 1, func_character = function(x){sample(x, 1)})
 
-
+}
 }
 \author{
 Bruno Vilela & Alexander Ziska

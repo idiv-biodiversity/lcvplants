@@ -72,6 +72,10 @@ Matches and compares two name lists based on the taxonomic resolution of
 plant taxa names listed in the "Leipzig Catalogue of Vascular Plants" (LCVP).
 }
 \examples{
+# Ensure that LCVP package is available before running the example.
+# If it is not, see the `lcvplants` package vignette for details
+# on installing the required data package.
+if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 
 # Generate two lists of species name
 splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[5:100])
@@ -85,7 +89,7 @@ matchLists <- lcvp_match(splist1, splist2, include_all = FALSE)
 ## This can be used to quickly change positions in splist2 to match splist1
 splist2[matchLists$Match.Position.2to1]
 
-
+}
 }
 \references{
 Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig

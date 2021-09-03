@@ -34,6 +34,10 @@ author and infracategory names were exactly matched. Note that if authors or
 infracategory is not provided, it will be considered a no match.
 }
 \examples{
+# Ensure that LCVP package is available before running the example.
+# If it is not, see the `lcvplants` package vignette for details
+# on installing the required data package.
+if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 
 # Perform the search
 x <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.",
@@ -46,6 +50,7 @@ max.distance = 1)
 # Summarize the results
 lcvp_summary(x)
 
+}
 }
 \references{
 Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig

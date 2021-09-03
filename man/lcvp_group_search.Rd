@@ -78,13 +78,18 @@ to find the closest name given the maximum distance defined in \code{max.distanc
 If more than one name is fuzzy matched, only the first will be returned.
 }
 \examples{
+# Ensure that LCVP package is available before running the example.
+# If it is not, see the `lcvplants` package vignette for details
+# on installing the required data package.
+if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
+ 
 # Search by Genus
 lcvp_group_search(c("AA", "Adansonia"), search_by = "Genus")
 
 # Search by Author and keep only accepted names
 lcvp_group_search("Schltr.", search_by = "Author", status = "accepted")
 
-
+}
 }
 \references{
 Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig

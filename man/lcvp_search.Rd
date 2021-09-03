@@ -71,6 +71,10 @@ function. Search based on  genus, family, order or author names should use
 the function \code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}}.
 }
 \examples{
+# Ensure that LCVP package is available before running the example.
+# If it is not, see the `lcvplants` package vignette for details
+# on installing the required data package.
+if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 
 # Search one species
 lcvp_search("Hibiscus vitifolius")
@@ -93,6 +97,7 @@ mult <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.",
  ## Results for multiple species search can be summarized using lcvp_summary
  lcvp_summary(mult)
 
+}
 }
 \references{
 Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig

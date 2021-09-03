@@ -80,6 +80,10 @@ function. Search based on  genus, family, order or author names should use
 the function  \code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}}.
 }
 \examples{
+# Ensure that LCVP package is available before running the example.
+# If it is not, see the `lcvplants` package vignette for details
+# on installing the required data package.
+if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 
 # Returns a data.frame
 lcvp_fuzzy_search(c("Hibiscus vitifolia", "Adansonia digitata"))
@@ -91,6 +95,7 @@ bind_result = FALSE)
 # Returns only accepted names
 lcvp_fuzzy_search("Hibiscus vitifolia", status = "accepted")
 
+} 
 }
 \references{
 Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig
