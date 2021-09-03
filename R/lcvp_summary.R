@@ -40,6 +40,10 @@
 #' @keywords R-package nomenclature taxonomy vascular plants
 #' 
 #' @examples
+#' # Ensure that LCVP package is available before running the example.
+#' # If it is not, see the `lcvplants` package vignette for details
+#' # on installing the required data package.
+#' if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 #' 
 #' # Perform the search
 #' x <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.",
@@ -52,6 +56,7 @@
 #' # Summarize the results
 #' lcvp_summary(x)
 #' 
+#' }
 #'@export
 
 

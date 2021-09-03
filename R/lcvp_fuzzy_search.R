@@ -83,6 +83,10 @@
 #' @keywords R-package nomenclature taxonomy vascular plants
 #' 
 #' @examples 
+#' # Ensure that LCVP package is available before running the example.
+#' # If it is not, see the `lcvplants` package vignette for details
+#' # on installing the required data package.
+#' if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 #' 
 #' # Returns a data.frame
 #' lcvp_fuzzy_search(c("Hibiscus vitifolia", "Adansonia digitata"))
@@ -94,6 +98,7 @@
 #' # Returns only accepted names
 #' lcvp_fuzzy_search("Hibiscus vitifolia", status = "accepted")
 #' 
+#' } 
 #'@export
 
 

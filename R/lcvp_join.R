@@ -82,6 +82,11 @@
 #' @keywords R-package nomenclature taxonomy vascular plants 
 #'
 #' @examples
+#' # Ensure that LCVP package is available before running the example.
+#' # If it is not, see the `lcvplants` package vignette for details
+#' # on installing the required data package.
+#' if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
+#' 
 #' # Create data.frame1
 #' splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[2:100])
 #' x <- data.frame("Species" = splist1, "Trait1" = runif(length(splist1)))
@@ -107,7 +112,7 @@
 #' lcvp_join(x, y, c("Species", "Species"), 
 #' type = "inner", solve_duplicated = TRUE)
 #' 
-#' 
+#' }
 #'@export
 
 

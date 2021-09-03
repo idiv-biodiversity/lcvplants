@@ -79,14 +79,19 @@
 #' 
 #' @keywords R-package nomenclature taxonomy vascular plants
 #' 
-#' @examples 
+#' @examples
+#' # Ensure that LCVP package is available before running the example.
+#' # If it is not, see the `lcvplants` package vignette for details
+#' # on installing the required data package.
+#' if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
+#'  
 #' # Search by Genus
 #' lcvp_group_search(c("AA", "Adansonia"), search_by = "Genus")
 #' 
 #' # Search by Author and keep only accepted names
 #' lcvp_group_search("Schltr.", search_by = "Author", status = "accepted")
 #'
-#' 
+#' }
 #'@export
 
 

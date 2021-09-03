@@ -81,6 +81,10 @@
 #' @keywords R-package nomenclature taxonomy vascular plants
 #' 
 #' @examples
+#' # Ensure that LCVP package is available before running the example.
+#' # If it is not, see the `lcvplants` package vignette for details
+#' # on installing the required data package.
+#' if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 #' 
 #' # Search one species
 #' lcvp_search("Hibiscus vitifolius")
@@ -103,6 +107,7 @@
 #'  ## Results for multiple species search can be summarized using lcvp_summary
 #'  lcvp_summary(mult)
 #' 
+#' }
 #'@export
 
 lcvp_search <- function(splist, 
