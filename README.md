@@ -1,11 +1,20 @@
-# lcvplants v2.0
+# lcvplants 2.0
 [![R](https://github.com/idiv-biodiversity/lcvplants/actions/workflows/r.yml/badge.svg)](https://github.com/idiv-biodiversity/lcvplants/actions/workflows/r.yml)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 A package for large-scale taxonomic harmonization of plant names by fuzzy matching and synonymy resolution against the Leipzig Plant Catalogue as taxonomic backbone. Submission of single names or list of species names is possible. The Leipzig Plant Catalogue is an updated taxonomic backbone based on the plant list comprising more than 1,300,000 names and 350,000 accepted names (this data is in the [`LCVP`](https://github.com/idiv-biodiversity/LCVP) package). 
 
+# New version (v2.0)
+In this version the package has been entirely reprogrammed.
+* Improved speed in processing species search
+* Separated function to search by group or authors name
+* Separated function to show all results from a fuzzy match
+* New function to match two lists of species name
+* New function to join two tables based on species name
+* New function to combine duplicated rows
 
 See `News.md` for update information.
+
 
 # Installation
 You can install lcvplants directly from R using the `install_github` function of devtools (you may need to install that one first). To use `lcvplants` you also need the data of the [`LCVP` package](https://github.com/idiv-biodiversity/LCVP), which you can install in the same way.

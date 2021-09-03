@@ -1,13 +1,15 @@
 lcvplants v2.0 (2021-09-01)
 =========================
-### MAJOR IMPROVEMENTS
 Package has been entirely reprogrammed. 
+
+### MAJOR IMPROVEMENTS
   * Improved speed in processing species search 
   * Separated function to search by group or authors name
   * Separated function to show all results from a fuzzy match
   * New function to match two lists of species name
   * New function to join two tables based on species name
   * New function to combine duplicated rows
+  
 
 lcvplants 1.1.1 (2020-11-16)
 =========================
