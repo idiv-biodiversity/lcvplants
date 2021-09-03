@@ -98,7 +98,7 @@ lcvp_join(x, y, c("Species", "Species"), type = "full")
 
 
 # Documentation
-You can find more information on how to use lcvplants in the vignette.
+You can find more information on how to use lcvplants in the [vignette](https://idiv-biodiversity.github.io/lcvplants/articles/taxonomic_resolution_using_lcvplants.html).
 
 # Citation
 
