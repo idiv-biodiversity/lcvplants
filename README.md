@@ -20,6 +20,8 @@ See `News.md` for update information.
 You can install lcvplants directly from R using the `install_github` function of devtools (you may need to install that one first). To use `lcvplants` you also need the data of the [`LCVP` package](https://github.com/idiv-biodiversity/LCVP), which you can install in the same way.
 
 ```r
+install.packages("devtools")
+
 devtools::install_github("idiv-biodiversity/LCVP")
 devtools::install_github("idiv-biodiversity/lcvplants")
 ```

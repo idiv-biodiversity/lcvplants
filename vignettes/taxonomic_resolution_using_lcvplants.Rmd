@@ -15,6 +15,17 @@ knitr::opts_chunk$set(
   comment = "#>",
   warning = FALSE
 )
+
+hasData <- requireNamespace("LCVP", quietly=TRUE)
+if (!hasData) {
+    knitr::opts_chunk$set(eval = FALSE)
+    msg <- paste("Note: Examples in this vignette require that the", 
+                 "`LCVP` package be installed. The system",
+                 "currently running this vignette does not have that package",
+                 "installed, so code examples will not be evaluated.")
+    msg <- paste(strwrap(msg), collapse="\n")
+    message(msg)
+}
 ```
 
 # Background
@@ -25,11 +36,14 @@ The Leipzig Catalogue of Vascular Plants (LCVP) is a novel global taxonomic back
 # Running lcvplants
 
 ## Installation
-You can install `lcvplants` from github using the devtools package (you may need to install devtools first). To use `lcvplants` you also need the data of the [`LCVP` package](https://github.com/idiv-biodiversity/LCVP), which you can install in the same way.
+You can install `lcvplants` from github using the devtools package You may need to install devtools first, so if you do not have it installed, run the following code.
+```{r, eval = FALSE}
+install.packages("devtools")
+```
 
+To use `lcvplants` you also need the data of the [`LCVP` package](https://github.com/idiv-biodiversity/LCVP), which you can install in the same way.
 
 ```{r installation, eval = FALSE}
-library(devtools)
 devtools::install_github("idiv-biodiversity/lcvplants")
 devtools::install_github("idiv-biodiversity/LCVP")
 ```

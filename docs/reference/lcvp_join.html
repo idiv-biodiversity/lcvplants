@@ -244,7 +244,12 @@ https://doi.org/10.1038/s41597-020-00702-z</p>
     <p>Bruno Vilela &amp; Alexander Ziska</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='co'># Create data.frame1</span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='co'># Ensure that LCVP package is available before running the example.</span>
+<span class='co'># If it is not, see the `lcvplants` package vignette for details</span>
+<span class='co'># on installing the required data package.</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"LCVP"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span> <span class='co'># Do not run this</span>
+
+<span class='co'># Create data.frame1</span>
 <span class='va'>splist1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'>LCVP</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/LCVP/man/tab_lcvp.html'>tab_lcvp</a></span><span class='op'>$</span><span class='va'>Input.Taxon</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>]</span><span class='op'>)</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='st'>"Species"</span> <span class='op'>=</span> <span class='va'>splist1</span>, <span class='st'>"Trait1"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>splist1</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
@@ -269,7 +274,7 @@ https://doi.org/10.1038/s41597-020-00702-z</p>
 <span class='fu'>lcvp_join</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Species"</span>, <span class='st'>"Species"</span><span class='op'>)</span>, 
 type <span class='op'>=</span> <span class='st'>"inner"</span>, solve_duplicated <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-
+<span class='op'>}</span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

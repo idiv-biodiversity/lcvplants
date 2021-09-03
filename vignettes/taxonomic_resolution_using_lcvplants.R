@@ -5,8 +5,21 @@ knitr::opts_chunk$set(
   warning = FALSE
 )
 
+hasData <- requireNamespace("LCVP", quietly=TRUE)
+if (!hasData) {
+    knitr::opts_chunk$set(eval = FALSE)
+    msg <- paste("Note: Examples in this vignette require that the", 
+                 "`LCVP` package be installed. The system",
+                 "currently running this vignette does not have that package",
+                 "installed, so code examples will not be evaluated.")
+    msg <- paste(strwrap(msg), collapse="\n")
+    message(msg)
+}
+
+## ---- eval = FALSE------------------------------------------------------------
+#  install.packages("devtools")
+
 ## ----installation, eval = FALSE-----------------------------------------------
-#  library(devtools)
 #  devtools::install_github("idiv-biodiversity/lcvplants")
 #  devtools::install_github("idiv-biodiversity/LCVP")
 
