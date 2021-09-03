@@ -132,7 +132,7 @@ knitr::kable(head(x))
 
 
 
-### Basic output
+### Basic output information
 The output from `lcvp_search`, `lcvp_fuzzy_search` and `lcvp_group_search` is a `data.frame` (or list of data.frames) with the following columns:
 
 * *Search*: Taxa name list provided by the user.
