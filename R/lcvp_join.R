@@ -121,6 +121,7 @@ lcvp_join <- function(x,
                       func_numeric = mean,
                       func_character = .keep_all,
                       func_logical = any) {
+  hasData() # Check if LCVP is installed
   # Defensive here
   .check_join(x, y, sp_columns, type)
   .check_funcs(func_numeric,

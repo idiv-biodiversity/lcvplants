@@ -105,6 +105,7 @@ lcvp_fuzzy_search <- function(splist,
                                          "unresolved",
                                          "external"),
                               bind_result = TRUE) {
+  hasData() # Check if LCVP is installed
   # Defensive functions, check for user input errors
   ## Change factors in characters
   if (is.factor(splist)) {

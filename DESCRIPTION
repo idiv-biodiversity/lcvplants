@@ -14,13 +14,16 @@ License: MIT + file LICENSE
 URL: https://github.com/idiv-biodiversity/lcvplants
 BugReports: https://github.com/idiv-biodiversity/lcvplants/issues
 Repository: iDiv (https://idata.idiv.de/ddm/Data/ShowData/1806)
-Depends: R (>= 3.5.0), LCVP
+Depends: R (>= 3.5.0) 
 Imports: utils
 Suggests: 
+    LCVP,
     knitr,
     testthat (>= 3.0.0),
     remotes,
-    rmarkdown
+    rmarkdown,
+    devtools
+Additional_repositories: https://github.com/idiv-biodiversity/LCVP/releases
 LazyLoad: yes
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)

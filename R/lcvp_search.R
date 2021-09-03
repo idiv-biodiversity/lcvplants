@@ -107,6 +107,7 @@
 
 lcvp_search <- function(splist, 
                         max.distance = 0.1) {
+  hasData() # Check if LCVP is installed
   # Defensive function here, check for user input errors
   if (is.factor(splist)) {
     splist <- as.character(splist)

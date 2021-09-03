@@ -99,6 +99,7 @@ lcvp_group_search <- function(group_names,
                                          "synonym",
                                          "unresolved",
                                          "external")) {
+  hasData() # Check if LCVP is installed
   # Check names
   if (is.factor(group_names)) {
     group_names <- as.character(group_names)

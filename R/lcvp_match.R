@@ -97,6 +97,7 @@ lcvp_match <- function(splist1,
                        max.distance = 0.1,
                        include_all = TRUE, 
                        identify_dups = TRUE) {
+  hasData() # Check if LCVP is installed
   # Defensive
   if (is.factor(splist1)) {
     splist1 <- as.character(splist1)
