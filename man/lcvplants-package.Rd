@@ -4,7 +4,8 @@
 \name{lcvplants-package}
 \alias{lcvplants-package}
 \alias{lcvplants}
-\title{\Sexpr{tools:::Rd_package_title("lcvplants")}}
+\title{The Leipzig Catalogue of Vascular Plants (LCVP) - An Improved Taxonomic Reference List
+for All Known Vascular Plants}
 \description{
 A package for large-scale taxonomic harmonization of plant names by fuzzy
 matching and synonymy resolution against the Leipzig Plant Catalogue as

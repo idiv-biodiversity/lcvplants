@@ -1,5 +1,5 @@
-
-#' \Sexpr{tools:::Rd_package_title("lcvplants")}
+#' The Leipzig Catalogue of Vascular Plants (LCVP) - An Improved Taxonomic Reference List 
+#' for All Known Vascular Plants
 #' 
 #' A package for large-scale taxonomic harmonization of plant names by fuzzy 
 #' matching and synonymy resolution against the Leipzig Plant Catalogue as 
