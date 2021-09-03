@@ -99,6 +99,7 @@ The function `lcvp_summary` gives a report on the searching results using the `l
 lcvp_summary(x)
 ```
 
+
 ## Search all vascular plant names of a Genus, Family, Order or Author 
 
 Users can search all plant taxa names listed in the "Leipzig Catalogue of Vascular Plants" (LCVP) by order, family, genus or author, using the `lcvp_group_search` function.
@@ -128,6 +129,23 @@ head(x)
 ```{r, echo = FALSE}
 knitr::kable(head(x))
 ```
+
+
+
+### Basic output
+The output from `lcvp_search`, `lcvp_fuzzy_search` and `lcvp_group_search` is a `data.frame` (or list of data.frames) with the following columns:
+
+* *Search*: Taxa name list provided by the user.
+* *Input.Taxon*: Matched taxa names listed in the LCVP data.
+* *Status*: Nomenclature status: 'accepted', 'synonym', 'unresolved' or 'external'.
+* *PL.comparisson*: This field provides a direct comparison with ‘The Plant List’: ‘identical', 'synonym', 'other synonym', 'different authors', 'missing', 'misspelling' or 'unresolved'.
+*  *PL.alternative*: This field provides a possible alternative name from ‘The Plant List’.
+*  *Output.Taxon*: The list of the accepted plant taxa names according to the LCVP.
+* *Family*: The corresponding family name of the Input.Taxon, staying empty if the Status is unresolved.
+* *Order*: The corresponding order name of the Input.Taxon, staying empty if the Status is unresolved.
+
+If no match is found for one species it will return NA for the columns in the LCVP table. But, if no match is found for all species the function will return NULL and a warning message.
+
 
 
 ## Matching and joining two lists of vascular plant names

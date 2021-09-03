@@ -1,4 +1,4 @@
-# lcvplants v2.0.999
+# lcvplants v2.0
 [![R](https://github.com/idiv-biodiversity/lcvplants/actions/workflows/r.yml/badge.svg)](https://github.com/idiv-biodiversity/lcvplants/actions/workflows/r.yml)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
@@ -94,10 +94,11 @@ lcvp_join(x, y, c("Species", "Species"), type = "full")
 |`lcvp_group_search`| Return all names listed in LCVP for a genus, family, order, or authority|
 |`lcvp_match`| Compare and match two lists of species vascular plant names|
 |`lcvp_join`| Join two tables based on vascular plant names|
+|`lcvp_solve_dups`| Solve duplicated species names by summarizing traits given user provided functions|
 
 
 # Documentation
-You can find more information on how to use lcvplants in the [vignette](https://idiv-biodiversity.github.io/lcvplants/articles/taxonomic_resolution_using_lcplants.html)
+You can find more information on how to use lcvplants in the vignette.
 
 # Citation
 

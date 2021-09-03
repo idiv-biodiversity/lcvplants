@@ -15,3 +15,5 @@ README.yml
 ^manual_tests$
 ^LICENSE\.md$
 ^\.github$
+^_pkgdown\.yml$
+^pkgdown$
