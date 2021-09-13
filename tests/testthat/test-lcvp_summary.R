@@ -7,7 +7,6 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
                          "Hibiscus abutiloides Willd.",
                          "Hibiscus aculeatus",
                          "Hibiscus acuminatus",
-                         "Hibiscus furcatuis",
                          "Hibiscus error"
                        ),
                        max.distance = 1

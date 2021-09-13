@@ -40,7 +40,7 @@
                          max.distance = max.distance)
       closest1 <- utils::adist(group_name, group_ref[group_pos])
       
-      if (closest) {
+      if (closest & length(group_pos) > 0) {
         which_closest1 <- which(closest1 == min(closest1))
         group_pos <- group_pos[which_closest1] 
       }

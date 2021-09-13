@@ -1,6 +1,6 @@
 if (requireNamespace("LCVP", quietly = TRUE)) {
   test_that("lcvp_search works for one species", {
-    res_ex <- lcvp_search("Hibiscus vitifolius")
+    expect_warning(res_ex <- lcvp_search("Hibiscus vitifolius"))
     expect_equal(class(res_ex), "data.frame")
     expect_equal(ncol(res_ex), 8)
     expect_equal(nrow(res_ex), 1)
@@ -18,7 +18,8 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
   
   
   test_that("lcvp_search works for one species, fuzzy in genus", {
-    res_ex <- lcvp_search("Tibiscus vitifolius", max.distance = 2)
+    expect_warning(res_ex <- lcvp_search("Tibiscus vitifolius", 
+                                         max.distance = 2))
     expect_equal(class(res_ex), "data.frame")
     expect_equal(ncol(res_ex), 8)
     expect_equal(nrow(res_ex), 1)
@@ -38,7 +39,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
   
   
   test_that("lcvp_search works for multiple species, no fuzzy", {
-    res_ex <-
+    expect_warning(res_ex <-
       lcvp_search(
         c(
           "Hibiscus abelmoschus var. betulifolius Mast.",
@@ -48,7 +49,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
           "Hibiscus furcatuis"
         ),
         max.distance = 0
-      )
+      ))
     expect_equal(class(res_ex), "data.frame")
     expect_equal(ncol(res_ex), 8)
     expect_equal(nrow(res_ex), 5)
@@ -56,21 +57,16 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
   })
   
   test_that("lcvp_search works for multiple species, with fuzzy", {
-    expect_warning(res_ex <-
-                     lcvp_search(
-                       c(
-                         "Hibiscus abelmoschus var. betulifolius Mast.",
-                         "Hibiscus abutiloides Willd.",
-                         "Hibiscus aculeatus",
-                         "Hibiscus acuminatus",
-                         "Hibiscus furcatuis"
-                       ),
-                       max.distance = 0.1
-                     ))
+    sps <- c(
+      "Hibiscus abelmoschus var. betulifolius Mast.",
+      "Hibiscus abutiloides Willd.",
+      "Hibiscus aculeatus",
+      "Hibiscus acuminatus"
+    )
+    expect_warning(res_ex <- lcvp_search(sps, max.distance = 0.1))
     expect_equal(class(res_ex), "data.frame")
     expect_equal(ncol(res_ex), 8)
-    expect_equal(nrow(res_ex), 5)
-    expect_true(!is.na(res_ex$Input.Taxon[5]))
+    expect_equal(nrow(res_ex), 4)
   })
   
   test_that("lcvp_search output errors for wrong inputs", {

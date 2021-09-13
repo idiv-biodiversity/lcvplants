@@ -17,35 +17,41 @@
   # Loop across species
   for (i in 1:n_sps) {
     splist_class_i <- splist_class[i,]
-    
-    # Search genus position
-    pos_genus_pre <- .lcvp_group_ind(splist_class_i[2],
-                                     LCVP::tab_position$Genus,
-                                     max.distance, 
-                                     only_one = FALSE,
-                                     closest = TRUE)
-    pos_genus <- .genus_search(pos_genus_pre)
-    
-    if (!any(is.na(pos_genus))) {
-      # Try exact match first
-      exact[i,] <- .exact_match(splist_class_i,
-                                pos_genus,
-                                n_class)
-      # Try fuzzy
-      if (any(is.na(exact[i, ]))) {
-        exact[i,] <- .fuzzy_match(splist_class_i,
+    check_non_defined <-
+      splist_class_i[3] %in% c("SP", "SP.",
+                               "SPEC.", "AGG.")
+    if (!check_non_defined) {
+      # Search genus position
+      pos_genus_pre <- .lcvp_group_ind(
+        group_name = splist_class_i[2],
+        group_ref = LCVP::tab_position$Genus,
+        max.distance,
+        only_one = FALSE,
+        closest = TRUE
+      )
+      pos_genus <- .genus_search(pos_genus_pre)
+      
+      if (!any(is.na(pos_genus))) {
+        # Try exact match first
+        exact[i,] <- .exact_match(splist_class_i,
                                   pos_genus,
-                                  max.distance,
                                   n_class)
+        # Try fuzzy
+        if (any(is.na(exact[i, ]))) {
+          exact[i,] <- .fuzzy_match(splist_class_i,
+                                    pos_genus,
+                                    max.distance,
+                                    n_class)
+        }
+      } else {
+        # Fuzzy if did not find the genus
+        exact[i, ] <- .fuzzy_match(splist_class_i,
+                                   pos_genus = NULL,
+                                   max.distance,
+                                   n_class)
       }
-    } else {
-      # Fuzzy if did not find the genus
-      exact[i, ] <- .fuzzy_match(splist_class_i,
-                                 pos_genus = NULL,
-                                 max.distance,
-                                 n_class)
+      
     }
-    
   }
   return(exact)
 }
@@ -60,7 +66,7 @@
                          n_class,
                          fuzzy = FALSE) {
   # Look the categories that are equal
-  sp_pos <- apply(LCVP::lcvp_sps_class[pos_genus,-n_class,
+  sp_pos <- apply(LCVP::lcvp_sps_class[pos_genus, -n_class,
                                        drop = FALSE],
                   1,
                   function(x) {
@@ -68,9 +74,9 @@
                   })
   
   # Identify the actual number positions
-  choosen <- which(sp_pos[3,])
+  choosen <- which(sp_pos[3, ])
   
-  # Work for the when fuzzy
+  # Work when fuzzy
   if (fuzzy) {
     choosen <- 1:ncol(sp_pos)
   }
@@ -85,8 +91,43 @@
     # if there is more than one matched genus and epithet
     # keep the one with more matches across subcategories
     if (n_choosen > 1) {
-      choosen <- choosen[which.max(colSums(sp_pos[, choosen]))]
+      sum_equals <- colSums(sp_pos[, choosen])
+      pos_equals <- sum_equals == max(sum_equals)
+      choosen <- choosen[pos_equals]
+      if (length(choosen) > 1) {
+        matched_sp <-
+          LCVP::lcvp_sps_class[pos_genus, , drop = FALSE][choosen, "ID"]
+        status_pos <-
+          LCVP::tab_lcvp[as.numeric(matched_sp), "Status"]
+        test_accepted <- status_pos == "accepted"
+        if (any(test_accepted)) {
+          choosen <- choosen[test_accepted]
+          warning(
+            paste0(
+              "More than one name was matched for species ",
+              splist_class_i[1],
+              ". Only the first accepted name was returned.",
+              " Consider using the function lcvp_fuzzy_search",
+              " to return all names."
+            ),
+            call. = FALSE
+          )
+        } else {
+          warning(
+            paste0(
+              "More than one name was matched for species ",
+              splist_class_i[1],
+              ". Only the first name was returned.",
+              " Consider using the function lcvp_fuzzy_search",
+              " with max.distance = 0 to return all names."
+            ),
+            call. = FALSE
+          )
+          choosen <- choosen[1]
+        }
+      }
     }
+    
     
     # Pick matched species ID
     matched_sp <-
@@ -104,7 +145,8 @@
 .fuzzy_match <- function(splist_class_i,
                          pos_genus = NULL,
                          max.distance,
-                         n_class) {
+                         n_class,
+                         return_all = FALSE) {
   # If we did not find an approximation of the genus
   fuzzy_match <- NULL
   if (!is.null(pos_genus)) {
@@ -144,13 +186,13 @@
     res_fuzzy <- matrix(nrow = n_pos_genus, ncol = n_class)
     
     for (i in 1:n_pos_genus) {
-      res_fuzzy[i,] <- .exact_match(splist_class_i,
-                                    pos_genus[i],
-                                    n_class,
-                                    fuzzy = TRUE)
+      res_fuzzy[i, ] <- .exact_match(splist_class_i,
+                                     pos_genus[i],
+                                     n_class,
+                                     fuzzy = TRUE)
     }
     # keep only the ones with highest number of classes matches
-    rights <- apply(res_fuzzy[,-1, drop = FALSE],
+    rights <- apply(res_fuzzy[, -1, drop = FALSE],
                     1,
                     function(x) {
                       sum(x == "TRUE")
@@ -158,35 +200,40 @@
     pos_genus2 <- which(rights == max(rights))
     
     # If more than one
-    if (length(pos_genus2) > 1) {
-      sub_tab <- LCVP::tab_lcvp[res_fuzzy[pos_genus2, 1],]
-      pos_genus2 <- which(sub_tab$Status == "accepted")
-
-      if (length(pos_genus2) == 0) {
-        pos_genus2 <- 1
-        warning(
-          paste0(
-            "More than one name was fuzzy matched for species ",
-            name1,
-            ". Only the first name was returned.",
-            " Consider using the function lcvp_fuzzy_search ",
-            "to return all names."
-          ),
-          call. = FALSE
-        )
-      } else {
-        warning(
-          paste0(
-            "More than one name was fuzzy matched for species ",
-            name1,
-            ". Only the first accepted name was returned.",
-            " Consider using the function lcvp_fuzzy_search ",
-            "to return all names."
-          ),
-          call. = FALSE
-        )
+    if (!return_all) {
+      if (length(pos_genus2) > 1) {
+        sub_tab <- LCVP::tab_lcvp[res_fuzzy[pos_genus2, 1], ]
+        pos_genus2 <- which(sub_tab$Status == "accepted")
+        
+        if (length(pos_genus2) == 0) {
+          pos_genus2 <- 1
+          warning(
+            paste0(
+              "More than one name was fuzzy matched for species ",
+              name1,
+              ". Only the first name was returned.",
+              " Consider using the function lcvp_fuzzy_search ",
+              "to return all names."
+            ),
+            call. = FALSE
+          )
+        } else {
+          warning(
+            paste0(
+              "More than one name was fuzzy matched for species ",
+              name1,
+              ". Only the first accepted name was returned.",
+              " Consider using the function lcvp_fuzzy_search ",
+              "to return all names."
+            ),
+            call. = FALSE
+          )
+        }
       }
+      return(res_fuzzy[pos_genus2[1], ])
     }
-    return(res_fuzzy[pos_genus2[1],])
+    if (return_all) {
+      return(res_fuzzy[pos_genus2, 1])
+    }
   }
 }

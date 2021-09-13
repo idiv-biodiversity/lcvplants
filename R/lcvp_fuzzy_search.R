@@ -89,10 +89,10 @@
 #' if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 #' 
 #' # Returns a data.frame
-#' lcvp_fuzzy_search(c("Hibiscus vitifolia", "Adansonia digitata"))
+#' lcvp_fuzzy_search(c("Hibiscus vitifolia", "Artemisia vulgaris"))
 #' 
 #' # Returns a list of data.frames
-#' lcvp_fuzzy_search(c("Hibiscus vitifolia", "Adansonia digitata"),
+#' lcvp_fuzzy_search(c("Hibiscus vitifolia", "Artemisia vulgaris"),
 #' bind_result = FALSE)
 #' 
 #' # Returns only accepted names
@@ -172,26 +172,39 @@ lcvp_fuzzy_search <- function(splist,
                                   max.distance,
                                   FALSE)
     pos_genus <- unlist(.genus_search_multiple(gen_number))
+    n_class <- ncol(LCVP::lcvp_sps_class)
     
-    ## Than get all matches
-    name1 <- paste(species_class[1, 2], species_class[1, 3])
-    name2 <- paste(LCVP::lcvp_sps_class[pos_genus, 2],
-                   LCVP::lcvp_sps_class[pos_genus, 3])
-    fuzzy_match <- agrep(name1,
-                         name2,
-                         max.distance = max.distance)
-    if (length(fuzzy_match) > 0) {
+    if (!any(is.na(pos_genus))) {
+      # Try fuzzy
+      pos_res <- .fuzzy_match(species_class[1,],
+                            pos_genus,
+                            max.distance,
+                            n_class,
+                            return_all = TRUE)
+    } else {
+      # Fuzzy if did not find the genus
+      pos_res <- .fuzzy_match(splist_class_i = species_class[1,],
+                            pos_genus = NULL,
+                            max.distance,
+                            n_class,
+                            return_all = TRUE)
+    }
+    if (length(pos_res) > 0 & !all(is.na(pos_res))) {
       # Result
-      pos_res <-
-        as.numeric(LCVP::lcvp_sps_class[pos_genus, "ID"][fuzzy_match])
       result <- LCVP::tab_lcvp[pos_res, , drop = FALSE]
-      # Add a column indicating the distance
-      Name.Distance <- t(utils::adist(name1, name2[fuzzy_match]))
-      result <- cbind(result, Name.Distance)
+      ## names 1 and 2
+      name1 <- paste(species_class[1, 2], species_class[1, 3])
+      name2 <- paste(LCVP::lcvp_sps_class[as.numeric(pos_res), 2],
+                     LCVP::lcvp_sps_class[as.numeric(pos_res), 3])
       
+      # Add a column indicating the distance
+      Name.Distance <- t(utils::adist(name1, name2))
+      result <- cbind(result, Name.Distance)
+      result <- result[order(Name.Distance), , drop = FALSE]
       if (!all(c("accepted", "synonym", "unresolved", "external") %in% status)) {
         result <- result[result$Status %in% status, , drop = FALSE]
       }
+      
       rownames(result) <- NULL
       return(result)
     } else {

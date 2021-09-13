@@ -51,6 +51,7 @@
 # The algorithm for one name
 .classify_algo <- function(x_split_i,
                            Infrasp_cat_reg) {
+  
   # Base output
   output <- character(10)
   
@@ -97,6 +98,10 @@
       if (n > pos_1) {
         # get the author
         output[3] <- paste(x_split_i[(pos_1 + 1):n],
+                           collapse = " ")
+      }
+      if (pos[1] > 3) { # Author names before infras
+        output[3] <- paste(x_split_i[3:(pos[1] - 1)],
                            collapse = " ")
       }
     }

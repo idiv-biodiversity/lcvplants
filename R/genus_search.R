@@ -12,8 +12,10 @@
   for (i in 1:n_positions) {
     gen_pos_mult[[i]] <- .genus_search(gen_pos[i])
   }
-  # Genus names in the list 
-  names(gen_pos_mult) <- LCVP::tab_position$Genus[gen_pos]
+  if(!all(is.na(gen_pos))) {
+    # Genus names in the list 
+    names(gen_pos_mult) <- LCVP::tab_position$Genus[gen_pos]
+  }
   # Return the list with the positions
   return(gen_pos_mult)
 }

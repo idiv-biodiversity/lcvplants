@@ -3,7 +3,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     res_ex <- lcvp_fuzzy_search("Hibiscus vitifolia")
     expect_equal(class(res_ex), "data.frame")
     expect_equal(ncol(res_ex), 8)
-    expect_equal(nrow(res_ex), 8)
+    expect_equal(nrow(res_ex), 2)
   })
   
   test_that("lcvp_fuzzy_search works for one species, only accepted", {
@@ -11,7 +11,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
       lcvp_fuzzy_search("Hibiscus vitifolia", status = "accepted")
     expect_equal(class(res_ex), "data.frame")
     expect_equal(ncol(res_ex), 8)
-    expect_equal(nrow(res_ex), 2)
+    expect_equal(nrow(res_ex), 1)
     expect_true(all(res_ex$Status == "accepted"))
   })
   
@@ -22,7 +22,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
                                   bind_result = TRUE)
               expect_equal(class(res_ex), "data.frame")
               expect_equal(ncol(res_ex), 8)
-              expect_equal(nrow(res_ex), 10)
+              expect_equal(nrow(res_ex), 3)
             })
   
   test_that("lcvp_fuzzy_search works for multiple species, bind_result = FALSE",

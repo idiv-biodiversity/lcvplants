@@ -1,92 +1,85 @@
-#' Join two data.frames using the Leipzig Catalogue of Plants (LCVP)
+#'Join two data.frames using the Leipzig Catalogue of Plants (LCVP)
 #'
 #'
-#' Join two data.frames based on the taxonomic resolution of plant taxa names 
-#' listed in the "Leipzig Catalogue of Vascular Plants" (LCVP). Inspired by the 
-#' \code{\link[dplyr:join]{dplyr:join}} function.
+#'Join two data.frames based on the taxonomic resolution of plant taxa names
+#'listed in the "Leipzig Catalogue of Vascular Plants" (LCVP). Inspired by the
+#'\code{\link[dplyr:join]{dplyr:join}} function.
 #'
-#' @param x,y data.frames to join.
+#'@param x,y data.frames to join.
 #'
-#' @param sp_columns A character vector indicating the column names in x and y
-#' with respective species names to join by.
-#' 
-#' For example, c("species", "Species_name").
+#'@param sp_columns A character vector indicating the column names in x and y
+#'  with respective species names to join by.
 #'
-#' @param max.distance It represents the maximum distance allowed for a match 
-#' when comparing the submitted name with the closest name matches in the LCVP. 
-#' Expressed either as integer, or as a fraction of the pattern length times the 
-#' maximal transformation cost (will be replaced by the smallest integer not 
-#' less than the corresponding fraction). 
-#' See \code{\link[base:agrep]{agrep}} for more details.
+#'  For example, c("species", "Species_name").
 #'
-#' @param type What type of join should be done: "full" (default), "left", "right"
-#' or "inner".
-#' * "full" return all rows and all columns from both x and y.
-#' * "left" return all rows from x.
-#' * "right" return all rows from y.
-#' * "inner" return all rows from x where there are matching species in y.
+#'@param max.distance It represents the maximum distance allowed for a match
+#'  when comparing the submitted name with the closest name matches in the LCVP.
+#'  Expressed either as integer, or as a fraction of the pattern length times
+#'  the maximal transformation cost (will be replaced by the smallest integer
+#'  not less than the corresponding fraction). See
+#'  \code{\link[base:agrep]{agrep}} for more details.
 #'
-#' @param solve_duplicated if TRUE, it will summarize duplicated output names
-#' given a function for each column class.
-#' 
-#' See \code{\link[lcvplants:lcvp_solve_dups]{lcvp_solve_dups}} for details.
-#' 
-#' @param func_numeric A function to summarize numeric columns 
-#' if solve_duplicated = TRUE. Default will return the mean.
-#' 
-#' @param func_character A function to summarize character columns 
-#' if solve_duplicated = TRUE. Default will keep all unique strings separated 
-#' by comma.
-#' 
-#' @param func_logical A function to summarize logical columns 
-#' if solve_duplicated = TRUE. Default will return TRUE if any is TRUE.
-#' 
-#' @details 
-#' The function add the columns from y to x 
-#' based on the list of species name in both tables. It
-#' first standardizes the species names in both tables based on the "Leipzig 
-#' Catalogue of Vascular Plants" (LCVP) using the algorithm in 
-#' \code{\link[lcvplants:lcvp_search]{lcvp_search}}. These
-#' standardized names of both tables are then matched using the algorithm in 
-#' \code{\link[lcvplants:lcvp_match]{lcvp_match}}. The type "full" join will 
-#' keep all species and add NAs to missing values. No NA is added in "inner", 
-#' "left" and "right" options.
-#' 
-#' Duplicated taxonomic resolution may occur if two inputs are now synonyms.
-#' If \code{solve_duplicated} is \code{TRUE} the 
-#' \code{\link[lcvplants:lcvp_match]{lcvp_solve_dups}} function is applied to 
-#' merge duplicated output names.
-#' 
-#' 
-#' @return 
-#' A data.frame with the columns in both tables.
-#' The rows will depend on the \code{type} selected. For "inner", a 
-#' subset of x rows. For "left", all x rows. For "right", a subset of x rows, 
-#' followed by unmatched y rows. For "full", all x rows, followed by unmatched 
-#' y rows.
-#' 
-#' @author 
-#' Bruno Vilela & Alexander Ziska
-#' 
-#' @seealso 
-#' \code{\link[lcvplants:lcvp_search]{lcvp_search}}, 
-#' \code{\link[lcvplants:lcvp_match]{lcvp_match}},  
-#' \code{\link[lcvplants:lcvp_solve_dups]{lcvp_solve_dups}}.
-#' 
-#' @references 
-#' Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig 
-#' catalogue of vascular plants, a new taxonomic reference list for all known 
-#' vascular plants. Sci Data 7, 416 (2020). 
-#' https://doi.org/10.1038/s41597-020-00702-z 
-#' 
-#' @keywords R-package nomenclature taxonomy vascular plants 
+#'@param type What type of join should be done: "full" (default), "left",
+#'  "right" or "inner". * "full" return all rows and all columns from both x and
+#'  y. * "left" return all rows from x. * "right" return all rows from y. *
+#'  "inner" return all rows from x where there are matching species in y.
+#'
+#'@param solve_duplicated if TRUE, it will summarize duplicated output names
+#'  given a function for each column class.
+#'
+#'  See \code{\link[lcvplants:lcvp_solve_dups]{lcvp_solve_dups}} for details.
+#'
+#'@param func_numeric A function to summarize numeric columns if
+#'  solve_duplicated = TRUE. Default will return the mean.
+#'
+#'@param func_character A function to summarize character columns if
+#'  solve_duplicated = TRUE. Default will keep all unique strings separated by
+#'  comma.
+#'
+#'@param func_logical A function to summarize logical columns if
+#'  solve_duplicated = TRUE. Default will return TRUE if any is TRUE.
+#'
+#'@details The function add the columns from y to x based on the list of species
+#'name in both tables. It first standardizes the species names in both tables
+#'based on the "Leipzig Catalogue of Vascular Plants" (LCVP) using the algorithm
+#'in \code{\link[lcvplants:lcvp_search]{lcvp_search}}. Note that
+#'\code{lcvp_join} can also deal with misspelling by fuzzy matching species name
+#'given a \code{max.distance} choice. These standardized names of both tables
+#'are then matched using the algorithm in
+#'\code{\link[lcvplants:lcvp_match]{lcvp_match}}. The type "full" join will keep
+#'all species and add NAs to missing values. No NA is added in "inner", "left"
+#'and "right" options.
+#'
+#'Duplicated taxonomic resolution may occur if two inputs are now synonyms. If
+#'\code{solve_duplicated} is \code{TRUE} the
+#'\code{\link[lcvplants:lcvp_match]{lcvp_solve_dups}} function is applied to
+#'merge duplicated output names.
+#'
+#'
+#'@return A data.frame with the columns in both tables. The rows will depend on
+#'the \code{type} selected. For "inner", a subset of x rows. For "left", all x
+#'rows. For "right", a subset of x rows, followed by unmatched y rows. For
+#'"full", all x rows, followed by unmatched y rows.
+#'
+#'@author Bruno Vilela & Alexander Ziska
+#'
+#'@seealso \code{\link[lcvplants:lcvp_search]{lcvp_search}},
+#'\code{\link[lcvplants:lcvp_match]{lcvp_match}},
+#'\code{\link[lcvplants:lcvp_solve_dups]{lcvp_solve_dups}}.
+#'
+#'@references Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig
+#'catalogue of vascular plants, a new taxonomic reference list for all known
+#'vascular plants. Sci Data 7, 416 (2020).
+#'https://doi.org/10.1038/s41597-020-00702-z
+#'
+#'@keywords R-package nomenclature taxonomy vascular plants
 #'
 #' @examples
 #' # Ensure that LCVP package is available before running the example.
 #' # If it is not, see the `lcvplants` package vignette for details
 #' # on installing the required data package.
 #' if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
-#' 
+#'
 #' # Create data.frame1
 #' splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[2:100])
 #' x <- data.frame("Species" = splist1, "Trait1" = runif(length(splist1)))
@@ -101,17 +94,17 @@
 #'
 #' # Full join
 #' lcvp_join(x, y, c("Species", "Species"), type = "full")
-#' 
+#'
 #' # Left join
 #' lcvp_join(x, y, c("Species", "Species"), type = "left")
-#' 
+#'
 #' # Right join
 #' lcvp_join(x, y, c("Species", "Species"), type = "right")
-#' 
+#'
 #' # Inner join and solve duplicates
-#' lcvp_join(x, y, c("Species", "Species"), 
+#' lcvp_join(x, y, c("Species", "Species"),
 #' type = "inner", solve_duplicated = TRUE)
-#' 
+#'
 #' }
 #'@export
 

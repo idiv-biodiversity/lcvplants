@@ -86,10 +86,10 @@ the function  \code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}}.
 if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 
 # Returns a data.frame
-lcvp_fuzzy_search(c("Hibiscus vitifolia", "Adansonia digitata"))
+lcvp_fuzzy_search(c("Hibiscus vitifolia", "Artemisia vulgaris"))
 
 # Returns a list of data.frames
-lcvp_fuzzy_search(c("Hibiscus vitifolia", "Adansonia digitata"),
+lcvp_fuzzy_search(c("Hibiscus vitifolia", "Artemisia vulgaris"),
 bind_result = FALSE)
 
 # Returns only accepted names
