@@ -76,25 +76,27 @@
 #' if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 #'
 #' # Search one species
-#' lcvp_search("Hibiscus vitifolius")
+#' lcvp_search("Aa achalensis")
 #'
 #' # Search one species with misspelled name
-#' lcvp_search("Hibiscus vitifoliuse")
-#' lcvp_search("Tibiscus vitifolius", max.distance = 2)
+#' lcvp_search("Aa achalensise")
+#' lcvp_search("Aae achalensise", max.distance = 2)
 #'
 #' # Search for a variety
 #' lcvp_search("Hibiscus abelmoschus var. betulifolius Mast.")
 #'
 #' # Search for multiple species
-#' mult <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.",
+#' splist <- c(
+#' "Hibiscus abelmoschus var. betulifolius Mast.",
 #' "Hibiscus abutiloides Willd.",
-#'  "Hibiscus aculeatus",
-#'  "Hibiscus acuminatus",
-#'  "Hibiscus furcatuis"), # This is a wrong name
-#'   max.distance = 0)
+#' "Hibiscus aculeatus",
+#' "Hibiscus acuminatus",
+#' "Hibiscus furcatuis" # This is a wrong name
+#' )
+#' mult <- lcvp_search(splist, max.distance = 0.1)
 #'
 #'  ## Results for multiple species search can be summarized using lcvp_summary
-#'  lcvp_summary(mult)
+#' lcvp_summary(mult)
 #'
 #' }
 #'@export
@@ -128,7 +130,13 @@ lcvp_search <- function(splist,
   ## Return the matrix with matched species 
   } else {
     comb_match <- matching[,-(1:2), drop = FALSE]
+    # keep homonyms to the warning
+    ho_pos <- ncol(comb_match) 
+    homonyms <- as.logical(comb_match[, ho_pos])
+    comb_match <- comb_match[, -ho_pos, drop = FALSE]
+    
     comb_match <- as.matrix(apply(comb_match, 2, as.logical))
+    
     if (ncol(comb_match) == 1) { # If only one column, need to be transposed
       comb_match <- t(comb_match)
     }
@@ -147,7 +155,21 @@ lcvp_search <- function(splist,
     attributes(result_final)$match.names <- comb_match  
     # Remove row names
     rownames(result_final) <- NULL
+    # Warning more than one match
+    if (any(homonyms)) {
+      warning(
+        paste0(
+          "More than one name was matched for some species. ",
+          "Only the first 'accepted' (if present) name was returned. ",
+          "Consider using the function lcvp_fuzzy_search ",
+          "to return all names for these species:\n",
+          paste(result_final[homonyms, 1], collapse = ", ")
+        ),
+        call. = FALSE
+      )
+    }
   }
+  
   # If no match, give a warning
   if (is.null(result_final)) {
     warning(paste0("No match found for the species list provided.",

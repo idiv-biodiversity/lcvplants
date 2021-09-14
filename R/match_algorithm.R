@@ -11,7 +11,7 @@
   n_class <- ncol(LCVP::lcvp_sps_class)
   
   # Save results
-  exact <- matrix(ncol = n_class, nrow = n_sps)
+  exact <- matrix(ncol = n_class + 1, nrow = n_sps)
   
   
   # Loop across species
@@ -65,6 +65,7 @@
                          pos_genus,
                          n_class,
                          fuzzy = FALSE) {
+  
   # Look the categories that are equal
   sp_pos <- apply(LCVP::lcvp_sps_class[pos_genus, -n_class,
                                        drop = FALSE],
@@ -76,6 +77,10 @@
   # Identify the actual number positions
   choosen <- which(sp_pos[3, ])
   
+  # Set homonyms FALSE
+  homonyms <- FALSE
+  
+  
   # Work when fuzzy
   if (fuzzy) {
     choosen <- 1:ncol(sp_pos)
@@ -86,7 +91,7 @@
   
   if (n_choosen == 0) {
     # No match found
-    return(rep(NA, n_class))
+    return(rep(NA, n_class + 1))
   } else {
     # if there is more than one matched genus and epithet
     # keep the one with more matches across subcategories
@@ -102,27 +107,9 @@
         test_accepted <- status_pos == "accepted"
         if (any(test_accepted)) {
           choosen <- choosen[test_accepted]
-          warning(
-            paste0(
-              "More than one name was matched for species ",
-              splist_class_i[1],
-              ". Only the first accepted name was returned.",
-              " Consider using the function lcvp_fuzzy_search",
-              " to return all names."
-            ),
-            call. = FALSE
-          )
+          homonyms <- TRUE
         } else {
-          warning(
-            paste0(
-              "More than one name was matched for species ",
-              splist_class_i[1],
-              ". Only the first name was returned.",
-              " Consider using the function lcvp_fuzzy_search",
-              " with max.distance = 0 to return all names."
-            ),
-            call. = FALSE
-          )
+          homonyms <- TRUE
           choosen <- choosen[1]
         }
       }
@@ -134,7 +121,7 @@
       LCVP::lcvp_sps_class[pos_genus, , drop = FALSE][choosen, "ID"]
     
     # Concatenate with the matching info
-    matched_result <- c(matched_sp, sp_pos[, choosen])
+    matched_result <- c(matched_sp, sp_pos[, choosen], homonyms)
     
     return(matched_result)
   }
@@ -171,7 +158,7 @@
   
   if (length(fuzzy_match) == 0) {
     # No match found
-    return(rep(NA, n_class))
+    return(rep(NA, n_class + 1))
   } else {
     # Keep the closest
     dist_names <- utils::adist(name1, name2[fuzzy_match])
@@ -183,7 +170,7 @@
       as.numeric(LCVP::lcvp_sps_class[pos_genus, "ID"][fuzzy_match])
     n_pos_genus <- length(pos_genus)
     
-    res_fuzzy <- matrix(nrow = n_pos_genus, ncol = n_class)
+    res_fuzzy <- matrix(nrow = n_pos_genus, ncol = n_class + 1)
     
     for (i in 1:n_pos_genus) {
       res_fuzzy[i, ] <- .exact_match(splist_class_i,
@@ -198,36 +185,14 @@
                       sum(x == "TRUE")
                     })
     pos_genus2 <- which(rights == max(rights))
-    
     # If more than one
     if (!return_all) {
       if (length(pos_genus2) > 1) {
         sub_tab <- LCVP::tab_lcvp[res_fuzzy[pos_genus2, 1], ]
         pos_genus2 <- which(sub_tab$Status == "accepted")
-        
+        res_fuzzy[, n_class + 1] <- TRUE # homonyms to TRUE
         if (length(pos_genus2) == 0) {
           pos_genus2 <- 1
-          warning(
-            paste0(
-              "More than one name was fuzzy matched for species ",
-              name1,
-              ". Only the first name was returned.",
-              " Consider using the function lcvp_fuzzy_search ",
-              "to return all names."
-            ),
-            call. = FALSE
-          )
-        } else {
-          warning(
-            paste0(
-              "More than one name was fuzzy matched for species ",
-              name1,
-              ". Only the first accepted name was returned.",
-              " Consider using the function lcvp_fuzzy_search ",
-              "to return all names."
-            ),
-            call. = FALSE
-          )
         }
       }
       return(res_fuzzy[pos_genus2[1], ])

@@ -70,25 +70,27 @@ function \code{\link[lcvplants:lcvp_group_search]{lcvp_group_search}}.
 if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 
 # Search one species
-lcvp_search("Hibiscus vitifolius")
+lcvp_search("Aa achalensis")
 
 # Search one species with misspelled name
-lcvp_search("Hibiscus vitifoliuse")
-lcvp_search("Tibiscus vitifolius", max.distance = 2)
+lcvp_search("Aa achalensise")
+lcvp_search("Aae achalensise", max.distance = 2)
 
 # Search for a variety
 lcvp_search("Hibiscus abelmoschus var. betulifolius Mast.")
 
 # Search for multiple species
-mult <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.",
+splist <- c(
+"Hibiscus abelmoschus var. betulifolius Mast.",
 "Hibiscus abutiloides Willd.",
- "Hibiscus aculeatus",
- "Hibiscus acuminatus",
- "Hibiscus furcatuis"), # This is a wrong name
-  max.distance = 0)
+"Hibiscus aculeatus",
+"Hibiscus acuminatus",
+"Hibiscus furcatuis" # This is a wrong name
+)
+mult <- lcvp_search(splist, max.distance = 0.1)
 
  ## Results for multiple species search can be summarized using lcvp_summary
- lcvp_summary(mult)
+lcvp_summary(mult)
 
 }
 }
