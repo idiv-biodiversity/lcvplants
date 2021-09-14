@@ -41,12 +41,10 @@
 
 <meta property="og:title" content="Standardize plant names according to the Leipzig Catalogue of Plants (LCVP) — lcvp_search" />
 <meta property="og:description" content="Allow taxonomic resolution of plant taxa names listed in the &quot;Leipzig
-Catalogue of Vascular Plants&quot; (LCVP).
-Connects to the LCVP table and validates the
-names of a vector of plant taxa, replacing synonyms with accepted names and
-removing orthographic errors in plant names.
-The LCVP data package must be installed. It is available from
-https://github.com/idiv-biodiversity/LCVP." />
+Catalogue of Vascular Plants&quot; (LCVP). Connects to the LCVP table and validates
+the names of a vector of plant taxa, replacing synonyms with accepted names
+and removing orthographic errors in plant names. The LCVP data package must be
+installed. It is available from https://github.com/idiv-biodiversity/LCVP." />
 
 
 
@@ -86,7 +84,7 @@ https://github.com/idiv-biodiversity/LCVP." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lcvplants</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
       </span>
     </div>
 
@@ -138,12 +136,10 @@ https://github.com/idiv-biodiversity/LCVP." />
 
     <div class="ref-description">
     <p>Allow taxonomic resolution of plant taxa names listed in the "Leipzig
-Catalogue of Vascular Plants" (LCVP).
-Connects to the LCVP table and validates the
-names of a vector of plant taxa, replacing synonyms with accepted names and
-removing orthographic errors in plant names.
-The LCVP data package must be installed. It is available from
-https://github.com/idiv-biodiversity/LCVP.</p>
+Catalogue of Vascular Plants" (LCVP). Connects to the LCVP table and validates
+the names of a vector of plant taxa, replacing synonyms with accepted names
+and removing orthographic errors in plant names. The LCVP data package must be
+installed. It is available from https://github.com/idiv-biodiversity/LCVP.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>lcvp_search</span><span class='op'>(</span><span class='va'>splist</span>, max.distance <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span></code></pre></div>
@@ -155,17 +151,17 @@ https://github.com/idiv-biodiversity/LCVP.</p>
       <th>splist</th>
       <td><p>A character vector specifying the input taxon, each element
 including genus and specific epithet and, potentially, infraspecific rank,
-infraspecific name and author name. Only valid characters are allowed
-(see <code><a href='https://rdrr.io/r/base/validUTF8.html'>base:validEnc</a></code>).</p></td>
+infraspecific name and author name. Only valid characters are allowed (see
+<code><a href='https://rdrr.io/r/base/validUTF8.html'>base:validEnc</a></code>).</p></td>
     </tr>
     <tr>
       <th>max.distance</th>
       <td><p>It represents the maximum distance allowed for a match
 when comparing the submitted name with the closest name matches in the LCVP.
-Expressed either as integer, or as a fraction of the pattern length times the
-maximal transformation cost (will be replaced by the smallest integer not
-less than the corresponding fraction).
-See <code><a href='https://rdrr.io/r/base/agrep.html'>agrep</a></code> for more details.</p></td>
+Expressed either as integer, or as a fraction of the pattern length times
+the maximal transformation cost (will be replaced by the smallest integer
+not less than the corresponding fraction). See
+<code><a href='https://rdrr.io/r/base/agrep.html'>agrep</a></code> for more details.</p></td>
     </tr>
     </table>
 
@@ -176,36 +172,38 @@ See <code><a href='https://rdrr.io/r/base/agrep.html'>agrep</a></code> for more 
 <li><p><em>Input.Taxon</em>: Matched taxa names listed in the LCVP data.</p></li>
 <li><p><em>Status</em>: Nomenclature status: 'accepted', 'synonym',
 'unresolved' or 'external'.</p></li>
-<li><p><em>PL.comparisson</em>: This field provides a direct comparison with
-‘The Plant List’: ‘identical', 'synonym', 'other synonym',
-'different authors', 'missing', 'misspelling' or 'unresolved'.</p></li>
-<li><p><em>PL.alternative</em>: This field provides a possible alternative
-name from ‘The Plant List’.</p></li>
-<li><p><em>Output.Taxon</em>: The list of the accepted plant taxa names
-according to the LCVP.</p></li>
+<li><p><em>PL.comparisson</em>: This field
+provides a direct comparison with ‘The Plant List’: ‘identical', 'synonym',
+'other synonym', 'different authors', 'missing', 'misspelling' or
+'unresolved'.</p></li>
+<li><p><em>PL.alternative</em>: This field provides a possible
+alternative name from ‘The Plant List’.</p></li>
+<li><p><em>Output.Taxon</em>: The list
+of the accepted plant taxa names according to the LCVP.</p></li>
 <li><p><em>Family</em>: The corresponding family name of the Input.Taxon,
 staying empty if the Status is unresolved.</p></li>
-<li><p><em>Order</em>: The corresponding order name of the Input.Taxon,
-staying empty if the Status is unresolved.</p></li>
-</ul><p>See <code><a href='https://rdrr.io/pkg/LCVP/man/tab_lcvp.html'>LCVP:tab_lcvp</a></code> for more details.</p>
-<p>If no match is found for one species it will return NA for the columns in
-the LCVP table. But, if no match is found for all species the function will
-return NULL and a warning message.</p>
+<li><p><em>Order</em>: The
+corresponding order name of the Input.Taxon, staying empty if the Status is
+unresolved.</p></li>
+</ul><p>See <code><a href='https://rdrr.io/pkg/LCVP/man/tab_lcvp.html'>LCVP:tab_lcvp</a></code> for more
+details.</p>
+<p>If no match is found for one species it will return NA for the columns in the
+LCVP table. But, if no match is found for all species the function will return
+NULL and a warning message.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The algorithm will first try to exactly match the binomial names provided
-in <code>splist</code>. If no match is found, it will try to find the
-closest name given the maximum distance defined in <code>max.distance</code>. If more than
-one name is fuzzy matched, only the accepted or the first will be returned.
-The function
-<code><a href='lcvp_fuzzy_search.html'>lcvp_fuzzy_search</a></code>
-can be used to return all results of the fuzzy match algorithm.</p>
-<p>The <code><a href='lcvp_summary.html'>lcvp_summary</a></code> function can be
-used to summarize the results from a multiple species search, indicating the
-number of species matched, and how many of them were exactly or fuzzy matched.</p>
+    <p>The algorithm will first try to exactly match the binomial names provided in
+<code>splist</code>. If no match is found, it will try to find the closest name given the
+maximum distance defined in <code>max.distance</code>. If more than one name is exactly
+or fuzzy matched, only the accepted or the first will be returned. The
+function <code><a href='lcvp_fuzzy_search.html'>lcvp_fuzzy_search</a></code> can be
+used to return all results of the algorithm.</p>
+<p>The <code><a href='lcvp_summary.html'>lcvp_summary</a></code> function can be used to
+summarize the results from a multiple species search, indicating the number of
+species matched, and how many of them were exactly or fuzzy matched.</p>
 <p>Note that only binomial names with valid characters are allowed in this
-function. Search based on  genus, family, order or author names should use
-the function <code><a href='lcvp_group_search.html'>lcvp_group_search</a></code>.</p>
+function. Search based on  genus, family, order or author names should use the
+function <code><a href='lcvp_group_search.html'>lcvp_group_search</a></code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig
@@ -228,25 +226,27 @@ https://doi.org/10.1038/s41597-020-00702-z</p>
 <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"LCVP"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span> <span class='co'># Do not run this</span>
 
 <span class='co'># Search one species</span>
-<span class='fu'>lcvp_search</span><span class='op'>(</span><span class='st'>"Hibiscus vitifolius"</span><span class='op'>)</span>
+<span class='fu'>lcvp_search</span><span class='op'>(</span><span class='st'>"Aa achalensis"</span><span class='op'>)</span>
 
 <span class='co'># Search one species with misspelled name</span>
-<span class='fu'>lcvp_search</span><span class='op'>(</span><span class='st'>"Hibiscus vitifoliuse"</span><span class='op'>)</span>
-<span class='fu'>lcvp_search</span><span class='op'>(</span><span class='st'>"Tibiscus vitifolius"</span>, max.distance <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'>lcvp_search</span><span class='op'>(</span><span class='st'>"Aa achalensise"</span><span class='op'>)</span>
+<span class='fu'>lcvp_search</span><span class='op'>(</span><span class='st'>"Aae achalensise"</span>, max.distance <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 
 <span class='co'># Search for a variety</span>
 <span class='fu'>lcvp_search</span><span class='op'>(</span><span class='st'>"Hibiscus abelmoschus var. betulifolius Mast."</span><span class='op'>)</span>
 
 <span class='co'># Search for multiple species</span>
-<span class='va'>mult</span> <span class='op'>&lt;-</span> <span class='fu'>lcvp_search</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Hibiscus abelmoschus var. betulifolius Mast."</span>,
+<span class='va'>splist</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+<span class='st'>"Hibiscus abelmoschus var. betulifolius Mast."</span>,
 <span class='st'>"Hibiscus abutiloides Willd."</span>,
- <span class='st'>"Hibiscus aculeatus"</span>,
- <span class='st'>"Hibiscus acuminatus"</span>,
- <span class='st'>"Hibiscus furcatuis"</span><span class='op'>)</span>, <span class='co'># This is a wrong name</span>
-  max.distance <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
- 
+<span class='st'>"Hibiscus aculeatus"</span>,
+<span class='st'>"Hibiscus acuminatus"</span>,
+<span class='st'>"Hibiscus furcatuis"</span> <span class='co'># This is a wrong name</span>
+<span class='op'>)</span>
+<span class='va'>mult</span> <span class='op'>&lt;-</span> <span class='fu'>lcvp_search</span><span class='op'>(</span><span class='va'>splist</span>, max.distance <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>
+
  <span class='co'>## Results for multiple species search can be summarized using lcvp_summary</span>
- <span class='fu'><a href='lcvp_summary.html'>lcvp_summary</a></span><span class='op'>(</span><span class='va'>mult</span><span class='op'>)</span>
+<span class='fu'><a href='lcvp_summary.html'>lcvp_summary</a></span><span class='op'>(</span><span class='va'>mult</span><span class='op'>)</span>
 
 <span class='op'>}</span>
 </code></pre></div>

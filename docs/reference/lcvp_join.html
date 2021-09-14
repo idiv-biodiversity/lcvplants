@@ -82,7 +82,7 @@ dplyr:join function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lcvplants</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
       </span>
     </div>
 
@@ -167,20 +167,17 @@ with respective species names to join by.</p>
       <th>max.distance</th>
       <td><p>It represents the maximum distance allowed for a match
 when comparing the submitted name with the closest name matches in the LCVP.
-Expressed either as integer, or as a fraction of the pattern length times the
-maximal transformation cost (will be replaced by the smallest integer not
-less than the corresponding fraction).
-See <code><a href='https://rdrr.io/r/base/agrep.html'>agrep</a></code> for more details.</p></td>
+Expressed either as integer, or as a fraction of the pattern length times
+the maximal transformation cost (will be replaced by the smallest integer
+not less than the corresponding fraction). See
+<code><a href='https://rdrr.io/r/base/agrep.html'>agrep</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>What type of join should be done: "full" (default), "left", "right"
-or "inner".</p><ul>
-<li><p>"full" return all rows and all columns from both x and y.</p></li>
-<li><p>"left" return all rows from x.</p></li>
-<li><p>"right" return all rows from y.</p></li>
-<li><p>"inner" return all rows from x where there are matching species in y.</p></li>
-</ul></td>
+      <td><p>What type of join should be done: "full" (default), "left",
+"right" or "inner". * "full" return all rows and all columns from both x and
+y. * "left" return all rows from x. * "right" return all rows from y. *
+"inner" return all rows from x where there are matching species in y.</p></td>
     </tr>
     <tr>
       <th>solve_duplicated</th>
@@ -190,42 +187,42 @@ given a function for each column class.</p>
     </tr>
     <tr>
       <th>func_numeric</th>
-      <td><p>A function to summarize numeric columns
-if solve_duplicated = TRUE. Default will return the mean.</p></td>
+      <td><p>A function to summarize numeric columns if
+solve_duplicated = TRUE. Default will return the mean.</p></td>
     </tr>
     <tr>
       <th>func_character</th>
-      <td><p>A function to summarize character columns
-if solve_duplicated = TRUE. Default will keep all unique strings separated
-by comma.</p></td>
+      <td><p>A function to summarize character columns if
+solve_duplicated = TRUE. Default will keep all unique strings separated by
+comma.</p></td>
     </tr>
     <tr>
       <th>func_logical</th>
-      <td><p>A function to summarize logical columns
-if solve_duplicated = TRUE. Default will return TRUE if any is TRUE.</p></td>
+      <td><p>A function to summarize logical columns if
+solve_duplicated = TRUE. Default will return TRUE if any is TRUE.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame with the columns in both tables.
-The rows will depend on the <code>type</code> selected. For "inner", a
-subset of x rows. For "left", all x rows. For "right", a subset of x rows,
-followed by unmatched y rows. For "full", all x rows, followed by unmatched
-y rows.</p>
+    <p>A data.frame with the columns in both tables. The rows will depend on
+the <code>type</code> selected. For "inner", a subset of x rows. For "left", all x
+rows. For "right", a subset of x rows, followed by unmatched y rows. For
+"full", all x rows, followed by unmatched y rows.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function add the columns from y to x
-based on the list of species name in both tables. It
-first standardizes the species names in both tables based on the "Leipzig
-Catalogue of Vascular Plants" (LCVP) using the algorithm in
-<code><a href='lcvp_search.html'>lcvp_search</a></code>. These
-standardized names of both tables are then matched using the algorithm in
-<code><a href='lcvp_match.html'>lcvp_match</a></code>. The type "full" join will
-keep all species and add NAs to missing values. No NA is added in "inner",
-"left" and "right" options.</p>
-<p>Duplicated taxonomic resolution may occur if two inputs are now synonyms.
-If <code>solve_duplicated</code> is <code>TRUE</code> the
+    <p>The function add the columns from y to x based on the list of species
+name in both tables. It first standardizes the species names in both tables
+based on the "Leipzig Catalogue of Vascular Plants" (LCVP) using the algorithm
+in <code><a href='lcvp_search.html'>lcvp_search</a></code>. Note that
+<code>lcvp_join</code> can also deal with misspelling by fuzzy matching species name
+given a <code>max.distance</code> choice. These standardized names of both tables
+are then matched using the algorithm in
+<code><a href='lcvp_match.html'>lcvp_match</a></code>. The type "full" join will keep
+all species and add NAs to missing values. No NA is added in "inner", "left"
+and "right" options.</p>
+<p>Duplicated taxonomic resolution may occur if two inputs are now synonyms. If
+<code>solve_duplicated</code> is <code>TRUE</code> the
 <code><a href='lcvp_match.html'>lcvp_solve_dups</a></code> function is applied to
 merge duplicated output names.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -271,7 +268,7 @@ https://doi.org/10.1038/s41597-020-00702-z</p>
 <span class='fu'>lcvp_join</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Species"</span>, <span class='st'>"Species"</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"right"</span><span class='op'>)</span>
 
 <span class='co'># Inner join and solve duplicates</span>
-<span class='fu'>lcvp_join</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Species"</span>, <span class='st'>"Species"</span><span class='op'>)</span>, 
+<span class='fu'>lcvp_join</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Species"</span>, <span class='st'>"Species"</span><span class='op'>)</span>,
 type <span class='op'>=</span> <span class='st'>"inner"</span>, solve_duplicated <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='op'>}</span>
