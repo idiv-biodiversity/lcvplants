@@ -17,3 +17,4 @@ README.yml
 ^\.github$
 ^_pkgdown\.yml$
 ^pkgdown$
+^site_libs$

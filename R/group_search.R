@@ -35,7 +35,7 @@
   # Fuzzy match if it did not work
   if (length(group_pos) == 0) {
     if (max.distance > 0) {
-      group_pos <- agrep(group_name,
+      group_pos <- .agrep_whole(group_name,
                          group_ref,
                          max.distance = max.distance)
       closest1 <- utils::adist(group_name, group_ref[group_pos])

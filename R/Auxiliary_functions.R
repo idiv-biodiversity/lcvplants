@@ -11,13 +11,23 @@
   fixed5 <- gsub("_", " ", fixed4) # change names separated by _ to space
   # Merge multiple spaces
   fixed6 <- gsub("(^X )|( X$)|( X )", " ", fixed5)
-  fixed7 <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", fixed6, perl=TRUE)
+  fixed7 <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", fixed6, perl = TRUE)
   return(fixed7)
 }
 
 #-------------------------------------------------------#
 # Function default lcvp_join argument func_character
 # It returns all names separated by comma. 
-.keep_all <- function (x) {
+.keep_all <- function(x) {
   return(paste(unique(x), collapse = ", "))
+}
+
+#-------------------------------------------------------#
+# Function to match the closest fuzzy name
+.agrep_whole <- function(x, y, max.distance) {
+  if (max.distance < 1 & max.distance > 0) {
+    max.distance <- ceiling(nchar(x) * max.distance)
+  } 
+  a <- utils::adist(x, y)
+  return(which(a <= max.distance))
 }

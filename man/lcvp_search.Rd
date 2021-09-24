@@ -4,7 +4,7 @@
 \alias{lcvp_search}
 \title{Standardize plant names according to the Leipzig Catalogue of Plants (LCVP)}
 \usage{
-lcvp_search(splist, max.distance = 0.1)
+lcvp_search(splist, max.distance = 0.2, show.correct = FALSE)
 }
 \arguments{
 \item{splist}{A character vector specifying the input taxon, each element
@@ -12,12 +12,17 @@ including genus and specific epithet and, potentially, infraspecific rank,
 infraspecific name and author name. Only valid characters are allowed (see
 \code{\link[base:validEnc]{base:validEnc}}).}
 
-\item{max.distance}{It represents the maximum distance allowed for a match
-when comparing the submitted name with the closest name matches in the LCVP.
-Expressed either as integer, or as a fraction of the pattern length times
-the maximal transformation cost (will be replaced by the smallest integer
-not less than the corresponding fraction). See
-\code{\link[base:agrep]{agrep}} for more details.}
+\item{max.distance}{It represents the maximum string distance allowed for a
+match when comparing the submitted name with the closest name matches in the
+LCVP. The distance used is a generalized Levenshtein distance that indicates
+the total number of insertions, deletions, and substitutions allowed to
+match the two names. It can be expressed as an integer or as the fraction of
+the binomial name. For example, a name with length 10, and a max.distance =
+0.1, allow only one change (insertion, deletion, or substitution). A
+max.distance = 2, allows two changes.}
+
+\item{show.correct}{If TRUE, a column is added to the final result indicating
+whether the binomial name was exactly matched, or if it is misspelled.}
 }
 \value{
 A data.frame with the following columns: \itemize{
@@ -73,7 +78,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 lcvp_search("Aa achalensis")
 
 # Search one species with misspelled name
-lcvp_search("Aa achalensise")
+lcvp_search("Aa achalensise", show.correct = TRUE)
 lcvp_search("Aae achalensise", max.distance = 2)
 
 # Search for a variety
@@ -87,7 +92,7 @@ splist <- c(
 "Hibiscus acuminatus",
 "Hibiscus furcatuis" # This is a wrong name
 )
-mult <- lcvp_search(splist, max.distance = 0.1)
+mult <- lcvp_search(splist, max.distance = 0.2)
 
  ## Results for multiple species search can be summarized using lcvp_summary
 lcvp_summary(mult)

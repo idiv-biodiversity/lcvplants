@@ -9,11 +9,14 @@
 #' infraspecific name and author name. Only valid characters are allowed 
 #' (see \code{\link[base:validEnc]{validEnc}}).
 #'
-#' @param max.distance It represents the maximum distance allowed for a match
-#' when comparing the submitted name with the closest name matches in the LCVP.
-#' Expressed either as integer, or as a fraction of the pattern length times the maximal
-#' transformation cost (will be replaced by the smallest integer not less than
-#' the corresponding fraction). See \code{\link[base]{agrep}} for more details.
+#'@param max.distance It represents the maximum string distance allowed for a
+#'  match when comparing the submitted name with the closest name matches in the
+#'  LCVP. The distance used is a generalized Levenshtein distance that indicates
+#'  the total number of insertions, deletions, and substitutions allowed to
+#'  match the two names. It can be expressed as an integer or as the fraction of
+#'  the binomial name. For example, a name with length 10, and a max.distance =
+#'  0.1, allow only one change (insertion, deletion, or substitution). A
+#'  max.distance = 2, allows two changes.
 #'
 #' @param status A character vector indicating what taxa status should be 
 #' included in the results: "accepted", "synonym", "unresolved", "external".
@@ -104,7 +107,7 @@
 
 
 lcvp_fuzzy_search <- function(splist,
-                              max.distance = 0.1,
+                              max.distance = 0.2,
                               status = c("accepted",
                                          "synonym",
                                          "unresolved",

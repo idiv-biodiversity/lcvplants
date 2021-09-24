@@ -137,21 +137,21 @@
   # If we did not find an approximation of the genus
   fuzzy_match <- NULL
   if (!is.null(pos_genus)) {
-    # Use the `agrep` function with the max.distance parameter
+    # Use the `.agrep_whole` function with the max.distance parameter
     name1 <- paste(splist_class_i[2], splist_class_i[3])
     name2 <- paste(LCVP::lcvp_sps_class[pos_genus, 2],
                    LCVP::lcvp_sps_class[pos_genus, 3])
-    fuzzy_match <- agrep(name1,
+    fuzzy_match <- .agrep_whole(name1,
                          name2,
                          max.distance = max.distance)
   }
   if (is.null(pos_genus) | length(fuzzy_match) == 0) {
     pos_genus <- 1:nrow(LCVP::lcvp_sps_class)
-    # Use the `agrep` function with the max.distance parameter
+    # Use the `.agrep_whole` function with the max.distance parameter
     name1 <- paste(splist_class_i[2], splist_class_i[3])
     name2 <- paste(LCVP::lcvp_sps_class[, 2],
                    LCVP::lcvp_sps_class[, 3])
-    fuzzy_match <- agrep(name1,
+    fuzzy_match <- .agrep_whole(name1,
                          name2,
                          max.distance = max.distance)
   }
