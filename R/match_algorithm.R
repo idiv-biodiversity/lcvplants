@@ -3,7 +3,8 @@
 
 #-------------------------------------------------------#
 # The matching algorithm
-.match_algorithm  <- function(splist_class, max.distance) {
+.match_algorithm  <- function(splist_class, max.distance, 
+                              progress_bar = FALSE) {
   # N species
   n_sps <- nrow(splist_class)
   
@@ -15,6 +16,9 @@
   
   
   # Loop across species
+  if (progress_bar) {
+  pb <- utils::txtProgressBar(min = 0, max = n_sps, style = 3)
+  }
   for (i in 1:n_sps) {
     splist_class_i <- splist_class[i,]
     check_non_defined <-
@@ -51,6 +55,9 @@
                                    n_class)
       }
       
+    }
+    if (progress_bar) {
+    utils::setTxtProgressBar(pb, i)
     }
   }
   return(exact)
@@ -106,7 +113,7 @@
           LCVP::tab_lcvp[as.numeric(matched_sp), "Status"]
         test_accepted <- status_pos == "accepted"
         if (any(test_accepted)) {
-          choosen <- choosen[test_accepted]
+          choosen <- choosen[test_accepted][1]
           homonyms <- TRUE
         } else {
           homonyms <- TRUE

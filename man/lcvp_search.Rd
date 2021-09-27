@@ -4,7 +4,12 @@
 \alias{lcvp_search}
 \title{Standardize plant names according to the Leipzig Catalogue of Plants (LCVP)}
 \usage{
-lcvp_search(splist, max.distance = 0.2, show.correct = FALSE)
+lcvp_search(
+  splist,
+  max.distance = 0.2,
+  show.correct = FALSE,
+  progress_bar = FALSE
+)
 }
 \arguments{
 \item{splist}{A character vector specifying the input taxon, each element
@@ -22,7 +27,10 @@ the binomial name. For example, a name with length 10, and a max.distance =
 max.distance = 2, allows two changes.}
 
 \item{show.correct}{If TRUE, a column is added to the final result indicating
-whether the binomial name was exactly matched, or if it is misspelled.}
+whether the binomial name was exactly matched (TRUE), or if it is misspelled
+(FALSE).}
+
+\item{progress_bar}{If TRUE, a progress bar will be printed.}
 }
 \value{
 A data.frame with the following columns: \itemize{

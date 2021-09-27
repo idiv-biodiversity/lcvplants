@@ -21,7 +21,10 @@
 #'  max.distance = 2, allows two changes.
 #'
 #'@param show.correct If TRUE, a column is added to the final result indicating
-#'  whether the binomial name was exactly matched, or if it is misspelled.
+#'  whether the binomial name was exactly matched (TRUE), or if it is misspelled
+#'  (FALSE).
+#'  
+#'@param progress_bar If TRUE, a progress bar will be printed.
 #'
 #'@details
 #'
@@ -108,7 +111,8 @@
 
 lcvp_search <- function(splist, 
                         max.distance = 0.2,
-                        show.correct = FALSE) {
+                        show.correct = FALSE,
+                        progress_bar = FALSE) {
   hasData() # Check if LCVP is installed
   # Defensive function here, check for user input errors
   if (is.factor(splist)) {
@@ -127,7 +131,8 @@ lcvp_search <- function(splist,
   
   # Now match
   matching <- .match_algorithm(splist_class,
-                               max.distance)
+                               max.distance,
+                               progress_bar)
   
   # Elaborate the return object
   ## Return Null if it did not find anything
