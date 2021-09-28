@@ -39,8 +39,9 @@
 #' 
 #' @details 
 #' 
-#' The algorithm will look for all the names within the given maximum distance 
-#' defined in `max.distance`.
+#' The algorithm will look for all the names within the given maximum distance
+#' defined in `max.distance`. It can return all best matches (keep_closest =
+#' TRUE), or all the matches within the distance (keep_closest = FALSE).
 #' 
 #' Note that only binomial names with valid characters are allowed in this
 #' function. Search based on  genus, family, order or author names should use 
@@ -51,26 +52,34 @@
 #' with the following columns:
 #' 
 #' \itemize{
-#' \item{\emph{Search}}{: Taxa name list provided by the user.}
-#' \item{\emph{Input.Taxon}}{: Matched taxa names listed in the LCVP data.}  
-#' \item{\emph{Status}}{: Nomenclature status: 'accepted', 'synonym', 
-#' 'unresolved' or 'external'.}
-#' \item{\emph{PL.comparisson}}{: This field provides a direct comparison with
-#' ‘The Plant List’: ‘identical', 'synonym', 'other synonym', 
-#' 'different authors', 'missing', 'misspelling' or 'unresolved'.}  
-#' \item{\emph{PL.alternative}}{: This field provides a possible alternative 
-#' name from ‘The Plant List’.}
-#' \item{\emph{Output.Taxon}}{: The list of the accepted plant taxa names 
-#' according to the LCVP.}  
-#' \item{\emph{Family}}{: The corresponding family name of the Input.Taxon, 
-#' staying empty if the Status is unresolved.}  
-#' \item{\emph{Order}}{: The corresponding order name of the Input.Taxon,
+#'  \item{\emph{Search}}{: Taxa name list provided by the user.}
+#'  \item{\emph{Input.Taxon}}{: The matched taxa name listed in the LCVP data.}
+#'  \item{\emph{Status}}{: Nomenclature status in the Leipzig Catalogue of
+#'  Plants: 'accepted', 'synonym', 'unresolved' or 'external'. 
+#' The "unresolved" rank means that the status of the plant name could be 
+#' either valid or synonym, but the information available does not allow 
+#' a definitive decision. "external" is an extra rank that lists names 
+#' outside the scope of this publication but useful to keep on this 
+#' updated list.}
+#'  \item{\emph{PL.comparisson}}{: This field provides a direct comparison with
+#'  ‘The Plant List’ (TPL; The Plant List http://www.theplantlist.org/ accessed:
+#'  1.1. 2013) reporting further information such as ‘identical', 'synonym',
+#'  'other synonym', 'different authors', 'missing', 'misspelling',
+#'  'unresolved'.}
+#'  \item{\emph{PL.alternative}}{: This field provides a possible alternative
+#'  name from ‘The Plant List’.} 
+#'  \item{\emph{Output.Taxon}}{: The list of the accepted plant taxa names
+#'  according to the LCVP. If input is 'accepted', the output is the same as the
+#'  input taxon.}
+#'  \item{\emph{Family}}{: The corresponding family name of the Input.Taxon,
+#'  staying empty if the Status is unresolved.}
+#'  \item{\emph{Order}}{: The corresponding order name of the Input.Taxon,
 #'  staying empty if the Status is unresolved.}
 #' \item{\emph{Name.Distance}}{The approximate string distance between the Search 
 #' and matched Input.Taxon names. See \code{\link[utils:adist]{utils:adist}}
 #' for more details.}
 #' }
-#' See \code{\link[LCVP:tab_lcvp]{LCVP:tab_lcvp}} for more details.
+#' See \code{\link[LCVP:tab_lcvp]{LCVP::tab_lcvp}} for more details.
 #' 
 #' If no match is found for one species it will return NA for the columns in 
 #' the LCVP table. But, if no match is found for all species the function will 

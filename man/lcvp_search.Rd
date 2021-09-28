@@ -15,7 +15,7 @@ lcvp_search(
 \item{splist}{A character vector specifying the input taxon, each element
 including genus and specific epithet and, potentially, infraspecific rank,
 infraspecific name and author name. Only valid characters are allowed (see
-\code{\link[base:validEnc]{base:validEnc}}).}
+\code{\link[base:validEnc]{base::validEnc}}).}
 
 \item{max.distance}{It represents the maximum string distance allowed for a
 match when comparing the submitted name with the closest name matches in the
@@ -35,18 +35,33 @@ whether the binomial name was exactly matched (TRUE), or if it is misspelled
 \value{
 A data.frame with the following columns: \itemize{
 \item{\emph{Search}}{: Taxa name list provided by the user.}
-\item{\emph{Input.Taxon}}{: Matched taxa names listed in the LCVP data.}
-\item{\emph{Status}}{: Nomenclature status: 'accepted', 'synonym',
-'unresolved' or 'external'.} \item{\emph{PL.comparisson}}{: This field
-provides a direct comparison with ‘The Plant List’: ‘identical', 'synonym',
-'other synonym', 'different authors', 'missing', 'misspelling' or
-'unresolved'.} \item{\emph{PL.alternative}}{: This field provides a possible
-alternative name from ‘The Plant List’.} \item{\emph{Output.Taxon}}{: The list
-of the accepted plant taxa names according to the LCVP.}
+\item{\emph{Input.Taxon}}{: The matched taxa name listed in the LCVP data.}
+\item{\emph{Status}}{: Nomenclature status in the Leipzig Catalogue of
+Plants: 'accepted', 'synonym', 'unresolved' or 'external'.
+The "unresolved" rank means that the status of the plant name could be
+either valid or synonym, but the information available does not allow
+a definitive decision. "external" is an extra rank that lists names
+outside the scope of this publication but useful to keep on this
+updated list.}
+\item{\emph{PL.comparisson}}{: This field provides a direct comparison with
+‘The Plant List’ (TPL; The Plant List http://www.theplantlist.org/ accessed:
+1.1. 2013) reporting further information such as ‘identical', 'synonym',
+'other synonym', 'different authors', 'missing', 'misspelling',
+'unresolved'.}
+\item{\emph{PL.alternative}}{: This field provides a possible alternative
+name from ‘The Plant List’.}
+\item{\emph{Output.Taxon}}{: The list of the accepted plant taxa names
+according to the LCVP. If input is 'accepted', the output is the same as the
+input taxon.}
 \item{\emph{Family}}{: The corresponding family name of the Input.Taxon,
-staying empty if the Status is unresolved.} \item{\emph{Order}}{: The
-corresponding order name of the Input.Taxon, staying empty if the Status is
-unresolved.} } See \code{\link[LCVP:tab_lcvp]{LCVP:tab_lcvp}} for more
+staying empty if the Status is unresolved.}
+\item{\emph{Order}}{: The corresponding order name of the Input.Taxon,
+staying empty if the Status is unresolved.}
+\item{\emph{Correct}}{: if show.correct = TRUE, this column is added to the
+final result indicating whether the binomial name was exactly matched
+(TRUE), or if it is misspelled (FALSE).} }
+
+See \code{\link[LCVP:tab_lcvp]{LCVP::tab_lcvp}} for more
 details.
 
 If no match is found for one species it will return NA for the columns in the
@@ -61,6 +76,11 @@ and removing orthographic errors in plant names. The LCVP data package must be
 installed. It is available from https://github.com/idiv-biodiversity/LCVP.
 }
 \details{
+The function tries to match a name (Input.Taxon column) in LCVP, which has a
+corresponding accepted valid name according to LCVP (Output.Taxon column). If
+the Input.Taxon is a valid name, it will be the duplicated in Output.Taxon
+column.
+
 The algorithm will first try to exactly match the binomial names provided in
 \code{splist}. If no match is found, it will try to find the closest name given the
 maximum distance defined in \code{max.distance}. If more than one name is exactly
