@@ -167,6 +167,9 @@ lcvp_fuzzy_search <- function(splist,
       utils::setTxtProgressBar(pb, i)
     }
   }
+  if (progress_bar) {
+    close(pb)
+  }
   # If need to bind the results
   if (bind_result) {
     result <- do.call(rbind, result)

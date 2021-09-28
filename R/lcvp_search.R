@@ -36,9 +36,12 @@
 #'The algorithm will first try to exactly match the binomial names provided in
 #'`splist`. If no match is found, it will try to find the closest name given the
 #'maximum distance defined in `max.distance`. If more than one name is exactly
-#'or fuzzy matched, only the accepted or the first will be returned. The
-#'function \code{\link[lcvplants:lcvp_fuzzy_search]{lcvp_fuzzy_search}} can be
-#'used to return all results of the algorithm.
+#'or fuzzy matched, only the accepted or the first will be returned and a
+#'warning message will be printed on the console. The list of input names that
+#'matched multiple names in LCVP can be obtained using \code{attr(x,
+#'"matched_mult")}, being x the resulting data.frame. The function
+#'\code{\link[lcvplants:lcvp_fuzzy_search]{lcvp_fuzzy_search}} can then be used
+#'to return all results of the algorithm.
 #'
 #'The \code{\link[lcvplants:lcvp_summary]{lcvp_summary}} function can be used to
 #'summarize the results from a multiple species search, indicating the number of

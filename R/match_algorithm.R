@@ -68,6 +68,9 @@
       utils::setTxtProgressBar(pb, i)
     }
   }
+  if (progress_bar) {
+    close(pb)
+  }
   return(exact)
 }
 

@@ -33,16 +33,24 @@ library(lcvplants)
 knitr::kable(lcvp_search("Hibiscus vitifolius"))
 
 ## ----Search one species with misspelled name, eval = FALSE--------------------
-#  lcvp_search("Hibiscus vitifoliuse", max.distance = 0.1)
+#  lcvp_search("Hibiscus vitifoliuse",
+#              max.distance = 0.1,
+#              show.correct = TRUE)
 
 ## ---- echo = FALSE, warning = FALSE-------------------------------------------
-knitr::kable(lcvp_search("Hibiscus vitifoliuse", max.distance = 0.1))
+knitr::kable(lcvp_search("Hibiscus vitifoliuse", 
+                         max.distance = 0.1, 
+                         show.correct = TRUE,))
 
 ## ----fuzzy match, eval = FALSE------------------------------------------------
-#  lcvp_fuzzy_search("Hibiscus vitifoliuse", max.distance = 0.1)
+#  lcvp_fuzzy_search("Hibiscus vitifoliuse",
+#                    max.distance = 0.1,
+#                    keep_closest = TRUE)
 
 ## ---- echo = FALSE, warning = FALSE-------------------------------------------
-knitr::kable(lcvp_fuzzy_search("Hibiscus vitifoliuse", max.distance = 0.1))
+knitr::kable(lcvp_fuzzy_search("Hibiscus vitifoliuse",
+                               max.distance = 0.1, 
+                               keep_closest = TRUE))
 
 ## ----multiple species search--------------------------------------------------
 splist <- c(
@@ -50,9 +58,9 @@ splist <- c(
   "Hibiscus abutiloides Willd.",
   "Hibiscus aculeatus",
   "Hibiscus acuminatus",
-  "Hibiscus furcatuis" # This is a wrong name
+  "Hibiscus furcatuis" 
 )
-x <- lcvp_search(splist, max.distance = 0)
+x <- lcvp_search(splist, max.distance = 0.2)
 
 ## ----show multiple, eval = FALSE----------------------------------------------
 #  x
@@ -62,6 +70,16 @@ knitr::kable(x)
 
 ## -----------------------------------------------------------------------------
 lcvp_summary(x)
+
+## -----------------------------------------------------------------------------
+sps_mult <- attr(x, "matched_mult")
+sps_mult
+
+## ---- eval = FALSE------------------------------------------------------------
+#  lcvp_fuzzy_search(sps_mult)
+
+## ---- echo = FALSE------------------------------------------------------------
+knitr::kable(lcvp_fuzzy_search(sps_mult))
 
 ## -----------------------------------------------------------------------------
 # Search by Genus

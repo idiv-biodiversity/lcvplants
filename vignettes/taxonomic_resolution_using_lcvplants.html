@@ -197,18 +197,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>The <code>lcvp_search</code> algorithm will first try to exactly match the binomial names provided by the user. If no match is found, it will try to find the closest name given the maximal transformation cost defined in the argument <code>max.distance</code> (see ?base::agrep for more details).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lcvp_search</span>(<span class="st">&quot;Hibiscus vitifoliuse&quot;</span>, <span class="at">max.distance =</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<p>The <code>lcvp_search</code> algorithm will first try to exactly match the binomial names provided by the user. If no match is found, it will try to find the closest name given the maximal transformation cost defined in the argument <code>max.distance</code> (see ?base::agrep for more details). When the argument <code>show.correct = TRUE</code> a column is added to the final result indicating whether the binomial name was exactly matched (TRUE), or if it is misspelled (FALSE).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lcvp_search</span>(<span class="st">&quot;Hibiscus vitifoliuse&quot;</span>, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">max.distance =</span> <span class="fl">0.1</span>, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.correct =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <table>
 <colgroup>
-<col width="16%" />
-<col width="18%" />
-<col width="7%" />
+<col width="15%" />
+<col width="17%" />
+<col width="6%" />
+<col width="10%" />
 <col width="11%" />
-<col width="12%" />
-<col width="18%" />
-<col width="8%" />
+<col width="17%" />
 <col width="7%" />
+<col width="6%" />
+<col width="6%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -220,6 +223,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <th align="left">Output.Taxon</th>
 <th align="left">Family</th>
 <th align="left">Order</th>
+<th align="left">Correct</th>
 </tr>
 </thead>
 <tbody>
@@ -232,11 +236,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left">Hibiscus vitifolius L.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left">FALSE</td>
 </tr>
 </tbody>
 </table>
-<p>If more than one name is fuzzy matched (more than one closest match found), only the accepted or the first name will be returned. The function <code>lcvp_fuzzy_search</code> can be used to return all results of the fuzzy match algorithm within the <code>max.distance</code> defined.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lcvp_fuzzy_search</span>(<span class="st">&quot;Hibiscus vitifoliuse&quot;</span>, <span class="at">max.distance =</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<p>If more than one name is fuzzy matched (more than one closest match found), only the accepted or the first name will be returned. The function <code>lcvp_fuzzy_search</code> can be used to return all the closest results when argument <code>keep_closest = TRUE</code>, or all names within the <code>max.distance</code> defined when <code>keep_closest = FALSE</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lcvp_fuzzy_search</span>(<span class="st">&quot;Hibiscus vitifoliuse&quot;</span>, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">max.distance =</span> <span class="fl">0.1</span>, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">keep_closest =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="21%" />
@@ -283,15 +290,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>Both <code>lcvp_search</code> and <code>lcvp_fuzzy_search</code> allows multiple species search.</p>
+<p>Both <code>lcvp_search</code> and <code>lcvp_fuzzy_search</code> allows multiple species search. If you need to run for many species consider setting the argument <code>progress_bar = TRUE</code> to track the execution progress.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>splist <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Hibiscus abelmoschus var. betulifolius Mast.&quot;</span>,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Hibiscus abutiloides Willd.&quot;</span>,</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Hibiscus aculeatus&quot;</span>,</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Hibiscus acuminatus&quot;</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Hibiscus furcatuis&quot;</span> <span class="co"># This is a wrong name</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Hibiscus furcatuis&quot;</span> </span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_search</span>(splist, <span class="at">max.distance =</span> <span class="dv">0</span>)</span></code></pre></div>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_search</span>(splist, <span class="at">max.distance =</span> <span class="fl">0.2</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <table>
 <colgroup>
@@ -359,31 +366,163 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td align="left">Hibiscus furcatuis</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<td align="left">Hibiscus furcatus Roxb.</td>
+<td align="left">accepted</td>
+<td align="left">synonym</td>
+<td align="left">Hibiscus surattensis L.</td>
+<td align="left">Hibiscus furcatus Roxb.</td>
+<td align="left">Malvaceae</td>
+<td align="left">Malvales</td>
 </tr>
 </tbody>
 </table>
 <p>The function <code>lcvp_summary</code> gives a report on the searching results using the <code>lcvp_search</code> function. Indicating the number of species searched, how many were matched. Among the matched names, it indicates how many were exactly or fuzzy matched. Then it checks how many author and infracategory names were exactly matched. Note that if authors or infracategory is not provided, it will be considered a no match.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lcvp_summary</span>(x)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Species searched: 5</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Species matched: 4 (80%)</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Species matched: 5 (100%)</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Species exactly matched: 4 (80%)</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Species fuzzy matched: 0 (0%)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Species fuzzy matched: 1 (20%)</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Authors exactly matched: 2 (40%)</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Infracategories exactly matched: 4 (80%)</span></span></code></pre></div>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Infracategories exactly matched: 5 (100%)</span></span></code></pre></div>
+<p>Notice that the warning message indicated that more than one name was matched for some species. You can easily access these species using the following code.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sps_mult <span class="ot">&lt;-</span> <span class="fu">attr</span>(x, <span class="st">&quot;matched_mult&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sps_mult</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Hibiscus aculeatus&quot; &quot;Hibiscus furcatuis&quot;</span></span></code></pre></div>
+<p>And you can quickly use the <code>lcvp_fuzzy_search</code> on them.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lcvp_fuzzy_search</span>(sps_mult)</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="18%" />
+<col width="7%" />
+<col width="9%" />
+<col width="19%" />
+<col width="23%" />
+<col width="6%" />
+<col width="5%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Input.Taxon</th>
+<th align="left">Status</th>
+<th align="left">PL.comparison</th>
+<th align="left">PL.alternative</th>
+<th align="left">Output.Taxon</th>
+<th align="left">Family</th>
+<th align="left">Order</th>
+<th align="right">Name.Distance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Hibiscus aculeatus F.Dietr.</td>
+<td align="left">synonym</td>
+<td align="left">missing</td>
+<td align="left"></td>
+<td align="left">Hibiscus heterophyllus Vent.</td>
+<td align="left">Malvaceae</td>
+<td align="left">Malvales</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Hibiscus aculeatus G.Don</td>
+<td align="left">synonym</td>
+<td align="left">identical</td>
+<td align="left"></td>
+<td align="left">Hibiscus surattensis L.</td>
+<td align="left">Malvaceae</td>
+<td align="left">Malvales</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Hibiscus aculeatus Roxb.</td>
+<td align="left">synonym</td>
+<td align="left">other synonym</td>
+<td align="left">Hibiscus hispidissimus Griff.</td>
+<td align="left">Hibiscus furcatus Roxb.</td>
+<td align="left">Malvaceae</td>
+<td align="left">Malvales</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Hibiscus aculeatus Walter</td>
+<td align="left">accepted</td>
+<td align="left">identical</td>
+<td align="left"></td>
+<td align="left">Hibiscus aculeatus Walter</td>
+<td align="left">Malvaceae</td>
+<td align="left">Malvales</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Hibiscus furcatus Craib</td>
+<td align="left">unresolved</td>
+<td align="left">missing</td>
+<td align="left"></td>
+<td align="left">unresolved</td>
+<td align="left">Malvaceae</td>
+<td align="left">Malvales</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Hibiscus furcatus Harv.</td>
+<td align="left">synonym</td>
+<td align="left">missing</td>
+<td align="left"></td>
+<td align="left">Hibiscus altissimus Hornby</td>
+<td align="left">Malvaceae</td>
+<td align="left">Malvales</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Hibiscus furcatus Mullend.</td>
+<td align="left">synonym</td>
+<td align="left">missing</td>
+<td align="left"></td>
+<td align="left">Hibiscus noldeae Baker.f.</td>
+<td align="left">Malvaceae</td>
+<td align="left">Malvales</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Hibiscus furcatus Roxb.</td>
+<td align="left">accepted</td>
+<td align="left">synonym</td>
+<td align="left">Hibiscus surattensis L.</td>
+<td align="left">Hibiscus furcatus Roxb.</td>
+<td align="left">Malvaceae</td>
+<td align="left">Malvales</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Hibiscus furcatus Wall.</td>
+<td align="left">synonym</td>
+<td align="left">missing</td>
+<td align="left"></td>
+<td align="left">Hibiscus furcatus Roxb.</td>
+<td align="left">Malvaceae</td>
+<td align="left">Malvales</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Hibiscus furcatus Willd.</td>
+<td align="left">synonym</td>
+<td align="left">identical</td>
+<td align="left"></td>
+<td align="left">Hibiscus rostellatus Guill. &amp; Perr.</td>
+<td align="left">Malvaceae</td>
+<td align="left">Malvales</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="search-all-vascular-plant-names-of-a-genus-family-order-or-author" class="section level2">
 <h2>Search all vascular plant names of a Genus, Family, Order or Author</h2>
 <p>Users can search all plant taxa names listed in the “Leipzig Catalogue of Vascular Plants” (LCVP) by order, family, genus or author, using the <code>lcvp_group_search</code> function.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Search by Genus</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_group_search</span>(<span class="fu">c</span>(<span class="st">&quot;AA&quot;</span>, <span class="st">&quot;Adansonia&quot;</span>), <span class="at">search_by =</span> <span class="st">&quot;Genus&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Search by Genus</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_group_search</span>(<span class="fu">c</span>(<span class="st">&quot;AA&quot;</span>, <span class="st">&quot;Adansonia&quot;</span>), <span class="at">search_by =</span> <span class="st">&quot;Genus&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="22%" />
@@ -463,9 +602,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>Users can choose to keep only certain taxonomic stauts, this includes “accepted”, “synonym”, “unresolved”, and “external”.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Search by Author and keep only accepted names</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_group_search</span>(<span class="st">&quot;Schltr.&quot;</span>, <span class="at">search_by =</span> <span class="st">&quot;Author&quot;</span>, <span class="at">status =</span> <span class="st">&quot;accepted&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Search by Author and keep only accepted names</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_group_search</span>(<span class="st">&quot;Schltr.&quot;</span>, <span class="at">search_by =</span> <span class="st">&quot;Author&quot;</span>, <span class="at">status =</span> <span class="st">&quot;accepted&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="2%" />
@@ -573,22 +712,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="match" class="section level3">
 <h3>Match</h3>
 <p>In many situations, researchers want to compare and match two lists of species name coming from different sources (e.g. phylogenies, spatial data, trait data, regional lists). The function <code>lcvp_match</code> can be used for that. It matches and compares two name lists based on the taxonomic resolution of plant taxa names listed in the LCVP.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate two lists of species name</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>splist1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(LCVP<span class="sc">::</span>tab_lcvp<span class="sc">$</span>Input.Taxon[<span class="dv">5</span><span class="sc">:</span><span class="dv">100</span>])</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>splist2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(LCVP<span class="sc">::</span>tab_lcvp<span class="sc">$</span>Input.Taxon[<span class="dv">100</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate two lists of species name</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>splist1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(LCVP<span class="sc">::</span>tab_lcvp<span class="sc">$</span>Input.Taxon[<span class="dv">5</span><span class="sc">:</span><span class="dv">100</span>])</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>splist2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(LCVP<span class="sc">::</span>tab_lcvp<span class="sc">$</span>Input.Taxon[<span class="dv">100</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
 <p>Ordered is based on the splist1, and followed by non-matched names in splist2.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Match both lists</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_match</span>(splist1, splist2)</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<table>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Match both lists</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_match</span>(splist1, splist2)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
+<table style="width:100%;">
 <colgroup>
-<col width="16%" />
-<col width="16%" />
-<col width="16%" />
-<col width="4%" />
-<col width="24%" />
-<col width="9%" />
-<col width="12%" />
+<col width="21%" />
+<col width="21%" />
+<col width="21%" />
+<col width="2%" />
+<col width="18%" />
+<col width="6%" />
+<col width="8%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -603,92 +742,92 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Abacopteris glandulosa (Blume) Fée</td>
-<td align="left">Abacopteris glandulosa (Blume) Fée</td>
-<td align="left">Abacopteris glandulosa (Blume) Fée</td>
+<td align="left">Abacopteris multilineata (Wall. ex Hook.) Ching</td>
+<td align="left">Abacopteris multilineata (Wall. ex Hook.) Ching</td>
+<td align="left">Abacopteris multilineata (Wall. ex Hook.) Ching</td>
 <td align="left">synonym</td>
-<td align="left">Cyclosorus glandulosus (Blume) Ching</td>
-<td align="left">94</td>
+<td align="left">Cyclosorus nudatus (Roxb. ex Griff.) B.K.Nayar &amp; S.Kaur</td>
+<td align="left">17</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">Abacopteris megacuspis (Baker) Ching</td>
-<td align="left">Abacopteris megacuspis (Baker) Ching</td>
-<td align="left">Abacopteris megacuspis (Baker) Ching</td>
-<td align="left">synonym</td>
-<td align="left">Cyclosorus megacuspis (Baker) Tardieu &amp; C.Chr.</td>
-<td align="left">28</td>
-<td align="left">2, 56</td>
+<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
+<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
+<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
+<td align="left">73</td>
+<td align="left">NA</td>
 </tr>
 <tr class="odd">
-<td align="left">Abacopteris insularis K.Iwats.</td>
-<td align="left">Abacopteris insularis K.Iwats.</td>
-<td align="left">Abacopteris insularis K.Iwats.</td>
+<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
+<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
+<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
+<td align="left">30</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Aaronsohnia pubescens subsp. maroccana (Ball) Förther &amp; Podlech</td>
+<td align="left">Aaronsohnia pubescens subsp. maroccana (Ball) Förther &amp; Podlech</td>
+<td align="left">Aaronsohnia pubescens subsp. maroccana (Ball) Förther &amp; Podlech</td>
 <td align="left">synonym</td>
-<td align="left">Chrinephrium_x insulare (K.Iwats.) Nakaike</td>
+<td align="left">Aaronsohnia pubescens (Desf.) K.Bremer &amp; Humphries</td>
+<td align="left">68</td>
+<td align="left">4, 30, 37</td>
+</tr>
+<tr class="odd">
+<td align="left">Aalius rhamnoides (Blume) Kuntze</td>
+<td align="left">Aalius rhamnoides (Blume) Kuntze</td>
+<td align="left">Aalius rhamnoides (Blume) Kuntze</td>
+<td align="left">synonym</td>
+<td align="left">Breynia lanceolata (Blume) Welzen &amp; Pruesapan</td>
 <td align="left">44</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">Abacopteris gracilis Ching</td>
-<td align="left">Abacopteris gracilis Ching</td>
-<td align="left">Abacopteris gracilis Ching</td>
+<td align="left">Aa rostrata (Rchb.f.) Schltr.</td>
+<td align="left">Aa rostrata (Rchb.f.) Schltr.</td>
+<td align="left">Aa rostrata (Rchb.f.) Schltr.</td>
 <td align="left">synonym</td>
-<td align="left">Cyclosorus gracilis (Ching ex Y.X.Lin) comb.ined.</td>
-<td align="left">56</td>
+<td align="left">Myrosmodes rostratum (Rchb.f.) Garay</td>
+<td align="left">39</td>
 <td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">Aa denticulata Schltr.</td>
-<td align="left">Aa denticulata Schltr.</td>
-<td align="left">Aa denticulata Schltr.</td>
-<td align="left">accepted</td>
-<td align="left">Aa denticulata Schltr.</td>
-<td align="left">18</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">Aalius rigida (Thwaites) Kuntze</td>
-<td align="left">Aalius rigida (Thwaites) Kuntze</td>
-<td align="left">Aalius rigida (Thwaites) Kuntze</td>
-<td align="left">synonym</td>
-<td align="left">Breynia quadrangularis (Willd.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="left">47</td>
-<td align="left">6, 48, 81</td>
 </tr>
 </tbody>
 </table>
 <p>If <code>include_all = FALSE</code>, non-matched names in splist2 are not included. And users can use the column <code>Match.Position.2to1</code> to reorder splist2 to match splist1.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Match both lists</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>matchLists <span class="ot">&lt;-</span> <span class="fu">lcvp_match</span>(splist1, splist2, <span class="at">include_all =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>splist2_reordered <span class="ot">&lt;-</span> splist2[matchLists<span class="sc">$</span>Match.Position<span class="fl">.2</span>to1]</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Match both lists</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>matchLists <span class="ot">&lt;-</span> <span class="fu">lcvp_match</span>(splist1, splist2, <span class="at">include_all =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>splist2_reordered <span class="ot">&lt;-</span> splist2[matchLists<span class="sc">$</span>Match.Position<span class="fl">.2</span>to1]</span></code></pre></div>
 </div>
 <div id="join" class="section level3">
 <h3>Join</h3>
 <p>The <code>lcvp_join</code> function provides a quicker way to join two tables based on the taxonomic resolution of plant taxa names listed in the LCVP. It is inspired by the <code>dplyr::join</code> function. The function add the columns from a first table to a second table based on the list of species name in both tables. It first standardizes the species names in both tables based on the “Leipzig Catalogue of Vascular Plants” (LCVP) using the algorithm in <code>lcvp_search</code>. These standardized names of both tables are then matched using the algorithm in <code>lcvp_match</code>. The argument <code>type</code> indicates the kind of join to be done. The option “full” join will keep all species, “left” return all rows from the first table and drops the non-matches from the second, “right” do the same for the second table, and “inner” keep only matched species.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data.frame1</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>splist1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(LCVP<span class="sc">::</span>tab_lcvp<span class="sc">$</span>Input.Taxon[<span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>])</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>tbl1 <span class="ot">&lt;-</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="st">&quot;Species&quot;</span> <span class="ot">=</span> splist1, <span class="st">&quot;Trait1&quot;</span> <span class="ot">=</span> <span class="fu">runif</span>(<span class="fu">length</span>(splist1)))</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data.frame2</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>splist2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(LCVP<span class="sc">::</span>tab_lcvp<span class="sc">$</span>Input.Taxon[<span class="dv">98</span><span class="sc">:</span><span class="dv">8</span>])</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>tbl2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Species&quot;</span> <span class="ot">=</span> splist2,</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Trait2&quot;</span> <span class="ot">=</span> <span class="fu">runif</span>(<span class="fu">length</span>(splist2)),</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Trait3&quot;</span> <span class="ot">=</span> <span class="fu">runif</span>(<span class="fu">length</span>(splist2)),</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Trait4&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="fu">length</span>(splist2), <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Trait5&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), <span class="fu">length</span>(splist2), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Full join the two tables</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_join</span>(tbl1, tbl2, <span class="fu">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Species&quot;</span>), <span class="at">type =</span> <span class="st">&quot;full&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data.frame1</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>splist1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(LCVP<span class="sc">::</span>tab_lcvp<span class="sc">$</span>Input.Taxon[<span class="dv">2</span><span class="sc">:</span><span class="dv">100</span>])</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>tbl1 <span class="ot">&lt;-</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="st">&quot;Species&quot;</span> <span class="ot">=</span> splist1, <span class="st">&quot;Trait1&quot;</span> <span class="ot">=</span> <span class="fu">runif</span>(<span class="fu">length</span>(splist1)))</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data.frame2</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>splist2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(LCVP<span class="sc">::</span>tab_lcvp<span class="sc">$</span>Input.Taxon[<span class="dv">98</span><span class="sc">:</span><span class="dv">8</span>])</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>tbl2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Species&quot;</span> <span class="ot">=</span> splist2,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Trait2&quot;</span> <span class="ot">=</span> <span class="fu">runif</span>(<span class="fu">length</span>(splist2)),</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Trait3&quot;</span> <span class="ot">=</span> <span class="fu">runif</span>(<span class="fu">length</span>(splist2)),</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Trait4&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="fu">length</span>(splist2), <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Trait5&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), <span class="fu">length</span>(splist2), <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Full join the two tables</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_join</span>(tbl1, tbl2, <span class="fu">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Species&quot;</span>), <span class="at">type =</span> <span class="st">&quot;full&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
 <table>
 <colgroup>
-<col width="19%" />
-<col width="19%" />
-<col width="19%" />
-<col width="21%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="24%" />
 <col width="4%" />
 <col width="4%" />
 <col width="4%" />
@@ -710,83 +849,83 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Aa inaequalis (Rchb.f.) Schltr.</td>
-<td align="left">Aa inaequalis (Rchb.f.) Schltr.</td>
-<td align="left">Aa inaequalis (Rchb.f.) Schltr.</td>
-<td align="left">Myrosmodes inaequalis (Rchb.f.) C.A.Vargas</td>
-<td align="right">0.6700756</td>
-<td align="right">0.9661238</td>
-<td align="right">0.2346525</td>
-<td align="left">b</td>
-<td align="left">TRUE</td>
-</tr>
-<tr class="even">
-<td align="left">Abacopteris prolifera (Retz.) W.C.Shieh</td>
-<td align="left">Abacopteris prolifera (Retz.) W.C.Shieh</td>
-<td align="left">Abacopteris prolifera (Retz.) W.C.Shieh</td>
-<td align="left">Ampelopteris prolifera (Retz.) Copel.</td>
-<td align="right">0.2478036</td>
-<td align="right">0.2144328</td>
-<td align="right">0.3171479</td>
-<td align="left">b</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="odd">
-<td align="left">Aa nigrescens Schltr.</td>
-<td align="left">Aa nigrescens Schltr.</td>
-<td align="left">Aa nigrescens Schltr.</td>
-<td align="left">Aa leucantha (Rchb.f.) Schltr.</td>
-<td align="right">0.6484241</td>
-<td align="right">0.4025638</td>
-<td align="right">0.1191663</td>
-<td align="left">b</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="even">
-<td align="left">Aa paludosa (Rchb.f.) Schltr.</td>
-<td align="left">Aa paludosa (Rchb.f.) Schltr.</td>
-<td align="left">Aa paludosa (Rchb.f.) Schltr.</td>
-<td align="left">Myrosmodes paludosa (Rchb.f.) P.Ortiz</td>
-<td align="right">0.5664815</td>
-<td align="right">0.3972593</td>
-<td align="right">0.1587951</td>
-<td align="left">b</td>
-<td align="left">TRUE</td>
-</tr>
-<tr class="odd">
-<td align="left">Aalius lanceolata (Hook.f.) Kuntze</td>
-<td align="left">Aalius lanceolata (Hook.f.) Kuntze</td>
-<td align="left">Aalius lanceolata (Hook.f.) Kuntze</td>
-<td align="left">Breynia androgyna (L.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="right">0.8412826</td>
-<td align="right">0.0413384</td>
-<td align="right">0.4409138</td>
+<td align="left">Aalius assimilis (Thwaites) Kuntze</td>
+<td align="left">Aalius assimilis (Thwaites) Kuntze</td>
+<td align="left">Aalius assimilis (Thwaites) Kuntze</td>
+<td align="left">Sauropus assimilis Thwaites</td>
+<td align="right">0.5706144</td>
+<td align="right">0.8194049</td>
+<td align="right">0.6909550</td>
 <td align="left">a</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
-<td align="left">Abacopteris thwaitesii (Hook.) Ching</td>
-<td align="left">NA</td>
-<td align="left">Abacopteris thwaitesii (Hook.) Ching</td>
-<td align="left">Cyclosorus thwaitesii (Hook.) Abeyw.</td>
-<td align="right">0.7619281</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
+<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
+<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
+<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
+<td align="right">0.6281164</td>
+<td align="right">0.8289346</td>
+<td align="right">0.1124142</td>
+<td align="left">b</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">Aalius oblongifolia (Hook.f.) Kuntze</td>
+<td align="left">Aalius oblongifolia (Hook.f.) Kuntze</td>
+<td align="left">Aalius oblongifolia (Hook.f.) Kuntze</td>
+<td align="left">Breynia androgyna (L.) Chakrab. &amp; N.P.Balakr.</td>
+<td align="right">0.4456880</td>
+<td align="right">0.8513769</td>
+<td align="right">0.2099374</td>
+<td align="left">b</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
+<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
+<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
+<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
+<td align="right">0.6869013</td>
+<td align="right">0.9951987</td>
+<td align="right">0.4221338</td>
+<td align="left">a</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">Aalius macrantha (Hassk.) Kuntze</td>
+<td align="left">Aalius macrantha (Hassk.) Kuntze</td>
+<td align="left">Aalius macrantha (Hassk.) Kuntze</td>
+<td align="left">Breynia macrantha (Hassk.) Chakrab. &amp; N.P.Balakr.</td>
+<td align="right">0.0644445</td>
+<td align="right">0.2299911</td>
+<td align="right">0.8642174</td>
+<td align="left">a</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">Aa ustulata Schltr.</td>
+<td align="left">Aa ustulata Schltr.</td>
+<td align="left">Aa ustulata Schltr.</td>
+<td align="left">Myrosmodes ustulatum (Schltr.) Garay</td>
+<td align="right">0.9239872</td>
+<td align="right">0.1306918</td>
+<td align="right">0.3618248</td>
+<td align="left">a</td>
+<td align="left">FALSE</td>
 </tr>
 </tbody>
 </table>
 <p>Because some names may turn out to be synonyms based on the LCVP taxonomic resolution, users may opt to solve duplicated species names by summarizing traits given provided functions for common classes of variables (numeric, character, and logical). This can be done by turning the option <code>solve_duplicated = TRUE</code>, and the algorithm will combine duplicated output names (<code>Output.Taxon</code> column) based on users-defined functions to summarize the information.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_join</span>(tbl1, tbl2, <span class="fu">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Species&quot;</span>), <span class="at">type =</span> <span class="st">&quot;full&quot;</span>,</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">solve_duplicated =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_join</span>(tbl1, tbl2, <span class="fu">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Species&quot;</span>), <span class="at">type =</span> <span class="st">&quot;full&quot;</span>,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">solve_duplicated =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
 <table>
 <colgroup>
-<col width="19%" />
-<col width="19%" />
-<col width="19%" />
-<col width="21%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="24%" />
 <col width="4%" />
 <col width="4%" />
 <col width="4%" />
@@ -808,85 +947,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Aa inaequalis (Rchb.f.) Schltr.</td>
-<td align="left">Aa inaequalis (Rchb.f.) Schltr.</td>
-<td align="left">Aa inaequalis (Rchb.f.) Schltr.</td>
-<td align="left">Myrosmodes inaequalis (Rchb.f.) C.A.Vargas</td>
-<td align="right">0.6700756</td>
-<td align="right">0.9661238</td>
-<td align="right">0.2346525</td>
-<td align="left">b</td>
+<td align="left">Aalius assimilis (Thwaites) Kuntze</td>
+<td align="left">Aalius assimilis (Thwaites) Kuntze</td>
+<td align="left">Aalius assimilis (Thwaites) Kuntze</td>
+<td align="left">Sauropus assimilis Thwaites</td>
+<td align="right">0.5706144</td>
+<td align="right">0.8194049</td>
+<td align="right">0.6909550</td>
+<td align="left">a</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
-<td align="left">Abacopteris prolifera (Retz.) W.C.Shieh</td>
-<td align="left">Abacopteris prolifera (Retz.) W.C.Shieh</td>
-<td align="left">Abacopteris prolifera (Retz.) W.C.Shieh</td>
-<td align="left">Ampelopteris prolifera (Retz.) Copel.</td>
-<td align="right">0.2478036</td>
-<td align="right">0.2144328</td>
-<td align="right">0.3171479</td>
+<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
+<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
+<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
+<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
+<td align="right">0.6281164</td>
+<td align="right">0.8289346</td>
+<td align="right">0.1124142</td>
 <td align="left">b</td>
 <td align="left">FALSE</td>
 </tr>
 <tr class="odd">
-<td align="left">Aa nigrescens Schltr.</td>
-<td align="left">Aa nigrescens Schltr.</td>
-<td align="left">Aa nigrescens Schltr.</td>
-<td align="left">Aa leucantha (Rchb.f.) Schltr.</td>
-<td align="right">0.4541621</td>
-<td align="right">0.4553957</td>
-<td align="right">0.1287572</td>
-<td align="left">b</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="even">
-<td align="left">Aa paludosa (Rchb.f.) Schltr.</td>
-<td align="left">Aa paludosa (Rchb.f.) Schltr.</td>
-<td align="left">Aa paludosa (Rchb.f.) Schltr.</td>
-<td align="left">Myrosmodes paludosa (Rchb.f.) P.Ortiz</td>
-<td align="right">0.5664815</td>
-<td align="right">0.3972593</td>
-<td align="right">0.1587951</td>
-<td align="left">b</td>
-<td align="left">TRUE</td>
-</tr>
-<tr class="odd">
-<td align="left">Aalius lanceolata (Hook.f.) Kuntze</td>
-<td align="left">Aalius lanceolata (Hook.f.) Kuntze</td>
-<td align="left">Aalius lanceolata (Hook.f.) Kuntze</td>
+<td align="left">Aalius oblongifolia (Hook.f.) Kuntze</td>
+<td align="left">Aalius oblongifolia (Hook.f.) Kuntze</td>
+<td align="left">Aalius oblongifolia (Hook.f.) Kuntze</td>
 <td align="left">Breynia androgyna (L.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="right">0.5080421</td>
-<td align="right">0.5202040</td>
-<td align="right">0.4618576</td>
+<td align="right">0.4274720</td>
+<td align="right">0.4429380</td>
+<td align="right">0.4673970</td>
+<td align="left">b, a</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
+<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
+<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
+<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
+<td align="right">0.6869013</td>
+<td align="right">0.9951987</td>
+<td align="right">0.4221338</td>
+<td align="left">a</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">Aalius macrantha (Hassk.) Kuntze</td>
+<td align="left">Aalius macrantha (Hassk.) Kuntze</td>
+<td align="left">Aalius macrantha (Hassk.) Kuntze</td>
+<td align="left">Breynia macrantha (Hassk.) Chakrab. &amp; N.P.Balakr.</td>
+<td align="right">0.5450402</td>
+<td align="right">0.4013139</td>
+<td align="right">0.5270851</td>
 <td align="left">a, b</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
-<td align="left">Abacopteris thwaitesii (Hook.) Ching</td>
-<td align="left">NA</td>
-<td align="left">Abacopteris thwaitesii (Hook.) Ching</td>
-<td align="left">Cyclosorus thwaitesii (Hook.) Abeyw.</td>
-<td align="right">0.7619281</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
+<td align="left">Aa ustulata Schltr.</td>
+<td align="left">Aa ustulata Schltr.</td>
+<td align="left">Aa ustulata Schltr.</td>
+<td align="left">Myrosmodes ustulatum (Schltr.) Garay</td>
+<td align="right">0.9239872</td>
+<td align="right">0.1306918</td>
+<td align="right">0.3618248</td>
+<td align="left">a</td>
+<td align="left">FALSE</td>
 </tr>
 </tbody>
 </table>
 <p>Because some users may want to solve duplicated names outside the <code>lcvp_join</code> function, the algorithm is available as an individual function names <code>lcvp_solve_dups</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data.frame with duplicated names and different traits</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>splist <span class="ot">&lt;-</span> <span class="fu">sample</span>(LCVP<span class="sc">::</span>tab_lcvp<span class="sc">$</span>Input.Taxon[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>])</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>search <span class="ot">&lt;-</span> <span class="fu">lcvp_search</span>(splist)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">&quot;Species&quot;</span> <span class="ot">=</span> search<span class="sc">$</span>Output.Taxon,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Trait1&quot;</span> <span class="ot">=</span> <span class="fu">runif</span>(<span class="fu">length</span>(splist)),</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Trait2&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="fu">length</span>(splist), <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Trait3&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), <span class="fu">length</span>(splist), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve with default parameters</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_solve_dups</span>(tbl, <span class="dv">1</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data.frame with duplicated names and different traits</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>splist <span class="ot">&lt;-</span> <span class="fu">sample</span>(LCVP<span class="sc">::</span>tab_lcvp<span class="sc">$</span>Input.Taxon[<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>])</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>search <span class="ot">&lt;-</span> <span class="fu">lcvp_search</span>(splist)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">&quot;Species&quot;</span> <span class="ot">=</span> search<span class="sc">$</span>Output.Taxon,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Trait1&quot;</span> <span class="ot">=</span> <span class="fu">runif</span>(<span class="fu">length</span>(splist)),</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Trait2&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="fu">length</span>(splist), <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Trait3&quot;</span> <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>), <span class="fu">length</span>(splist), <span class="at">replace =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solve with default parameters</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_solve_dups</span>(tbl, <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -898,40 +1037,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Aaronsohnia factorovskyi Warb. &amp; Eig</td>
-<td align="right">0.2771895</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="even">
-<td align="left">Sphaerostephanos simplicifolius (J.Sm. ex Hook.) Holttum</td>
-<td align="right">0.0801994</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="odd">
-<td align="left">Breynia gynophora (Hook.f.) Welzen &amp; Pruesapan</td>
-<td align="right">0.4776130</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="even">
-<td align="left">Aa leucantha (Rchb.f.) Schltr.</td>
-<td align="right">0.5459050</td>
-<td align="left">a</td>
-<td align="left">TRUE</td>
-</tr>
-<tr class="odd">
-<td align="left">Breynia macrantha (Hassk.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="right">0.5896655</td>
-<td align="left">a, b</td>
-<td align="left">TRUE</td>
-</tr>
-<tr class="even">
-<td align="left">Aa denticulata Schltr.</td>
-<td align="right">0.9361604</td>
+<td align="left">Aa schickendanzii Schltr.</td>
+<td align="right">0.2893843</td>
 <td align="left">b</td>
 <td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">Cyclosorus cuspidatus (Blume) Copel.</td>
+<td align="right">0.9605319</td>
+<td align="left">a</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">Aa sphaeroglossa Schltr.</td>
+<td align="right">0.1208232</td>
+<td align="left">a</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
+<td align="right">0.5361613</td>
+<td align="left">a</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">Aa riobambae Schltr.</td>
+<td align="right">0.1461465</td>
+<td align="left">a</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">Breynia androgyna (L.) Chakrab. &amp; N.P.Balakr.</td>
+<td align="right">0.3414512</td>
+<td align="left">a, b</td>
+<td align="left">TRUE</td>
 </tr>
 </tbody>
 </table>
