@@ -8,7 +8,9 @@ lcvp_fuzzy_search(
   splist,
   max.distance = 0.2,
   status = c("accepted", "synonym", "unresolved", "external"),
-  bind_result = TRUE
+  bind_result = TRUE,
+  keep_closest = TRUE,
+  progress_bar = FALSE
 )
 }
 \arguments{
@@ -38,6 +40,12 @@ updated list.}
 \item{bind_result}{If TRUE the function will return one data.frame (default).
 If False, the function will return a list of separate data.frames for
 each input group.}
+
+\item{keep_closest}{if TRUE the function will return only the closest names
+within the max.distance specified. If FALSE, it will return all names
+within the specified distance.}
+
+\item{progress_bar}{If TRUE, a progress bar will be printed.}
 }
 \value{
 A data.frame or a list of data.frames (if \code{bind_result = FALSE})
@@ -95,8 +103,9 @@ lcvp_fuzzy_search(c("Hibiscus vitifolia", "Artemisia vulgaris"))
 lcvp_fuzzy_search(c("Hibiscus vitifolia", "Artemisia vulgaris"),
 bind_result = FALSE)
 
-# Returns only accepted names
-lcvp_fuzzy_search("Hibiscus vitifolia", status = "accepted")
+# Returns all accepted names within a max.distance of 6.
+lcvp_fuzzy_search("Hibiscus vitifolia", status = "accepted",
+keep_closest = FALSE, max.distance = 6)
 
 } 
 }

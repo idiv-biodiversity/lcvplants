@@ -31,6 +31,12 @@
 #' If False, the function will return a list of separate data.frames for
 #' each input group.
 #' 
+#' @param keep_closest if TRUE the function will return only the closest names
+#'   within the max.distance specified. If FALSE, it will return all names
+#'   within the specified distance.
+#' 
+#'@param progress_bar If TRUE, a progress bar will be printed.
+#' 
 #' @details 
 #' 
 #' The algorithm will look for all the names within the given maximum distance 
@@ -98,8 +104,9 @@
 #' lcvp_fuzzy_search(c("Hibiscus vitifolia", "Artemisia vulgaris"),
 #' bind_result = FALSE)
 #' 
-#' # Returns only accepted names
-#' lcvp_fuzzy_search("Hibiscus vitifolia", status = "accepted")
+#' # Returns all accepted names within a max.distance of 6.
+#' lcvp_fuzzy_search("Hibiscus vitifolia", status = "accepted",
+#' keep_closest = FALSE, max.distance = 6)
 #' 
 #' } 
 #'@export
@@ -112,7 +119,9 @@ lcvp_fuzzy_search <- function(splist,
                                          "synonym",
                                          "unresolved",
                                          "external"),
-                              bind_result = TRUE) {
+                              bind_result = TRUE,
+                              keep_closest = TRUE,
+                              progress_bar = FALSE) {
   hasData() # Check if LCVP is installed
   # Defensive functions, check for user input errors
   ## Change factors in characters
@@ -134,11 +143,20 @@ lcvp_fuzzy_search <- function(splist,
   # Run individual algorithm to multiple species
   n_sps <- length(splist)
   result <- list()
+  # Progress_bar
+  if (progress_bar) {
+    pb <- utils::txtProgressBar(min = 0, max = n_sps, style = 3)
+  }
+  
   for (i in 1:n_sps) {
-    result [[i]] <-
+    result[[i]] <-
       .lcvp_fuzzy_search_ind(species_class[i, , drop = FALSE],
                             max.distance,
-                            status)
+                            status,
+                            keep_closest)
+    if (progress_bar) {
+      utils::setTxtProgressBar(pb, i)
+    }
   }
   # If need to bind the results
   if (bind_result) {
@@ -160,7 +178,8 @@ lcvp_fuzzy_search <- function(splist,
 
 .lcvp_fuzzy_search_ind <- function(species_class,
                               max.distance,
-                              status) {
+                              status,
+                              keep_closest) {
   
   
   if (is.na(species_class[, 3])) {
@@ -183,14 +202,16 @@ lcvp_fuzzy_search <- function(splist,
                             pos_genus,
                             max.distance,
                             n_class,
-                            return_all = TRUE)
+                            return_all = TRUE, 
+                            keep_closest = keep_closest)
     } else {
       # Fuzzy if did not find the genus
       pos_res <- .fuzzy_match(splist_class_i = species_class[1,],
                             pos_genus = NULL,
                             max.distance,
                             n_class,
-                            return_all = TRUE)
+                            return_all = TRUE, 
+                            keep_closest = keep_closest)
     }
     if (length(pos_res) > 0 & !all(is.na(pos_res))) {
       # Result

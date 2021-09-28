@@ -144,6 +144,7 @@ lcvp_search <- function(splist,
     # keep homonyms to the warning
     ho_pos <- ncol(comb_match) 
     homonyms <- as.logical(comb_match[, ho_pos])
+    homonyms[is.na(homonyms)] <- FALSE
     comb_match <- comb_match[, -ho_pos, drop = FALSE]
     
     comb_match <- as.matrix(apply(comb_match, 2, as.logical))
@@ -178,6 +179,7 @@ lcvp_search <- function(splist,
         ),
         call. = FALSE
       )
+      attributes(result_final)$matched_mult <- result_final[homonyms, 1]
     }
   }
   
