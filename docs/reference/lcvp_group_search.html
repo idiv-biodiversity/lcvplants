@@ -141,7 +141,7 @@ genus or author.</p>
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>lcvp_group_search</span><span class='op'>(</span>
   <span class='va'>group_names</span>,
   <span class='va'>search_by</span>,
-  max.distance <span class='op'>=</span> <span class='fl'>0.1</span>,
+  max.distance <span class='op'>=</span> <span class='fl'>0.2</span>,
   bind_result <span class='op'>=</span> <span class='cn'>TRUE</span>,
   status <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"accepted"</span>, <span class='st'>"synonym"</span>, <span class='st'>"unresolved"</span>, <span class='st'>"external"</span><span class='op'>)</span>
 <span class='op'>)</span></code></pre></div>
@@ -162,12 +162,14 @@ characters are allowed (see <code><a href='https://rdrr.io/r/base/validUTF8.html
     </tr>
     <tr>
       <th>max.distance</th>
-      <td><p>It represents the maximum distance allowed for a match
-when comparing the submitted name with the closest name matches in the LCVP.
-Expressed either as integer, or as a fraction of the pattern length times the
-maximal transformation cost (will be replaced by the smallest integer not
-less than the corresponding fraction).
-See <code><a href='https://rdrr.io/r/base/agrep.html'>agrep</a></code> for more details.</p></td>
+      <td><p>It represents the maximum string distance allowed for a
+match when comparing the submitted name with the closest name matches in the
+LCVP. The distance used is a generalized Levenshtein distance that indicates
+the total number of insertions, deletions, and substitutions allowed to
+match the two names. It can be expressed as an integer or as the fraction of
+the binomial name. For example, a name with length 10, and a max.distance =
+0.1, allow only one change (insertion, deletion, or substitution). A
+max.distance = 2, allows two changes.</p></td>
     </tr>
     <tr>
       <th>bind_result</th>
