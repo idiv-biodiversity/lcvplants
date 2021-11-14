@@ -4,9 +4,11 @@
 #-------------------------------------------------------#
 # The matching algorithm
 .match_algorithm  <- function(splist_class,
-                              max.distance,
+                              max_distance,
                               progress_bar = FALSE,
-                              keep_closest = TRUE) {
+                              keep_closest = TRUE,
+                              genus_fuzzy = TRUE, 
+                              grammar_check = FALSE) {
   # N species
   n_sps <- nrow(splist_class)
   
@@ -30,10 +32,11 @@
                                "SPEC.", "AGG.")
     if (!check_non_defined) {
       # Search genus position
+      max_distance2 <- ifelse(genus_fuzzy, max_distance, 0)
       pos_genus_pre <- .lcvp_group_ind(
         group_name = splist_class_i[2],
         group_ref = LCVP::tab_position$Genus,
-        max.distance,
+        max_distance2,
         only_one = FALSE,
         closest = TRUE
       )
@@ -41,28 +44,59 @@
       
       if (!any(is.na(pos_genus))) {
         # Try exact match first
-        exact[i, ] <- .exact_match(splist_class_i,
-                                   pos_genus,
-                                   n_class)
-        # Try fuzzy
-        if (any(is.na(exact[i,])) & max.distance > 0) {
-          exact[i, ] <- .fuzzy_match(splist_class_i,
-                                     pos_genus,
-                                     max.distance,
-                                     n_class,
-                                     keep_closest = keep_closest)
+        exact[i,] <- .exact_match(splist_class_i,
+                                  pos_genus,
+                                  n_class)
+        # Try common grammar errors 
+        if (any(is.na(exact[i, ])) & grammar_check) {
+          epis <- .sub_common(splist_class_i[3])
+          if (length(epis) > 0) {
+            names_grammar <- paste(splist_class_i[2],
+                                         epis)
+            splist_class_i_mult <- .splist_classify(names_grammar)
+            n_gram <- length(names_grammar)
+            temp <- matrix(nrow = n_gram,
+                           ncol = length(exact[i, ]))
+            for (k in 1:n_gram) {
+              temp[k, ] <- .exact_match(splist_class_i_mult[k, ],
+                                        pos_genus,
+                                        n_class)
+            }
+            pos_gram <- apply(temp, 1, function(x) {all(!is.na(x))})
+            n_pos_gram <- sum(pos_gram)
+            if (n_pos_gram > 1) {
+              pos_gram_t <- pos_gram == TRUE
+              pos_gram[pos_gram_t] <- c(TRUE, rep(FALSE, (n_pos_gram - 1)))
+              temp[pos_gram, ncol(temp)] <- TRUE
+            }
+            if (any(pos_gram)) {
+              exact[i,] <- temp[pos_gram, ] 
+            }
+          }
         }
-      } else {
-        if (max.distance > 0) {
-          # Fuzzy if did not find the genus
+
+        # Try fuzzy
+        if (any(is.na(exact[i, ])) & max_distance > 0) {
           exact[i,] <- .fuzzy_match(splist_class_i,
-                                    pos_genus = NULL,
-                                    max.distance,
+                                    pos_genus,
+                                    max_distance,
                                     n_class,
                                     keep_closest = keep_closest)
         }
       }
-      
+      ## may improve match performance (a little), but consumes more
+      ## computational time; turned off.
+      # else {
+      #
+      #   if (max_distance2 > 0) {
+      #     # Fuzzy if did not find the genus
+      #     exact[i,] <- .fuzzy_match(splist_class_i,
+      #                               pos_genus = NULL,
+      #                               max_distance,
+      #                               n_class,
+      #                               keep_closest = keep_closest)
+      #   }
+      # }
     }
     if (progress_bar) {
       utils::setTxtProgressBar(pb, i)
@@ -84,7 +118,7 @@
                          n_class,
                          fuzzy = FALSE) {
   # Look the categories that are equal
-  sp_pos <- apply(LCVP::lcvp_sps_class[pos_genus,-n_class,
+  sp_pos <- apply(LCVP::lcvp_sps_class[pos_genus, -n_class,
                                        drop = FALSE],
                   1,
                   function(x) {
@@ -92,7 +126,7 @@
                   })
   
   # Identify the actual number positions
-  choosen <- which(sp_pos[3,])
+  choosen <- which(sp_pos[3, ])
   
   # Set homonyms FALSE
   homonyms <- FALSE
@@ -106,6 +140,7 @@
   
   n_choosen <- length(choosen)
   
+  # IF NEEDED INSERT COMMON ERRORS HERE
   if (n_choosen == 0) {
     # No match found
     return(rep(NA, n_class + 1))
@@ -148,30 +183,30 @@
 # Fuzzy matching function
 .fuzzy_match <- function(splist_class_i,
                          pos_genus = NULL,
-                         max.distance,
+                         max_distance,
                          n_class,
                          return_all = FALSE,
                          keep_closest = TRUE) {
   # If we did not find an approximation of the genus
   fuzzy_match <- NULL
   if (!is.null(pos_genus)) {
-    # Use the `.agrep_whole` function with the max.distance parameter
+    # Use the `.agrep_whole` function with the max_distance parameter
     name1 <- paste(splist_class_i[2], splist_class_i[3])
     name2 <- paste(LCVP::lcvp_sps_class[pos_genus, 2],
                    LCVP::lcvp_sps_class[pos_genus, 3])
     fuzzy_match <- .agrep_whole(name1,
                                 name2,
-                                max.distance = max.distance)
+                                max_distance = max_distance)
   }
   if (is.null(pos_genus) | length(fuzzy_match) == 0) {
     pos_genus <- 1:nrow(LCVP::lcvp_sps_class)
-    # Use the `.agrep_whole` function with the max.distance parameter
+    # Use the `.agrep_whole` function with the max_distance parameter
     name1 <- paste(splist_class_i[2], splist_class_i[3])
     name2 <- paste(LCVP::lcvp_sps_class[, 2],
                    LCVP::lcvp_sps_class[, 3])
     fuzzy_match <- .agrep_whole(name1,
                                 name2,
-                                max.distance = max.distance)
+                                max_distance = max_distance)
   }
   
   if (length(fuzzy_match) == 0) {
@@ -192,13 +227,13 @@
     res_fuzzy <- matrix(nrow = n_pos_genus, ncol = n_class + 1)
     
     for (i in 1:n_pos_genus) {
-      res_fuzzy[i,] <- .exact_match(splist_class_i,
-                                    pos_genus[i],
-                                    n_class,
-                                    fuzzy = TRUE)
+      res_fuzzy[i, ] <- .exact_match(splist_class_i,
+                                     pos_genus[i],
+                                     n_class,
+                                     fuzzy = TRUE)
     }
     # keep only the ones with highest number of classes matches
-    rights <- apply(res_fuzzy[,-1, drop = FALSE],
+    rights <- apply(res_fuzzy[, -1, drop = FALSE],
                     1,
                     function(x) {
                       sum(x == "TRUE")
@@ -207,14 +242,14 @@
     # If more than one
     if (!return_all) {
       if (length(pos_genus2) > 1) {
-        sub_tab <- LCVP::tab_lcvp[res_fuzzy[pos_genus2, 1],]
+        sub_tab <- LCVP::tab_lcvp[res_fuzzy[pos_genus2, 1], ]
         pos_genus2 <- which(sub_tab$Status == "accepted")
         res_fuzzy[, n_class + 1] <- TRUE # homonyms to TRUE
         if (length(pos_genus2) == 0) {
           pos_genus2 <- 1
         }
       }
-      return(res_fuzzy[pos_genus2[1],])
+      return(res_fuzzy[pos_genus2[1], ])
     }
     if (return_all) {
       return(res_fuzzy[pos_genus2, 1])

@@ -253,24 +253,24 @@
 <div id="change-distance-of-the-fuzzy-matching" class="section level2">
 <h2 class="hasAnchor">
 <a href="#change-distance-of-the-fuzzy-matching" class="anchor"></a>Change distance of the fuzzy matching</h2>
-<p>In case you expect misspellings in your names list (very likely, at least for longer lists), you might want to use fuzzy matching for the names resolution. If fuzzy matching is activated, <code>LCVP</code> will also match names that differ in spelling from the submitted name. You can use the <code>max.distance</code> argument to define in how many positions the matched names are allowed to differ from the submitted name. This is especially relevant if your names include authorities, since they often differ in spelling (e.g., if spaces are used or not). One or two might be reasonable values here. Increases in <code>max.distance</code> will increase the computation time for the name resolution. In any case, it is advisable to check the results of fuzzy matching since there might be accepted names that only differ by few characters.</p>
+<p>In case you expect misspellings in your names list (very likely, at least for longer lists), you might want to use fuzzy matching for the names resolution. If fuzzy matching is activated, <code>LCVP</code> will also match names that differ in spelling from the submitted name. You can use the <code>max_distance</code> argument to define in how many positions the matched names are allowed to differ from the submitted name. This is especially relevant if your names include authorities, since they often differ in spelling (e.g., if spaces are used or not). One or two might be reasonable values here. Increases in <code>max_distance</code> will increase the computation time for the name resolution. In any case, it is advisable to check the results of fuzzy matching since there might be accepted names that only differ by few characters.</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># no fuzzy matching does not find misspelled names</span>
 <span class="no">fuzz</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifolios"</span>)</pre></body></html></div>
 <pre><code>## Time difference of 26.65401 secs</code></pre>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">fuzz</span>$<span class="no">Score</span></pre></body></html></div>
 <pre><code>## [1] "Epithet name not found"</code></pre>
 <div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="co"># fuzzy matching does find it</span>
-<span class="no">fuzz</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifolios"</span>, <span class="kw">max.distance</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
+<span class="no">fuzz</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifolios"</span>, <span class="kw">max_distance</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
 <pre><code>## Time difference of 34.06915 secs</code></pre>
 <div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">fuzz</span>$<span class="no">Score</span></pre></body></html></div>
 <pre><code>## [1] "misspelling: Epithet" "misspelling: Epithet"</code></pre>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="co">#Also works for larger distances</span>
-<span class="no">fuzz</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifulios"</span>, <span class="kw">max.distance</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
+<span class="no">fuzz</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus vitifulios"</span>, <span class="kw">max_distance</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
 <pre><code>## Time difference of 39.58281 secs</code></pre>
 <div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">fuzz</span>$<span class="no">Score</span></pre></body></html></div>
 <pre><code>## [1] "misspelling: Epithet" "misspelling: Epithet"</code></pre>
 <div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="co"># But results become less reliable with larger distances</span>
-<span class="no">fuzz</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus acetosulla"</span>, <span class="kw">max.distance</span> <span class="kw">=</span> <span class="fl">5</span>)</pre></body></html></div>
+<span class="no">fuzz</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hibiscus acetosulla"</span>, <span class="kw">max_distance</span> <span class="kw">=</span> <span class="fl">5</span>)</pre></body></html></div>
 <pre><code>## Time difference of 41.49436 secs</code></pre>
 <div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="no">fuzz</span></pre></body></html></div>
 <pre><code>##   ID      Submitted_Name    Order    Family    Genus    Species Infrasp
@@ -296,7 +296,7 @@
 <div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="no">fuzz</span>$<span class="no">Score</span></pre></body></html></div>
 <pre><code>## [1] "Genus name not found"</code></pre>
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="co"># fuzzy matching does find it</span>
-<span class="no">fuzz</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hubiscus vitifolius"</span>, <span class="kw">max.distance</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">genus_search</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="no">fuzz</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/LCVP.html">LCVP</a></span>(<span class="st">"Hubiscus vitifolius"</span>, <span class="kw">max_distance</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">genus_search</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <pre><code>## Time difference of 33.82916 secs</code></pre>
 <div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="no">fuzz</span>$<span class="no">Score</span></pre></body></html></div>
 <pre><code>## [1] "misspelling: Genus" "misspelling: Genus"</code></pre>

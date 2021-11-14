@@ -75,7 +75,7 @@
 
       
 
-      </header><script src="taxonomic_resolution_using_lcvplants_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
+      </header><script src="taxonomic_resolution_using_lcvplants_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Taxonomic resolution using lcvplants</h1>
@@ -148,11 +148,11 @@
 <td align="left">Malvales</td>
 </tr></tbody>
 </table>
-<p>The <code>lcvp_search</code> algorithm will first try to exactly match the binomial names provided by the user. If no match is found, it will try to find the closest name given the maximal transformation cost defined in the argument <code>max.distance</code> (see ?base::agrep for more details). When the argument <code>show.correct = TRUE</code> a column is added to the final result indicating whether the binomial name was exactly matched (TRUE), or if it is misspelled (FALSE).</p>
+<p>The <code>lcvp_search</code> algorithm will first try to exactly match the binomial names provided by the user. If no match is found, it will try to find the closest name given the maximal transformation cost defined in the argument <code>max_distance</code> (see ?base::agrep for more details). When the argument <code>show_correct = TRUE</code> a column is added to the final result indicating whether the binomial name was exactly matched (TRUE), or if it is misspelled (FALSE).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifoliuse"</span>, 
-            max.distance <span class="op">=</span> <span class="fl">0.1</span>, 
-            show.correct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+            max_distance <span class="op">=</span> <span class="fl">0.1</span>, 
+            show_correct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="15%">
@@ -188,10 +188,10 @@
 <td align="left">FALSE</td>
 </tr></tbody>
 </table>
-<p>If more than one name is fuzzy matched (more than one closest match found), only the accepted or the first name will be returned. The function <code>lcvp_fuzzy_search</code> can be used to return all the closest results when argument <code>keep_closest = TRUE</code>, or all names within the <code>max.distance</code> defined when <code>keep_closest = FALSE</code>.</p>
+<p>If more than one name is fuzzy matched (more than one closest match found), only the accepted or the first name will be returned. The function <code>lcvp_fuzzy_search</code> can be used to return all the closest results when argument <code>keep_closest = TRUE</code>, or all names within the <code>max_distance</code> defined when <code>keep_closest = FALSE</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/lcvp_fuzzy_search.html">lcvp_fuzzy_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifoliuse"</span>, 
-                  max.distance <span class="op">=</span> <span class="fl">0.1</span>, 
+                  max_distance <span class="op">=</span> <span class="fl">0.1</span>, 
                   keep_closest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
@@ -246,19 +246,20 @@
   <span class="st">"Hibiscus acuminatus"</span>,
   <span class="st">"Hibiscus furcatuis"</span> 
 <span class="op">)</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="va">splist</span>, max.distance <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></code></pre></div>
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="va">splist</span>, max_distance <span class="op">=</span> <span class="fl">0.2</span>, show_correct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="22%">
-<col width="22%">
+<col width="21%">
+<col width="21%">
 <col width="4%">
 <col width="6%">
-<col width="16%">
+<col width="15%">
 <col width="18%">
 <col width="4%">
 <col width="4%">
+<col width="3%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Search</th>
@@ -269,6 +270,7 @@
 <th align="left">Output.Taxon</th>
 <th align="left">Family</th>
 <th align="left">Order</th>
+<th align="left">Correct</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -280,6 +282,7 @@
 <td align="left">Abelmoschus moschatus Medik.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="even">
 <td align="left">Hibiscus abutiloides Willd.</td>
@@ -290,6 +293,7 @@
 <td align="left">Talipariti tiliaceum (L.) Fryxell</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="odd">
 <td align="left">Hibiscus aculeatus</td>
@@ -300,6 +304,7 @@
 <td align="left">Hibiscus aculeatus Walter</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="even">
 <td align="left">Hibiscus acuminatus</td>
@@ -310,6 +315,7 @@
 <td align="left">Kosteletzkya acuminata (Cav.) Britten</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="odd">
 <td align="left">Hibiscus furcatuis</td>
@@ -320,6 +326,7 @@
 <td align="left">Hibiscus furcatus Roxb.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left">FALSE</td>
 </tr>
 </tbody>
 </table>
@@ -688,9 +695,9 @@
 <col width="18%">
 <col width="18%">
 <col width="3%">
-<col width="19%">
-<col width="8%">
-<col width="11%">
+<col width="22%">
+<col width="7%">
+<col width="10%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Species.List.1</th>
@@ -703,58 +710,58 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
-<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
-<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
-<td align="left">accepted</td>
-<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
-<td align="left">84</td>
+<td align="left">Abacopteris simplicifolia (J.Sm. ex Hook.) Fée</td>
+<td align="left">Abacopteris simplicifolia (J.Sm. ex Hook.) Fée</td>
+<td align="left">Abacopteris simplicifolia (J.Sm. ex Hook.) Fée</td>
+<td align="left">synonym</td>
+<td align="left">Sphaerostephanos simplicifolius (J.Sm. ex Hook.) Holttum</td>
+<td align="left">37</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">Abacopteris gymnopteridifrons (Hayata) Ching</td>
-<td align="left">Abacopteris gymnopteridifrons (Hayata) Ching</td>
-<td align="left">Abacopteris gymnopteridifrons (Hayata) Ching</td>
+<td align="left">Abacopteris simplex var. trifoliata Ching</td>
+<td align="left">Abacopteris simplex var. trifoliata Ching</td>
+<td align="left">Abacopteris simplex var. trifoliata Ching</td>
 <td align="left">synonym</td>
-<td align="left">Cyclosorus gymnopteridifrons (Hayata) C.M.Kuo</td>
-<td align="left">89</td>
-<td align="left">2, 92</td>
+<td align="left">Cyclosorus simplex (Hook.) Copel.</td>
+<td align="left">68</td>
+<td align="left">2, 76</td>
 </tr>
 <tr class="odd">
-<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
-<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
-<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
-<td align="left">accepted</td>
-<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
-<td align="left">40</td>
+<td align="left">Aa filamentosa Mansf.</td>
+<td align="left">Aa filamentosa Mansf.</td>
+<td align="left">Aa filamentosa Mansf.</td>
+<td align="left">synonym</td>
+<td align="left">Myrosmodes filamentosum (Mansf.) Garay</td>
+<td align="left">59</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">Aa macra Schltr.</td>
-<td align="left">Aa macra Schltr.</td>
-<td align="left">Aa macra Schltr.</td>
-<td align="left">accepted</td>
-<td align="left">Aa macra Schltr.</td>
-<td align="left">63</td>
-<td align="left">NA</td>
+<td align="left">Aalius pubescens (Hook.f.) Kuntze</td>
+<td align="left">Aalius pubescens (Hook.f.) Kuntze</td>
+<td align="left">Aalius pubescens (Hook.f.) Kuntze</td>
+<td align="left">synonym</td>
+<td align="left">Sauropus compressus Müll.Arg.</td>
+<td align="left">5</td>
+<td align="left">4, 91</td>
 </tr>
 <tr class="odd">
-<td align="left">Abacopteris sampsonii (Baker) Ching</td>
-<td align="left">Abacopteris sampsonii (Baker) Ching</td>
-<td align="left">Abacopteris sampsonii (Baker) Ching</td>
-<td align="left">synonym</td>
-<td align="left">Cyclosorus megacuspis (Baker) Tardieu &amp; C.Chr.</td>
-<td align="left">16</td>
-<td align="left">5, 17</td>
-</tr>
-<tr class="even">
-<td align="left">Abacopteris rubra (Ching) Ching</td>
-<td align="left">Abacopteris rubra (Ching) Ching</td>
-<td align="left">Abacopteris rubra (Ching) Ching</td>
+<td align="left">Abacopteris lakhimpurensis (Rosenst.) Ching</td>
+<td align="left">Abacopteris lakhimpurensis (Rosenst.) Ching</td>
+<td align="left">Abacopteris lakhimpurensis (Rosenst.) Ching</td>
 <td align="left">synonym</td>
 <td align="left">Cyclosorus lakhimpurensis (Rosenst.) Copel.</td>
-<td align="left">21</td>
-<td align="left">6, 82</td>
+<td align="left">60</td>
+<td align="left">5, 61</td>
+</tr>
+<tr class="even">
+<td align="left">Abacopteris holophylla (Baker) Ching</td>
+<td align="left">Abacopteris holophylla (Baker) Ching</td>
+<td align="left">Abacopteris holophylla (Baker) Ching</td>
+<td align="left">synonym</td>
+<td align="left">Cyclosorus menisciicarpus (Blume) Holttum</td>
+<td align="left">16</td>
+<td align="left">6, 43</td>
 </tr>
 </tbody>
 </table>
@@ -813,70 +820,70 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Abacopteris aspera (C.Presl) Ching</td>
-<td align="left">Abacopteris aspera (C.Presl) Ching</td>
-<td align="left">Abacopteris aspera (C.Presl) Ching</td>
-<td align="left">Cyclosorus asperus (C.Presl) B.K.Nayar &amp; S.Kaur</td>
-<td align="right">0.2715930</td>
-<td align="right">0.3379460</td>
-<td align="right">0.1743630</td>
-<td align="left">b</td>
-<td align="left">TRUE</td>
-</tr>
-<tr class="even">
-<td align="left">Abacopteris liukiuensis (Christ) Tagawa</td>
-<td align="left">Abacopteris liukiuensis (Christ) Tagawa</td>
-<td align="left">Abacopteris liukiuensis (Christ) Tagawa</td>
-<td align="left">Cyclosorus liukiuensis (Christ) Masam.</td>
-<td align="right">0.2513669</td>
-<td align="right">0.2859954</td>
-<td align="right">0.4289916</td>
+<td align="left">Aa leucantha (Rchb.f.) Schltr.</td>
+<td align="left">Aa leucantha (Rchb.f.) Schltr.</td>
+<td align="left">Aa leucantha (Rchb.f.) Schltr.</td>
+<td align="left">Aa leucantha (Rchb.f.) Schltr.</td>
+<td align="right">0.8227127</td>
+<td align="right">0.1370711</td>
+<td align="right">0.9344355</td>
 <td align="left">a</td>
 <td align="left">FALSE</td>
-</tr>
-<tr class="odd">
-<td align="left">Abacopteris sampsonii (Baker) Ching</td>
-<td align="left">Abacopteris sampsonii (Baker) Ching</td>
-<td align="left">Abacopteris sampsonii (Baker) Ching</td>
-<td align="left">Cyclosorus megacuspis (Baker) Tardieu &amp; C.Chr.</td>
-<td align="right">0.7719660</td>
-<td align="right">0.2401567</td>
-<td align="right">0.2707127</td>
-<td align="left">a</td>
-<td align="left">TRUE</td>
 </tr>
 <tr class="even">
 <td align="left">Aalius quadrangularis (Müll.Arg.) Kuntze</td>
 <td align="left">Aalius quadrangularis (Müll.Arg.) Kuntze</td>
 <td align="left">Aalius quadrangularis (Müll.Arg.) Kuntze</td>
 <td align="left">Breynia quadrangularis (Willd.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="right">0.9508966</td>
-<td align="right">0.4747385</td>
-<td align="right">0.7697152</td>
-<td align="left">a</td>
+<td align="right">0.3810600</td>
+<td align="right">0.6137126</td>
+<td align="right">0.8379393</td>
+<td align="left">b</td>
 <td align="left">FALSE</td>
 </tr>
 <tr class="odd">
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="right">0.8721475</td>
-<td align="right">0.7425088</td>
-<td align="right">0.3179941</td>
+<td align="left">Aa gymnandra (Rchb.f.) Schltr.</td>
+<td align="left">Aa gymnandra (Rchb.f.) Schltr.</td>
+<td align="left">Aa gymnandra (Rchb.f.) Schltr.</td>
+<td align="left">Myrosmodes gymnandra (Rchb.f.) C.A.Vargas</td>
+<td align="right">0.1343616</td>
+<td align="right">0.5290964</td>
+<td align="right">0.6541276</td>
+<td align="left">a</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">Aalius androgyna (L.) Kuntze</td>
+<td align="left">Aalius androgyna (L.) Kuntze</td>
+<td align="left">Aalius androgyna (L.) Kuntze</td>
+<td align="left">Breynia androgyna (L.) Chakrab. &amp; N.P.Balakr.</td>
+<td align="right">0.0269119</td>
+<td align="right">0.2794335</td>
+<td align="right">0.4228346</td>
 <td align="left">a</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="even">
-<td align="left">Aalius macrophylla (Hook.f.) Kuntze</td>
-<td align="left">Aalius macrophylla (Hook.f.) Kuntze</td>
-<td align="left">Aalius macrophylla (Hook.f.) Kuntze</td>
-<td align="left">Breynia macrantha (Hassk.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="right">0.7747417</td>
-<td align="right">0.3200081</td>
-<td align="right">0.3891506</td>
-<td align="left">a</td>
+<tr class="odd">
+<td align="left">Aa nigrescens Schltr.</td>
+<td align="left">Aa nigrescens Schltr.</td>
+<td align="left">Aa nigrescens Schltr.</td>
+<td align="left">Aa leucantha (Rchb.f.) Schltr.</td>
+<td align="right">0.0773851</td>
+<td align="right">0.7394820</td>
+<td align="right">0.5560322</td>
+<td align="left">b</td>
 <td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">Aa brevis Schltr.</td>
+<td align="left">NA</td>
+<td align="left">Aa brevis Schltr.</td>
+<td align="left">Myrosmodes breve (Schltr.) Garay</td>
+<td align="right">0.6095119</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 </tr>
 </tbody>
 </table>
@@ -888,17 +895,19 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
+<col width="1%">
+<col width="22%">
+<col width="22%">
+<col width="22%">
 <col width="18%">
-<col width="18%">
-<col width="18%">
-<col width="24%">
-<col width="4%">
-<col width="4%">
-<col width="4%">
 <col width="3%">
 <col width="3%">
+<col width="3%">
+<col width="2%">
+<col width="2%">
 </colgroup>
 <thead><tr class="header">
+<th align="left"></th>
 <th align="left">Species.List.1</th>
 <th align="left">Species.List.2</th>
 <th align="left">LCVP.Input.Taxon</th>
@@ -911,68 +920,74 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Abacopteris aspera (C.Presl) Ching</td>
-<td align="left">Abacopteris aspera (C.Presl) Ching</td>
-<td align="left">Abacopteris aspera (C.Presl) Ching</td>
-<td align="left">Cyclosorus asperus (C.Presl) B.K.Nayar &amp; S.Kaur</td>
-<td align="right">0.5004397</td>
-<td align="right">0.3468131</td>
-<td align="right">0.6006648</td>
-<td align="left">b, a</td>
-<td align="left">TRUE</td>
-</tr>
-<tr class="even">
-<td align="left">Abacopteris liukiuensis (Christ) Tagawa</td>
-<td align="left">Abacopteris liukiuensis (Christ) Tagawa</td>
-<td align="left">Abacopteris liukiuensis (Christ) Tagawa</td>
-<td align="left">Cyclosorus liukiuensis (Christ) Masam.</td>
-<td align="right">0.2513669</td>
-<td align="right">0.2859954</td>
-<td align="right">0.4289916</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="odd">
-<td align="left">Abacopteris sampsonii (Baker) Ching</td>
-<td align="left">Abacopteris sampsonii (Baker) Ching</td>
-<td align="left">Abacopteris sampsonii (Baker) Ching</td>
-<td align="left">Cyclosorus megacuspis (Baker) Tardieu &amp; C.Chr.</td>
-<td align="right">0.5015224</td>
-<td align="right">0.5700032</td>
-<td align="right">0.3347801</td>
+<td align="left">1</td>
+<td align="left">Aa leucantha (Rchb.f.) Schltr.</td>
+<td align="left">Aa leucantha (Rchb.f.) Schltr.</td>
+<td align="left">Aa leucantha (Rchb.f.) Schltr.</td>
+<td align="left">Aa leucantha (Rchb.f.) Schltr.</td>
+<td align="right">0.4500489</td>
+<td align="right">0.4382766</td>
+<td align="right">0.7452338</td>
 <td align="left">a, b</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
+<td align="left">2</td>
 <td align="left">Aalius quadrangularis (Müll.Arg.) Kuntze</td>
 <td align="left">Aalius quadrangularis (Müll.Arg.) Kuntze</td>
 <td align="left">Aalius quadrangularis (Müll.Arg.) Kuntze</td>
 <td align="left">Breynia quadrangularis (Willd.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="right">0.5603437</td>
-<td align="right">0.4080732</td>
-<td align="right">0.4754469</td>
-<td align="left">a</td>
+<td align="right">0.3616663</td>
+<td align="right">0.5478937</td>
+<td align="right">0.6741900</td>
+<td align="left">b, a</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="odd">
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="right">0.8721475</td>
-<td align="right">0.7425088</td>
-<td align="right">0.3179941</td>
+<td align="left">3</td>
+<td align="left">Aa gymnandra (Rchb.f.) Schltr.</td>
+<td align="left">Aa gymnandra (Rchb.f.) Schltr.</td>
+<td align="left">Aa gymnandra (Rchb.f.) Schltr.</td>
+<td align="left">Myrosmodes gymnandra (Rchb.f.) C.A.Vargas</td>
+<td align="right">0.1343616</td>
+<td align="right">0.5290964</td>
+<td align="right">0.6541276</td>
 <td align="left">a</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="even">
-<td align="left">Aalius macrophylla (Hook.f.) Kuntze</td>
-<td align="left">Aalius macrophylla (Hook.f.) Kuntze</td>
-<td align="left">Aalius macrophylla (Hook.f.) Kuntze</td>
-<td align="left">Breynia macrantha (Hassk.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="right">0.4638804</td>
-<td align="right">0.3673206</td>
-<td align="right">0.4937480</td>
+<td align="left">4</td>
+<td align="left">Aalius androgyna (L.) Kuntze</td>
+<td align="left">Aalius androgyna (L.) Kuntze</td>
+<td align="left">Aalius androgyna (L.) Kuntze</td>
+<td align="left">Breynia androgyna (L.) Chakrab. &amp; N.P.Balakr.</td>
+<td align="right">0.3992738</td>
+<td align="right">0.3930851</td>
+<td align="right">0.4237122</td>
+<td align="left">a, b</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="left">6</td>
+<td align="left">Aa brevis Schltr.</td>
+<td align="left">NA</td>
+<td align="left">Aa brevis Schltr.</td>
+<td align="left">Myrosmodes breve (Schltr.) Garay</td>
+<td align="right">0.6095119</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">Aaronsohnia pubescens subsp. maroccana (Ball) Fennane &amp; IbnTattou</td>
+<td align="left">Aaronsohnia pubescens subsp. maroccana (Ball) Fennane &amp; IbnTattou</td>
+<td align="left">Aaronsohnia pubescens subsp. maroccana (Ball) Fennane &amp; IbnTattou</td>
+<td align="left">Aaronsohnia pubescens (Desf.) K.Bremer &amp; Humphries</td>
+<td align="right">0.2006667</td>
+<td align="right">0.4673905</td>
+<td align="right">0.4012514</td>
 <td align="left">a, b</td>
 <td align="left">TRUE</td>
 </tr>
@@ -1002,39 +1017,39 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Aa trilobulata Schltr.</td>
-<td align="right">0.5312035</td>
+<td align="left">Myrosmodes weberbaueri (Schltr.) C.A.Vargas</td>
+<td align="right">0.1540072</td>
 <td align="left">b</td>
 <td align="left">FALSE</td>
 </tr>
 <tr class="even">
-<td align="left">Ampelopteris prolifera (Retz.) Copel.</td>
-<td align="right">0.7744167</td>
+<td align="left">Cyclosorus asperus (C.Presl) B.K.Nayar &amp; S.Kaur</td>
+<td align="right">0.5112996</td>
 <td align="left">b</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="odd">
-<td align="left">Myrosmodes filamentosum (Mansf.) Garay</td>
-<td align="right">0.6602078</td>
-<td align="left">b</td>
+<td align="left">Cyclosorus gymnopteridifrons (Hayata) C.M.Kuo</td>
+<td align="right">0.0304989</td>
+<td align="left">a</td>
 <td align="left">FALSE</td>
 </tr>
 <tr class="even">
-<td align="left">Breynia macrantha (Hassk.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="right">0.2025029</td>
-<td align="left">a, b</td>
-<td align="left">TRUE</td>
+<td align="left">Aaronsohnia factorovskyi Warb. &amp; Eig</td>
+<td align="right">0.6422294</td>
+<td align="left">b</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="odd">
-<td align="left">Aa matthewsii (Rchb.f.) Schltr.</td>
-<td align="right">0.2234689</td>
+<td align="left">Cyclosorus longipetiolatus (K.Iwats.) C.M.Kuo</td>
+<td align="right">0.2689325</td>
 <td align="left">b</td>
 <td align="left">FALSE</td>
 </tr>
 <tr class="even">
-<td align="left">Aa leucantha (Rchb.f.) Schltr.</td>
-<td align="right">0.5269659</td>
-<td align="left">b, a</td>
+<td align="left">Aa lehmannii Rchb.f. ex Szlach. &amp; Kolan.</td>
+<td align="right">0.2167244</td>
+<td align="left">a</td>
 <td align="left">FALSE</td>
 </tr>
 </tbody>

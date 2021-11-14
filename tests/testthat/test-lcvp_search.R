@@ -19,7 +19,8 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
   
   test_that("lcvp_search works for one species, fuzzy in genus", {
     expect_warning(res_ex <- lcvp_search("Tibiscus vitifolius", 
-                                         max.distance = 2))
+                                         max_distance = 2,
+                                         genus_fuzzy = TRUE))
     expect_equal(class(res_ex), "data.frame")
     expect_equal(ncol(res_ex), 8)
     expect_equal(nrow(res_ex), 1)
@@ -48,7 +49,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
           "Hibiscus acuminatus",
           "Hibiscus furcatuis"
         ),
-        max.distance = 0
+        max_distance = 0
       ))
     expect_equal(class(res_ex), "data.frame")
     expect_equal(ncol(res_ex), 8)
@@ -63,7 +64,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
       "Hibiscus aculeatus",
       "Hibiscus acuminatus"
     )
-    expect_warning(res_ex <- lcvp_search(sps, max.distance = 0.1))
+    expect_warning(res_ex <- lcvp_search(sps, max_distance = 0.1))
     expect_equal(class(res_ex), "data.frame")
     expect_equal(ncol(res_ex), 8)
     expect_equal(nrow(res_ex), 4)

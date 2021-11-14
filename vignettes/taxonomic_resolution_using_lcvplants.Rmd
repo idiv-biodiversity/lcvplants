@@ -66,37 +66,38 @@ knitr::kable(lcvp_search("Hibiscus vitifolius"))
 ```
 
 
-The `lcvp_search` algorithm will first try to exactly match the binomial names provided by the user. If no match is found, it will try to find the closest name given the maximal transformation cost defined in the argument `max.distance` (see ?base::agrep for more details).
-When the argument `show.correct = TRUE` a column is added to the final result indicating whether the binomial name was exactly matched (TRUE), or if it is misspelled (FALSE).
+The `lcvp_search` algorithm will first try to exactly match the binomial names provided by the user. If no match is found, it will try to find the closest name given the maximal transformation cost defined in the argument `max_distance` (see ?base::agrep for more details).
+When the argument `show_correct = TRUE` a column is added to the final result indicating whether the binomial name was exactly matched (TRUE), or if it is misspelled (FALSE).
 
 ```{r Search one species with misspelled name, eval = FALSE}
 lcvp_search("Hibiscus vitifoliuse", 
-            max.distance = 0.1, 
-            show.correct = TRUE)
+            max_distance = 0.1, 
+            show_correct = TRUE)
 ```
 
 ```{r, echo = FALSE, warning = FALSE}
 knitr::kable(lcvp_search("Hibiscus vitifoliuse", 
-                         max.distance = 0.1, 
-                         show.correct = TRUE,))
+                         max_distance = 0.1, 
+                         show_correct = TRUE))
 ```
 
 
-If more than one name is fuzzy matched (more than one closest match found), only the accepted or the first name will be returned. The function `lcvp_fuzzy_search` can be used to return all the closest results when argument `keep_closest = TRUE`, or all names within the `max.distance` defined when `keep_closest = FALSE`.
+If more than one name is fuzzy matched (more than one closest match found), only the accepted or the first name will be returned. The function `lcvp_fuzzy_search` can be used to return all the closest results when argument `keep_closest = TRUE`, or all names within the `max_distance` defined when `keep_closest = FALSE`.
 ```{r fuzzy match, eval = FALSE}
 lcvp_fuzzy_search("Hibiscus vitifoliuse", 
-                  max.distance = 0.1, 
+                  max_distance = 0.1, 
                   keep_closest = TRUE)
 ```
 
 ```{r, echo = FALSE, warning = FALSE}
 knitr::kable(lcvp_fuzzy_search("Hibiscus vitifoliuse",
-                               max.distance = 0.1, 
+                               max_distance = 0.1, 
                                keep_closest = TRUE))
 ```
 
 
 Both `lcvp_search` and `lcvp_fuzzy_search` allows multiple species search. If you need to run for many species consider setting the argument `progress_bar = TRUE` to track the execution progress.
+
 ```{r multiple species search}
 splist <- c(
   "Hibiscus abelmoschus var. betulifolius Mast.",
@@ -105,7 +106,7 @@ splist <- c(
   "Hibiscus acuminatus",
   "Hibiscus furcatuis" 
 )
-x <- lcvp_search(splist, max.distance = 0.2)
+x <- lcvp_search(splist, max_distance = 0.2, show_correct = TRUE)
 ```
 
 ```{r show multiple, eval = FALSE}

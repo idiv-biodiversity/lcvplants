@@ -45,7 +45,7 @@ x <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.",
 "Hibiscus aculeatus",
 "Hibiscus acuminatis",
 "Hibiscus error"), 
-max.distance = 1)
+max_distance = 1)
 
 # Summarize the results
 lcvp_summary(x)

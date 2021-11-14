@@ -2,10 +2,10 @@
 # Function to wrap .lcvp_group_ind for multiple names
 .lcvp_group <- function(group_names,
                         group_ref,
-                        max.distance) {
+                        max_distance) {
   # group_names = list of names to be searched
   # group_ref = reference species name
-  # max.distance = fuzzy match distance allowed
+  # max_distance = fuzzy match distance allowed
   
   # Length of group names
   n_groups <- length(group_names)
@@ -15,7 +15,7 @@
   for (i in 1:n_groups) {
     groups_pos[i] <- .lcvp_group_ind(group_names[i],
                                      group_ref,
-                                     max.distance)
+                                     max_distance)
   }
   # Result the position in the list
   return(groups_pos)
@@ -27,17 +27,17 @@
 # based on group (genus, family, order)
 .lcvp_group_ind <- function(group_name,
                             group_ref,
-                            max.distance,
+                            max_distance,
                             only_one = TRUE, 
                             closest = FALSE) {
   # Get the position
   group_pos <- which(group_ref == group_name)
   # Fuzzy match if it did not work
   if (length(group_pos) == 0) {
-    if (max.distance > 0) {
+    if (max_distance > 0) {
       group_pos <- .agrep_whole(group_name,
                          group_ref,
-                         max.distance = max.distance)
+                         max_distance = max_distance)
       closest1 <- utils::adist(group_name, group_ref[group_pos])
       
       if (closest & length(group_pos) > 0) {

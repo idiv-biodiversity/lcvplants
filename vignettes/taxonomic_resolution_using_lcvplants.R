@@ -34,22 +34,22 @@ knitr::kable(lcvp_search("Hibiscus vitifolius"))
 
 ## ----Search one species with misspelled name, eval = FALSE--------------------
 #  lcvp_search("Hibiscus vitifoliuse",
-#              max.distance = 0.1,
-#              show.correct = TRUE)
+#              max_distance = 0.1,
+#              show_correct = TRUE)
 
 ## ---- echo = FALSE, warning = FALSE-------------------------------------------
 knitr::kable(lcvp_search("Hibiscus vitifoliuse", 
-                         max.distance = 0.1, 
-                         show.correct = TRUE,))
+                         max_distance = 0.1, 
+                         show_correct = TRUE))
 
 ## ----fuzzy match, eval = FALSE------------------------------------------------
 #  lcvp_fuzzy_search("Hibiscus vitifoliuse",
-#                    max.distance = 0.1,
+#                    max_distance = 0.1,
 #                    keep_closest = TRUE)
 
 ## ---- echo = FALSE, warning = FALSE-------------------------------------------
 knitr::kable(lcvp_fuzzy_search("Hibiscus vitifoliuse",
-                               max.distance = 0.1, 
+                               max_distance = 0.1, 
                                keep_closest = TRUE))
 
 ## ----multiple species search--------------------------------------------------
@@ -60,7 +60,7 @@ splist <- c(
   "Hibiscus acuminatus",
   "Hibiscus furcatuis" 
 )
-x <- lcvp_search(splist, max.distance = 0.2)
+x <- lcvp_search(splist, max_distance = 0.2, show_correct = TRUE)
 
 ## ----show multiple, eval = FALSE----------------------------------------------
 #  x

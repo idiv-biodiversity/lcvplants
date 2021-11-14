@@ -197,10 +197,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>The <code>lcvp_search</code> algorithm will first try to exactly match the binomial names provided by the user. If no match is found, it will try to find the closest name given the maximal transformation cost defined in the argument <code>max.distance</code> (see ?base::agrep for more details). When the argument <code>show.correct = TRUE</code> a column is added to the final result indicating whether the binomial name was exactly matched (TRUE), or if it is misspelled (FALSE).</p>
+<p>The <code>lcvp_search</code> algorithm will first try to exactly match the binomial names provided by the user. If no match is found, it will try to find the closest name given the maximal transformation cost defined in the argument <code>max_distance</code> (see ?base::agrep for more details). When the argument <code>show_correct = TRUE</code> a column is added to the final result indicating whether the binomial name was exactly matched (TRUE), or if it is misspelled (FALSE).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lcvp_search</span>(<span class="st">&quot;Hibiscus vitifoliuse&quot;</span>, </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">max.distance =</span> <span class="fl">0.1</span>, </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.correct =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_distance =</span> <span class="fl">0.1</span>, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">show_correct =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <table>
 <colgroup>
 <col width="15%" />
@@ -240,9 +240,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>If more than one name is fuzzy matched (more than one closest match found), only the accepted or the first name will be returned. The function <code>lcvp_fuzzy_search</code> can be used to return all the closest results when argument <code>keep_closest = TRUE</code>, or all names within the <code>max.distance</code> defined when <code>keep_closest = FALSE</code>.</p>
+<p>If more than one name is fuzzy matched (more than one closest match found), only the accepted or the first name will be returned. The function <code>lcvp_fuzzy_search</code> can be used to return all the closest results when argument <code>keep_closest = TRUE</code>, or all names within the <code>max_distance</code> defined when <code>keep_closest = FALSE</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lcvp_fuzzy_search</span>(<span class="st">&quot;Hibiscus vitifoliuse&quot;</span>, </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">max.distance =</span> <span class="fl">0.1</span>, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">max_distance =</span> <span class="fl">0.1</span>, </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">keep_closest =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <table>
 <colgroup>
@@ -298,18 +298,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Hibiscus acuminatus&quot;</span>,</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Hibiscus furcatuis&quot;</span> </span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_search</span>(splist, <span class="at">max.distance =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_search</span>(splist, <span class="at">max_distance =</span> <span class="fl">0.2</span>, <span class="at">show_correct =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <table>
 <colgroup>
-<col width="22%" />
-<col width="22%" />
+<col width="21%" />
+<col width="21%" />
 <col width="4%" />
 <col width="6%" />
-<col width="16%" />
+<col width="15%" />
 <col width="18%" />
 <col width="4%" />
 <col width="4%" />
+<col width="3%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -321,6 +322,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <th align="left">Output.Taxon</th>
 <th align="left">Family</th>
 <th align="left">Order</th>
+<th align="left">Correct</th>
 </tr>
 </thead>
 <tbody>
@@ -333,6 +335,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left">Abelmoschus moschatus Medik.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="even">
 <td align="left">Hibiscus abutiloides Willd.</td>
@@ -343,6 +346,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left">Talipariti tiliaceum (L.) Fryxell</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="odd">
 <td align="left">Hibiscus aculeatus</td>
@@ -353,6 +357,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left">Hibiscus aculeatus Walter</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="even">
 <td align="left">Hibiscus acuminatus</td>
@@ -363,6 +368,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left">Kosteletzkya acuminata (Cav.) Britten</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="odd">
 <td align="left">Hibiscus furcatuis</td>
@@ -373,6 +379,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td align="left">Hibiscus furcatus Roxb.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left">FALSE</td>
 </tr>
 </tbody>
 </table>
@@ -719,15 +726,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Match both lists</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_match</span>(splist1, splist2)</span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<table style="width:100%;">
+<table>
 <colgroup>
-<col width="21%" />
-<col width="21%" />
-<col width="21%" />
-<col width="2%" />
-<col width="18%" />
-<col width="6%" />
-<col width="8%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="3%" />
+<col width="25%" />
+<col width="7%" />
+<col width="10%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -742,57 +749,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Abacopteris multilineata (Wall. ex Hook.) Ching</td>
-<td align="left">Abacopteris multilineata (Wall. ex Hook.) Ching</td>
-<td align="left">Abacopteris multilineata (Wall. ex Hook.) Ching</td>
+<td align="left">Abacopteris gymnopteridifrons (Hayata) Ching</td>
+<td align="left">Abacopteris gymnopteridifrons (Hayata) Ching</td>
+<td align="left">Abacopteris gymnopteridifrons (Hayata) Ching</td>
 <td align="left">synonym</td>
-<td align="left">Cyclosorus nudatus (Roxb. ex Griff.) B.K.Nayar &amp; S.Kaur</td>
-<td align="left">17</td>
+<td align="left">Cyclosorus gymnopteridifrons (Hayata) C.M.Kuo</td>
+<td align="left">92</td>
+<td align="left">1, 62</td>
+</tr>
+<tr class="even">
+<td align="left">Abacopteris sampsonii (Baker) Ching</td>
+<td align="left">Abacopteris sampsonii (Baker) Ching</td>
+<td align="left">Abacopteris sampsonii (Baker) Ching</td>
+<td align="left">synonym</td>
+<td align="left">Cyclosorus megacuspis (Baker) Tardieu &amp; C.Chr.</td>
+<td align="left">26</td>
+<td align="left">2, 63</td>
+</tr>
+<tr class="odd">
+<td align="left">Aa hieronymi (Cogn.) Schltr.</td>
+<td align="left">Aa hieronymi (Cogn.) Schltr.</td>
+<td align="left">Aa hieronymi (Cogn.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">Aa hieronymi (Cogn.) Schltr.</td>
+<td align="left">34</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
-<td align="left">accepted</td>
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
-<td align="left">73</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
-<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
-<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
-<td align="left">accepted</td>
-<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
+<td align="left">Abacopteris lineata (Blume) Fée ex Ching</td>
+<td align="left">Abacopteris lineata (Blume) Fée ex Ching</td>
+<td align="left">Abacopteris lineata (Blume) Fée ex Ching</td>
+<td align="left">synonym</td>
+<td align="left">Cyclosorus affinis (Blume) Mazumdar &amp; Mukhop.</td>
 <td align="left">30</td>
 <td align="left">NA</td>
 </tr>
-<tr class="even">
-<td align="left">Aaronsohnia pubescens subsp. maroccana (Ball) Förther &amp; Podlech</td>
-<td align="left">Aaronsohnia pubescens subsp. maroccana (Ball) Förther &amp; Podlech</td>
-<td align="left">Aaronsohnia pubescens subsp. maroccana (Ball) Förther &amp; Podlech</td>
-<td align="left">synonym</td>
-<td align="left">Aaronsohnia pubescens (Desf.) K.Bremer &amp; Humphries</td>
-<td align="left">68</td>
-<td align="left">4, 30, 37</td>
-</tr>
 <tr class="odd">
-<td align="left">Aalius rhamnoides (Blume) Kuntze</td>
-<td align="left">Aalius rhamnoides (Blume) Kuntze</td>
-<td align="left">Aalius rhamnoides (Blume) Kuntze</td>
-<td align="left">synonym</td>
-<td align="left">Breynia lanceolata (Blume) Welzen &amp; Pruesapan</td>
-<td align="left">44</td>
+<td align="left">Aa maderoi Schltr.</td>
+<td align="left">Aa maderoi Schltr.</td>
+<td align="left">Aa maderoi Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">Aa maderoi Schltr.</td>
+<td align="left">65</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">Aa rostrata (Rchb.f.) Schltr.</td>
-<td align="left">Aa rostrata (Rchb.f.) Schltr.</td>
-<td align="left">Aa rostrata (Rchb.f.) Schltr.</td>
+<td align="left">Abacopteris penangiana (Hook.) Ching</td>
+<td align="left">Abacopteris penangiana (Hook.) Ching</td>
+<td align="left">Abacopteris penangiana (Hook.) Ching</td>
 <td align="left">synonym</td>
-<td align="left">Myrosmodes rostratum (Rchb.f.) Garay</td>
-<td align="left">39</td>
+<td align="left">Cyclosorus urophyllus (Wall. ex Hook.) Tardieu ex Tardieu &amp; C.Chr.</td>
+<td align="left">72</td>
 <td align="left">NA</td>
 </tr>
 </tbody>
@@ -822,17 +829,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Full join the two tables</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_join</span>(tbl1, tbl2, <span class="fu">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Species&quot;</span>), <span class="at">type =</span> <span class="st">&quot;full&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<table>
+<table style="width:100%;">
 <colgroup>
-<col width="18%" />
-<col width="18%" />
-<col width="18%" />
-<col width="24%" />
-<col width="4%" />
-<col width="4%" />
-<col width="4%" />
+<col width="19%" />
+<col width="19%" />
+<col width="19%" />
+<col width="25%" />
 <col width="3%" />
 <col width="3%" />
+<col width="3%" />
+<col width="2%" />
+<col width="2%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -849,70 +856,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Aalius assimilis (Thwaites) Kuntze</td>
-<td align="left">Aalius assimilis (Thwaites) Kuntze</td>
-<td align="left">Aalius assimilis (Thwaites) Kuntze</td>
-<td align="left">Sauropus assimilis Thwaites</td>
-<td align="right">0.5706144</td>
-<td align="right">0.8194049</td>
-<td align="right">0.6909550</td>
+<td align="left">Aalius trinervia (Hook.f. &amp; Thomson ex Müll.Arg.) Kuntze</td>
+<td align="left">Aalius trinervia (Hook.f. &amp; Thomson ex Müll.Arg.) Kuntze</td>
+<td align="left">Aalius trinervia (Hook.f. &amp; Thomson ex Müll.Arg.) Kuntze</td>
+<td align="left">Breynia trinervia (Hook.f. &amp; Thomson ex Müll.Arg.) Chakrab. &amp; N.P.Balakr.</td>
+<td align="right">0.6039847</td>
+<td align="right">0.3264265</td>
+<td align="right">0.2079364</td>
 <td align="left">a</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
-<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
-<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
-<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
-<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
-<td align="right">0.6281164</td>
-<td align="right">0.8289346</td>
-<td align="right">0.1124142</td>
+<td align="left">Abacopteris holophylla (Baker) Ching</td>
+<td align="left">Abacopteris holophylla (Baker) Ching</td>
+<td align="left">Abacopteris holophylla (Baker) Ching</td>
+<td align="left">Cyclosorus menisciicarpus (Blume) Holttum</td>
+<td align="right">0.4788481</td>
+<td align="right">0.3358664</td>
+<td align="right">0.3900915</td>
 <td align="left">b</td>
 <td align="left">FALSE</td>
 </tr>
 <tr class="odd">
-<td align="left">Aalius oblongifolia (Hook.f.) Kuntze</td>
-<td align="left">Aalius oblongifolia (Hook.f.) Kuntze</td>
-<td align="left">Aalius oblongifolia (Hook.f.) Kuntze</td>
-<td align="left">Breynia androgyna (L.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="right">0.4456880</td>
-<td align="right">0.8513769</td>
-<td align="right">0.2099374</td>
+<td align="left">Abacopteris insularis K.Iwats.</td>
+<td align="left">Abacopteris insularis K.Iwats.</td>
+<td align="left">Abacopteris insularis K.Iwats.</td>
+<td align="left">Chrinephrium_x insulare (K.Iwats.) Nakaike</td>
+<td align="right">0.3422323</td>
+<td align="right">0.7034421</td>
+<td align="right">0.1663943</td>
 <td align="left">b</td>
-<td align="left">FALSE</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="even">
-<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
-<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
-<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
-<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
-<td align="right">0.6869013</td>
-<td align="right">0.9951987</td>
-<td align="right">0.4221338</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="odd">
-<td align="left">Aalius macrantha (Hassk.) Kuntze</td>
-<td align="left">Aalius macrantha (Hassk.) Kuntze</td>
-<td align="left">Aalius macrantha (Hassk.) Kuntze</td>
+<td align="left">Aalius forcipata (Hook.f.) Kuntze</td>
+<td align="left">Aalius forcipata (Hook.f.) Kuntze</td>
+<td align="left">Aalius forcipata (Hook.f.) Kuntze</td>
 <td align="left">Breynia macrantha (Hassk.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="right">0.0644445</td>
-<td align="right">0.2299911</td>
-<td align="right">0.8642174</td>
-<td align="left">a</td>
+<td align="right">0.5730723</td>
+<td align="right">0.1600857</td>
+<td align="right">0.8680363</td>
+<td align="left">b</td>
 <td align="left">TRUE</td>
 </tr>
+<tr class="odd">
+<td align="left">Aa aurantiaca D.Trujillo</td>
+<td align="left">NA</td>
+<td align="left">Aa aurantiaca D.Trujillo</td>
+<td align="left">Aa aurantiaca D.Trujillo</td>
+<td align="right">0.2582376</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
 <tr class="even">
-<td align="left">Aa ustulata Schltr.</td>
-<td align="left">Aa ustulata Schltr.</td>
-<td align="left">Aa ustulata Schltr.</td>
-<td align="left">Myrosmodes ustulatum (Schltr.) Garay</td>
-<td align="right">0.9239872</td>
-<td align="right">0.1306918</td>
-<td align="right">0.3618248</td>
+<td align="left">Abacopteris megacuspis (Baker) Ching</td>
+<td align="left">Abacopteris megacuspis (Baker) Ching</td>
+<td align="left">Abacopteris megacuspis (Baker) Ching</td>
+<td align="left">Cyclosorus megacuspis (Baker) Tardieu &amp; C.Chr.</td>
+<td align="right">0.9129756</td>
+<td align="right">0.5148282</td>
+<td align="right">0.8562719</td>
 <td align="left">a</td>
-<td align="left">FALSE</td>
+<td align="left">TRUE</td>
 </tr>
 </tbody>
 </table>
@@ -920,17 +927,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">lcvp_join</span>(tbl1, tbl2, <span class="fu">c</span>(<span class="st">&quot;Species&quot;</span>, <span class="st">&quot;Species&quot;</span>), <span class="at">type =</span> <span class="st">&quot;full&quot;</span>,</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">solve_duplicated =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
-<table>
+<table style="width:100%;">
 <colgroup>
-<col width="18%" />
-<col width="18%" />
-<col width="18%" />
-<col width="24%" />
-<col width="4%" />
-<col width="4%" />
-<col width="4%" />
+<col width="19%" />
+<col width="19%" />
+<col width="19%" />
+<col width="25%" />
 <col width="3%" />
 <col width="3%" />
+<col width="3%" />
+<col width="2%" />
+<col width="2%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -947,70 +954,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Aalius assimilis (Thwaites) Kuntze</td>
-<td align="left">Aalius assimilis (Thwaites) Kuntze</td>
-<td align="left">Aalius assimilis (Thwaites) Kuntze</td>
-<td align="left">Sauropus assimilis Thwaites</td>
-<td align="right">0.5706144</td>
-<td align="right">0.8194049</td>
-<td align="right">0.6909550</td>
+<td align="left">Aalius trinervia (Hook.f. &amp; Thomson ex Müll.Arg.) Kuntze</td>
+<td align="left">Aalius trinervia (Hook.f. &amp; Thomson ex Müll.Arg.) Kuntze</td>
+<td align="left">Aalius trinervia (Hook.f. &amp; Thomson ex Müll.Arg.) Kuntze</td>
+<td align="left">Breynia trinervia (Hook.f. &amp; Thomson ex Müll.Arg.) Chakrab. &amp; N.P.Balakr.</td>
+<td align="right">0.6039847</td>
+<td align="right">0.3264265</td>
+<td align="right">0.2079364</td>
 <td align="left">a</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
-<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
-<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
-<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
-<td align="left">Aa paleacea (Kunth) Rchb.f.</td>
-<td align="right">0.6281164</td>
-<td align="right">0.8289346</td>
-<td align="right">0.1124142</td>
-<td align="left">b</td>
+<td align="left">Abacopteris holophylla (Baker) Ching</td>
+<td align="left">Abacopteris holophylla (Baker) Ching</td>
+<td align="left">Abacopteris holophylla (Baker) Ching</td>
+<td align="left">Cyclosorus menisciicarpus (Blume) Holttum</td>
+<td align="right">0.6012663</td>
+<td align="right">0.2481461</td>
+<td align="right">0.4048809</td>
+<td align="left">b, a</td>
 <td align="left">FALSE</td>
 </tr>
 <tr class="odd">
-<td align="left">Aalius oblongifolia (Hook.f.) Kuntze</td>
-<td align="left">Aalius oblongifolia (Hook.f.) Kuntze</td>
-<td align="left">Aalius oblongifolia (Hook.f.) Kuntze</td>
-<td align="left">Breynia androgyna (L.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="right">0.4274720</td>
-<td align="right">0.4429380</td>
-<td align="right">0.4673970</td>
+<td align="left">Abacopteris insularis K.Iwats.</td>
+<td align="left">Abacopteris insularis K.Iwats.</td>
+<td align="left">Abacopteris insularis K.Iwats.</td>
+<td align="left">Chrinephrium_x insulare (K.Iwats.) Nakaike</td>
+<td align="right">0.3422323</td>
+<td align="right">0.7034421</td>
+<td align="right">0.1663943</td>
+<td align="left">b</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">Aalius forcipata (Hook.f.) Kuntze</td>
+<td align="left">Aalius forcipata (Hook.f.) Kuntze</td>
+<td align="left">Aalius forcipata (Hook.f.) Kuntze</td>
+<td align="left">Breynia macrantha (Hassk.) Chakrab. &amp; N.P.Balakr.</td>
+<td align="right">0.5103060</td>
+<td align="right">0.2959818</td>
+<td align="right">0.5068927</td>
 <td align="left">b, a</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="even">
-<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
-<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
-<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
-<td align="left">Aa nervosa (Kraenzl.) Schltr.</td>
-<td align="right">0.6869013</td>
-<td align="right">0.9951987</td>
-<td align="right">0.4221338</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
-</tr>
 <tr class="odd">
-<td align="left">Aalius macrantha (Hassk.) Kuntze</td>
-<td align="left">Aalius macrantha (Hassk.) Kuntze</td>
-<td align="left">Aalius macrantha (Hassk.) Kuntze</td>
-<td align="left">Breynia macrantha (Hassk.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="right">0.5450402</td>
-<td align="right">0.4013139</td>
-<td align="right">0.5270851</td>
+<td align="left">Aa aurantiaca D.Trujillo</td>
+<td align="left">NA</td>
+<td align="left">Aa aurantiaca D.Trujillo</td>
+<td align="left">Aa aurantiaca D.Trujillo</td>
+<td align="right">0.2582376</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Abacopteris megacuspis (Baker) Ching</td>
+<td align="left">Abacopteris megacuspis (Baker) Ching</td>
+<td align="left">Abacopteris megacuspis (Baker) Ching</td>
+<td align="left">Cyclosorus megacuspis (Baker) Tardieu &amp; C.Chr.</td>
+<td align="right">0.7619468</td>
+<td align="right">0.7323410</td>
+<td align="right">0.6068377</td>
 <td align="left">a, b</td>
 <td align="left">TRUE</td>
-</tr>
-<tr class="even">
-<td align="left">Aa ustulata Schltr.</td>
-<td align="left">Aa ustulata Schltr.</td>
-<td align="left">Aa ustulata Schltr.</td>
-<td align="left">Myrosmodes ustulatum (Schltr.) Garay</td>
-<td align="right">0.9239872</td>
-<td align="right">0.1306918</td>
-<td align="right">0.3618248</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
 </tr>
 </tbody>
 </table>
@@ -1037,38 +1044,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Aa schickendanzii Schltr.</td>
-<td align="right">0.2893843</td>
+<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
+<td align="right">0.4399712</td>
+<td align="left">a</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">Myrosmodes rostratum (Rchb.f.) Garay</td>
+<td align="right">0.4680149</td>
 <td align="left">b</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="even">
-<td align="left">Cyclosorus cuspidatus (Blume) Copel.</td>
-<td align="right">0.9605319</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
-</tr>
 <tr class="odd">
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="right">0.1208232</td>
+<td align="left">Cyclosorus rubicundus (Alderw.) S.Linds.</td>
+<td align="right">0.5291840</td>
 <td align="left">a</td>
 <td align="left">FALSE</td>
 </tr>
 <tr class="even">
-<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
-<td align="right">0.5361613</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
+<td align="left">Cyclosorus asperus (C.Presl) B.K.Nayar &amp; S.Kaur</td>
+<td align="right">0.3450050</td>
+<td align="left">a, b</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="odd">
-<td align="left">Aa riobambae Schltr.</td>
-<td align="right">0.1461465</td>
+<td align="left">Aa lorentzii Schltr.</td>
+<td align="right">0.4787994</td>
 <td align="left">a</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
-<td align="left">Breynia androgyna (L.) Chakrab. &amp; N.P.Balakr.</td>
-<td align="right">0.3414512</td>
+<td align="left">Breynia quadrangularis (Willd.) Chakrab. &amp; N.P.Balakr.</td>
+<td align="right">0.4701015</td>
 <td align="left">a, b</td>
 <td align="left">TRUE</td>
 </tr>

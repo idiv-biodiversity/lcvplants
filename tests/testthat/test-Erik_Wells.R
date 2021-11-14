@@ -235,7 +235,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     expect_true(is.null(res_ex))
     
     expect_warning(
-    res_ex <- lcvp_fuzzy_search(sp, max.distance = .2) 
+    res_ex <- lcvp_fuzzy_search(sp, max_distance = .2) 
     )
     expect_true(is.null(res_ex))
   })

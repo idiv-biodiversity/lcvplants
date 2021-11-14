@@ -52,18 +52,18 @@ search_result <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.", "
 lcvp_summary(search_result)
 ```
 
-The algorithm can also consider misspellings and look for the most similar match given a max.distance argument set by the user:
+The algorithm can also consider misspellings and look for the most similar match given a max_distance argument set by the user:
 ```r
 # Misspeled name
-lcvp_search("Hibiscus vitifolia", max.distance = 2)
+lcvp_search("Hibiscus vitifolia", max_distance = 2)
 
 # Misspelings in a vector of names
-res_ex <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.", "Hibiscus abutiloides Willd.", "Hibiscus aculeatus", "Hibiscus acuminatus", "Hibiscus furcatuis", "Hibiscus error"), max.distance = 1)
+res_ex <- lcvp_search(c("Hibiscus abelmoschus var. betulifolius Mast.", "Hibiscus abutiloides Willd.", "Hibiscus aculeatus", "Hibiscus acuminatus", "Hibiscus furcatuis", "Hibiscus error"), max_distance = 1)
 lcvp_summary(res_ex)
 
 
 # You may also want to check all the possible matches 
-lcvp_fuzzy_search("Hibiscus vitifolia", max.distance = 2)
+lcvp_fuzzy_search("Hibiscus vitifolia", max_distance = 2)
 ```
 
 You can also search for species using the Order, Family, Genus or Author name:

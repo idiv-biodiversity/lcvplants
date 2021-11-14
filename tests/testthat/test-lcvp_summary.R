@@ -9,7 +9,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
                          "Hibiscus acuminatus",
                          "Hibiscus error"
                        ),
-                       max.distance = 1
+                       max_distance = 1
                      ))
     expect_output(lcvp_summary(res_ex))
   })

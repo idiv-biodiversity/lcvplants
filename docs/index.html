@@ -134,18 +134,18 @@
 
 <span class="co"># You can see the summary results</span>
 <span class="fu"><a href="reference/lcvp_summary.html">lcvp_summary</a></span><span class="op">(</span><span class="va">search_result</span><span class="op">)</span></code></pre></div>
-<p>The algorithm can also consider misspellings and look for the most similar match given a max.distance argument set by the user:</p>
+<p>The algorithm can also consider misspellings and look for the most similar match given a max_distance argument set by the user:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Misspeled name</span>
-<span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifolia"</span>, max.distance <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+<span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifolia"</span>, max_distance <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 
 <span class="co"># Misspelings in a vector of names</span>
-<span class="va">res_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span>, <span class="st">"Hibiscus abutiloides Willd."</span>, <span class="st">"Hibiscus aculeatus"</span>, <span class="st">"Hibiscus acuminatus"</span>, <span class="st">"Hibiscus furcatuis"</span>, <span class="st">"Hibiscus error"</span><span class="op">)</span>, max.distance <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">res_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span>, <span class="st">"Hibiscus abutiloides Willd."</span>, <span class="st">"Hibiscus aculeatus"</span>, <span class="st">"Hibiscus acuminatus"</span>, <span class="st">"Hibiscus furcatuis"</span>, <span class="st">"Hibiscus error"</span><span class="op">)</span>, max_distance <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="fu"><a href="reference/lcvp_summary.html">lcvp_summary</a></span><span class="op">(</span><span class="va">res_ex</span><span class="op">)</span>
 
 
 <span class="co"># You may also want to check all the possible matches </span>
-<span class="fu"><a href="reference/lcvp_fuzzy_search.html">lcvp_fuzzy_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifolia"</span>, max.distance <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="reference/lcvp_fuzzy_search.html">lcvp_fuzzy_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifolia"</span>, max_distance <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p>You can also search for species using the Order, Family, Genus or Author name:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Search for the genus AA</span>

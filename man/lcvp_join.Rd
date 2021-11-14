@@ -8,7 +8,9 @@ lcvp_join(
   x,
   y,
   sp_columns,
-  max.distance = 0.2,
+  max_distance = 0.2,
+  genus_fuzzy = FALSE,
+  grammar_check = FALSE,
   type = "full",
   solve_duplicated = FALSE,
   func_numeric = mean,
@@ -24,14 +26,21 @@ with respective species names to join by.
 
 For example, c("species", "Species_name").}
 
-\item{max.distance}{It represents the maximum string distance allowed for a
+\item{max_distance}{It represents the maximum string distance allowed for a
 match when comparing the submitted name with the closest name matches in the
 LCVP. The distance used is a generalized Levenshtein distance that indicates
 the total number of insertions, deletions, and substitutions allowed to
 match the two names. It can be expressed as an integer or as the fraction of
-the binomial name. For example, a name with length 10, and a max.distance =
+the binomial name. For example, a name with length 10, and a max_distance =
 0.1, allow only one change (insertion, deletion, or substitution). A
-max.distance = 2, allows two changes.}
+max_distance = 2, allows two changes.}
+
+\item{genus_fuzzy}{If TRUE, the fuzzy match algorithm based on max_distance
+will also be applied to the genus (note that this may considerably increase
+computational time). If FALSE, fuzzy match will only apply to the epithet.}
+
+\item{grammar_check}{if TRUE, the algorithm will try to fix common latin
+grammar mistakes.}
 
 \item{type}{What type of join should be done: "full" (default), "left",
 "right" or "inner". * "full" return all rows and all columns from both x and
@@ -70,7 +79,7 @@ name in both tables. It first standardizes the species names in both tables
 based on the "Leipzig Catalogue of Vascular Plants" (LCVP) using the algorithm
 in \code{\link[lcvplants:lcvp_search]{lcvp_search}}. Note that
 \code{lcvp_join} can also deal with misspelling by fuzzy matching species name
-given a \code{max.distance} choice. These standardized names of both tables
+given a \code{max_distance} choice. These standardized names of both tables
 are then matched using the algorithm in
 \code{\link[lcvplants:lcvp_match]{lcvp_match}}. The type "full" join will keep
 all species and add NAs to missing values. No NA is added in "inner", "left"

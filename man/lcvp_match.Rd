@@ -7,7 +7,9 @@
 lcvp_match(
   splist1,
   splist2,
-  max.distance = 0.2,
+  max_distance = 0.2,
+  genus_fuzzy = FALSE,
+  grammar_check = FALSE,
   include_all = TRUE,
   identify_dups = TRUE
 )
@@ -23,14 +25,21 @@ Each element including genus and specific epithet and, potentially, infraspecifi
 infraspecific name, and author name. Only valid characters are allowed
 (see \code{\link[base:validEnc]{base:validEnc}}).}
 
-\item{max.distance}{It represents the maximum string distance allowed for a
+\item{max_distance}{It represents the maximum string distance allowed for a
 match when comparing the submitted name with the closest name matches in the
 LCVP. The distance used is a generalized Levenshtein distance that indicates
 the total number of insertions, deletions, and substitutions allowed to
 match the two names. It can be expressed as an integer or as the fraction of
-the binomial name. For example, a name with length 10, and a max.distance =
+the binomial name. For example, a name with length 10, and a max_distance =
 0.1, allow only one change (insertion, deletion, or substitution). A
-max.distance = 2, allows two changes.}
+max_distance = 2, allows two changes.}
+
+\item{genus_fuzzy}{If TRUE, the fuzzy match algorithm based on max_distance
+will also be applied to the genus (note that this may considerably increase
+computational time). If FALSE, fuzzy match will only apply to the epithet.}
+
+\item{grammar_check}{if TRUE, the algorithm will try to fix common latin
+grammar mistakes.}
 
 \item{include_all}{If \code{TRUE} (default), it will include all species in both
 \code{splist1} and \code{splist2}. If \code{FALSE}, it will exclude species

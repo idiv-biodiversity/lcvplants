@@ -6,8 +6,10 @@
 \usage{
 lcvp_search(
   splist,
-  max.distance = 0.2,
-  show.correct = FALSE,
+  max_distance = 0.2,
+  show_correct = FALSE,
+  genus_fuzzy = FALSE,
+  grammar_check = FALSE,
   progress_bar = FALSE
 )
 }
@@ -17,18 +19,24 @@ including genus and specific epithet and, potentially, infraspecific rank,
 infraspecific name and author name. Only valid characters are allowed (see
 \code{\link[base:validEnc]{base::validEnc}}).}
 
-\item{max.distance}{It represents the maximum string distance allowed for a
-match when comparing the submitted name with the closest name matches in the
+\item{max_distance}{match when comparing the submitted name with the closest name matches in the
 LCVP. The distance used is a generalized Levenshtein distance that indicates
 the total number of insertions, deletions, and substitutions allowed to
 match the two names. It can be expressed as an integer or as the fraction of
-the binomial name. For example, a name with length 10, and a max.distance =
+the binomial name. For example, a name with length 10, and a max_distance =
 0.1, allow only one change (insertion, deletion, or substitution). A
-max.distance = 2, allows two changes.}
+max_distance = 2, allows two changes.}
 
-\item{show.correct}{If TRUE, a column is added to the final result indicating
+\item{show_correct}{If TRUE, a column is added to the final result indicating
 whether the binomial name was exactly matched (TRUE), or if it is misspelled
 (FALSE).}
+
+\item{genus_fuzzy}{If TRUE, the fuzzy match algorithm based on max_distance
+will also be applied to the genus (note that this may considerably increase
+computational time). If FALSE, fuzzy match will only apply to the epithet.}
+
+\item{grammar_check}{if TRUE, the algorithm will try to fix common latin
+grammar mistakes.}
 
 \item{progress_bar}{If TRUE, a progress bar will be printed.}
 }
@@ -57,7 +65,7 @@ input taxon.}
 staying empty if the Status is unresolved.}
 \item{\emph{Order}}{: The corresponding order name of the Input.Taxon,
 staying empty if the Status is unresolved.}
-\item{\emph{Correct}}{: if show.correct = TRUE, this column is added to the
+\item{\emph{Correct}}{: if show_correct = TRUE, this column is added to the
 final result indicating whether the binomial name was exactly matched
 (TRUE), or if it is misspelled (FALSE).} }
 
@@ -83,7 +91,7 @@ column.
 
 The algorithm will first try to exactly match the binomial names provided in
 \code{splist}. If no match is found, it will try to find the closest name given the
-maximum distance defined in \code{max.distance}. If more than one name is exactly
+maximum distance defined in \code{max_distance}. If more than one name is exactly
 or fuzzy matched, only the accepted or the first will be returned and a
 warning message will be printed on the console. The list of input names that
 matched multiple names in LCVP can be obtained using \code{attr(x,
@@ -109,8 +117,8 @@ if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 lcvp_search("Aa achalensis")
 
 # Search one species with misspelled name
-lcvp_search("Aa achalensise", show.correct = TRUE)
-lcvp_search("Aae achalensise", max.distance = 2)
+lcvp_search("Aa achalensise", show_correct = TRUE)
+lcvp_search("Aae achalensise", max_distance = 2)
 
 # Search for a variety
 lcvp_search("Hibiscus abelmoschus var. betulifolius Mast.")
@@ -123,7 +131,7 @@ splist <- c(
 "Hibiscus acuminatus",
 "Hibiscus furcatuis" # This is a wrong name
 )
-mult <- lcvp_search(splist, max.distance = 0.2)
+mult <- lcvp_search(splist, max_distance = 0.2)
 
  ## Results for multiple species search can be summarized using lcvp_summary
 lcvp_summary(mult)

@@ -26,11 +26,11 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     expect_equal(nrow(res_ex), 99)
   })
   
-  test_that("lcvp_match works, include_all = FALSE & max.distance = 0", {
+  test_that("lcvp_match works, include_all = FALSE & max_distance = 0", {
     res_ex <- lcvp_match(splist1,
                          splist2,
                          include_all = FALSE,
-                         max.distance = 0)
+                         max_distance = 0)
     expect_equal(class(res_ex), "data.frame")
     expect_equal(ncol(res_ex), 7)
     expect_equal(nrow(res_ex), 96)

@@ -7,7 +7,7 @@
 lcvp_group_search(
   group_names,
   search_by,
-  max.distance = 0.2,
+  max_distance = 0.2,
   bind_result = TRUE,
   status = c("accepted", "synonym", "unresolved", "external")
 )
@@ -20,14 +20,14 @@ characters are allowed (see \code{\link[base:validEnc]{validEnc}}).}
 \item{search_by}{A character indicating whether to search by "Order",
 "Family", "Genus" or "Author".}
 
-\item{max.distance}{It represents the maximum string distance allowed for a
+\item{max_distance}{It represents the maximum string distance allowed for a
 match when comparing the submitted name with the closest name matches in the
 LCVP. The distance used is a generalized Levenshtein distance that indicates
 the total number of insertions, deletions, and substitutions allowed to
 match the two names. It can be expressed as an integer or as the fraction of
-the binomial name. For example, a name with length 10, and a max.distance =
+the binomial name. For example, a name with length 10, and a max_distance =
 0.1, allow only one change (insertion, deletion, or substitution). A
-max.distance = 2, allows two changes.}
+max_distance = 2, allows two changes.}
 
 \item{bind_result}{If TRUE the function will return one data.frame (default).
 If False, the function will return a list of separate data.frames for
@@ -76,7 +76,7 @@ genus or author.
 The algorithm will look for all the plant taxa names listed in the "Leipzig
 Catalogue of Vascular Plants" (LCVP) based on a user-specified list of
 orders,  families, genus, or authors names. If no match is found, it will try
-to find the closest name given the maximum distance defined in \code{max.distance}.
+to find the closest name given the maximum distance defined in \code{max_distance}.
 If more than one name is fuzzy matched, only the first will be returned.
 }
 \examples{

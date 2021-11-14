@@ -51,7 +51,7 @@
 #' "Hibiscus aculeatus",
 #' "Hibiscus acuminatis",
 #' "Hibiscus error"), 
-#' max.distance = 1)
+#' max_distance = 1)
 #' 
 #' # Summarize the results
 #' lcvp_summary(x)

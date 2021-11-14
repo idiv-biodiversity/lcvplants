@@ -9,14 +9,18 @@
 #' infraspecific name and author name. Only valid characters are allowed 
 #' (see \code{\link[base:validEnc]{validEnc}}).
 #'
-#'@param max.distance It represents the maximum string distance allowed for a
+#'@param max_distance It represents the maximum string distance allowed for a
 #'  match when comparing the submitted name with the closest name matches in the
 #'  LCVP. The distance used is a generalized Levenshtein distance that indicates
 #'  the total number of insertions, deletions, and substitutions allowed to
 #'  match the two names. It can be expressed as an integer or as the fraction of
-#'  the binomial name. For example, a name with length 10, and a max.distance =
+#'  the binomial name. For example, a name with length 10, and a max_distance =
 #'  0.1, allow only one change (insertion, deletion, or substitution). A
-#'  max.distance = 2, allows two changes.
+#'  max_distance = 2, allows two changes.
+#'  
+#' @param genus_fuzzy If TRUE, the fuzzy match algorithm based on max_distance
+#'  will also be applied to the genus (note that this may considerably increase
+#'  computational time). If FALSE, fuzzy match will only apply to the epithet.
 #'
 #' @param status A character vector indicating what taxa status should be 
 #' included in the results: "accepted", "synonym", "unresolved", "external".
@@ -32,15 +36,16 @@
 #' each input group.
 #' 
 #' @param keep_closest if TRUE the function will return only the closest names
-#'   within the max.distance specified. If FALSE, it will return all names
+#'   within the max_distance specified. If FALSE, it will return all names
 #'   within the specified distance.
 #' 
-#'@param progress_bar If TRUE, a progress bar will be printed.
+#' @param progress_bar If TRUE, a progress bar will be printed.
+#'
 #' 
 #' @details 
 #' 
 #' The algorithm will look for all the names within the given maximum distance
-#' defined in `max.distance`. It can return all best matches (keep_closest =
+#' defined in `max_distance`. It can return all best matches (keep_closest =
 #' TRUE), or all the matches within the distance (keep_closest = FALSE).
 #' 
 #' Note that only binomial names with valid characters are allowed in this
@@ -113,9 +118,9 @@
 #' lcvp_fuzzy_search(c("Hibiscus vitifolia", "Artemisia vulgaris"),
 #' bind_result = FALSE)
 #' 
-#' # Returns all accepted names within a max.distance of 6.
+#' # Returns all accepted names within a max_distance of 6.
 #' lcvp_fuzzy_search("Hibiscus vitifolia", status = "accepted",
-#' keep_closest = FALSE, max.distance = 6)
+#' keep_closest = FALSE, max_distance = 6)
 #' 
 #' } 
 #'@export
@@ -123,7 +128,8 @@
 
 
 lcvp_fuzzy_search <- function(splist,
-                              max.distance = 0.2,
+                              max_distance = 0.2, 
+                              genus_fuzzy = FALSE,
                               status = c("accepted",
                                          "synonym",
                                          "unresolved",
@@ -160,9 +166,10 @@ lcvp_fuzzy_search <- function(splist,
   for (i in 1:n_sps) {
     result[[i]] <-
       .lcvp_fuzzy_search_ind(species_class[i, , drop = FALSE],
-                            max.distance,
+                            max_distance,
                             status,
-                            keep_closest)
+                            keep_closest, 
+                            genus_fuzzy = genus_fuzzy)
     if (progress_bar) {
       utils::setTxtProgressBar(pb, i)
     }
@@ -189,9 +196,10 @@ lcvp_fuzzy_search <- function(splist,
 #----------------------------------------------------
 
 .lcvp_fuzzy_search_ind <- function(species_class,
-                              max.distance,
+                              max_distance,
                               status,
-                              keep_closest) {
+                              keep_closest, 
+                              genus_fuzzy) {
   
   
   if (is.na(species_class[, 3])) {
@@ -201,9 +209,10 @@ lcvp_fuzzy_search <- function(splist,
   } else {
     # Now match
     ## Get the genus  first
+    max_distance2 <- ifelse(genus_fuzzy, max_distance, 0)
     gen_number <- .lcvp_group_ind(species_class[1, 2],
                                   LCVP::tab_position$Genus,
-                                  max.distance,
+                                  max_distance = max_distance2,
                                   FALSE)
     pos_genus <- unlist(.genus_search_multiple(gen_number))
     n_class <- ncol(LCVP::lcvp_sps_class)
@@ -211,19 +220,14 @@ lcvp_fuzzy_search <- function(splist,
     if (!any(is.na(pos_genus))) {
       # Try fuzzy
       pos_res <- .fuzzy_match(species_class[1,],
-                            pos_genus,
-                            max.distance,
-                            n_class,
-                            return_all = TRUE, 
-                            keep_closest = keep_closest)
+                              pos_genus,
+                              max_distance,
+                              n_class,
+                              return_all = TRUE, 
+                              keep_closest = keep_closest)
     } else {
       # Fuzzy if did not find the genus
-      pos_res <- .fuzzy_match(splist_class_i = species_class[1,],
-                            pos_genus = NULL,
-                            max.distance,
-                            n_class,
-                            return_all = TRUE, 
-                            keep_closest = keep_closest)
+      pos_res <- NULL
     }
     if (length(pos_res) > 0 & !all(is.na(pos_res))) {
       # Result

@@ -24,10 +24,10 @@
 
 #-------------------------------------------------------#
 # Function to match the closest fuzzy name
-.agrep_whole <- function(x, y, max.distance) {
-  if (max.distance < 1 & max.distance > 0) {
-    max.distance <- ceiling(nchar(x) * max.distance)
+.agrep_whole <- function(x, y, max_distance) {
+  if (max_distance < 1 & max_distance > 0) {
+    max_distance <- ceiling(nchar(x) * max_distance)
   } 
   a <- utils::adist(x, y)
-  return(which(a <= max.distance))
+  return(which(a <= max_distance))
 }
