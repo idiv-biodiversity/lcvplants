@@ -4,7 +4,7 @@
 .onLoad  <- function(libname, pkgname) {
   has_data <- requireNamespace("LCVP", quietly = TRUE)
   if (has_data) {
-    has_data <- has_data & packageVersion("LCVP") >= 2 # change accordingly
+    has_data <- has_data & utils::packageVersion("LCVP") >= 2 # change accordingly
   }
   .pkgenv[["has_data"]] <- has_data
 }
@@ -23,7 +23,7 @@
 hasData <- function() {
   has_data <- requireNamespace("LCVP", quietly = TRUE)
   if (has_data) {
-    has_data <- has_data & packageVersion("LCVP") >= 2 # change accordingly
+    has_data <- has_data & utils::packageVersion("LCVP") >= 2 # change accordingly
   }
   if (!has_data) {
     msg <- paste("To use this function, you must have the",

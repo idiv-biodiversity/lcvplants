@@ -18,3 +18,4 @@ README.yml
 ^_pkgdown\.yml$
 ^pkgdown$
 ^site_libs$
+^vignettes/articles$
