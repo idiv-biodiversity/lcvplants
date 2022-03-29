@@ -284,6 +284,9 @@ head(x)
 knitr::kable(head(x))
 ```
 
+# Parallel programing with lcvplants
+
+Some users may want to use lcvplants functions to perform taxonomic harmonization for many thousands of species and wish to use the entire computational capacity available to speed up the processing time. Check this [article](https://idiv-biodiversity.github.io/lcvplants/articles/articles/Parallel-name-harmonization.html), where we show how to run lcvp_search or lcvp_fuzzy_search in parallel in an efficient way to reduce computational time.
 
 # References
 

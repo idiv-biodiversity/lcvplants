@@ -224,7 +224,8 @@ lcvp_fuzzy_search <- function(splist,
                               max_distance,
                               n_class,
                               return_all = TRUE, 
-                              keep_closest = keep_closest)
+                              keep_closest = keep_closest,
+                              max_distance2 = max_distance2)
     } else {
       # Fuzzy if did not find the genus
       pos_res <- NULL

@@ -81,7 +81,8 @@
                                     pos_genus,
                                     max_distance,
                                     n_class,
-                                    keep_closest = keep_closest)
+                                    keep_closest = keep_closest,
+                                    max_distance2 = max_distance2)
         }
       }
       ## may improve match performance (a little), but consumes more
@@ -186,7 +187,8 @@
                          max_distance,
                          n_class,
                          return_all = FALSE,
-                         keep_closest = TRUE) {
+                         keep_closest = TRUE,
+                         max_distance2 = max_distance) {
   # If we did not find an approximation of the genus
   fuzzy_match <- NULL
   if (!is.null(pos_genus)) {
@@ -206,7 +208,7 @@
                    LCVP::lcvp_sps_class[, 3])
     fuzzy_match <- .agrep_whole(name1,
                                 name2,
-                                max_distance = max_distance)
+                                max_distance = max_distance2)
   }
   
   if (length(fuzzy_match) == 0) {

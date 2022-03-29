@@ -87,7 +87,7 @@ We run some tests on a workstation with 8 cores to harmonize random samples of n
 knitr::include_graphics("Parallel-name-harmonization-fig2.png", dpi = 300)
 ```
 
-In other words, if you want to run your code using 3 cores, you should divide the total dataset into 3 subsets, and then run `lcvp_search` in 3 parallel cores. Use the following code to dive your dataset.
+In other words, if you want to run your code using 3 cores, you should divide the total dataset into 3 subsets, and then run `lcvp_search` in 3 parallel cores. Use the following code to divide your dataset.
 
 ```{r dividing_dataset}
 blocks <- round(quantile(1:length(sps), 
