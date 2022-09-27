@@ -975,29 +975,55 @@ using the <code>lcvp_group_search</code> function.</p>
 columns:</p>
 <ul>
 <li>
-<em>Search</em>: Taxa name list provided by the user.</li>
+<em>global.Id</em>: The fixed species id of the input taxon in the
+Leipzig Catalogue of Vascular Plants (LCVP).</li>
 <li>
-<em>Input.Taxon</em>: Matched taxa names listed in the LCVP
-data.</li>
+<em>Input.Genus</em>: A character vector. The input genus of the
+corresponding vascular plant species name listed in LCVP.</li>
 <li>
-<em>Status</em>: Nomenclature status: ‘accepted’, ‘synonym’,
-‘unresolved’ or ‘external’.</li>
+<em>Input.Epitheton</em>: A character vector. The input epitheton of
+the corresponding vascular plant species name listed in LCVP.</li>
 <li>
-<em>PL.comparisson</em>: This field provides a direct comparison
-with ‘The Plant List’: ‘identical’, ‘synonym’, ‘other synonym’,
-‘different authors’, ‘missing’, ‘misspelling’ or ‘unresolved’.</li>
+<em>Rank</em>: A character vector. The taxonomic rank (“species”,
+subspecies: “subsp.”, variety: “var.”, subvariety: “subvar.”, “forma”,
+or subforma: “subf.”) of the corresponding vascular plant species name
+listed in LCVP.</li>
 <li>
-<em>PL.alternative</em>: This field provides a possible alternative
-name from ‘The Plant List’.</li>
+<em>Input.Subspecies.Epitheton</em>: A character vector. If the
+indicated rank is below species, the subspecies epitheton input of the
+corresponding vascular plant species name listed in LCVP. If the rank is
+“species”, the input is “nil”.</li>
 <li>
-<em>Output.Taxon</em>: The list of the accepted plant taxa names
-according to the LCVP.</li>
+<em>Input.Authors</em>: A character vector. The taxonomic authority
+input of the corresponding vascular plant species name listed in
+LCVP.</li>
 <li>
-<em>Family</em>: The corresponding family name of the Input.Taxon,
-staying empty if the Status is unresolved.</li>
+<em>Status</em>: A character vector. description if a taxon is
+classified as ‘valid’, ‘synonym’, ‘unresolved’, ‘external’ or ‘blanks’.
+The ‘unresolved’ rank means that the status of the plant name could be
+either valid or synonym, but the information available does not allow a
+definitive decision. ‘External’ in an extra rank which lists names
+outside the scope of this publication but useful to keep on this updated
+list. ‘Blanks’ means that the respective name exists in bibliography but
+it is neither clear where it came from valid, synonym or unresolved.
+(see the main text Freiberg et al. for more details)</li>
 <li>
-<em>Order</em>: The corresponding order name of the Input.Taxon,
-staying empty if the Status is unresolved.</li>
+<em>globalId.of.Output.Taxon</em>: The fixed species id of the
+output taxon in LCVP.</li>
+<li>
+<em>Output.Taxon</em>: A character vector. The list of the accepted
+plant taxa names according to the LCVP.</li>
+<li>
+<em>Family</em>: A character vector. The corresponding family name
+of the Input.Taxon, staying empty if the Status is unresolved.</li>
+<li>
+<em>Order</em>: A character vector. The corresponding order name of
+the Input.Taxon, staying empty if the Status is unresolved.</li>
+<li>
+<em>Literature</em>: A character vector. The bibliography used.</li>
+<li>
+<em>Comments</em>: A character vector. Further taxonomic
+comments.</li>
 </ul>
 <p>If no match is found for one species it will return NA for the
 columns in the LCVP table. But, if no match is found for all species the
@@ -1028,24 +1054,24 @@ splist2.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
 <table style="width:100%;" class="table">
 <colgroup>
-<col width="0%">
-<col width="4%">
-<col width="4%">
+<col width="1%">
+<col width="5%">
+<col width="5%">
 <col width="3%">
-<col width="3%">
+<col width="4%">
 <col width="5%">
 <col width="2%">
-<col width="8%">
-<col width="5%">
-<col width="2%">
-<col width="8%">
-<col width="13%">
-<col width="3%">
-<col width="3%">
 <col width="9%">
-<col width="2%">
 <col width="6%">
+<col width="3%">
 <col width="8%">
+<col width="11%">
+<col width="4%">
+<col width="4%">
+<col width="9%">
+<col width="3%">
+<col width="6%">
+<col width="9%">
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
@@ -1069,66 +1095,6 @@ splist2.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">9</td>
-<td align="left">Aa fiebrigii</td>
-<td align="left">Aa fiebrigii</td>
-<td align="left">9</td>
-<td align="left">Aa</td>
-<td align="left">fiebrigii</td>
-<td align="left">species</td>
-<td align="left">nil</td>
-<td align="left">(Schltr.) Schltr.</td>
-<td align="left">accepted</td>
-<td align="left">9</td>
-<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
-<td align="left">Orchidaceae</td>
-<td align="left">Asparagales</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">7</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="left">5</td>
-<td align="left">Aa chiogena</td>
-<td align="left">Aa chiogena</td>
-<td align="left">5</td>
-<td align="left">Aa</td>
-<td align="left">chiogena</td>
-<td align="left">species</td>
-<td align="left">nil</td>
-<td align="left">Schltr.</td>
-<td align="left">synonym</td>
-<td align="left">819080</td>
-<td align="left">Myrosmodes chiogena (Schltr.) C.A.Vargas</td>
-<td align="left">Orchidaceae</td>
-<td align="left">Asparagales</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">4</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">4</td>
-<td align="left">Aa calceata</td>
-<td align="left">Aa calceata</td>
-<td align="left">4</td>
-<td align="left">Aa</td>
-<td align="left">calceata</td>
-<td align="left">species</td>
-<td align="left">nil</td>
-<td align="left">(Rchb.f.) Schltr.</td>
-<td align="left">accepted</td>
-<td align="left">4</td>
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
-<td align="left">Orchidaceae</td>
-<td align="left">Asparagales</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">3</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
 <td align="left">10</td>
 <td align="left">Aa figueroi</td>
 <td align="left">Aa figueroi</td>
@@ -1145,7 +1111,27 @@ splist2.</p>
 <td align="left">Asparagales</td>
 <td align="left"></td>
 <td align="left"></td>
-<td align="left">1</td>
+<td align="left">2</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">Aa colombiana</td>
+<td align="left">Aa colombiana</td>
+<td align="left">6</td>
+<td align="left">Aa</td>
+<td align="left">colombiana</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">6</td>
+<td align="left">Aa colombiana Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left">Ann Bot 2009.104.3 403-416;</td>
+<td align="left"></td>
+<td align="left">3</td>
 <td align="right">NA</td>
 </tr>
 <tr class="odd">
@@ -1169,23 +1155,63 @@ splist2.</p>
 <td align="right">NA</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
-<td align="left">Aa aurantiaca</td>
-<td align="left">NA</td>
-<td align="left">2</td>
+<td align="left">3</td>
+<td align="left">Aa brevis</td>
+<td align="left">Aa brevis</td>
+<td align="left">3</td>
 <td align="left">Aa</td>
-<td align="left">aurantiaca</td>
+<td align="left">brevis</td>
 <td align="left">species</td>
 <td align="left">nil</td>
-<td align="left">D.Trujillo</td>
-<td align="left">accepted</td>
-<td align="left">2</td>
-<td align="left">Aa aurantiaca D.Trujillo</td>
+<td align="left">Schltr.</td>
+<td align="left">synonym</td>
+<td align="left">819078</td>
+<td align="left">Myrosmodes breve (Schltr.) Garay</td>
 <td align="left">Orchidaceae</td>
 <td align="left">Asparagales</td>
-<td align="left">Lankesteriana 2011.11.1 1-8;</td>
 <td align="left"></td>
-<td align="left">NA</td>
+<td align="left"></td>
+<td align="left">7</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">Aa denticulata</td>
+<td align="left">Aa denticulata</td>
+<td align="left">7</td>
+<td align="left">Aa</td>
+<td align="left">denticulata</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">7</td>
+<td align="left">Aa denticulata Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">6</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">Aa calceata</td>
+<td align="left">Aa calceata</td>
+<td align="left">4</td>
+<td align="left">Aa</td>
+<td align="left">calceata</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Rchb.f.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">4</td>
+<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">8</td>
 <td align="right">NA</td>
 </tr>
 </tbody>
@@ -1245,11 +1271,11 @@ keep only matched species.</p>
 <col width="9%">
 <col width="6%">
 <col width="3%">
-<col width="9%">
-<col width="15%">
+<col width="8%">
+<col width="14%">
 <col width="4%">
 <col width="4%">
-<col width="4%">
+<col width="10%">
 <col width="3%">
 <col width="3%">
 <col width="3%">
@@ -1280,6 +1306,48 @@ keep only matched species.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
+<td align="left">Aa aurantiaca</td>
+<td align="left">NA</td>
+<td align="left">2</td>
+<td align="left">aurantiaca</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">D.Trujillo</td>
+<td align="left">accepted</td>
+<td align="left">2</td>
+<td align="left">Aa aurantiaca D.Trujillo</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left">Lankesteriana 2011.11.1 1-8;</td>
+<td align="left"></td>
+<td align="right">0.6890363</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Aa calceata</td>
+<td align="left">Aa calceata</td>
+<td align="left">4</td>
+<td align="left">calceata</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Rchb.f.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">4</td>
+<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.5726328</td>
+<td align="right">0.9064010</td>
+<td align="right">0.9797993</td>
+<td align="left">a</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
 <td align="left">Aa figueroi</td>
 <td align="left">Aa figueroi</td>
 <td align="left">10</td>
@@ -1294,34 +1362,13 @@ keep only matched species.</p>
 <td align="left">Asparagales</td>
 <td align="left"></td>
 <td align="left"></td>
-<td align="right">0.6246144</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">Aa denticulata</td>
-<td align="left">Aa denticulata</td>
-<td align="left">7</td>
-<td align="left">denticulata</td>
-<td align="left">species</td>
-<td align="left">nil</td>
-<td align="left">Schltr.</td>
-<td align="left">accepted</td>
-<td align="left">7</td>
-<td align="left">Aa denticulata Schltr.</td>
-<td align="left">Orchidaceae</td>
-<td align="left">Asparagales</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="right">0.7703857</td>
-<td align="right">0.4266160</td>
-<td align="right">0.4490895</td>
+<td align="right">0.2787250</td>
+<td align="right">0.7715947</td>
+<td align="right">0.9051410</td>
 <td align="left">a</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Aa erosa</td>
 <td align="left">Aa erosa</td>
 <td align="left">8</td>
@@ -1336,13 +1383,13 @@ keep only matched species.</p>
 <td align="left">Asparagales</td>
 <td align="left"></td>
 <td align="left"></td>
-<td align="right">0.7069253</td>
-<td align="right">0.9518089</td>
-<td align="right">0.4491395</td>
-<td align="left">a</td>
-<td align="left">TRUE</td>
+<td align="right">0.7463743</td>
+<td align="right">0.0066540</td>
+<td align="right">0.3033325</td>
+<td align="left">b</td>
+<td align="left">FALSE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Aa fiebrigii</td>
 <td align="left">Aa fiebrigii</td>
 <td align="left">9</td>
@@ -1357,13 +1404,13 @@ keep only matched species.</p>
 <td align="left">Asparagales</td>
 <td align="left"></td>
 <td align="left"></td>
-<td align="right">0.0764028</td>
-<td align="right">0.8352246</td>
-<td align="right">0.3898149</td>
-<td align="left">b</td>
+<td align="right">0.6621064</td>
+<td align="right">0.9649959</td>
+<td align="right">0.3309069</td>
+<td align="left">a</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Aa chiogena</td>
 <td align="left">Aa chiogena</td>
 <td align="left">5</td>
@@ -1378,32 +1425,11 @@ keep only matched species.</p>
 <td align="left">Asparagales</td>
 <td align="left"></td>
 <td align="left"></td>
-<td align="right">0.0271018</td>
-<td align="right">0.6746247</td>
-<td align="right">0.4517954</td>
-<td align="left">b</td>
-<td align="left">TRUE</td>
-</tr>
-<tr class="even">
-<td align="left">Aa brevis</td>
-<td align="left">Aa brevis</td>
-<td align="left">3</td>
-<td align="left">brevis</td>
-<td align="left">species</td>
-<td align="left">nil</td>
-<td align="left">Schltr.</td>
-<td align="left">synonym</td>
-<td align="left">819078</td>
-<td align="left">Myrosmodes breve (Schltr.) Garay</td>
-<td align="left">Orchidaceae</td>
-<td align="left">Asparagales</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="right">0.9181100</td>
-<td align="right">0.6625154</td>
-<td align="right">0.2580027</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
+<td align="right">0.3675975</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 </tr>
 </tbody>
 </table>
@@ -1429,11 +1455,11 @@ on users-defined functions to summarize the information.</p>
 <col width="9%">
 <col width="6%">
 <col width="3%">
-<col width="9%">
-<col width="15%">
+<col width="8%">
+<col width="14%">
 <col width="4%">
 <col width="4%">
-<col width="4%">
+<col width="10%">
 <col width="3%">
 <col width="3%">
 <col width="3%">
@@ -1464,6 +1490,48 @@ on users-defined functions to summarize the information.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
+<td align="left">Aa aurantiaca</td>
+<td align="left">NA</td>
+<td align="left">2</td>
+<td align="left">aurantiaca</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">D.Trujillo</td>
+<td align="left">accepted</td>
+<td align="left">2</td>
+<td align="left">Aa aurantiaca D.Trujillo</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left">Lankesteriana 2011.11.1 1-8;</td>
+<td align="left"></td>
+<td align="right">0.6890363</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">Aa calceata</td>
+<td align="left">Aa calceata</td>
+<td align="left">4</td>
+<td align="left">calceata</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Rchb.f.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">4</td>
+<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.5726328</td>
+<td align="right">0.9064010</td>
+<td align="right">0.9797993</td>
+<td align="left">a</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
 <td align="left">Aa figueroi</td>
 <td align="left">Aa figueroi</td>
 <td align="left">10</td>
@@ -1478,34 +1546,13 @@ on users-defined functions to summarize the information.</p>
 <td align="left">Asparagales</td>
 <td align="left"></td>
 <td align="left"></td>
-<td align="right">0.6246144</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="left">NA</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">Aa denticulata</td>
-<td align="left">Aa denticulata</td>
-<td align="left">7</td>
-<td align="left">denticulata</td>
-<td align="left">species</td>
-<td align="left">nil</td>
-<td align="left">Schltr.</td>
-<td align="left">accepted</td>
-<td align="left">7</td>
-<td align="left">Aa denticulata Schltr.</td>
-<td align="left">Orchidaceae</td>
-<td align="left">Asparagales</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="right">0.7703857</td>
-<td align="right">0.4266160</td>
-<td align="right">0.4490895</td>
+<td align="right">0.2787250</td>
+<td align="right">0.7715947</td>
+<td align="right">0.9051410</td>
 <td align="left">a</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Aa erosa</td>
 <td align="left">Aa erosa</td>
 <td align="left">8</td>
@@ -1520,13 +1567,13 @@ on users-defined functions to summarize the information.</p>
 <td align="left">Asparagales</td>
 <td align="left"></td>
 <td align="left"></td>
-<td align="right">0.7069253</td>
-<td align="right">0.9518089</td>
-<td align="right">0.4491395</td>
-<td align="left">a</td>
-<td align="left">TRUE</td>
+<td align="right">0.7463743</td>
+<td align="right">0.0066540</td>
+<td align="right">0.3033325</td>
+<td align="left">b</td>
+<td align="left">FALSE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Aa fiebrigii</td>
 <td align="left">Aa fiebrigii</td>
 <td align="left">9</td>
@@ -1541,13 +1588,13 @@ on users-defined functions to summarize the information.</p>
 <td align="left">Asparagales</td>
 <td align="left"></td>
 <td align="left"></td>
-<td align="right">0.0764028</td>
-<td align="right">0.8352246</td>
-<td align="right">0.3898149</td>
-<td align="left">b</td>
+<td align="right">0.6621064</td>
+<td align="right">0.9649959</td>
+<td align="right">0.3309069</td>
+<td align="left">a</td>
 <td align="left">FALSE</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Aa chiogena</td>
 <td align="left">Aa chiogena</td>
 <td align="left">5</td>
@@ -1562,32 +1609,11 @@ on users-defined functions to summarize the information.</p>
 <td align="left">Asparagales</td>
 <td align="left"></td>
 <td align="left"></td>
-<td align="right">0.0271018</td>
-<td align="right">0.6746247</td>
-<td align="right">0.4517954</td>
-<td align="left">b</td>
-<td align="left">TRUE</td>
-</tr>
-<tr class="even">
-<td align="left">Aa brevis</td>
-<td align="left">Aa brevis</td>
-<td align="left">3</td>
-<td align="left">brevis</td>
-<td align="left">species</td>
-<td align="left">nil</td>
-<td align="left">Schltr.</td>
-<td align="left">synonym</td>
-<td align="left">819078</td>
-<td align="left">Myrosmodes breve (Schltr.) Garay</td>
-<td align="left">Orchidaceae</td>
-<td align="left">Asparagales</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="right">0.9181100</td>
-<td align="right">0.6625154</td>
-<td align="right">0.2580027</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
+<td align="right">0.3675975</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 </tr>
 </tbody>
 </table>
@@ -1610,8 +1636,8 @@ individual function names <code>lcvp_solve_dups</code>.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="69%">
-<col width="12%">
+<col width="72%">
+<col width="11%">
 <col width="8%">
 <col width="8%">
 </colgroup>
@@ -1623,41 +1649,41 @@ individual function names <code>lcvp_solve_dups</code>.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Aa weddelliana (Rchb.f.) Schltr.</td>
-<td align="right">0.7443151</td>
+<td align="left">Abacopteris repanda (Fée) S.E.Fawc. &amp; A.R.Sm.</td>
+<td align="right">0.4143270</td>
 <td align="left">a</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">Triplophyllum varians (T.Moore) Holttum</td>
+<td align="right">0.1115714</td>
+<td align="left">a</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">Myrosmodes nubigenum Rchb.f.</td>
+<td align="right">0.3225941</td>
+<td align="left">b</td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
-<td align="left">Breynia quadrangularis (Willd.) Chakrab. &amp;
-N.P.Balakr.</td>
-<td align="right">0.4535887</td>
-<td align="left">a</td>
-<td align="left">TRUE</td>
+<td align="left">Breynia gynophora (Hook.f.) Welzen &amp; Pruesapan</td>
+<td align="right">0.8331867</td>
+<td align="left">b</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="odd">
-<td align="left">Myrosmodes weberbaueri (Schltr.) C.A.Vargas</td>
-<td align="right">0.3696221</td>
+<td align="left">Abacopteris macrophylla (Ching ex Y.X.Lin) S.E.Fawc.
+&amp; A.R.Sm.</td>
+<td align="right">0.7501614</td>
 <td align="left">b</td>
 <td align="left">FALSE</td>
 </tr>
 <tr class="even">
-<td align="left">Aa mandonii (Rchb.f.) Schltr.</td>
-<td align="right">0.9311101</td>
-<td align="left">b</td>
+<td align="left">Myrosmodes rostratum (Rchb.f.) Garay</td>
+<td align="right">0.3216598</td>
+<td align="left">a</td>
 <td align="left">TRUE</td>
-</tr>
-<tr class="odd">
-<td align="left">Aa denticulata Schltr.</td>
-<td align="right">0.4410251</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="even">
-<td align="left">Myrosmodes filamentosum (Mansf.) Garay</td>
-<td align="right">0.4086975</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
 </tr>
 </tbody>
 </table>
