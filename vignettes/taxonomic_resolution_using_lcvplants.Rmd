@@ -176,14 +176,19 @@ knitr::kable(head(x))
 ### Basic output information
 The output from `lcvp_search`, `lcvp_fuzzy_search` and `lcvp_group_search` is a `data.frame` (or list of data.frames) with the following columns:
 
-* *Search*: Taxa name list provided by the user.
-* *Input.Taxon*: Matched taxa names listed in the LCVP data.
-* *Status*: Nomenclature status: 'accepted', 'synonym', 'unresolved' or 'external'.
-* *PL.comparisson*: This field provides a direct comparison with ‘The Plant List’: ‘identical', 'synonym', 'other synonym', 'different authors', 'missing', 'misspelling' or 'unresolved'.
-*  *PL.alternative*: This field provides a possible alternative name from ‘The Plant List’.
-*  *Output.Taxon*: The list of the accepted plant taxa names according to the LCVP.
-* *Family*: The corresponding family name of the Input.Taxon, staying empty if the Status is unresolved.
-* *Order*: The corresponding order name of the Input.Taxon, staying empty if the Status is unresolved.
+* *global.Id*: The fixed species id of the input taxon in the Leipzig Catalogue of Vascular Plants (LCVP).
+* *Input.Genus*: A character vector. The input genus of the corresponding vascular plant species name listed in LCVP.
+* *Input.Epitheton*: A character vector. The input epitheton of the corresponding vascular plant species name listed in LCVP.
+* *Rank*: A character vector. The taxonomic rank ("species", subspecies: "subsp.", variety: "var.", subvariety: "subvar.", "forma", or subforma: "subf.") of the corresponding vascular plant species name listed in LCVP.
+* *Input.Subspecies.Epitheton*: A character vector. If the indicated rank is below species, the subspecies epitheton input of the corresponding vascular plant species name listed in LCVP. If the rank is "species", the input is "nil".
+* *Input.Authors*: A character vector. The taxonomic authority input of the corresponding vascular plant species name listed in LCVP.
+* *Status*: A character vector. description if a taxon is classified as ‘valid’, ‘synonym’, ‘unresolved’, ‘external’ or ‘blanks’. The ‘unresolved’ rank means that the status of the plant name could be either valid or synonym, but the information available does not allow a definitive decision. ‘External’ in an extra rank which lists names outside the scope of this publication but useful to keep on this updated list. ‘Blanks’ means that the respective name exists in bibliography but it is neither clear where it came from valid, synonym or unresolved. (see the main text Freiberg et al. for more details)
+* *globalId.of.Output.Taxon*: The fixed species id of the output taxon in LCVP.
+* *Output.Taxon*: A character vector. The list of the accepted plant taxa names according to the LCVP.
+* *Family*: A character vector. The corresponding family name of the Input.Taxon, staying empty if the Status is unresolved.
+* *Order*: A character vector. The corresponding order name of the Input.Taxon, staying empty if the Status is unresolved.
+* *Literature*: A character vector. The bibliography used.
+* *Comments*: A character vector. Further taxonomic comments.
 
 If no match is found for one species it will return NA for the columns in the LCVP table. But, if no match is found for all species the function will return NULL and a warning message.
 
