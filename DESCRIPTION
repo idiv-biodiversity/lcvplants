@@ -1,9 +1,10 @@
 Package: lcvplants
 Title: The Leipzig Catalogue of Vascular Plants (LCVP) - An Improved Taxonomic Reference List 
     for All Known Vascular Plants
-Version: 2.0.0
+Version: 2.1.0
 Authors@R: c(
-    person(given = "Bruno", family = "Vilela", role = c("aut", "cre"), email = "bvilela.bv@gmail.com"),
+    person(given = "Bruno", family = "Vilela", role = c("aut", "cre"),
+    email = "bvilela.bv@gmail.com", c(ORCID = "0000-0003-4072-0558")),
     person(given = "Alessandro", family = "Gentile", role = c("aut")),
     person(given = "Martin", family = "Freiberg", role = "aut"),
     person(given = "Marten", family = "Winter", role = "aut"),
@@ -22,6 +23,7 @@ Suggests:
     testthat (>= 3.0.0),
     remotes,
     rmarkdown,
+    dplyr,
     devtools
 Additional_repositories: https://github.com/idiv-biodiversity/LCVP/releases
 LazyLoad: yes

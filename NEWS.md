@@ -1,3 +1,8 @@
+lcvplants v2.1 (2022-09-27)
+=========================
+### MAJOR IMPROVEMENTS
+  * New output table for main functions
+  
 lcvplants v2.0 (2021-09-01)
 =========================
 Package has been entirely reprogrammed. 

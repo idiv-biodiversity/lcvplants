@@ -1,12 +1,13 @@
-# lcvplants 2.0.0
+# lcvplants 2.1.0
 [![R](https://github.com/idiv-biodiversity/lcvplants/actions/workflows/r.yml/badge.svg)](https://github.com/idiv-biodiversity/lcvplants/actions/workflows/r.yml)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 A package for large-scale taxonomic harmonization of plant names by fuzzy matching and synonymy resolution against the Leipzig Plant Catalogue as taxonomic backbone. Submission of single names or list of species names is possible. The Leipzig Plant Catalogue is an updated taxonomic backbone based on the plant list comprising more than 1,300,000 names and 350,000 accepted names (this data is in the [`LCVP`](https://github.com/idiv-biodiversity/LCVP) package). 
 
-# New version (v2.0.0)
-In this version the package has been entirely reprogrammed.
+# New version (v2.1.0)
+* New output table for main functions
 
+# New version (v2.0.0)
 
 * Improved speed in processing species search
 * Separated function to search by group or authors name
@@ -78,10 +79,10 @@ lcvp_group_search(c("Orchidaceae", "Poaceae", "Phyllanthaceae"), search_by = "Fa
 The package also facilitates the comparison between two lists of species vascular plant names:
 ```r
 # Species list 1
-splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[1:10])
+splist1 <- sample(apply(LCVP::tab_lcvp[2:10, 2:3], 1, paste, collapse = " "))
 
 # Species list 2
-splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[1:10])
+splist2 <- sample(apply(LCVP::tab_lcvp[11:3, 2:3], 1, paste, collapse = " "))
 
 # Compare the two lists
 lcvp_match(splist1, splist2)
@@ -90,11 +91,11 @@ lcvp_match(splist1, splist2)
 Lastly, you can use lcvplants two join two tables based on vascular plant names:
 ```r
 # data.frame1 
-splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[2:10])
+splist1 <- sample(apply(LCVP::tab_lcvp[2:10, 2:3], 1, paste, collapse = " "))
 x <- data.frame("Species" = splist1, "Trait1" = runif(length(splist1)))
  
 # data.frame2
-splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[1:8])
+splist2 <- sample(apply(LCVP::tab_lcvp[11:3, 2:3], 1, paste, collapse = " "))
 y <- data.frame("Species" = splist2,  "Trait2" = runif(length(splist2)), "Trait3" = runif(length(splist2)))
  
 # Full join the two tables
