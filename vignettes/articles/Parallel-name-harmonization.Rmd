@@ -54,7 +54,7 @@ We are going to use here as an example a random sample of 100 names from the Lei
 
 ```{r example_data}
 set.seed(1)
-sps <- tab_lcvp[sample(1:nrow(tab_lcvp), 100), 1]
+sample(apply(LCVP::tab_lcvp[1:100, 2:3], 1, paste, collapse = " "))
 
 ```
 

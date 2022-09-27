@@ -90,11 +90,11 @@
 #' if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 #'
 #' # Create data.frame1
-#' splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[2:100])
+#' splist1 <- sample(apply(LCVP::tab_lcvp[2:10, 2:3], 1, paste, collapse = " "))
 #' x <- data.frame("Species" = splist1, "Trait1" = runif(length(splist1)))
 #'
 #' # Create data.frame2
-#' splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[98:8])
+#' splist2 <-sample(apply(LCVP::tab_lcvp[11:3, 2:3], 1, paste, collapse = " "))
 #' y <- data.frame("Species" = splist2,
 #' "Trait2" = runif(length(splist2)),
 #' "Trait3" = runif(length(splist2)),

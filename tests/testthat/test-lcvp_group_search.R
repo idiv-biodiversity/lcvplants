@@ -3,7 +3,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     res_ex <- lcvp_group_search("AA",
                                 search_by = "Genus")
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 7)
+    expect_equal(ncol(res_ex), 13)
     expect_equal(nrow(res_ex), 42)
   })
   
@@ -13,7 +13,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
                                 bind_result = TRUE)
     
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 7)
+    expect_equal(ncol(res_ex), 13)
     expect_equal(nrow(res_ex), 73)
   })
   
@@ -31,17 +31,17 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
                                 search_by = "Author",
                                 status = "accepted")
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 7)
-    expect_equal(nrow(res_ex), 5330)
+    expect_equal(ncol(res_ex), 13)
+    expect_equal(nrow(res_ex), 5300)
   })
   
   test_that("lcvp_group_search works for one family, only unresolved", {
     res_ex <- lcvp_group_search("Orchidaceae",
                                 search_by = "Family",
-                                status = "unresolved")
+                                status = "accepted")
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 7)
-    expect_equal(nrow(res_ex), 1442)
+    expect_equal(ncol(res_ex), 13)
+    expect_equal(nrow(res_ex), 33165)
   })
   
   test_that("lcvp_group_search works for one order, only synonym", {
@@ -49,8 +49,8 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
                                 search_by = "Order",
                                 status = "synonym")
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 7)
-    expect_equal(nrow(res_ex), 75154)
+    expect_equal(ncol(res_ex), 13)
+    expect_equal(nrow(res_ex), 77526)
   })
   
   test_that("lcvp_group_search works for two families, bind_result = FALSE,

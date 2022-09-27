@@ -14,21 +14,21 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     sp <- "Artemisia vulgaris"
     expect_warning(res_ex <- lcvp_search(sp))
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
     res_ex <- lcvp_fuzzy_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 4)
     # sp2
     sp <- "Artemisia biennis"
     expect_warning(res_ex <- lcvp_search(sp))
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
     res_ex <- lcvp_fuzzy_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 2)
   })
   
@@ -45,11 +45,11 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     sp <- "Myosotis micrantha"
     expect_warning(res_ex <- lcvp_search(sp))
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
     res_ex <- lcvp_fuzzy_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 2)
     
   })
@@ -70,11 +70,11 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     sp <- "Artemisia campestris"
     expect_warning(res_ex <- lcvp_search(sp))
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
     res_ex <- lcvp_fuzzy_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 7)
     
   })
@@ -112,12 +112,12 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     sp <- "Platanus xhispanica Miller ex Münchh."
     res_ex <- lcvp_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
     sp <- "Platanus x hispanica Miller ex Münchh."
     res_ex <- lcvp_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
   })
   
@@ -129,12 +129,12 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     sp <- "Achillea macrophylla L."
     res_ex <- lcvp_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
     sp <- "Achillea roseo-alba EHREND"
     res_ex <- lcvp_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
   })
   
@@ -147,12 +147,12 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     sp <- "Carex riparia CURT."
     expect_warning(res_ex <- lcvp_search(sp))
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
     
     res_ex <- lcvp_fuzzy_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 5)
   })
   
@@ -166,12 +166,12 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     sp <- "Alchemilla hoppeana (RCHB.) DALLA TORRE"
     expect_warning(res_ex <- lcvp_search(sp))
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
     
     res_ex <- lcvp_fuzzy_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 2)
   })
   
@@ -188,13 +188,13 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     sp <- "Cerastium arvense L. subsp. arvense"
     res_ex <- lcvp_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
     
     sp <- "Festuca arundinacea SCHREB. subsp. arundinacea"
     res_ex <- lcvp_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
   })
   
@@ -208,37 +208,16 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     sp <- "Prunus padus L. subsp. padus"
     res_ex <- lcvp_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
     
     res_ex <- lcvp_fuzzy_search("Prunus padus", 
                          status = "accepted") 
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
   })
   
-  # Finally, there seem to be a certain number of newer taxa lacking in LCVP
-  # compared to other databases like Worldplants (WP). Hysterobaeckea, which was
-  # established and published in 2015, includes 11 accepted species; the genus
-  # is still missing from LCVP. Three species of the genus were treated as
-  # accepted species in the genera Babingtonia (B. behrii (SCHLTDL.) A.R.BEAN)
-  # or Baeckea (B. ochropetala F.MUELL.; B. tuberculata TRUDGEN) in LCVP, yet
-  # the other eight species were missing from LCVP (i.e. Hysterobaeckea cornuta
-  # RYE; H. glandulosa RYE; H. graniticola RYE; H. longipes RYE; H. occlusa RYE;
-  # H. petraea RYE; H. pterocera RYE; H. setifera RYE). Interestingly, when
-  # switching to fuzzy after trying plain search, the above-described error
-  # reappears which might hint to a bug?
-  test_that("bug search ", {
-    sp <- "Hysterobaeckea cornuta"
-    expect_warning(res_ex <- lcvp_search(sp))
-    expect_true(is.null(res_ex))
-    
-    expect_warning(
-    res_ex <- lcvp_fuzzy_search(sp, max_distance = .2) 
-    )
-    expect_true(is.null(res_ex))
-  })
   
   # Other (casually found) examples include Marsdenia chirindensis which was
   # newly named in 2020 by David Goyder (Kew – so a quite visible and reliable
@@ -254,7 +233,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     sp <- "Marsdenia chirindensis"
     res_ex <- lcvp_search(sp)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 8)
+    expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
   })
   

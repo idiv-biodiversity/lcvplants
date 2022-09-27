@@ -56,11 +56,45 @@ A data.frame with the following columns:
 splist1.}
 \item{\emph{Species.List.2}}{: Taxa name list provided by the user in the
 splist2.}
-\item{\emph{LCVP.Input.Taxon}}{: Matched taxa names listed in the LCVP data.}
-\item{\emph{Status}}{: Nomenclature status: 'accepted', 'synonym',
-'unresolved' or 'external'.}
-\item{\emph{LCVP.Output.Taxon}}{: The list of the accepted plant taxa names
-according to the LCVP.}
+\item{global.Id}{The fixed species id of the input taxon in the
+Leipzig Catalogue of Vascular Plants (LCVP).}
+\item{Input.Genus}{A
+character vector. The input genus of the corresponding vascular plant
+species name listed in LCVP.}
+\item{Input.Epitheton}{A character vector.
+The input epitheton of the corresponding vascular plant species name listed
+in LCVP.}
+\item{Rank}{A character vector. The taxonomic rank ("species",
+subspecies: "subsp.", variety: "var.", subvariety: "subvar.", "forma", or
+subforma: "subf.") of the corresponding vascular plant species name listed
+in LCVP.}
+\item{Input.Subspecies.Epitheton}{A character vector. If the
+indicated rank is below species, the subspecies epitheton input of the
+corresponding vascular plant species name listed in LCVP. If the rank is
+"species", the input is "nil".}
+\item{Input.Authors}{A character vector.
+The taxonomic authority input of the corresponding vascular plant species
+name listed in LCVP.}
+\item{Status}{A character vector. description if a
+taxon is classified as ‘valid’, ‘synonym’, ‘unresolved’, ‘external’ or
+‘blanks’. The ‘unresolved’ rank means that the status of the plant name
+could be either valid or synonym, but the information available does not
+allow a definitive decision. ‘External’ in an extra rank which lists names
+outside the scope of this publication but useful to keep on this updated
+list. ‘Blanks’ means that the respective name exists in bibliography but it
+is neither clear where it came from valid, synonym or unresolved. (see the
+main text Freiberg et al. for more details)}
+\item{globalId.of.Output.Taxon}{The fixed species id of the output taxon
+in LCVP.}
+\item{Output.Taxon}{A character vector. The list of the accepted
+plant taxa names according to the LCVP.}
+\item{Family}{A character vector.
+The corresponding family name of the Input.Taxon, staying empty if the
+Status is unresolved.}
+\item{Order}{A character vector. The corresponding
+order name of the Input.Taxon, staying empty if the Status is unresolved.}
+\item{Literature}{A character vector. The bibliography used.}
+\item{Comments}{A character vector. Further taxonomic comments.}
 \item{\emph{Match.Position.2to1}}{: positions of the names in splist1 in
 splist2. Can be used to reorder splist2 to match splist1.
 }
@@ -89,8 +123,8 @@ plant taxa names listed in the "Leipzig Catalogue of Vascular Plants" (LCVP).
 if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 
 # Generate two lists of species name
-splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[5:100])
-splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[100:2])
+splist1 <- sample(apply(LCVP::tab_lcvp[2:10, 2:3], 1, paste, collapse = " "))
+splist2 <- sample(apply(LCVP::tab_lcvp[11:3, 2:3], 1, paste, collapse = " "))
 
 # Including all species in both lists
 lcvp_match(splist1, splist2, include_all = TRUE)

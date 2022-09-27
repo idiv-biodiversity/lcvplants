@@ -55,7 +55,7 @@ corresponding class. Factors are transformed into characters.
 if (requireNamespace("LCVP", quietly = TRUE)) { # Do not run this
 
 # Create a data.frame with duplicated names and different traits
-splist <- sample(LCVP::tab_lcvp$Input.Taxon[1:100])
+splist <- sample(apply(LCVP::tab_lcvp[1:100, 2:3], 1, paste, collapse = " "))
 search <- lcvp_search(splist)
 
 x <- data.frame("Species" = search$Output.Taxon,

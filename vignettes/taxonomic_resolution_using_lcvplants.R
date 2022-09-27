@@ -103,8 +103,9 @@ knitr::kable(head(x))
 
 ## -----------------------------------------------------------------------------
 # Generate two lists of species name
-splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[5:100])
-splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[100:2])
+splist1 <- sample(apply(LCVP::tab_lcvp[2:10, 2:3], 1, paste, collapse = " "))
+splist2 <- sample(apply(LCVP::tab_lcvp[11:3, 2:3], 1, paste, collapse = " "))
+
 
 ## -----------------------------------------------------------------------------
 # Match both lists
@@ -123,12 +124,12 @@ splist2_reordered <- splist2[matchLists$Match.Position.2to1]
 
 ## -----------------------------------------------------------------------------
 # Create data.frame1
-splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[2:100])
+splist1 <- sample(apply(LCVP::tab_lcvp[2:10, 2:3], 1, paste, collapse = " "))
 tbl1 <-
   data.frame("Species" = splist1, "Trait1" = runif(length(splist1)))
 
 # Create data.frame2
-splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[98:8])
+splist2 <- sample(apply(LCVP::tab_lcvp[11:3, 2:3], 1, paste, collapse = " "))
 tbl2 <- data.frame(
   "Species" = splist2,
   "Trait2" = runif(length(splist2)),
@@ -159,7 +160,7 @@ knitr::kable(head(x))
 
 ## -----------------------------------------------------------------------------
 # Create a data.frame with duplicated names and different traits
-splist <- sample(LCVP::tab_lcvp$Input.Taxon[1:100])
+splist <- sample(apply(LCVP::tab_lcvp[1:100, 2:3], 1, paste, collapse = " "))
 search <- lcvp_search(splist)
 
 tbl <- data.frame("Species" = search$Output.Taxon,

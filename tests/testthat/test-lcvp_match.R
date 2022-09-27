@@ -1,19 +1,20 @@
+
 if (requireNamespace("LCVP", quietly = TRUE)) {
-  splist1 <- sample(LCVP::tab_lcvp$Input.Taxon[5:100])
-  splist2 <- sample(LCVP::tab_lcvp$Input.Taxon[100:2])
+  splist1 <- sample(apply(LCVP::tab_lcvp[2:10, 2:3], 1, paste, collapse = " "))
+  splist2 <- sample(apply(LCVP::tab_lcvp[11:3, 2:3], 1, paste, collapse = " "))
   
   test_that("lcvp_match works, include_all = TRUE", {
     res_ex <- lcvp_match(splist1, splist2, include_all = TRUE)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 7)
-    expect_equal(nrow(res_ex), 99)
+    expect_equal(ncol(res_ex), 17)
+    expect_equal(nrow(res_ex), 10)
   })
   
   test_that("lcvp_match works, include_all = FALSE", {
     res_ex <- lcvp_match(splist1, splist2, include_all = FALSE)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 7)
-    expect_equal(nrow(res_ex), 96)
+    expect_equal(ncol(res_ex), 17)
+    expect_equal(nrow(res_ex), 9)
   })
   
   test_that("lcvp_match works, include_all = TRUE & identify_dups = FALSE", {
@@ -22,8 +23,8 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
                          include_all = TRUE,
                          identify_dups = FALSE)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 6)
-    expect_equal(nrow(res_ex), 99)
+    expect_equal(ncol(res_ex), 16)
+    expect_equal(nrow(res_ex), 10)
   })
   
   test_that("lcvp_match works, include_all = FALSE & max_distance = 0", {
@@ -32,8 +33,8 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
                          include_all = FALSE,
                          max_distance = 0)
     expect_equal(class(res_ex), "data.frame")
-    expect_equal(ncol(res_ex), 7)
-    expect_equal(nrow(res_ex), 96)
+    expect_equal(ncol(res_ex), 17)
+    expect_equal(nrow(res_ex), 9)
   })
   
   test_that("lcvp_match output errors for wrong inputs", {
