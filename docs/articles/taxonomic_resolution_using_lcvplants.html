@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">lcvplants</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -43,14 +43,14 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/articles/Parallel-name-harmonization.html">How to run lcvplants in parallel</a>
+      <a href="../articles/Parallel-name-harmonization.html">How to run lcvplants in parallel</a>
     </li>
     <li>
       <a href="../articles/taxonomic_resolution_using_lcvplants.html">Taxonomic resolution using lcvplants</a>
@@ -78,743 +78,1200 @@
 
       
 
-      </header><script src="taxonomic_resolution_using_lcvplants_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Taxonomic resolution using lcvplants</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/idiv-biodiversity/lcvplants/blob/master/vignettes/taxonomic_resolution_using_lcvplants.Rmd" class="external-link"><code>vignettes/taxonomic_resolution_using_lcvplants.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/idiv-biodiversity/lcvplants/blob/HEAD/vignettes/taxonomic_resolution_using_lcvplants.Rmd" class="external-link"><code>vignettes/taxonomic_resolution_using_lcvplants.Rmd</code></a></small>
       <div class="hidden name"><code>taxonomic_resolution_using_lcvplants.Rmd</code></div>
 
     </div>
 
     
     
-<div id="background" class="section level1">
-<h1 class="hasAnchor">
-<a href="#background" class="anchor" aria-hidden="true"></a>Background</h1>
-<p>When comparing or merging any list of plant species, for instance for compiling regional species lists, merging occurrence lists with trait data or phylogenies, the taxonomic names must be matched to avoid artificial inflation due to synonyms, data loss or erroneous matches due to homonyms. The <code>lcvplants</code> package facilitates this process by automatizing large-scale taxonomic harmonization of plant names by fuzzy matching and synonymy resolution against the Leipzig Catalogue of Vascular Plants as taxonomic backbone.</p>
-<p>The Leipzig Catalogue of Vascular Plants (LCVP) is a novel global taxonomic backbone, updating The Plant List, comprising more than 1,300,000 names and 350,000 accepted taxa names. We described the LCVP in detail in the related scientific publication (Freiberg et al, 2020).</p>
+<div class="section level2">
+<h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
+</h2>
+<p>When comparing or merging any list of plant species, for instance for
+compiling regional species lists, merging occurrence lists with trait
+data or phylogenies, the taxonomic names must be matched to avoid
+artificial inflation due to synonyms, data loss or erroneous matches due
+to homonyms. The <code>lcvplants</code> package facilitates this process
+by automatizing large-scale taxonomic harmonization of plant names by
+fuzzy matching and synonymy resolution against the Leipzig Catalogue of
+Vascular Plants as taxonomic backbone.</p>
+<p>The Leipzig Catalogue of Vascular Plants (LCVP) is a novel global
+taxonomic backbone, updating The Plant List, comprising more than
+1,300,000 names and 350,000 accepted taxa names. We described the LCVP
+in detail in the related scientific publication (Freiberg et al,
+2020).</p>
 </div>
-<div id="running-lcvplants" class="section level1">
-<h1 class="hasAnchor">
-<a href="#running-lcvplants" class="anchor" aria-hidden="true"></a>Running lcvplants</h1>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h2>
-<p>You can install <code>lcvplants</code> from github using the devtools package You may need to install devtools first, so if you do not have it installed, run the following code.</p>
+<div class="section level2">
+<h2 id="running-lcvplants">Running lcvplants<a class="anchor" aria-label="anchor" href="#running-lcvplants"></a>
+</h2>
+<div class="section level3">
+<h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h3>
+<p>You can install <code>lcvplants</code> from github using the devtools
+package You may need to install devtools first, so if you do not have it
+installed, run the following code.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></code></pre></div>
-<p>To use <code>lcvplants</code> you also need the data of the <a href="https://github.com/idiv-biodiversity/LCVP" class="external-link"><code>LCVP</code> package</a>, which you can install in the same way.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span></code></pre></div>
+<p>To use <code>lcvplants</code> you also need the data of the <a href="https://github.com/idiv-biodiversity/LCVP" class="external-link"><code>LCVP</code>
+package</a>, which you can install in the same way.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"idiv-biodiversity/lcvplants"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"idiv-biodiversity/LCVP"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"idiv-biodiversity/lcvplants"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"idiv-biodiversity/LCVP"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/idiv-biodiversity/lcvplants" class="external-link">lcvplants</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/idiv-biodiversity/lcvplants" class="external-link">lcvplants</a></span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="taxonomic-resolution" class="section level2">
-<h2 class="hasAnchor">
-<a href="#taxonomic-resolution" class="anchor" aria-hidden="true"></a>Taxonomic resolution</h2>
-<p>The basic function in <code>lcvplants</code> is <code>lcvp_search</code>. It allows users to input a list of species name that will be matched to the names in the LCVP data. It returns a data.frame indicating the full name matched — including the authority name and removing possible orthographic errors —, the taxonomic status, the accepted name, family and order.</p>
+<div class="section level3">
+<h3 id="taxonomic-resolution">Taxonomic resolution<a class="anchor" aria-label="anchor" href="#taxonomic-resolution"></a>
+</h3>
+<p>The basic function in <code>lcvplants</code> is
+<code>lcvp_search</code>. It allows users to input a list of species
+name that will be matched to the names in the LCVP data. It returns a
+data.frame indicating the full name matched — including the authority
+name and removing possible orthographic errors —, the taxonomic status,
+the accepted name, family and order.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifolius"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifolius"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="16%">
-<col width="18%">
+<col width="9%">
+<col width="4%">
+<col width="5%">
 <col width="7%">
-<col width="11%">
+<col width="3%">
+<col width="13%">
+<col width="6%">
+<col width="4%">
 <col width="12%">
-<col width="18%">
-<col width="8%">
-<col width="7%">
+<col width="11%">
+<col width="4%">
+<col width="4%">
+<col width="5%">
+<col width="4%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Search</th>
-<th align="left">Input.Taxon</th>
+<th align="right">global.Id</th>
+<th align="left">Input.Genus</th>
+<th align="left">Input.Epitheton</th>
+<th align="left">Rank</th>
+<th align="left">Input.Subspecies.Epitheton</th>
+<th align="left">Input.Authors</th>
 <th align="left">Status</th>
-<th align="left">PL.comparison</th>
-<th align="left">PL.alternative</th>
+<th align="right">globalId.of.Output.Taxon</th>
 <th align="left">Output.Taxon</th>
 <th align="left">Family</th>
 <th align="left">Order</th>
+<th align="left">Literature</th>
+<th align="left">Comments</th>
 </tr></thead>
 <tbody><tr class="odd">
 <td align="left">Hibiscus vitifolius</td>
-<td align="left">Hibiscus vitifolius L.</td>
+<td align="right">604882</td>
+<td align="left">Hibiscus</td>
+<td align="left">vitifolius</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">L.</td>
 <td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
+<td align="right">604882</td>
 <td align="left">Hibiscus vitifolius L.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 </tr></tbody>
 </table>
-<p>The <code>lcvp_search</code> algorithm will first try to exactly match the binomial names provided by the user. If no match is found, it will try to find the closest name given the maximal transformation cost defined in the argument <code>max_distance</code> (see ?base::agrep for more details). When the argument <code>show_correct = TRUE</code> a column is added to the final result indicating whether the binomial name was exactly matched (TRUE), or if it is misspelled (FALSE).</p>
+<p>The <code>lcvp_search</code> algorithm will first try to exactly
+match the binomial names provided by the user. If no match is found, it
+will try to find the closest name given the maximal transformation cost
+defined in the argument <code>max_distance</code> (see ?base::agrep for
+more details). When the argument <code>show_correct = TRUE</code> a
+column is added to the final result indicating whether the binomial name
+was exactly matched (TRUE), or if it is misspelled (FALSE).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifoliuse"</span>, 
-            max_distance <span class="op">=</span> <span class="fl">0.1</span>, 
-            show_correct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<table class="table">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifoliuse"</span>, </span>
+<span>            max_distance <span class="op">=</span> <span class="fl">0.1</span>, </span>
+<span>            show_correct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="15%">
-<col width="17%">
-<col width="6%">
-<col width="10%">
-<col width="11%">
-<col width="17%">
+<col width="9%">
+<col width="4%">
+<col width="5%">
 <col width="7%">
+<col width="3%">
+<col width="12%">
 <col width="6%">
-<col width="6%">
+<col width="4%">
+<col width="11%">
+<col width="10%">
+<col width="4%">
+<col width="4%">
+<col width="5%">
+<col width="4%">
+<col width="3%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Search</th>
-<th align="left">Input.Taxon</th>
+<th align="right">global.Id</th>
+<th align="left">Input.Genus</th>
+<th align="left">Input.Epitheton</th>
+<th align="left">Rank</th>
+<th align="left">Input.Subspecies.Epitheton</th>
+<th align="left">Input.Authors</th>
 <th align="left">Status</th>
-<th align="left">PL.comparison</th>
-<th align="left">PL.alternative</th>
+<th align="right">globalId.of.Output.Taxon</th>
 <th align="left">Output.Taxon</th>
 <th align="left">Family</th>
 <th align="left">Order</th>
+<th align="left">Literature</th>
+<th align="left">Comments</th>
 <th align="left">Correct</th>
 </tr></thead>
 <tbody><tr class="odd">
 <td align="left">Hibiscus vitifoliuse</td>
-<td align="left">Hibiscus vitifolius L.</td>
+<td align="right">604882</td>
+<td align="left">Hibiscus</td>
+<td align="left">vitifolius</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">L.</td>
 <td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
+<td align="right">604882</td>
 <td align="left">Hibiscus vitifolius L.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="left">FALSE</td>
 </tr></tbody>
 </table>
-<p>If more than one name is fuzzy matched (more than one closest match found), only the accepted or the first name will be returned. The function <code>lcvp_fuzzy_search</code> can be used to return all the closest results when argument <code>keep_closest = TRUE</code>, or all names within the <code>max_distance</code> defined when <code>keep_closest = FALSE</code>.</p>
+<p>If more than one name is fuzzy matched (more than one closest match
+found), only the accepted or the first name will be returned. The
+function <code>lcvp_fuzzy_search</code> can be used to return all the
+closest results when argument <code>keep_closest = TRUE</code>, or all
+names within the <code>max_distance</code> defined when
+<code>keep_closest = FALSE</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/lcvp_fuzzy_search.html">lcvp_fuzzy_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifoliuse"</span>, 
-                  max_distance <span class="op">=</span> <span class="fl">0.1</span>, 
-                  keep_closest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/lcvp_fuzzy_search.html">lcvp_fuzzy_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifoliuse"</span>, </span>
+<span>                  max_distance <span class="op">=</span> <span class="fl">0.1</span>, </span>
+<span>                  keep_closest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="21%">
-<col width="7%">
-<col width="11%">
-<col width="12%">
-<col width="19%">
+<col width="5%">
+<col width="6%">
 <col width="8%">
+<col width="4%">
+<col width="13%">
 <col width="7%">
+<col width="4%">
+<col width="12%">
 <col width="11%">
+<col width="5%">
+<col width="4%">
+<col width="5%">
+<col width="4%">
+<col width="7%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">Input.Taxon</th>
+<th align="right">global.Id</th>
+<th align="left">Input.Genus</th>
+<th align="left">Input.Epitheton</th>
+<th align="left">Rank</th>
+<th align="left">Input.Subspecies.Epitheton</th>
+<th align="left">Input.Authors</th>
 <th align="left">Status</th>
-<th align="left">PL.comparison</th>
-<th align="left">PL.alternative</th>
+<th align="right">globalId.of.Output.Taxon</th>
 <th align="left">Output.Taxon</th>
 <th align="left">Family</th>
 <th align="left">Order</th>
+<th align="left">Literature</th>
+<th align="left">Comments</th>
 <th align="right">Name.Distance</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Hibiscus vitifolius L.</td>
+<td align="right">604882</td>
+<td align="left">Hibiscus</td>
+<td align="left">vitifolius</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">L.</td>
 <td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
+<td align="right">604882</td>
 <td align="left">Hibiscus vitifolius L.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="left">Hibiscus vitifolius Mill.</td>
+<td align="right">604883</td>
+<td align="left">Hibiscus</td>
+<td align="left">vitifolius</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Mill.</td>
 <td align="left">synonym</td>
-<td align="left">identical</td>
-<td align="left"></td>
+<td align="right">603660</td>
 <td align="left">Hibiscus cannabinus L.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="right">1</td>
 </tr>
 </tbody>
 </table>
-<p>Both <code>lcvp_search</code> and <code>lcvp_fuzzy_search</code> allows multiple species search. If you need to run for many species consider setting the argument <code>progress_bar = TRUE</code> to track the execution progress.</p>
+<p>Both <code>lcvp_search</code> and <code>lcvp_fuzzy_search</code>
+allows multiple species search. If you need to run for many species
+consider setting the argument <code>progress_bar = TRUE</code> to track
+the execution progress.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">splist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-  <span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span>,
-  <span class="st">"Hibiscus abutiloides Willd."</span>,
-  <span class="st">"Hibiscus aculeatus"</span>,
-  <span class="st">"Hibiscus acuminatus"</span>,
-  <span class="st">"Hibiscus furcatuis"</span> 
-<span class="op">)</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="va">splist</span>, max_distance <span class="op">=</span> <span class="fl">0.2</span>, show_correct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">splist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span>,</span>
+<span>  <span class="st">"Hibiscus abutiloides Willd."</span>,</span>
+<span>  <span class="st">"Hibiscus aculeatus"</span>,</span>
+<span>  <span class="st">"Hibiscus acuminatus"</span>,</span>
+<span>  <span class="st">"Hibiscus furcatuis"</span> </span>
+<span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="va">splist</span>, max_distance <span class="op">=</span> <span class="fl">0.2</span>, show_correct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span></code></pre></div>
-<table class="table">
+<code class="sourceCode R"><span><span class="va">x</span></span></code></pre></div>
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="21%">
-<col width="21%">
+<col width="17%">
+<col width="3%">
 <col width="4%">
 <col width="6%">
+<col width="3%">
+<col width="10%">
+<col width="5%">
+<col width="3%">
+<col width="9%">
 <col width="15%">
-<col width="18%">
+<col width="3%">
+<col width="3%">
 <col width="4%">
-<col width="4%">
+<col width="3%">
 <col width="3%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Search</th>
-<th align="left">Input.Taxon</th>
+<th align="right">global.Id</th>
+<th align="left">Input.Genus</th>
+<th align="left">Input.Epitheton</th>
+<th align="left">Rank</th>
+<th align="left">Input.Subspecies.Epitheton</th>
+<th align="left">Input.Authors</th>
 <th align="left">Status</th>
-<th align="left">PL.comparison</th>
-<th align="left">PL.alternative</th>
+<th align="right">globalId.of.Output.Taxon</th>
 <th align="left">Output.Taxon</th>
 <th align="left">Family</th>
 <th align="left">Order</th>
+<th align="left">Literature</th>
+<th align="left">Comments</th>
 <th align="left">Correct</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">Hibiscus abelmoschus var. betulifolius Mast.</td>
-<td align="left">Hibiscus abelmoschus var. betulifolius Mast.</td>
+<td align="right">603424</td>
+<td align="left">Hibiscus</td>
+<td align="left">abelmoschus</td>
+<td align="left">var.</td>
+<td align="left">betulifolius</td>
+<td align="left">Mast.</td>
 <td align="left">synonym</td>
-<td align="left">identical</td>
-<td align="left"></td>
+<td align="right">518</td>
 <td align="left">Abelmoschus moschatus Medik.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
 <td align="left">Hibiscus abutiloides Willd.</td>
-<td align="left">Hibiscus abutiloides Willd.</td>
+<td align="right">603426</td>
+<td align="left">Hibiscus</td>
+<td align="left">abutiloides</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Willd.</td>
 <td align="left">synonym</td>
-<td align="left">identical</td>
-<td align="left"></td>
+<td align="right">1211289</td>
 <td align="left">Talipariti tiliaceum (L.) Fryxell</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="odd">
 <td align="left">Hibiscus aculeatus</td>
-<td align="left">Hibiscus aculeatus Walter</td>
+<td align="right">603439</td>
+<td align="left">Hibiscus</td>
+<td align="left">aculeatus</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Walter</td>
 <td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
+<td align="right">603439</td>
 <td align="left">Hibiscus aculeatus Walter</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="even">
 <td align="left">Hibiscus acuminatus</td>
-<td align="left">Hibiscus acuminatus Cav.</td>
+<td align="right">603440</td>
+<td align="left">Hibiscus</td>
+<td align="left">acuminatus</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Cav.</td>
 <td align="left">synonym</td>
-<td align="left">other synonym</td>
-<td align="left">Pavonia acuminata (Cav.) Spreng.</td>
+<td align="right">683056</td>
 <td align="left">Kosteletzkya acuminata (Cav.) Britten</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="left">TRUE</td>
 </tr>
 <tr class="odd">
 <td align="left">Hibiscus furcatuis</td>
-<td align="left">Hibiscus furcatus Roxb.</td>
+<td align="right">603937</td>
+<td align="left">Hibiscus</td>
+<td align="left">furcatus</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Roxb.</td>
 <td align="left">accepted</td>
-<td align="left">synonym</td>
-<td align="left">Hibiscus surattensis L.</td>
+<td align="right">603937</td>
 <td align="left">Hibiscus furcatus Roxb.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="left">FALSE</td>
 </tr>
 </tbody>
 </table>
-<p>The function <code>lcvp_summary</code> gives a report on the searching results using the <code>lcvp_search</code> function. Indicating the number of species searched, how many were matched. Among the matched names, it indicates how many were exactly or fuzzy matched. Then it checks how many author and infracategory names were exactly matched. Note that if authors or infracategory is not provided, it will be considered a no match.</p>
+<p>The function <code>lcvp_summary</code> gives a report on the
+searching results using the <code>lcvp_search</code> function.
+Indicating the number of species searched, how many were matched. Among
+the matched names, it indicates how many were exactly or fuzzy matched.
+Then it checks how many author and infracategory names were exactly
+matched. Note that if authors or infracategory is not provided, it will
+be considered a no match.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/lcvp_summary.html">lcvp_summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; Species searched: 5</span>
-<span class="co">#&gt; Species matched: 5 (100%)</span>
-<span class="co">#&gt; Species exactly matched: 4 (80%)</span>
-<span class="co">#&gt; Species fuzzy matched: 1 (20%)</span>
-<span class="co">#&gt; Authors exactly matched: 2 (40%)</span>
-<span class="co">#&gt; Infracategories exactly matched: 5 (100%)</span></code></pre></div>
-<p>Notice that the warning message indicated that more than one name was matched for some species. You can easily access these species using the following code.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/lcvp_summary.html">lcvp_summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Species searched: 5</span></span>
+<span><span class="co">#&gt; Species matched: 5 (100%)</span></span>
+<span><span class="co">#&gt; Species exactly matched: 4 (80%)</span></span>
+<span><span class="co">#&gt; Species fuzzy matched: 1 (20%)</span></span>
+<span><span class="co">#&gt; Authors exactly matched: 2 (40%)</span></span>
+<span><span class="co">#&gt; Infracategories exactly matched: 5 (100%)</span></span></code></pre></div>
+<p>Notice that the warning message indicated that more than one name was
+matched for some species. You can easily access these species using the
+following code.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sps_mult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"matched_mult"</span><span class="op">)</span>
-<span class="va">sps_mult</span>
-<span class="co">#&gt; [1] "Hibiscus aculeatus" "Hibiscus furcatuis"</span></code></pre></div>
-<p>And you can quickly use the <code>lcvp_fuzzy_search</code> on them.</p>
+<code class="sourceCode R"><span><span class="va">sps_mult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"matched_mult"</span><span class="op">)</span></span>
+<span><span class="va">sps_mult</span></span>
+<span><span class="co">#&gt; [1] "Hibiscus aculeatus" "Hibiscus furcatuis"</span></span></code></pre></div>
+<p>And you can quickly use the <code>lcvp_fuzzy_search</code> on
+them.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/lcvp_fuzzy_search.html">lcvp_fuzzy_search</a></span><span class="op">(</span><span class="va">sps_mult</span><span class="op">)</span></code></pre></div>
-<table style="width:100%;" class="table">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/lcvp_fuzzy_search.html">lcvp_fuzzy_search</a></span><span class="op">(</span><span class="va">sps_mult</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
 <colgroup>
-<col width="18%">
+<col width="4%">
+<col width="5%">
 <col width="7%">
-<col width="9%">
-<col width="19%">
-<col width="23%">
+<col width="3%">
+<col width="12%">
 <col width="6%">
 <col width="5%">
-<col width="9%">
+<col width="11%">
+<col width="16%">
+<col width="4%">
+<col width="4%">
+<col width="5%">
+<col width="4%">
+<col width="6%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">Input.Taxon</th>
+<th align="right">global.Id</th>
+<th align="left">Input.Genus</th>
+<th align="left">Input.Epitheton</th>
+<th align="left">Rank</th>
+<th align="left">Input.Subspecies.Epitheton</th>
+<th align="left">Input.Authors</th>
 <th align="left">Status</th>
-<th align="left">PL.comparison</th>
-<th align="left">PL.alternative</th>
+<th align="right">globalId.of.Output.Taxon</th>
 <th align="left">Output.Taxon</th>
 <th align="left">Family</th>
 <th align="left">Order</th>
+<th align="left">Literature</th>
+<th align="left">Comments</th>
 <th align="right">Name.Distance</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Hibiscus aculeatus F.Dietr.</td>
+<td align="right">603436</td>
+<td align="left">Hibiscus</td>
+<td align="left">aculeatus</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">F.Dietr.</td>
 <td align="left">synonym</td>
-<td align="left">missing</td>
-<td align="left"></td>
+<td align="right">604041</td>
 <td align="left">Hibiscus heterophyllus Vent.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">Hibiscus aculeatus G.Don</td>
+<td align="right">603437</td>
+<td align="left">Hibiscus</td>
+<td align="left">aculeatus</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">G.Don</td>
 <td align="left">synonym</td>
-<td align="left">identical</td>
-<td align="left"></td>
+<td align="right">604734</td>
 <td align="left">Hibiscus surattensis L.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">Hibiscus aculeatus Roxb.</td>
+<td align="right">603438</td>
+<td align="left">Hibiscus</td>
+<td align="left">aculeatus</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Roxb.</td>
 <td align="left">synonym</td>
-<td align="left">other synonym</td>
-<td align="left">Hibiscus hispidissimus Griff.</td>
+<td align="right">603937</td>
 <td align="left">Hibiscus furcatus Roxb.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">Hibiscus aculeatus Walter</td>
+<td align="right">603439</td>
+<td align="left">Hibiscus</td>
+<td align="left">aculeatus</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Walter</td>
 <td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
+<td align="right">603439</td>
 <td align="left">Hibiscus aculeatus Walter</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">Hibiscus furcatus Craib</td>
+<td align="right">603934</td>
+<td align="left">Hibiscus</td>
+<td align="left">furcatus</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Craib</td>
 <td align="left">unresolved</td>
-<td align="left">missing</td>
+<td align="right">604561</td>
+<td align="left">Hibiscus rosa-sinensis L.</td>
+<td align="left">—</td>
+<td align="left">—</td>
 <td align="left"></td>
-<td align="left">unresolved</td>
-<td align="left">Malvaceae</td>
-<td align="left">Malvales</td>
+<td align="left"></td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="left">Hibiscus furcatus Harv.</td>
+<td align="right">603935</td>
+<td align="left">Hibiscus</td>
+<td align="left">furcatus</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Harv.</td>
 <td align="left">synonym</td>
-<td align="left">missing</td>
-<td align="left"></td>
+<td align="right">603462</td>
 <td align="left">Hibiscus altissimus Hornby</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
-<td align="left">Hibiscus furcatus Mullend.</td>
+<td align="right">603936</td>
+<td align="left">Hibiscus</td>
+<td align="left">furcatus</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Mullend.</td>
 <td align="left">synonym</td>
-<td align="left">missing</td>
-<td align="left"></td>
+<td align="right">604338</td>
 <td align="left">Hibiscus noldeae Baker.f.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="left">Hibiscus furcatus Roxb.</td>
+<td align="right">603937</td>
+<td align="left">Hibiscus</td>
+<td align="left">furcatus</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Roxb.</td>
 <td align="left">accepted</td>
-<td align="left">synonym</td>
-<td align="left">Hibiscus surattensis L.</td>
+<td align="right">603937</td>
 <td align="left">Hibiscus furcatus Roxb.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
-<td align="left">Hibiscus furcatus Wall.</td>
+<td align="right">603940</td>
+<td align="left">Hibiscus</td>
+<td align="left">furcatus</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Wall.</td>
 <td align="left">synonym</td>
-<td align="left">missing</td>
-<td align="left"></td>
+<td align="right">603937</td>
 <td align="left">Hibiscus furcatus Roxb.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="left">Hibiscus furcatus Willd.</td>
+<td align="right">603941</td>
+<td align="left">Hibiscus</td>
+<td align="left">furcatus</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Willd.</td>
 <td align="left">synonym</td>
-<td align="left">identical</td>
-<td align="left"></td>
+<td align="right">604573</td>
 <td align="left">Hibiscus rostellatus Guill. &amp; Perr.</td>
 <td align="left">Malvaceae</td>
 <td align="left">Malvales</td>
+<td align="left"></td>
+<td align="left"></td>
 <td align="right">1</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="search-all-vascular-plant-names-of-a-genus-family-order-or-author" class="section level2">
-<h2 class="hasAnchor">
-<a href="#search-all-vascular-plant-names-of-a-genus-family-order-or-author" class="anchor" aria-hidden="true"></a>Search all vascular plant names of a Genus, Family, Order or Author</h2>
-<p>Users can search all plant taxa names listed in the “Leipzig Catalogue of Vascular Plants” (LCVP) by order, family, genus or author, using the <code>lcvp_group_search</code> function.</p>
+<div class="section level3">
+<h3 id="search-all-vascular-plant-names-of-a-genus-family-order-or-author">Search all vascular plant names of a Genus, Family, Order or
+Author<a class="anchor" aria-label="anchor" href="#search-all-vascular-plant-names-of-a-genus-family-order-or-author"></a>
+</h3>
+<p>Users can search all plant taxa names listed in the “Leipzig
+Catalogue of Vascular Plants” (LCVP) by order, family, genus or author,
+using the <code>lcvp_group_search</code> function.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Search by Genus</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_group_search.html">lcvp_group_search</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AA"</span>, <span class="st">"Adansonia"</span><span class="op">)</span>, search_by <span class="op">=</span> <span class="st">"Genus"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Search by Genus</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_group_search.html">lcvp_group_search</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AA"</span>, <span class="st">"Adansonia"</span><span class="op">)</span>, search_by <span class="op">=</span> <span class="st">"Genus"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
-<col width="22%">
-<col width="6%">
-<col width="10%">
+<col width="4%">
+<col width="5%">
+<col width="7%">
+<col width="3%">
 <col width="11%">
-<col width="30%">
-<col width="9%">
-<col width="9%">
+<col width="7%">
+<col width="3%">
+<col width="10%">
+<col width="17%">
+<col width="5%">
+<col width="5%">
+<col width="12%">
+<col width="3%">
 </colgroup>
 <thead><tr class="header">
-<th align="left">Input.Taxon</th>
+<th align="right">global.Id</th>
+<th align="left">Input.Genus</th>
+<th align="left">Input.Epitheton</th>
+<th align="left">Rank</th>
+<th align="left">Input.Subspecies.Epitheton</th>
+<th align="left">Input.Authors</th>
 <th align="left">Status</th>
-<th align="left">PL.comparison</th>
-<th align="left">PL.alternative</th>
+<th align="right">globalId.of.Output.Taxon</th>
 <th align="left">Output.Taxon</th>
 <th align="left">Family</th>
 <th align="left">Order</th>
+<th align="left">Literature</th>
+<th align="left">Comments</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Aa achalensis Schltr.</td>
+<td align="right">1</td>
+<td align="left">Aa</td>
+<td align="left">argyrolepis</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Rchb.f.) Rchb.f.</td>
 <td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
-<td align="left">Aa achalensis Schltr.</td>
+<td align="right">1</td>
+<td align="left">Aa argyrolepis (Rchb.f.) Rchb.f.</td>
 <td align="left">Orchidaceae</td>
 <td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="even">
-<td align="left">Aa argyrolepis Rchb.f.</td>
+<td align="right">2</td>
+<td align="left">Aa</td>
+<td align="left">aurantiaca</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">D.Trujillo</td>
 <td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
-<td align="left">Aa argyrolepis Rchb.f.</td>
+<td align="right">2</td>
+<td align="left">Aa aurantiaca D.Trujillo</td>
 <td align="left">Orchidaceae</td>
 <td align="left">Asparagales</td>
+<td align="left">Lankesteriana 2011.11.1 1-8;</td>
+<td align="left"></td>
 </tr>
 <tr class="odd">
-<td align="left">Aa aurantiaca D.Trujillo</td>
-<td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
-<td align="left">Aa aurantiaca D.Trujillo</td>
-<td align="left">Orchidaceae</td>
-<td align="left">Asparagales</td>
-</tr>
-<tr class="even">
-<td align="left">Aa brevis Schltr.</td>
+<td align="right">3</td>
+<td align="left">Aa</td>
+<td align="left">brevis</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
 <td align="left">synonym</td>
-<td align="left">identical</td>
-<td align="left"></td>
+<td align="right">819078</td>
 <td align="left">Myrosmodes breve (Schltr.) Garay</td>
 <td align="left">Orchidaceae</td>
 <td align="left">Asparagales</td>
-</tr>
-<tr class="odd">
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
-<td align="left">accepted</td>
-<td align="left">identical</td>
 <td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="left">Aa</td>
+<td align="left">calceata</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Rchb.f.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="right">4</td>
 <td align="left">Aa calceata (Rchb.f.) Schltr.</td>
 <td align="left">Orchidaceae</td>
 <td align="left">Asparagales</td>
-</tr>
-<tr class="even">
-<td align="left">Aa chiogena Schltr.</td>
-<td align="left">synonym</td>
-<td align="left">identical</td>
 <td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="left">Aa</td>
+<td align="left">chiogena</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
+<td align="left">synonym</td>
+<td align="right">819080</td>
 <td align="left">Myrosmodes chiogena (Schltr.) C.A.Vargas</td>
 <td align="left">Orchidaceae</td>
 <td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="left">Aa</td>
+<td align="left">colombiana</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
+<td align="left">accepted</td>
+<td align="right">6</td>
+<td align="left">Aa colombiana Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left">Ann Bot 2009.104.3 403-416;</td>
+<td align="left"></td>
 </tr>
 </tbody>
 </table>
-<p>Users can choose to keep only certain taxonomic stauts, this includes “accepted”, “synonym”, “unresolved”, and “external”.</p>
+<p>Users can choose to keep only certain taxonomic stauts, this includes
+“accepted”, “synonym”, “unresolved”, and “external”.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Search by Author and keep only accepted names</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_group_search.html">lcvp_group_search</a></span><span class="op">(</span><span class="st">"Schltr."</span>, search_by <span class="op">=</span> <span class="st">"Author"</span>, status <span class="op">=</span> <span class="st">"accepted"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Search by Author and keep only accepted names</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_group_search.html">lcvp_group_search</a></span><span class="op">(</span><span class="st">"Schltr."</span>, search_by <span class="op">=</span> <span class="st">"Author"</span>, status <span class="op">=</span> <span class="st">"accepted"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
-<table class="table">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="2%">
-<col width="24%">
+<col width="1%">
+<col width="4%">
+<col width="5%">
 <col width="7%">
+<col width="3%">
+<col width="12%">
+<col width="8%">
+<col width="4%">
 <col width="11%">
-<col width="11%">
-<col width="24%">
-<col width="9%">
-<col width="9%">
+<col width="14%">
+<col width="5%">
+<col width="5%">
+<col width="12%">
+<col width="4%">
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
-<th align="left">Input.Taxon</th>
+<th align="right">global.Id</th>
+<th align="left">Input.Genus</th>
+<th align="left">Input.Epitheton</th>
+<th align="left">Rank</th>
+<th align="left">Input.Subspecies.Epitheton</th>
+<th align="left">Input.Authors</th>
 <th align="left">Status</th>
-<th align="left">PL.comparison</th>
-<th align="left">PL.alternative</th>
+<th align="right">globalId.of.Output.Taxon</th>
 <th align="left">Output.Taxon</th>
 <th align="left">Family</th>
 <th align="left">Order</th>
+<th align="left">Literature</th>
+<th align="left">Comments</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
-<td align="left">Aa achalensis Schltr.</td>
+<td align="left">2</td>
+<td align="right">4</td>
+<td align="left">Aa</td>
+<td align="left">calceata</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Rchb.f.) Schltr.</td>
 <td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
-<td align="left">Aa achalensis Schltr.</td>
+<td align="right">4</td>
+<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
 <td align="left">Orchidaceae</td>
 <td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="even">
-<td align="left">3</td>
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
+<td align="left">4</td>
+<td align="right">6</td>
+<td align="left">Aa</td>
+<td align="left">colombiana</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
 <td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
+<td align="right">6</td>
+<td align="left">Aa colombiana Schltr.</td>
 <td align="left">Orchidaceae</td>
 <td align="left">Asparagales</td>
+<td align="left">Ann Bot 2009.104.3 403-416;</td>
+<td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left">5</td>
-<td align="left">Aa colombiana Schltr.</td>
+<td align="right">7</td>
+<td align="left">Aa</td>
+<td align="left">denticulata</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
 <td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
-<td align="left">Aa colombiana Schltr.</td>
+<td align="right">7</td>
+<td align="left">Aa denticulata Schltr.</td>
 <td align="left">Orchidaceae</td>
 <td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left">6</td>
-<td align="left">Aa denticulata Schltr.</td>
+<td align="right">8</td>
+<td align="left">Aa</td>
+<td align="left">erosa</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Rchb.f.) Schltr.</td>
 <td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
-<td align="left">Aa denticulata Schltr.</td>
+<td align="right">8</td>
+<td align="left">Aa erosa (Rchb.f.) Schltr.</td>
 <td align="left">Orchidaceae</td>
 <td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left">7</td>
-<td align="left">Aa erosa (Rchb.f.) Schltr.</td>
+<td align="right">9</td>
+<td align="left">Aa</td>
+<td align="left">fiebrigii</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Schltr.) Schltr.</td>
 <td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
-<td align="left">Aa erosa (Rchb.f.) Schltr.</td>
+<td align="right">9</td>
+<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
 <td align="left">Orchidaceae</td>
 <td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="even">
-<td align="left">8</td>
-<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
+<td align="left">9</td>
+<td align="right">14</td>
+<td align="left">Aa</td>
+<td align="left">hieronymi</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Cogn.) Schltr.</td>
 <td align="left">accepted</td>
-<td align="left">identical</td>
-<td align="left"></td>
-<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
+<td align="right">14</td>
+<td align="left">Aa hieronymi (Cogn.) Schltr.</td>
 <td align="left">Orchidaceae</td>
 <td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 </tbody>
 </table>
-<div id="basic-output-information" class="section level3">
-<h3 class="hasAnchor">
-<a href="#basic-output-information" class="anchor" aria-hidden="true"></a>Basic output information</h3>
-<p>The output from <code>lcvp_search</code>, <code>lcvp_fuzzy_search</code> and <code>lcvp_group_search</code> is a <code>data.frame</code> (or list of data.frames) with the following columns:</p>
+<div class="section level4">
+<h4 id="basic-output-information">Basic output information<a class="anchor" aria-label="anchor" href="#basic-output-information"></a>
+</h4>
+<p>The output from <code>lcvp_search</code>,
+<code>lcvp_fuzzy_search</code> and <code>lcvp_group_search</code> is a
+<code>data.frame</code> (or list of data.frames) with the following
+columns:</p>
 <ul>
 <li>
 <em>Search</em>: Taxa name list provided by the user.</li>
 <li>
-<em>Input.Taxon</em>: Matched taxa names listed in the LCVP data.</li>
+<em>Input.Taxon</em>: Matched taxa names listed in the LCVP
+data.</li>
 <li>
-<em>Status</em>: Nomenclature status: ‘accepted’, ‘synonym’, ‘unresolved’ or ‘external’.</li>
+<em>Status</em>: Nomenclature status: ‘accepted’, ‘synonym’,
+‘unresolved’ or ‘external’.</li>
 <li>
-<em>PL.comparisson</em>: This field provides a direct comparison with ‘The Plant List’: ‘identical’, ‘synonym’, ‘other synonym’, ‘different authors’, ‘missing’, ‘misspelling’ or ‘unresolved’.</li>
+<em>PL.comparisson</em>: This field provides a direct comparison
+with ‘The Plant List’: ‘identical’, ‘synonym’, ‘other synonym’,
+‘different authors’, ‘missing’, ‘misspelling’ or ‘unresolved’.</li>
 <li>
-<em>PL.alternative</em>: This field provides a possible alternative name from ‘The Plant List’.</li>
+<em>PL.alternative</em>: This field provides a possible alternative
+name from ‘The Plant List’.</li>
 <li>
-<em>Output.Taxon</em>: The list of the accepted plant taxa names according to the LCVP.</li>
+<em>Output.Taxon</em>: The list of the accepted plant taxa names
+according to the LCVP.</li>
 <li>
-<em>Family</em>: The corresponding family name of the Input.Taxon, staying empty if the Status is unresolved.</li>
+<em>Family</em>: The corresponding family name of the Input.Taxon,
+staying empty if the Status is unresolved.</li>
 <li>
-<em>Order</em>: The corresponding order name of the Input.Taxon, staying empty if the Status is unresolved.</li>
+<em>Order</em>: The corresponding order name of the Input.Taxon,
+staying empty if the Status is unresolved.</li>
 </ul>
-<p>If no match is found for one species it will return NA for the columns in the LCVP table. But, if no match is found for all species the function will return NULL and a warning message.</p>
+<p>If no match is found for one species it will return NA for the
+columns in the LCVP table. But, if no match is found for all species the
+function will return NULL and a warning message.</p>
 </div>
 </div>
-<div id="matching-and-joining-two-lists-of-vascular-plant-names" class="section level2">
-<h2 class="hasAnchor">
-<a href="#matching-and-joining-two-lists-of-vascular-plant-names" class="anchor" aria-hidden="true"></a>Matching and joining two lists of vascular plant names</h2>
-<div id="match" class="section level3">
-<h3 class="hasAnchor">
-<a href="#match" class="anchor" aria-hidden="true"></a>Match</h3>
-<p>In many situations, researchers want to compare and match two lists of species name coming from different sources (e.g. phylogenies, spatial data, trait data, regional lists). The function <code>lcvp_match</code> can be used for that. It matches and compares two name lists based on the taxonomic resolution of plant taxa names listed in the LCVP.</p>
+<div class="section level3">
+<h3 id="matching-and-joining-two-lists-of-vascular-plant-names">Matching and joining two lists of vascular plant names<a class="anchor" aria-label="anchor" href="#matching-and-joining-two-lists-of-vascular-plant-names"></a>
+</h3>
+<div class="section level4">
+<h4 id="match">Match<a class="anchor" aria-label="anchor" href="#match"></a>
+</h4>
+<p>In many situations, researchers want to compare and match two lists
+of species name coming from different sources (e.g. phylogenies, spatial
+data, trait data, regional lists). The function <code>lcvp_match</code>
+can be used for that. It matches and compares two name lists based on
+the taxonomic resolution of plant taxa names listed in the LCVP.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Generate two lists of species name</span>
-<span class="va">splist1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">$</span><span class="va">Input.Taxon</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">100</span><span class="op">]</span><span class="op">)</span>
-<span class="va">splist2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">$</span><span class="va">Input.Taxon</span><span class="op">[</span><span class="fl">100</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p>Ordered is based on the splist1, and followed by non-matched names in splist2.</p>
+<code class="sourceCode R"><span><span class="co"># Generate two lists of species name</span></span>
+<span><span class="va">splist1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">1</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">splist2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">[</span><span class="fl">11</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">1</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Ordered is based on the splist1, and followed by non-matched names in
+splist2.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Match both lists</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_match.html">lcvp_match</a></span><span class="op">(</span><span class="va">splist1</span>, <span class="va">splist2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Match both lists</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_match.html">lcvp_match</a></span><span class="op">(</span><span class="va">splist1</span>, <span class="va">splist2</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
-<table class="table">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="19%">
-<col width="19%">
-<col width="19%">
+<col width="0%">
+<col width="4%">
+<col width="4%">
 <col width="3%">
-<col width="19%">
-<col width="7%">
-<col width="10%">
+<col width="3%">
+<col width="5%">
+<col width="2%">
+<col width="8%">
+<col width="5%">
+<col width="2%">
+<col width="8%">
+<col width="13%">
+<col width="3%">
+<col width="3%">
+<col width="9%">
+<col width="2%">
+<col width="6%">
+<col width="8%">
 </colgroup>
 <thead><tr class="header">
+<th align="left"></th>
 <th align="left">Species.List.1</th>
 <th align="left">Species.List.2</th>
-<th align="left">LCVP.Input.Taxon</th>
+<th align="left">global.Id</th>
+<th align="left">Input.Genus</th>
+<th align="left">Input.Epitheton</th>
+<th align="left">Rank</th>
+<th align="left">Input.Subspecies.Epitheton</th>
+<th align="left">Input.Authors</th>
 <th align="left">Status</th>
-<th align="left">LCVP.Output.Taxon</th>
+<th align="left">globalId.of.Output.Taxon</th>
+<th align="left">Output.Taxon</th>
+<th align="left">Family</th>
+<th align="left">Order</th>
+<th align="left">Literature</th>
+<th align="left">Comments</th>
 <th align="left">Match.Position.2to1</th>
-<th align="left">Duplicated.Output.Position</th>
+<th align="right">Duplicated.Output.Position</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Abacopteris longipetiolata K.Iwats.</td>
-<td align="left">Abacopteris longipetiolata K.Iwats.</td>
-<td align="left">Abacopteris longipetiolata K.Iwats.</td>
-<td align="left">synonym</td>
-<td align="left">Cyclosorus longipetiolatus (K.Iwats.) C.M.Kuo</td>
-<td align="left">82</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">Abacopteris salicifolia (Wall. ex Hook.) Holttum</td>
-<td align="left">Abacopteris salicifolia (Wall. ex Hook.) Holttum</td>
-<td align="left">Abacopteris salicifolia (Wall. ex Hook.) Holttum</td>
-<td align="left">synonym</td>
-<td align="left">Cyclosorus salicifolius (Wall. ex Hook.) Copel.</td>
-<td align="left">36</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">Abacopteris gymnopteridifrons (Hayata) Ching</td>
-<td align="left">Abacopteris gymnopteridifrons (Hayata) Ching</td>
-<td align="left">Abacopteris gymnopteridifrons (Hayata) Ching</td>
-<td align="left">synonym</td>
-<td align="left">Cyclosorus gymnopteridifrons (Hayata) C.M.Kuo</td>
-<td align="left">62</td>
-<td align="left">3, 50</td>
-</tr>
-<tr class="even">
-<td align="left">Aa rosei Ames</td>
-<td align="left">Aa rosei Ames</td>
-<td align="left">Aa rosei Ames</td>
-<td align="left">accepted</td>
-<td align="left">Aa rosei Ames</td>
-<td align="left">57</td>
-<td align="left">NA</td>
-</tr>
-<tr class="odd">
-<td align="left">Abacopteris glandulosa (Blume) Fée</td>
-<td align="left">Abacopteris glandulosa (Blume) Fée</td>
-<td align="left">Abacopteris glandulosa (Blume) Fée</td>
-<td align="left">synonym</td>
-<td align="left">Cyclosorus glandulosus (Blume) Ching</td>
-<td align="left">55</td>
-<td align="left">NA</td>
-</tr>
-<tr class="even">
-<td align="left">Abacopteris thwaitesii (Hook.) Ching</td>
-<td align="left">Abacopteris thwaitesii (Hook.) Ching</td>
-<td align="left">Abacopteris thwaitesii (Hook.) Ching</td>
-<td align="left">synonym</td>
-<td align="left">Cyclosorus thwaitesii (Hook.) Abeyw.</td>
 <td align="left">9</td>
+<td align="left">Aa fiebrigii</td>
+<td align="left">Aa fiebrigii</td>
+<td align="left">9</td>
+<td align="left">Aa</td>
+<td align="left">fiebrigii</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Schltr.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">9</td>
+<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">7</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="left">Aa chiogena</td>
+<td align="left">Aa chiogena</td>
+<td align="left">5</td>
+<td align="left">Aa</td>
+<td align="left">chiogena</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
+<td align="left">synonym</td>
+<td align="left">819080</td>
+<td align="left">Myrosmodes chiogena (Schltr.) C.A.Vargas</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">4</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="left">Aa calceata</td>
+<td align="left">Aa calceata</td>
+<td align="left">4</td>
+<td align="left">Aa</td>
+<td align="left">calceata</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Rchb.f.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">4</td>
+<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">3</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">Aa figueroi</td>
+<td align="left">Aa figueroi</td>
+<td align="left">10</td>
+<td align="left">Aa</td>
+<td align="left">figueroi</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Szlach. &amp; S.Nowak</td>
+<td align="left">accepted</td>
+<td align="left">10</td>
+<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">1</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">8</td>
+<td align="left">Aa erosa</td>
+<td align="left">Aa erosa</td>
+<td align="left">8</td>
+<td align="left">Aa</td>
+<td align="left">erosa</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Rchb.f.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">8</td>
+<td align="left">Aa erosa (Rchb.f.) Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">9</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">Aa aurantiaca</td>
 <td align="left">NA</td>
+<td align="left">2</td>
+<td align="left">Aa</td>
+<td align="left">aurantiaca</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">D.Trujillo</td>
+<td align="left">accepted</td>
+<td align="left">2</td>
+<td align="left">Aa aurantiaca D.Trujillo</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left">Lankesteriana 2011.11.1 1-8;</td>
+<td align="left"></td>
+<td align="left">NA</td>
+<td align="right">NA</td>
 </tr>
 </tbody>
 </table>
-<p>If <code>include_all = FALSE</code>, non-matched names in splist2 are not included. And users can use the column <code>Match.Position.2to1</code> to reorder splist2 to match splist1.</p>
+<p>If <code>include_all = FALSE</code>, non-matched names in splist2 are
+not included. And users can use the column
+<code>Match.Position.2to1</code> to reorder splist2 to match
+splist1.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Match both lists</span>
-<span class="va">matchLists</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_match.html">lcvp_match</a></span><span class="op">(</span><span class="va">splist1</span>, <span class="va">splist2</span>, include_all <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">splist2_reordered</span> <span class="op">&lt;-</span> <span class="va">splist2</span><span class="op">[</span><span class="va">matchLists</span><span class="op">$</span><span class="va">Match.Position.2to1</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Match both lists</span></span>
+<span><span class="va">matchLists</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_match.html">lcvp_match</a></span><span class="op">(</span><span class="va">splist1</span>, <span class="va">splist2</span>, include_all <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">splist2_reordered</span> <span class="op">&lt;-</span> <span class="va">splist2</span><span class="op">[</span><span class="va">matchLists</span><span class="op">$</span><span class="va">Match.Position.2to1</span><span class="op">]</span></span></code></pre></div>
 </div>
-<div id="join" class="section level3">
-<h3 class="hasAnchor">
-<a href="#join" class="anchor" aria-hidden="true"></a>Join</h3>
-<p>The <code>lcvp_join</code> function provides a quicker way to join two tables based on the taxonomic resolution of plant taxa names listed in the LCVP. It is inspired by the <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::join</a></code> function. The function add the columns from a first table to a second table based on the list of species name in both tables. It first standardizes the species names in both tables based on the “Leipzig Catalogue of Vascular Plants” (LCVP) using the algorithm in <code>lcvp_search</code>. These standardized names of both tables are then matched using the algorithm in <code>lcvp_match</code>. The argument <code>type</code> indicates the kind of join to be done. The option “full” join will keep all species, “left” return all rows from the first table and drops the non-matches from the second, “right” do the same for the second table, and “inner” keep only matched species.</p>
+<div class="section level4">
+<h4 id="join">Join<a class="anchor" aria-label="anchor" href="#join"></a>
+</h4>
+<p>The <code>lcvp_join</code> function provides a quicker way to join
+two tables based on the taxonomic resolution of plant taxa names listed
+in the LCVP. It is inspired by the <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::join</a></code> function.
+The function add the columns from a first table to a second table based
+on the list of species name in both tables. It first standardizes the
+species names in both tables based on the “Leipzig Catalogue of Vascular
+Plants” (LCVP) using the algorithm in <code>lcvp_search</code>. These
+standardized names of both tables are then matched using the algorithm
+in <code>lcvp_match</code>. The argument <code>type</code> indicates the
+kind of join to be done. The option “full” join will keep all species,
+“left” return all rows from the first table and drops the non-matches
+from the second, “right” do the same for the second table, and “inner”
+keep only matched species.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Create data.frame1</span>
-<span class="va">splist1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">$</span><span class="va">Input.Taxon</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">100</span><span class="op">]</span><span class="op">)</span>
-<span class="va">tbl1</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"Species"</span> <span class="op">=</span> <span class="va">splist1</span>, <span class="st">"Trait1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># Create data.frame2</span>
-<span class="va">splist2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">$</span><span class="va">Input.Taxon</span><span class="op">[</span><span class="fl">98</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span>
-<span class="va">tbl2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
-  <span class="st">"Species"</span> <span class="op">=</span> <span class="va">splist2</span>,
-  <span class="st">"Trait2"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist2</span><span class="op">)</span><span class="op">)</span>,
-  <span class="st">"Trait3"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist2</span><span class="op">)</span><span class="op">)</span>,
-  <span class="st">"Trait4"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist2</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-  <span class="st">"Trait5"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist2</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Create data.frame1</span></span>
+<span><span class="va">splist1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">1</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">tbl1</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"Species"</span> <span class="op">=</span> <span class="va">splist1</span>, <span class="st">"Trait1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create data.frame2</span></span>
+<span><span class="va">splist2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">[</span><span class="fl">11</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">1</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">tbl2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Species"</span> <span class="op">=</span> <span class="va">splist2</span>,</span>
+<span>  <span class="st">"Trait2"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist2</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="st">"Trait3"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist2</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="st">"Trait4"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist2</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  <span class="st">"Trait5"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist2</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Full join the two tables</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_join.html">lcvp_join</a></span><span class="op">(</span><span class="va">tbl1</span>, <span class="va">tbl2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Species"</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"full"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Full join the two tables</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_join.html">lcvp_join</a></span><span class="op">(</span><span class="va">tbl1</span>, <span class="va">tbl2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Species"</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"full"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
-<table class="table">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="19%">
-<col width="19%">
-<col width="19%">
-<col width="22%">
+<col width="5%">
+<col width="5%">
+<col width="3%">
+<col width="5%">
+<col width="2%">
+<col width="9%">
+<col width="6%">
+<col width="3%">
+<col width="9%">
+<col width="15%">
 <col width="4%">
 <col width="4%">
 <col width="4%">
 <col width="3%">
 <col width="3%">
+<col width="3%">
+<col width="3%">
+<col width="2%">
+<col width="2%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Species.List.1</th>
 <th align="left">Species.List.2</th>
-<th align="left">LCVP.Input.Taxon</th>
-<th align="left">LCVP.Output.Taxon</th>
+<th align="left">global.Id</th>
+<th align="left">Input.Epitheton</th>
+<th align="left">Rank</th>
+<th align="left">Input.Subspecies.Epitheton</th>
+<th align="left">Input.Authors</th>
+<th align="left">Status</th>
+<th align="left">globalId.of.Output.Taxon</th>
+<th align="left">Output.Taxon</th>
+<th align="left">Family</th>
+<th align="left">Order</th>
+<th align="left">Literature</th>
+<th align="left">Comments</th>
 <th align="right">Trait1</th>
 <th align="right">Trait2</th>
 <th align="right">Trait3</th>
@@ -823,96 +1280,182 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
-<td align="left">NA</td>
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
-<td align="right">0.8735713</td>
+<td align="left">Aa figueroi</td>
+<td align="left">Aa figueroi</td>
+<td align="left">10</td>
+<td align="left">figueroi</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Szlach. &amp; S.Nowak</td>
+<td align="left">accepted</td>
+<td align="left">10</td>
+<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.6246144</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
-<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
-<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
-<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
-<td align="right">0.1617493</td>
-<td align="right">0.7454298</td>
-<td align="right">0.1060625</td>
+<td align="left">Aa denticulata</td>
+<td align="left">Aa denticulata</td>
+<td align="left">7</td>
+<td align="left">denticulata</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">7</td>
+<td align="left">Aa denticulata Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.7703857</td>
+<td align="right">0.4266160</td>
+<td align="right">0.4490895</td>
+<td align="left">a</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">Aa erosa</td>
+<td align="left">Aa erosa</td>
+<td align="left">8</td>
+<td align="left">erosa</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Rchb.f.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">8</td>
+<td align="left">Aa erosa (Rchb.f.) Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.7069253</td>
+<td align="right">0.9518089</td>
+<td align="right">0.4491395</td>
+<td align="left">a</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">Aa fiebrigii</td>
+<td align="left">Aa fiebrigii</td>
+<td align="left">9</td>
+<td align="left">fiebrigii</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Schltr.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">9</td>
+<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.0764028</td>
+<td align="right">0.8352246</td>
+<td align="right">0.3898149</td>
+<td align="left">b</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">Aa chiogena</td>
+<td align="left">Aa chiogena</td>
+<td align="left">5</td>
+<td align="left">chiogena</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
+<td align="left">synonym</td>
+<td align="left">819080</td>
+<td align="left">Myrosmodes chiogena (Schltr.) C.A.Vargas</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.0271018</td>
+<td align="right">0.6746247</td>
+<td align="right">0.4517954</td>
 <td align="left">b</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="odd">
-<td align="left">Abacopteris presliana (Ching) Ching</td>
-<td align="left">Abacopteris presliana (Ching) Ching</td>
-<td align="left">Abacopteris presliana (Ching) Ching</td>
-<td align="left">Cyclosorus gymnopteridifrons (Hayata) C.M.Kuo</td>
-<td align="right">0.9946185</td>
-<td align="right">0.0993006</td>
-<td align="right">0.7000972</td>
-<td align="left">a</td>
-<td align="left">TRUE</td>
-</tr>
 <tr class="even">
-<td align="left">Abacopteris menisciicarpa (Blume) Holttum</td>
-<td align="left">Abacopteris menisciicarpa (Blume) Holttum</td>
-<td align="left">Abacopteris menisciicarpa (Blume) Holttum</td>
-<td align="left">Cyclosorus menisciicarpus (Blume) Holttum</td>
-<td align="right">0.7805099</td>
-<td align="right">0.1076773</td>
-<td align="right">0.7811816</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="odd">
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="right">0.3903740</td>
-<td align="right">0.3814146</td>
-<td align="right">0.1806073</td>
-<td align="left">a</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="even">
-<td align="left">Abacopteris aspera (C.Presl) Ching</td>
-<td align="left">Abacopteris aspera (C.Presl) Ching</td>
-<td align="left">Abacopteris aspera (C.Presl) Ching</td>
-<td align="left">Cyclosorus asperus (C.Presl) B.K.Nayar &amp; S.Kaur</td>
-<td align="right">0.8383426</td>
-<td align="right">0.8794875</td>
-<td align="right">0.8662900</td>
+<td align="left">Aa brevis</td>
+<td align="left">Aa brevis</td>
+<td align="left">3</td>
+<td align="left">brevis</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
+<td align="left">synonym</td>
+<td align="left">819078</td>
+<td align="left">Myrosmodes breve (Schltr.) Garay</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.9181100</td>
+<td align="right">0.6625154</td>
+<td align="right">0.2580027</td>
 <td align="left">a</td>
 <td align="left">FALSE</td>
 </tr>
 </tbody>
 </table>
-<p>Because some names may turn out to be synonyms based on the LCVP taxonomic resolution, users may opt to solve duplicated species names by summarizing traits given provided functions for common classes of variables (numeric, character, and logical). This can be done by turning the option <code>solve_duplicated = TRUE</code>, and the algorithm will combine duplicated output names (<code>Output.Taxon</code> column) based on users-defined functions to summarize the information.</p>
+<p>Because some names may turn out to be synonyms based on the LCVP
+taxonomic resolution, users may opt to solve duplicated species names by
+summarizing traits given provided functions for common classes of
+variables (numeric, character, and logical). This can be done by turning
+the option <code>solve_duplicated = TRUE</code>, and the algorithm will
+combine duplicated output names (<code>Output.Taxon</code> column) based
+on users-defined functions to summarize the information.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_join.html">lcvp_join</a></span><span class="op">(</span><span class="va">tbl1</span>, <span class="va">tbl2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Species"</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"full"</span>,
-               solve_duplicated <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_join.html">lcvp_join</a></span><span class="op">(</span><span class="va">tbl1</span>, <span class="va">tbl2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Species"</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"full"</span>,</span>
+<span>               solve_duplicated <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
-<table class="table">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="19%">
-<col width="19%">
-<col width="19%">
-<col width="22%">
+<col width="5%">
+<col width="5%">
+<col width="3%">
+<col width="5%">
+<col width="2%">
+<col width="9%">
+<col width="6%">
+<col width="3%">
+<col width="9%">
+<col width="15%">
 <col width="4%">
 <col width="4%">
 <col width="4%">
 <col width="3%">
 <col width="3%">
+<col width="3%">
+<col width="3%">
+<col width="2%">
+<col width="2%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Species.List.1</th>
 <th align="left">Species.List.2</th>
-<th align="left">LCVP.Input.Taxon</th>
-<th align="left">LCVP.Output.Taxon</th>
+<th align="left">global.Id</th>
+<th align="left">Input.Epitheton</th>
+<th align="left">Rank</th>
+<th align="left">Input.Subspecies.Epitheton</th>
+<th align="left">Input.Authors</th>
+<th align="left">Status</th>
+<th align="left">globalId.of.Output.Taxon</th>
+<th align="left">Output.Taxon</th>
+<th align="left">Family</th>
+<th align="left">Order</th>
+<th align="left">Literature</th>
+<th align="left">Comments</th>
 <th align="right">Trait1</th>
 <th align="right">Trait2</th>
 <th align="right">Trait3</th>
@@ -921,89 +1464,157 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
-<td align="left">NA</td>
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
-<td align="left">Aa calceata (Rchb.f.) Schltr.</td>
-<td align="right">0.8735713</td>
+<td align="left">Aa figueroi</td>
+<td align="left">Aa figueroi</td>
+<td align="left">10</td>
+<td align="left">figueroi</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Szlach. &amp; S.Nowak</td>
+<td align="left">accepted</td>
+<td align="left">10</td>
+<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.6246144</td>
 <td align="right">NA</td>
 <td align="right">NA</td>
 <td align="left">NA</td>
 <td align="left">NA</td>
 </tr>
 <tr class="even">
-<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
-<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
-<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
-<td align="left">Aa figueroi Szlach. &amp; S.Nowak</td>
-<td align="right">0.1617493</td>
-<td align="right">0.7454298</td>
-<td align="right">0.1060625</td>
+<td align="left">Aa denticulata</td>
+<td align="left">Aa denticulata</td>
+<td align="left">7</td>
+<td align="left">denticulata</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">7</td>
+<td align="left">Aa denticulata Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.7703857</td>
+<td align="right">0.4266160</td>
+<td align="right">0.4490895</td>
+<td align="left">a</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">Aa erosa</td>
+<td align="left">Aa erosa</td>
+<td align="left">8</td>
+<td align="left">erosa</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Rchb.f.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">8</td>
+<td align="left">Aa erosa (Rchb.f.) Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.7069253</td>
+<td align="right">0.9518089</td>
+<td align="right">0.4491395</td>
+<td align="left">a</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">Aa fiebrigii</td>
+<td align="left">Aa fiebrigii</td>
+<td align="left">9</td>
+<td align="left">fiebrigii</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">(Schltr.) Schltr.</td>
+<td align="left">accepted</td>
+<td align="left">9</td>
+<td align="left">Aa fiebrigii (Schltr.) Schltr.</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.0764028</td>
+<td align="right">0.8352246</td>
+<td align="right">0.3898149</td>
+<td align="left">b</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">Aa chiogena</td>
+<td align="left">Aa chiogena</td>
+<td align="left">5</td>
+<td align="left">chiogena</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
+<td align="left">synonym</td>
+<td align="left">819080</td>
+<td align="left">Myrosmodes chiogena (Schltr.) C.A.Vargas</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.0271018</td>
+<td align="right">0.6746247</td>
+<td align="right">0.4517954</td>
 <td align="left">b</td>
 <td align="left">TRUE</td>
 </tr>
-<tr class="odd">
-<td align="left">Abacopteris presliana (Ching) Ching</td>
-<td align="left">Abacopteris presliana (Ching) Ching</td>
-<td align="left">Abacopteris presliana (Ching) Ching</td>
-<td align="left">Cyclosorus gymnopteridifrons (Hayata) C.M.Kuo</td>
-<td align="right">0.8154958</td>
-<td align="right">0.0541672</td>
-<td align="right">0.5334087</td>
-<td align="left">a</td>
-<td align="left">TRUE</td>
-</tr>
 <tr class="even">
-<td align="left">Abacopteris menisciicarpa (Blume) Holttum</td>
-<td align="left">Abacopteris menisciicarpa (Blume) Holttum</td>
-<td align="left">Abacopteris menisciicarpa (Blume) Holttum</td>
-<td align="left">Cyclosorus menisciicarpus (Blume) Holttum</td>
-<td align="right">0.8013673</td>
-<td align="right">0.4534985</td>
-<td align="right">0.6464079</td>
-<td align="left">a, b</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="odd">
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="left">Aa sphaeroglossa Schltr.</td>
-<td align="right">0.3903740</td>
-<td align="right">0.3814146</td>
-<td align="right">0.1806073</td>
+<td align="left">Aa brevis</td>
+<td align="left">Aa brevis</td>
+<td align="left">3</td>
+<td align="left">brevis</td>
+<td align="left">species</td>
+<td align="left">nil</td>
+<td align="left">Schltr.</td>
+<td align="left">synonym</td>
+<td align="left">819078</td>
+<td align="left">Myrosmodes breve (Schltr.) Garay</td>
+<td align="left">Orchidaceae</td>
+<td align="left">Asparagales</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="right">0.9181100</td>
+<td align="right">0.6625154</td>
+<td align="right">0.2580027</td>
 <td align="left">a</td>
-<td align="left">FALSE</td>
-</tr>
-<tr class="even">
-<td align="left">Abacopteris aspera (C.Presl) Ching</td>
-<td align="left">Abacopteris aspera (C.Presl) Ching</td>
-<td align="left">Abacopteris aspera (C.Presl) Ching</td>
-<td align="left">Cyclosorus asperus (C.Presl) B.K.Nayar &amp; S.Kaur</td>
-<td align="right">0.6943090</td>
-<td align="right">0.6622206</td>
-<td align="right">0.4132474</td>
-<td align="left">a, b</td>
 <td align="left">FALSE</td>
 </tr>
 </tbody>
 </table>
-<p>Because some users may want to solve duplicated names outside the <code>lcvp_join</code> function, the algorithm is available as an individual function names <code>lcvp_solve_dups</code>.</p>
+<p>Because some users may want to solve duplicated names outside the
+<code>lcvp_join</code> function, the algorithm is available as an
+individual function names <code>lcvp_solve_dups</code>.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Create a data.frame with duplicated names and different traits</span>
-<span class="va">splist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">$</span><span class="va">Input.Taxon</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">]</span><span class="op">)</span>
-<span class="va">search</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="va">splist</span><span class="op">)</span>
-
-<span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"Species"</span> <span class="op">=</span> <span class="va">search</span><span class="op">$</span><span class="va">Output.Taxon</span>,
-<span class="st">"Trait1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist</span><span class="op">)</span><span class="op">)</span>,
-<span class="st">"Trait2"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-<span class="st">"Trait3"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Create a data.frame with duplicated names and different traits</span></span>
+<span><span class="va">splist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">1</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">search</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="va">splist</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"Species"</span> <span class="op">=</span> <span class="va">search</span><span class="op">$</span><span class="va">Output.Taxon</span>,</span>
+<span><span class="st">"Trait1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist</span><span class="op">)</span><span class="op">)</span>,</span>
+<span><span class="st">"Trait2"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span><span class="st">"Trait3"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Solve with default parameters</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_solve_dups.html">lcvp_solve_dups</a></span><span class="op">(</span><span class="va">tbl</span>, <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Solve with default parameters</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lcvp_solve_dups.html">lcvp_solve_dups</a></span><span class="op">(</span><span class="va">tbl</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
+<colgroup>
+<col width="69%">
+<col width="12%">
+<col width="8%">
+<col width="8%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Species</th>
 <th align="right">Trait1</th>
@@ -1012,55 +1623,63 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Cyclosorus affinis (Blume) Mazumdar &amp; Mukhop.</td>
-<td align="right">0.6200252</td>
+<td align="left">Aa weddelliana (Rchb.f.) Schltr.</td>
+<td align="right">0.7443151</td>
 <td align="left">a</td>
-<td align="left">FALSE</td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="even">
+<td align="left">Breynia quadrangularis (Willd.) Chakrab. &amp;
+N.P.Balakr.</td>
+<td align="right">0.4535887</td>
+<td align="left">a</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
 <td align="left">Myrosmodes weberbaueri (Schltr.) C.A.Vargas</td>
-<td align="right">0.2073560</td>
-<td align="left">a</td>
-<td align="left">TRUE</td>
-</tr>
-<tr class="odd">
-<td align="left">Aa schickendanzii Schltr.</td>
-<td align="right">0.4535771</td>
-<td align="left">b</td>
-<td align="left">TRUE</td>
-</tr>
-<tr class="even">
-<td align="left">Aa trilobulata Schltr.</td>
-<td align="right">0.1074133</td>
+<td align="right">0.3696221</td>
 <td align="left">b</td>
 <td align="left">FALSE</td>
 </tr>
+<tr class="even">
+<td align="left">Aa mandonii (Rchb.f.) Schltr.</td>
+<td align="right">0.9311101</td>
+<td align="left">b</td>
+<td align="left">TRUE</td>
+</tr>
 <tr class="odd">
-<td align="left">Myrosmodes ustulatum (Schltr.) Garay</td>
-<td align="right">0.3141533</td>
+<td align="left">Aa denticulata Schltr.</td>
+<td align="right">0.4410251</td>
 <td align="left">a</td>
 <td align="left">FALSE</td>
 </tr>
 <tr class="even">
-<td align="left">Panicum tuerckheimii Hack.</td>
-<td align="right">0.0569515</td>
+<td align="left">Myrosmodes filamentosum (Mansf.) Garay</td>
+<td align="right">0.4086975</td>
 <td align="left">a</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
-<div id="parallel-programing-with-lcvplants" class="section level1">
-<h1 class="hasAnchor">
-<a href="#parallel-programing-with-lcvplants" class="anchor" aria-hidden="true"></a>Parallel programing with lcvplants</h1>
-<p>Some users may want to use lcvplants functions to perform taxonomic harmonization for many thousands of species and wish to use the entire computational capacity available to speed up the processing time. Check this <a href="https://idiv-biodiversity.github.io/lcvplants/articles/articles/Parallel-name-harmonization.html" class="external-link">article</a>, where we show how to run lcvp_search or lcvp_fuzzy_search in parallel in an efficient way to reduce computational time.</p>
+<div class="section level2">
+<h2 id="parallel-programing-with-lcvplants">Parallel programing with lcvplants<a class="anchor" aria-label="anchor" href="#parallel-programing-with-lcvplants"></a>
+</h2>
+<p>Some users may want to use lcvplants functions to perform taxonomic
+harmonization for many thousands of species and wish to use the entire
+computational capacity available to speed up the processing time. Check
+this <a href="https://idiv-biodiversity.github.io/lcvplants/articles/articles/Parallel-name-harmonization.html" class="external-link">article</a>,
+where we show how to run lcvp_search or lcvp_fuzzy_search in parallel in
+an efficient way to reduce computational time.</p>
 </div>
-<div id="references" class="section level1">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor" aria-hidden="true"></a>References</h1>
-<p>Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig catalogue of vascular plants, a new taxonomic reference list for all known vascular plants. Sci Data 7, 416 (2020). <a href="https://doi.org/10.1038/s41597-020-00702-z" class="external-link uri">https://doi.org/10.1038/s41597-020-00702-z</a></p>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<p>Freiberg, M., Winter, M., Gentile, A. et al. LCVP, The Leipzig
+catalogue of vascular plants, a new taxonomic reference list for all
+known vascular plants. Sci Data 7, 416 (2020). <a href="https://doi.org/10.1038/s41597-020-00702-z" class="external-link uri">https://doi.org/10.1038/s41597-020-00702-z</a></p>
 </div>
   </div>
 
@@ -1076,12 +1695,12 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Bruno Vilela, Alessandro Gentile, Martin Freiberg, Marten Winter.</p>
+<p>Developed by Bruno 0000-0003-4072-0558 Vilela, Alessandro Gentile, Martin Freiberg, Marten Winter.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">lcvplants</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1.0</span>
       </span>
     </div>
 
@@ -45,14 +45,14 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/articles/Parallel-name-harmonization.html">How to run lcvplants in parallel</a>
+      <a href="articles/Parallel-name-harmonization.html">How to run lcvplants in parallel</a>
     </li>
     <li>
       <a href="articles/taxonomic_resolution_using_lcvplants.html">Taxonomic resolution using lcvplants</a>
@@ -65,7 +65,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/idiv-biodiversity/lcvplants/">
+  <a href="https://github.com/idiv-biodiversity/lcvplants/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -83,16 +83,22 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="lcvplants-200" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#lcvplants-200" class="anchor" aria-hidden="true"></a>lcvplants 2.0.0</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="lcvplants-210">lcvplants 2.1.0<a class="anchor" aria-label="anchor" href="#lcvplants-210"></a>
+</h1></div>
 
 <p>A package for large-scale taxonomic harmonization of plant names by fuzzy matching and synonymy resolution against the Leipzig Plant Catalogue as taxonomic backbone. Submission of single names or list of species names is possible. The Leipzig Plant Catalogue is an updated taxonomic backbone based on the plant list comprising more than 1,300,000 names and 350,000 accepted names (this data is in the <a href="https://github.com/idiv-biodiversity/LCVP" class="external-link"><code>LCVP</code></a> package).</p>
 </div>
-<div id="new-version-v200" class="section level1">
-<h1 class="hasAnchor">
-<a href="#new-version-v200" class="anchor" aria-hidden="true"></a>New version (v2.0.0)</h1>
-<p>In this version the package has been entirely reprogrammed.</p>
+<div class="section level1">
+<h1 id="new-version-v210">New version (v2.1.0)<a class="anchor" aria-label="anchor" href="#new-version-v210"></a>
+</h1>
+<ul>
+<li>New output table for main functions</li>
+</ul>
+</div>
+<div class="section level1">
+<h1 id="new-version-v200">New version (v2.0.0)<a class="anchor" aria-label="anchor" href="#new-version-v200"></a>
+</h1>
 <ul>
 <li>Improved speed in processing species search</li>
 <li>Separated function to search by group or authors name</li>
@@ -103,85 +109,85 @@
 </ul>
 <p>See <code>News.md</code> for update information.</p>
 </div>
-<div id="video-tutorial" class="section level1">
-<h1 class="hasAnchor">
-<a href="#video-tutorial" class="anchor" aria-hidden="true"></a>Video Tutorial</h1>
+<div class="section level1">
+<h1 id="video-tutorial">Video Tutorial<a class="anchor" aria-label="anchor" href="#video-tutorial"></a>
+</h1>
 <p><a href="https://www.youtube.com/watch?v=fAjbRNrLCec" class="external-link"><img src="https://img.youtube.com/vi/fAjbRNrLCec/0.jpg" alt="Video Tutorial"></a></p>
 </div>
-<div id="installation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h1>
+<div class="section level1">
+<h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h1>
 <p>You can install lcvplants directly from R using the <code>install_github</code> function of devtools (you may need to install that one first). To use <code>lcvplants</code> you also need the data of the <a href="https://github.com/idiv-biodiversity/LCVP" class="external-link"><code>LCVP</code> package</a>, which you can install in the same way.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"idiv-biodiversity/LCVP"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"idiv-biodiversity/lcvplants"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"idiv-biodiversity/LCVP"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"idiv-biodiversity/lcvplants"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="usage" class="section level1">
-<h1 class="hasAnchor">
-<a href="#usage" class="anchor" aria-hidden="true"></a>Usage</h1>
+<div class="section level1">
+<h1 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h1>
 <p>Simple working examples:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/idiv-biodiversity/lcvplants" class="external-link">lcvplants</a></span><span class="op">)</span>
-
-<span class="co"># single names</span>
-<span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifolius"</span><span class="op">)</span>
-
-<span class="co"># Can also include infra specific names and authorities</span>
-<span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span><span class="op">)</span>
-
-<span class="co"># Also works on vectors of names</span>
-<span class="va">search_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span>, <span class="st">"Hibiscus abutiloides Willd."</span>, 
-       <span class="st">"Hibiscus aculeatus"</span>, <span class="st">"Hibiscus acuminatus"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># You can see the summary results</span>
-<span class="fu"><a href="reference/lcvp_summary.html">lcvp_summary</a></span><span class="op">(</span><span class="va">search_result</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/idiv-biodiversity/lcvplants" class="external-link">lcvplants</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># single names</span></span>
+<span><span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifolius"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Can also include infra specific names and authorities</span></span>
+<span><span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Also works on vectors of names</span></span>
+<span><span class="va">search_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span>, <span class="st">"Hibiscus abutiloides Willd."</span>, </span>
+<span>       <span class="st">"Hibiscus aculeatus"</span>, <span class="st">"Hibiscus acuminatus"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># You can see the summary results</span></span>
+<span><span class="fu"><a href="reference/lcvp_summary.html">lcvp_summary</a></span><span class="op">(</span><span class="va">search_result</span><span class="op">)</span></span></code></pre></div>
 <p>The algorithm can also consider misspellings and look for the most similar match given a max_distance argument set by the user:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Misspeled name</span>
-<span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifolia"</span>, max_distance <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-
-<span class="co"># Misspelings in a vector of names</span>
-<span class="va">res_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span>, <span class="st">"Hibiscus abutiloides Willd."</span>, <span class="st">"Hibiscus aculeatus"</span>, <span class="st">"Hibiscus acuminatus"</span>, <span class="st">"Hibiscus furcatuis"</span>, <span class="st">"Hibiscus error"</span><span class="op">)</span>, max_distance <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="reference/lcvp_summary.html">lcvp_summary</a></span><span class="op">(</span><span class="va">res_ex</span><span class="op">)</span>
-
-
-<span class="co"># You may also want to check all the possible matches </span>
-<span class="fu"><a href="reference/lcvp_fuzzy_search.html">lcvp_fuzzy_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifolia"</span>, max_distance <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Misspeled name</span></span>
+<span><span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifolia"</span>, max_distance <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Misspelings in a vector of names</span></span>
+<span><span class="va">res_ex</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/lcvp_search.html">lcvp_search</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hibiscus abelmoschus var. betulifolius Mast."</span>, <span class="st">"Hibiscus abutiloides Willd."</span>, <span class="st">"Hibiscus aculeatus"</span>, <span class="st">"Hibiscus acuminatus"</span>, <span class="st">"Hibiscus furcatuis"</span>, <span class="st">"Hibiscus error"</span><span class="op">)</span>, max_distance <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/lcvp_summary.html">lcvp_summary</a></span><span class="op">(</span><span class="va">res_ex</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># You may also want to check all the possible matches </span></span>
+<span><span class="fu"><a href="reference/lcvp_fuzzy_search.html">lcvp_fuzzy_search</a></span><span class="op">(</span><span class="st">"Hibiscus vitifolia"</span>, max_distance <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p>You can also search for species using the Order, Family, Genus or Author name:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Search for the genus AA</span>
-<span class="fu"><a href="reference/lcvp_group_search.html">lcvp_group_search</a></span><span class="op">(</span><span class="st">"AA"</span>, search_by <span class="op">=</span> <span class="st">"Genus"</span><span class="op">)</span>
-
-<span class="co"># It also accepts a vector of names</span>
-<span class="fu"><a href="reference/lcvp_group_search.html">lcvp_group_search</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Orchidaceae"</span>, <span class="st">"Poaceae"</span>, <span class="st">"Phyllanthaceae"</span><span class="op">)</span>, search_by <span class="op">=</span> <span class="st">"Family"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Search for the genus AA</span></span>
+<span><span class="fu"><a href="reference/lcvp_group_search.html">lcvp_group_search</a></span><span class="op">(</span><span class="st">"AA"</span>, search_by <span class="op">=</span> <span class="st">"Genus"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># It also accepts a vector of names</span></span>
+<span><span class="fu"><a href="reference/lcvp_group_search.html">lcvp_group_search</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Orchidaceae"</span>, <span class="st">"Poaceae"</span>, <span class="st">"Phyllanthaceae"</span><span class="op">)</span>, search_by <span class="op">=</span> <span class="st">"Family"</span><span class="op">)</span></span></code></pre></div>
 <p>The package also facilitates the comparison between two lists of species vascular plant names:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Species list 1</span>
-<span class="va">splist1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">$</span><span class="va">Input.Taxon</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span>
-
-<span class="co"># Species list 2</span>
-<span class="va">splist2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">$</span><span class="va">Input.Taxon</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span>
-
-<span class="co"># Compare the two lists</span>
-<span class="fu"><a href="reference/lcvp_match.html">lcvp_match</a></span><span class="op">(</span><span class="va">splist1</span>, <span class="va">splist2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Species list 1</span></span>
+<span><span class="va">splist1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">1</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Species list 2</span></span>
+<span><span class="va">splist2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">[</span><span class="fl">11</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">1</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Compare the two lists</span></span>
+<span><span class="fu"><a href="reference/lcvp_match.html">lcvp_match</a></span><span class="op">(</span><span class="va">splist1</span>, <span class="va">splist2</span><span class="op">)</span></span></code></pre></div>
 <p>Lastly, you can use lcvplants two join two tables based on vascular plant names:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># data.frame1 </span>
-<span class="va">splist1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">$</span><span class="va">Input.Taxon</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"Species"</span> <span class="op">=</span> <span class="va">splist1</span>, <span class="st">"Trait1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
- 
-<span class="co"># data.frame2</span>
-<span class="va">splist2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">$</span><span class="va">Input.Taxon</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"Species"</span> <span class="op">=</span> <span class="va">splist2</span>,  <span class="st">"Trait2"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist2</span><span class="op">)</span><span class="op">)</span>, <span class="st">"Trait3"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
- 
-<span class="co"># Full join the two tables</span>
-<span class="fu"><a href="reference/lcvp_join.html">lcvp_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Species"</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"full"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># data.frame1 </span></span>
+<span><span class="va">splist1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">1</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"Species"</span> <span class="op">=</span> <span class="va">splist1</span>, <span class="st">"Trait1"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span> </span>
+<span><span class="co"># data.frame2</span></span>
+<span><span class="va">splist2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fu">LCVP</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/LCVP/man/tab_lcvp.html" class="external-link">tab_lcvp</a></span><span class="op">[</span><span class="fl">11</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="fl">1</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"Species"</span> <span class="op">=</span> <span class="va">splist2</span>,  <span class="st">"Trait2"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist2</span><span class="op">)</span><span class="op">)</span>, <span class="st">"Trait3"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">splist2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span> </span>
+<span><span class="co"># Full join the two tables</span></span>
+<span><span class="fu"><a href="reference/lcvp_join.html">lcvp_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species"</span>, <span class="st">"Species"</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"full"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="function-summary" class="section level1">
-<h1 class="hasAnchor">
-<a href="#function-summary" class="anchor" aria-hidden="true"></a>Function summary</h1>
+<div class="section level1">
+<h1 id="function-summary">Function summary<a class="anchor" aria-label="anchor" href="#function-summary"></a>
+</h1>
 <table class="table">
 <colgroup>
 <col width="50%">
@@ -223,16 +229,16 @@
 </tbody>
 </table>
 </div>
-<div id="documentation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#documentation" class="anchor" aria-hidden="true"></a>Documentation</h1>
+<div class="section level1">
+<h1 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h1>
 <p>You can find more information on how to use lcvplants in the <a href="https://idiv-biodiversity.github.io/lcvplants/articles/taxonomic_resolution_using_lcvplants.html" class="external-link">vignette</a>.</p>
 </div>
-<div id="citation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#citation" class="anchor" aria-hidden="true"></a>Citation</h1>
-<pre class="{r}"><code><a href="https://github.com/idiv-biodiversity/lcvplants" class="external-link">library(lcvplants)
-citation("lcvplants")</a></code></pre>
+<div class="section level1">
+<h1 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h1>
+<pre class="{r}"><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/idiv-biodiversity/lcvplants" class="external-link">lcvplants</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"lcvplants"</span><span class="op">)</span></span></code></pre>
 </div>
 
   </div>
@@ -241,10 +247,8 @@ citation("lcvplants")</a></code></pre>
     <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/idiv-biodiversity/lcvplants/">https://​github.com/​idiv-biodiversity/​lcvplants/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/idiv-biodiversity/lcvplants/issues">https://​github.com/​idiv-biodiversity/​lcvplants/​issues</a>
-</li>
+<li><a href="https://github.com/idiv-biodiversity/lcvplants/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/idiv-biodiversity/lcvplants/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -252,7 +256,7 @@ citation("lcvplants")</a></code></pre>
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a> </small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a> </small></li>
 </ul>
 </div>
 
@@ -260,18 +264,18 @@ citation("lcvplants")</a></code></pre>
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing lcvplants</a></li>
+<li><a href="authors.html#citation">Citing lcvplants</a></li>
 </ul>
 </div>
 
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Bruno Vilela <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Bruno 0000-0003-4072-0558 Vilela <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Alessandro Gentile <br><small class="roles"> Author </small>  </li>
 <li>Martin Freiberg <br><small class="roles"> Author </small>  </li>
 <li>Marten Winter <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">More on authors...</a></li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -289,12 +293,12 @@ citation("lcvplants")</a></code></pre>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Bruno Vilela, Alessandro Gentile, Martin Freiberg, Marten Winter.</p>
+<p>Developed by Bruno 0000-0003-4072-0558 Vilela, Alessandro Gentile, Martin Freiberg, Marten Winter.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
