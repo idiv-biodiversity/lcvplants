@@ -138,7 +138,7 @@ lcvp_join <- function(x,
                func_logical)
   
   # Transform factors in characters
-  i <- vapply(x, is.factor, factor(1))
+  i <- vapply(x, is.factor, logical(1))
   x[i] <- lapply(x[i], as.character)
   
   
@@ -159,7 +159,7 @@ lcvp_join <- function(x,
   y2 <- y[match_result$Match.Position.2to1, , drop = FALSE]
   n_x <- nrow(x)
   n_y2 <- nrow(y2)
-  x2 <- x[c(1:n_x, rep(NA, (n_y2 - n_x))),]
+  x2 <- x[c(seq_len(n_x), rep(NA, (n_y2 - n_x))),]
   
   # Join
   result <-
