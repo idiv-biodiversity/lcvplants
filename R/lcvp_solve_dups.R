@@ -83,7 +83,7 @@ lcvp_solve_dups <- function(x,
   dups <- .find_dups(x, output_pos = duplicated_col)
   
   # Transform factors in characters
-  i <- sapply(x, is.factor)
+  i <- vapply(x, is.factor, factor(1))
   x[i] <- lapply(x[i], as.character)
   
   

@@ -138,7 +138,7 @@ lcvp_join <- function(x,
                func_logical)
   
   # Transform factors in characters
-  i <- sapply(x, is.factor)
+  i <- vapply(x, is.factor, factor(1))
   x[i] <- lapply(x[i], as.character)
   
   

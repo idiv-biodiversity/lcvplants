@@ -198,7 +198,7 @@ lcvp_match <- function(splist1,
     pos_no_match <- which(!(splist2 %in% sp2))
     if (length(pos_no_match) > 0) {
       sp2_miss <- splist2[pos_no_match]
-      for (i in 1:length(sp2_miss)) {
+      for (i in seq_along(sp2_miss)) {
         extra_lines <- c(NA,
                          sp2_miss[i],
                          unlist(search2[pos_no_match[i], -1]),

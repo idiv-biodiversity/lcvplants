@@ -25,7 +25,7 @@
                                 max = n_sps,
                                 style = 3)
   }
-  for (i in 1:n_sps) {
+  for (i in seq_len(n_sps)) {
     splist_class_i <- splist_class[i, ]
     check_non_defined <-
       splist_class_i[3] %in% c("SP", "SP.",
@@ -57,7 +57,7 @@
             n_gram <- length(names_grammar)
             temp <- matrix(nrow = n_gram,
                            ncol = length(exact[i, ]))
-            for (k in 1:n_gram) {
+            for (k in seq_len(n_gram)) {
               temp[k, ] <- .exact_match(splist_class_i_mult[k, ],
                                         pos_genus,
                                         n_class)
@@ -135,7 +135,7 @@
   
   # Work when fuzzy
   if (fuzzy) {
-    choosen <- 1:ncol(sp_pos)
+    choosen <- seq_len(ncol(sp_pos))
   }
   
   
@@ -201,7 +201,7 @@
                                 max_distance = max_distance)
   }
   if (is.null(pos_genus) | length(fuzzy_match) == 0) {
-    pos_genus <- 1:nrow(LCVP::lcvp_sps_class)
+    pos_genus <- seq_len(nrow(LCVP::lcvp_sps_class))
     # Use the `.agrep_whole` function with the max_distance parameter
     name1 <- paste(splist_class_i[2], splist_class_i[3])
     name2 <- paste(LCVP::lcvp_sps_class[, 2],
@@ -228,7 +228,7 @@
     
     res_fuzzy <- matrix(nrow = n_pos_genus, ncol = n_class + 1)
     
-    for (i in 1:n_pos_genus) {
+    for (i in seq_len(n_pos_genus)) {
       res_fuzzy[i, ] <- .exact_match(splist_class_i,
                                      pos_genus[i],
                                      n_class,

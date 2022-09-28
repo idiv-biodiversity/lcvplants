@@ -9,7 +9,7 @@
   # List to result
   gen_pos_mult <- list()
   # Loop to apply the individual functions
-  for (i in 1:n_positions) {
+  for (i in seq_len(n_positions)) {
     gen_pos_mult[[i]] <- .genus_search(gen_pos[i])
   }
   if(!all(is.na(gen_pos))) {
@@ -29,7 +29,7 @@
   } else {
     # Identify their actual positions
     gen_pos <- NULL
-    for (k in 1:length(group_pos)) {
+    for (k in seq_along(group_pos)) {
       # Get the genus start and end position
       genus_sequence <- c(group_pos[k], group_pos[k] + 1)
       tab_gen_pos <- LCVP::tab_position[genus_sequence, 1]

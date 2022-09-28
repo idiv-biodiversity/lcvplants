@@ -37,7 +37,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     expect_equal(class(res_ex), "data.frame")
     expect_equal(ncol(res_ex), 14)
     expect_equal(nrow(res_ex), 1)
-    input.taxon <- paste(res_ex[, c(3:7)], collapse = " ")
+    input.taxon <- paste(res_ex[, 3:7], collapse = " ")
     expect_equal(input.taxon,
                  "Hibiscus abelmoschus var. betulifolius Mast.")
   })

@@ -188,7 +188,7 @@ lcvp_group_search <- function(group_names,
     # Return the actual data.frames
     result <- list()
     
-    for (i in 1:length(pos_list)) {
+    for (i in seq_along(pos_list)) {
       result[[i]] <- LCVP::tab_lcvp[pos_list[[i]],]
       rownames(result[[i]]) <- NULL
       if (!all(c("accepted", "synonym", "unresolved", "external") %in% status)) {

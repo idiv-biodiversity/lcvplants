@@ -70,7 +70,7 @@
 
 
 
-library(stringr)
+# library(stringr)
 # 
 # pos <- 1:1000
 # subs <- lapply(as.list(LCVP::lcvp_sps_class[pos, 3]), .sub_common)

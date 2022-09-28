@@ -33,7 +33,7 @@ Suggests:
     rmarkdown,
     dplyr,
     devtools
-Additional_repositories: https://github.com/idiv-biodiversity/LCVP
+Additional_repositories: https://github.com/idiv-biodiversity/LCVP/releases
 LazyLoad: yes
 RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
