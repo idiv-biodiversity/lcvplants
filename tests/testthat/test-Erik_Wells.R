@@ -115,7 +115,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
     expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)
     sp <- "Platanus x hispanica Miller ex Münchh."
-    res_ex <- lcvp_search(sp)
+    expect_warning(res_ex <- lcvp_search(sp))
     expect_equal(class(res_ex), "data.frame")
     expect_equal(ncol(res_ex),14)
     expect_equal(nrow(res_ex), 1)

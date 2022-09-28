@@ -9,8 +9,17 @@
   fixed3 <- gsub("AFF\\.", "", fixed2)
   fixed4 <- trimws(fixed3) # remove trailing and leading space
   fixed5 <- gsub("_", " ", fixed4) # change names separated by _ to space
-  # Merge multiple spaces
+  
+  # Hybrids 
   fixed6 <- gsub("(^X )|( X$)|( X )", " ", fixed5)
+  hybrids <- fixed5 == fixed6
+  if (!all(hybrids)) {
+    sp_hybrids <- splist[!hybrids]
+    warning(paste("The 'x' sign that indicate hybrids have been removed in the",
+                  "following names:", paste(sp_hybrids, collapse = ", ")),
+            immediate. = TRUE)
+  }
+  # Merge multiple spaces
   fixed7 <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", fixed6, perl = TRUE)
   return(fixed7)
 }
