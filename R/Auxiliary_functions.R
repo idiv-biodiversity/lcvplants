@@ -18,7 +18,7 @@
     warning(paste("The 'x' sign indicating hybrids have been removed in the",
                   "following names before search:", 
                   paste(paste0("'", sp_hybrids, "'"), collapse = ", ")),
-            immediate. = TRUE)
+            immediate. = TRUE, call. = FALSE)
   }
   # Merge multiple spaces
   fixed7 <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", fixed6, perl = TRUE)
