@@ -17,7 +17,7 @@
     sp_hybrids <- splist[!hybrids]
     warning(paste("The 'x' sign indicating hybrids have been removed in the",
                   "following names before search:", 
-                  paste(sp_hybrids, collapse = ", ")),
+                  paste(paste0("'", sp_hybrids, "'"), collapse = ", ")),
             immediate. = TRUE)
   }
   # Merge multiple spaces
