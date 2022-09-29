@@ -15,8 +15,9 @@
   hybrids <- fixed5 == fixed6
   if (!all(hybrids)) {
     sp_hybrids <- splist[!hybrids]
-    warning(paste("The 'x' sign that indicate hybrids have been removed in the",
-                  "following names:", paste(sp_hybrids, collapse = ", ")),
+    warning(paste("The 'x' sign indicating hybrids have been removed in the",
+                  "following names before search:", 
+                  paste(sp_hybrids, collapse = ", ")),
             immediate. = TRUE)
   }
   # Merge multiple spaces
