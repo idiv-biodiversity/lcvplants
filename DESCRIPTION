@@ -3,12 +3,12 @@ Title: The Leipzig Catalogue of Vascular Plants (LCVP) - An Improved Taxonomic R
     for All Known Vascular Plants
 Version: 2.1.0
 Authors@R: c(
-    person(given = "Bruno", family = "Vilela", role = c("aut", "cre"),
-    email = "bvilela.bv@gmail.com", c(ORCID = "0000-0003-4072-0558")),
-    person(given = "Alessandro", family = "Gentile", role = c("aut")),
-    person(given = "Martin", family = "Freiberg", role = "aut"),
-    person(given = "Marten", family = "Winter", role = "aut"),
-    person(given = "Alexander", family = "Zizka", role = "ctb")
+    person("Bruno", "Vilela", role = c("aut", "cre"),
+    email = "bvilela.bv@gmail.com", comment = c(ORCID = "0000-0003-4072-0558")),
+    person("Alessandro", "Gentile", role = c("aut")),
+    person("Martin", "Freiberg", role = "aut"),
+    person("Marten", "Winter", role = "aut"),
+    person("Alexander", "Zizka", role = "ctb")
   )
 Description: Allows taxonomic resolution of plant taxa names listed in the "Leipzig Catalogue of Vascular Plants" (LCVP). The package aims to facilitate  finding, retrieving and orthographically resolving plant names through the  comparison between plant taxa. The R-package is able to apply a text-based  search of plant names on the LCVP using a fuzzy match algorithm, which is the  core of the searching engine. This package interacts with data available trough the  "LCVP" package, which is available in a github repository. To access this data package, run  'devtools::install_github("idiv-biodiversity/LCVP")'. The size of the `LCVP` package is approximately 45 MB.
 License: MIT + file LICENSE 
