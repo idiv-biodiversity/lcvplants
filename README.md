@@ -7,7 +7,7 @@ A package for large-scale taxonomic harmonization of plant names by fuzzy matchi
 # New version (v2.1.0)
 * New output table for main functions
 
-# New version (v2.0.0)
+# version (v2.0.0)
 
 * Improved speed in processing species search
 * Separated function to search by group or authors name
