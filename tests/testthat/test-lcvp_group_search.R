@@ -32,7 +32,7 @@ if (requireNamespace("LCVP", quietly = TRUE)) {
                                 status = "accepted")
     expect_equal(class(res_ex), "data.frame")
     expect_equal(ncol(res_ex), 13)
-    expect_equal(nrow(res_ex), 5300)
+    expect_equal(nrow(res_ex), 5298)
   })
   
   test_that("lcvp_group_search works for one family, only unresolved", {
